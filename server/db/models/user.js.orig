@@ -1,8 +1,11 @@
 'use strict';
 var crypto = require('crypto');
+<<<<<<< HEAD
 var mongoose = require('mongoose');
 var objId = mongoose.Schema.ObjectId;
 
+=======
+>>>>>>> a532447969eed33b5ec3d493a4ebf57303c3203f
 var schema = new mongoose.Schema({
     email: {
         type: String,
@@ -95,6 +98,7 @@ schema.method('correctPassword', function (candidatePassword) {
     return encryptPassword(candidatePassword, this.salt) === this.password;
 });
 
+<<<<<<< HEAD
 // not sure how to do this in an array, probably calc on front end
 // schema.virtual('mastery.score').get(function(){
 //         return Math.floor(topic.pointsEarned/topic.pointsPossible);
@@ -102,3 +106,6 @@ schema.method('correctPassword', function (candidatePassword) {
 // });
 
 mongoose.model('User', schema);
+=======
+mongoose.model('User', schema);
+>>>>>>> a532447969eed33b5ec3d493a4ebf57303c3203f
