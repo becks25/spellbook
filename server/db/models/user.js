@@ -1,14 +1,52 @@
 'use strict';
 var crypto = require('crypto');
 var mongoose = require('mongoose');
+var objId = mongoose.Schema.ObjectId;
 
 var schema = new mongoose.Schema({
     email: {
-        type: String
+        type: String,
+        required: true,
+        unique: true
+
     },
     password: {
-        type: String
+        type: String,
+        required: true
     },
+    age: {
+        type: Number
+    },
+    gender: {
+        type: String,
+        enum: ['male', 'female', 'other', 'rather not say']
+    },
+    username: {
+        type: String,
+        required: true,
+        unique: true
+    },
+    character: {
+        name: {type: String},
+        picture: {type: String}
+    },
+    isAdmin: {
+        type: Boolean,
+        default: false
+    },
+    mastery: [{
+        topic: String,
+        pointsEarned: Number,
+        pointsPossible: Number
+    }],
+    completedStories: [{
+        type: objId,
+        ref: 'Story'
+    }],
+    unfinishedPages: [{
+        type: objId,
+        ref: 'Page'       
+    }],
     salt: {
         type: String
     },
@@ -56,5 +94,11 @@ schema.statics.encryptPassword = encryptPassword;
 schema.method('correctPassword', function (candidatePassword) {
     return encryptPassword(candidatePassword, this.salt) === this.password;
 });
+
+// not sure how to do this in an array, probably calc on front end
+// schema.virtual('mastery.score').get(function(){
+//         return Math.floor(topic.pointsEarned/topic.pointsPossible);
+//     });
+// });
 
 mongoose.model('User', schema);
