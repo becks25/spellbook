@@ -8,7 +8,7 @@ var _ = require('lodash');
 var Story = mongoose.model('Story');
 
 
-//get all
+//get all stories
 router.get('/', (req, res, next) => {
     Story.find()
     .then(stories => res.send(stories))
