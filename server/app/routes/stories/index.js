@@ -21,25 +21,33 @@ router.get('/:storyId', (req, res, next) => {
 });
 
 //create one
+//using jsdata
 router.post('/', (req, res, next) => {
-    Story.create(req.body.newStory)
-    .then(story => res.status(201).send(story))
-    .then(null, next);
+    if(req.user) {
+        Story.create(req.body)
+            .then(story => res.status(201).send(story))
+            .then(null, next);
+    } next();
 });
 
 //edit one
+//pass along author and story edits
 router.put('/:storyId', (req, res, next) => {
-    _.assign(req.story, req.body.editStory);
-    req.story.save()
-    .then(story => res.status(200).send(story))
-    .then(null, next);
+    if(req.user._id.toString() === req.body.author.toString() || req.user.isAdmin) {
+        _.assign(req.story, req.body);
+        req.story.save()
+            .then(story => res.status(200).send(story))
+            .then(null, next);
+    } next();
 });
 
 //delete one
 router.delete('/:storyId', (req, res, next) => {
-    Story.remove({_id: req.story._id}).exec()
-    .then(removed => res.status(200).send(removed))
-    .then(null, next);
+    if(req.user._id.toString() === req.body.author.toString() || req.user.isAdmin) {
+        Story.remove({_id: req.story._id}).exec()
+            .then(removed => res.status(200).send(removed))
+            .then(null, next);
+    } next();
 });
 
 router.param('storyId', (req, res, next, storyId) => {
