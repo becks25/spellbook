@@ -18,7 +18,7 @@ router.get('/:pageId', (req, res, next) => {
 // passes in the body
 router.post('/:storyId', (req, res, next) => {
     if(req.user) {
-        Page.create(req.body.newPage)
+        Page.create(req.body)
             .then(page => {
                 req.story.pages.push(page._id);
                 req.story.save()
@@ -31,7 +31,7 @@ router.post('/:storyId', (req, res, next) => {
 //edit one
 //pass the author and the edits in the body
 router.put('/:pageId', (req, res, next) => {
-    if(req.user === req.body.author || req.user.isAdmin) {
+    if(req.user._id.toString() === req.body.author.toString() || req.user.isAdmin) {
         _.assign(req.page, req.body.editPage);
         req.page.save()
             .then(page => res.status(200).send(page))
@@ -41,7 +41,7 @@ router.put('/:pageId', (req, res, next) => {
 
 //delete one
 router.delete('/:pageId', (req, res, next) => {
-    if(req.user === req.body.author || req.user.isAdmin) {
+    if(req.user._id.toString() === req.body.author.toString() || req.user.isAdmin) {
         Page.remove({_id: req.page._id}).exec()
             .then(removed => {
                 Story.find()
