@@ -56,7 +56,8 @@ var seedPages = function(stories){
                 concepts: [concepts[Math.floor(Math.random()*concepts.length)]],
                 hint: 'Try harder',
                 gameboard: [],
-                requirements: []
+                requirements: [],
+                pageNumber: i
             });
         }
     });
