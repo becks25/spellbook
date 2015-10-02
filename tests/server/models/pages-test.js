@@ -25,7 +25,7 @@ describe('Page Model', () => {
 
     beforeEach('Create a story', done => {
         Story.create({
-                name: 'Omri',
+                title: 'Omri',
                 description: 'A delightful tale about Me!'
             }).then(story => {
                 id = story._id;

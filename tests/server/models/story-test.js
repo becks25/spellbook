@@ -36,7 +36,7 @@ describe('Story Model', () => {
         var createStory = () => {
             return Story.create(
                 {
-                    name: 'Omri',
+                    title: 'Omri',
                     description: 'A delightful tale about Me!'
                 })
         };
@@ -44,7 +44,7 @@ describe('Story Model', () => {
         it('should create a new Story', done => {
             createStory().then(story => {
                 expect(story).to.exist;
-                expect(story.name).to.equal('Omri');
+                expect(story.title).to.equal('Omri');
                 expect(story.description).to.equal('A delightful tale about Me!');
                 done();
             })
