@@ -6,7 +6,7 @@ var Schema = mongoose.Schema;
 
 
 var schema = new mongoose.Schema({
-    name: {type: String, required: true},
+    title: {type: String, required: true},
     description: {type: String, required: true},
     author: {type: Schema.Types.ObjectId, ref: 'User'},
     difficulty: Number,
