@@ -17,4 +17,4 @@ app.factory('UserFactory', function(DS, $http) {
             }
         }
     });
-});
+}).run(UserFactory=>{});
