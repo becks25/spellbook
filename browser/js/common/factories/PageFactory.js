@@ -13,6 +13,7 @@ app.factory('PageFactory', function(DS, $http) {
         methods: {
             getNext: () => {
                 return $http.get(`/api/pages?story=${this.story._id}&pageNumber=${this.pageNumber+1}`)
+                            .then(response => response.data);
             }
         }
     });
