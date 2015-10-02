@@ -19,11 +19,7 @@ router.get('/:pageId', (req, res, next) => {
 router.post('/:storyId', (req, res, next) => {
     if(req.user) {
         Page.create(req.body)
-            .then(page => {
-                req.story.pages.push(page._id);
-                req.story.save()
-                    .then(page => res.status(201).send(page))
-            })
+            .then(page => res.status(201).send(page))
             .then(null, next);
     } next();
 });
@@ -43,15 +39,7 @@ router.put('/:pageId', (req, res, next) => {
 router.delete('/:pageId', (req, res, next) => {
     if(req.user._id.toString() === req.body.author.toString() || req.user.isAdmin) {
         Page.remove({_id: req.page._id}).exec()
-            .then(removed => {
-                Story.find()
-                    .where({pages: {$in: req.page._id}})
-                    .then(story => {
-                        _.remove(story.pages, n => n === req.page._id);
-                        story.save()
-                            .then(removed => res.status(200).send(removed))
-                    })
-            })
+            .then(removed => res.status(200).send(removed))
             .then(null, next);
     } next();
 });

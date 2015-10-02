@@ -13,7 +13,8 @@ var schema = new mongoose.Schema({
     concepts: [String],
     hint: String,
     gameboard: [],
-    requirements: []
+    requirements: [],
+    pageNumber: Number
 });
 
 
