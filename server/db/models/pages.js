@@ -2,6 +2,7 @@
  * Created by Austin on 10/1/15.
  */
 var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
 
 var schema = new mongoose.Schema({
     story: {type: Schema.Types.ObjectId, ref: 'Story', required: true},
