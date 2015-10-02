@@ -9,6 +9,13 @@ var _ = require('lodash');
 var Page = mongoose.model('Page');
 var Story = mongoose.model('Story');
 
+//find all
+router.get('/', (req, res, next) => {
+    Page.find(req.query)
+        .then(pages => res.send(pages))
+        .then(null, next);
+});
+
 //get one
 router.get('/:pageId', (req, res, next) => {
     res.send(req.page);
