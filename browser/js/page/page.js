@@ -3,7 +3,7 @@ app.config(function ($stateProvider) {
         url: '/page/:id',
         templateUrl: 'js/page/page.html',
         resolve: {
-          page: (PageFactory, $stateParams) => PageFactory.find($stateParams.id);
+          page: (PageFactory, $stateParams) => PageFactory.find($stateParams.id)
         },
         controller: 'PageCtrl'
     });

@@ -7,14 +7,24 @@ app.factory('UserFactory', function(DS, $http) {
                 stories: {
                     localKey: 'storyId',
                     localField: 'completedStories'
-                }
-            },
-            hasMany: {
+                },
                 pages: {
                     localKey: 'pageId',
                     localField: 'unfinishedPages'
                 }
             }
+        },
+        methods: {
+            getScore: (concept) => {
+                var score = 0;
+                this.mastery.some(conceptObj=>{
+                    if(conceptObj.topic === concept) {
+                        score = Math.floor(conceptObj.pointsEarned/conceptObj.pointsPossible*100);
+                        return true;
+                    }
+                    return score;
+                });
+            }
         }
     });
-}).run(UserFactory=>{});
+});
