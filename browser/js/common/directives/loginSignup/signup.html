@@ -7,18 +7,11 @@
     <alert type="danger" ng-show="signupError">
       {{ signupError }}
     </alert>
-    <!-- First name input -->
+    <!-- username input -->
     <div class="form-group">
-      <label class="control-label col-md-4" for="firstName">First name<span class="required">*</span></label>
+      <label class="control-label col-md-4" for="username">Username<span class="required">*</span></label>
       <div class="col-md-8">
-        <input required type="text" ng-model="signup.firstName" class="form-control" id="firstName" placeholder="First name">
-      </div>
-    </div>
-    <!-- Last name input -->
-    <div class="form-group">
-      <label class="control-label col-md-4" for="lastName">Last name<span class="required">*</span></label>
-      <div class="col-md-8">
-        <input required type="text" ng-model="signup.lastName" class="form-control" id="lastName" placeholder="Last name">
+        <input required type="text" ng-model="signup.username" class="form-control" id="username" placeholder="Username">
       </div>
     </div>
     <!-- Email input -->
@@ -35,6 +28,24 @@
         <input required type="password" ng-model="signup.password" class="form-control" id="signup-password" placeholder="Password">
       </div>
     </div>
+    <!-- Age input -->
+    <div class="form-group">
+      <label class="control-label col-md-4" for="age">Age</label>
+      <div class="col-md-8">
+        <input required type="text" ng-model="signup.age" class="form-control" id="age" placeholder="Age">
+      </div>
+    </div>
+    <!-- Gender input -->
+    <div class="form-group">
+      <label class="control-label col-md-4" for="gender">Gender</label>
+      <div class="col-md-8">
+        <input required type="text" ng-model="signup.gender" class="form-control" id="gender" placeholder="Gender">
+      </div>
+    </div>
+
+
+
+
     <!-- Submit form -->
     <button type="submit" class="btn btn-default">Signup</button>
   </form>
