@@ -28,7 +28,10 @@ var schema = new mongoose.Schema({
     },
     character: {
         name: {type: String},
-        picture: {type: String}
+        picture: {
+            type: String, 
+            default: 'https://s-media-cache-ak0.pinimg.com/236x/6e/7f/a3/6e7fa3580e6632889fc74411fcf36545.jpg'
+        }
     },
     isAdmin: {
         type: Boolean,
