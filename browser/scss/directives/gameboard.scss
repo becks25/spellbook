@@ -1,0 +1,12 @@
+@mixin size($width, $height: $width) {
+  width: $width;
+  height: $height;
+}
+
+.square{
+	border:1px solid black;
+	display:inline-block;
+	@include size(10vw);
+}
+
+
