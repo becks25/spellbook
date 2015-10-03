@@ -73,7 +73,8 @@ var seedUsers = function (stories, pages) {
         },
         {
             email: 'obama@gmail.com',
-            password: 'potus'
+            password: 'potus',
+            isAdmin: true
         }
     ];
 
@@ -93,8 +94,8 @@ var seedUsers = function (stories, pages) {
                 pointsEarned: Math.floor(Math.random()* 100),
                 pointsPossible: Math.floor(Math.random()* 100) + 100
             });
-        completedStories = [stories[Math.floor(Math.random()*stories.length)]._id];
-        unfinishedPages = [pages[Math.floor(Math.random()*pages.length)]._id];
+        user.completedStories = [stories[Math.floor(Math.random()*stories.length)]._id];
+        user.unfinishedPages = [pages[Math.floor(Math.random()*pages.length)]._id];
         });
 
     });

@@ -1,0 +1,10 @@
+<div>
+	<div img-src={{story.cover}} class='col-xs-3'>
+	</div>
+	<div>
+		<h3>{{story.title}}</h3>
+		<p>Author: {{story.author}}</p>
+		<p>Practice concepts: <span ng-repeat='concept in story.concepts'>{{concept}}, </span></p>
+		<p>{{story.description | limitTo: 100}}</p>
+	</div>
+</div>
