@@ -32,7 +32,9 @@ router.post('/', (req, res, next) => {
     if (!req.user || !req.user.isAdmin){
         req.body.isAdmin = false;
     }
-    User.create(req.body.newUser)
+    //console.log(req.body)
+    User.create(req.body)
+
     .then(user => res.status(201).send(user))
     .then(null, next);
 });
