@@ -1,0 +1,17 @@
+<div class="panel">
+	<div class="panel-heading">
+		My spell
+	</div>
+	<div class="panel-body" droppable>
+		<ul ui-sortable ng-model="spellTools">
+		  <li ng-repeat="tool in spellTools">{{ tool }}</li>
+		</ul>
+
+	</div>
+	<div class="text-center center-block">
+		<button class="btn">Clear</button>
+		<button class="btn">Run</button>
+		<button class="btn">Step</button>
+
+	</div>
+</div>
