@@ -3,6 +3,9 @@
 		My spell
 	</div>
 	<div class="panel-body" droppable>
+		<ul ui-sortable ng-model="spellTools">
+		  <li ng-repeat="tool in spellTools">{{ tool }}</li>
+		</ul>
 
 	</div>
 </div>
