@@ -4,10 +4,7 @@ app.directive('spell', function ($rootScope, $state) {
         restrict: 'E',
         templateUrl: 'js/common/directives/spell/spell.html',
         link: (scope, elem, attr) => {
-          scope.spellTools = [
-            'test',
-            'testing'
-          ];
+          //on drop, element should be added to spellTools model
         }
     }
   });
