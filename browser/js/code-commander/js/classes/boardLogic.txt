@@ -1,0 +1,13 @@
+
+
+on load: init game, level, char..., reset??
+
+on run: 
+go through spell directive
+make an array of all the component objs
+	{action: 'move',
+	direction: 'left'}
+loop through and call executeCommand(compObj)
+	obj with keys of each axn name
+		values- functions to execute
+			{'move': {}, pickUp: {}

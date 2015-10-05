@@ -57,38 +57,39 @@ Class.subclass('Program', {
     }
   },
   
-  parse: function() {
-    var self = this;
-    var source = $('#program').val();
-    var lines = source.split(/\r?\n/);
-    $.each(lines, function(i, line) {
-      self.parseLine(i, line);
-    });
-  },
-  
-  parseLine: function(lineNum, line) {
-    var match = Program.COMMAND_REGEX.exec(line);
-    if (match) {
-      var code = match[1];
-      var amt = match[2];
-      if (this.validCommand(code)) {
-        if (!amt || amt < 1) { amt = 1; }
-        for (var i = 0; i < amt; i++) {
-          this.commands.push({code: code, line: lineNum});
-        }
-      } else {
-        this.addBug(lineNum, 'unknown command');
-      }
+  // parse: function() {
+  //   var self = this;
+  //   var source = $('#program').val();
+  //   var lines = source.split(/\r?\n/);
+  //   $.each(lines, function(i, line) {
+  //     self.parseLine(i, line);
+  //   });
+  // },
+  // this is getting commands by regexing the html.  We are not passing commands this way
+  // How will we pass commands????
+  // parseLine: function(lineNum, line) {
+  //   var match = Program.COMMAND_REGEX.exec(line);
+  //   if (match) {
+  //     var code = match[1];
+  //     var amt = match[2];
+  //     if (this.validCommand(code)) {
+  //       if (!amt || amt < 1) { amt = 1; }
+  //       for (var i = 0; i < amt; i++) {
+  //         this.commands.push({code: code, line: lineNum});
+  //       }
+  //     } else {
+  //       this.addBug(lineNum, 'unknown command');
+  //     }
 
-    } else {
-      if (/^\s*$/.exec(line)) {
-        // Skip, just a blank line...
-      } else {
-        // Got an error!
-        this.addBug(lineNum, 'invalid');
-      }
-    }
-  },    
+  //   } else {
+  //     if (/^\s*$/.exec(line)) {
+  //       // Skip, just a blank line...
+  //     } else {
+  //       // Got an error!
+  //       this.addBug(lineNum, 'invalid');
+  //     }
+  //   }
+  // },    
 
   addBug: function(lineNum, msg) {
     this.ok = false;
@@ -137,7 +138,9 @@ Class.subclass('Program', {
     // }
   },
   
-  executeCommand: function(code) {
+  executeCommand: function(component) {
+    //component is an obj that was part of the array of components dragged to the spell
+    //has props for action, and any other additional props
     var program = this;
     var tank = this.tank;
     var map = this.map;
@@ -145,11 +148,11 @@ Class.subclass('Program', {
     // Lock for initial command, more locks may be applied by animations, etc.
     program.lock();
     
-    switch(code) {
+    switch(component.action) {
       
       case 'move':
         // Move forward
-        var newPos = tank.getMapPos().addDir(tank.getDir(), 1);
+        var newPos = tank.getMapPos().addDir(component.direction, component.distance);
         if (map.isPassable(newPos)) {
           // Do the move!
           app.audio.play('move-tank');
