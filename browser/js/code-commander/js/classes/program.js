@@ -57,47 +57,53 @@ Class.subclass('Program', {
     }
   },
   
-  parse: function() {
-    var self = this;
-    var source = $('#program').val();
-    var lines = source.split(/\r?\n/);
-    $.each(lines, function(i, line) {
-      self.parseLine(i, line);
-    });
-  },
-  
-  parseLine: function(lineNum, line) {
-    var match = Program.COMMAND_REGEX.exec(line);
-    if (match) {
-      var code = match[1];
-      var amt = match[2];
-      if (this.validCommand(code)) {
-        if (!amt || amt < 1) { amt = 1; }
-        for (var i = 0; i < amt; i++) {
-          this.commands.push({code: code, line: lineNum});
-        }
-      } else {
-        this.addBug(lineNum, 'unknown command');
-      }
+  //grab items in spell box
+  //make (if nec) objects with action prop, and poss others
+  // make array of component objs
+  parse: function(){}
 
-    } else {
-      if (/^\s*$/.exec(line)) {
-        // Skip, just a blank line...
-      } else {
-        // Got an error!
-        this.addBug(lineNum, 'invalid');
-      }
-    }
-  },    
+  // parse: function() {
+  //   var self = this;
+  //   var source = $('#program').val();
+  //   var lines = source.split(/\r?\n/);
+  //   $.each(lines, function(i, line) {
+  //     self.parseLine(i, line);
+  //   });
+  // },
+  // this is getting commands by regexing the html.  We are not passing commands this way
+  // How will we pass commands????
+  // parseLine: function(lineNum, line) {
+  //   var match = Program.COMMAND_REGEX.exec(line);
+  //   if (match) {
+  //     var code = match[1];
+  //     var amt = match[2];
+  //     if (this.validCommand(code)) {
+  //       if (!amt || amt < 1) { amt = 1; }
+  //       for (var i = 0; i < amt; i++) {
+  //         this.commands.push({code: code, line: lineNum});
+  //       }
+  //     } else {
+  //       this.addBug(lineNum, 'unknown command');
+  //     }
 
-  addBug: function(lineNum, msg) {
-    this.ok = false;
-    this.errors[lineNum] = msg;
-  },
+  //   } else {
+  //     if (/^\s*$/.exec(line)) {
+  //       // Skip, just a blank line...
+  //     } else {
+  //       // Got an error!
+  //       this.addBug(lineNum, 'invalid');
+  //     }
+  //   }
+  // },    
 
-  validCommand: function(code) {
-    return $.inArray(code, Program.CODES) >= 0;
-  },
+  // addBug: function(lineNum, msg) {
+  //   this.ok = false;
+  //   this.errors[lineNum] = msg;
+  // },
+
+  // validCommand: function(code) {
+  //   return $.inArray(code, Program.CODES) >= 0;
+  // },
   
   execute: function() {
     this.running = true;
@@ -137,7 +143,9 @@ Class.subclass('Program', {
     // }
   },
   
-  executeCommand: function(code) {
+  executeCommand: function(component) {
+    //component is an obj that was part of the array of components dragged to the spell
+    //has props for action, and any other additional props
     var program = this;
     var tank = this.tank;
     var map = this.map;
@@ -145,21 +153,23 @@ Class.subclass('Program', {
     // Lock for initial command, more locks may be applied by animations, etc.
     program.lock();
     
-    switch(code) {
+    switch(component.action) {
       
       case 'move':
         // Move forward
-        var newPos = tank.getMapPos().addDir(tank.getDir(), 1);
+        var newPos = tank.getMapPos().addDir(component.direction, 1);
         if (map.isPassable(newPos)) {
           // Do the move!
-          app.audio.play('move-tank');
+          // app.audio.play('move-tank');
+          //????what does this do????!
           tank.tween({x: newPos.x*64, y: newPos.y*64}, 45, function() {
-            app.audio.stop('move-tank');
+            // app.audio.stop('move-tank');
             tank.setMapPos(newPos);
             program.unlock();
           });
         } else {
           // Bump!
+
           var curPos = tank.getScreenPos();
           var newPos = curPos.dup().addDir(tank.getDir(), 8);
           tank.tween({x: newPos.x, y: newPos.y}, 3, function() {
