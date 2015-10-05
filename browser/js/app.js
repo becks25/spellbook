@@ -142,3 +142,9 @@ app.run(function ($rootScope, AuthService, $state) {
     });
 
 });
+app.run(function(StoryFactory, PageFactory, UserFactory) {
+      StoryFactory.findAll().then(stories=>console.log(stories));
+      PageFactory.findAll().then(pages=>console.log(pages));
+      UserFactory.findAll().then(users=> console.log('users', users));
+
+  });
