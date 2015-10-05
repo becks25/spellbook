@@ -9,8 +9,10 @@ app.config(function ($stateProvider) {
     });
 });
 
-app.controller('PageCtrl', function ($scope, AuthService, $state, page) {
+app.controller('PageCtrl', function ($scope, AuthService, $state, page, Class) {
   $scope.page = page;
-  console.log($scope.page.story)
+  console.log($scope.page.story);
+
+  $scope.app = Class.App.start();
 
 });
