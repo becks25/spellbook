@@ -1,9 +1,12 @@
-app.factory('ObstacleFactory', function(MapObjectFactory){
+app.factory('CollectiblesFactory', function(MapObjectFactory){
+
   var object = null;
   var position = {
     x: null,
     y: null
   };
+
+  var hasBeenPickedUp = false;
 
   return {
     init: function(object, posX, posY){
@@ -14,7 +17,11 @@ app.factory('ObstacleFactory', function(MapObjectFactory){
 
     position: position,
 
-    type: 'Obstacle'
+    pickUp: () => hasBeenPickedUp = true,
+
+    hasBeenPickedUp: hasBeenPickedUp,
+
+    type: 'Collectible'
 
   }
-});
+})
