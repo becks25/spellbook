@@ -1,27 +1,19 @@
 app.factory('CollectiblesFactory', function(MapObjectFactory){
 
-  var object = null;
-  var position = {
-    x: null,
-    y: null
-  };
+  class Collectible extends MapObjectFactory {
+      this.type = 'Collectible';
+      this.holding = false;
 
-  var hasBeenPickedUp = false;
+      pickUp() {
+        this.holding = true;
+      }
 
-  return {
-    init: function(object, posX, posY){
-      object = MapObjectFactory.basicEntity(object);
-      position.x = posX;
-      position.y = posY;
-    },
-
-    position: position,
-
-    pickUp: () => hasBeenPickedUp = true,
-
-    hasBeenPickedUp: hasBeenPickedUp,
-
-    type: 'Collectible'
-
+      give(){
+        this.holding = false;
+      }
   }
+
+  return Collectible;
+
+  
 })
