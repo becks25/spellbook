@@ -2,6 +2,7 @@
 var crypto = require('crypto');
 var mongoose = require('mongoose');
 var objId = mongoose.Schema.ObjectId;
+// var deepPopulate = require('mongoose-deep-populate')(mongoose);
 
 var schema = new mongoose.Schema({
     email: {
@@ -44,11 +45,12 @@ var schema = new mongoose.Schema({
     }],
     completedStories: [{
         type: objId,
-        ref: 'Story'
+        ref: 'Story',
+
     }],
     unfinishedPages: [{
         type: objId,
-        ref: 'Page'       
+        ref: 'Page',
     }],
     salt: {
         type: String
@@ -66,6 +68,7 @@ var schema = new mongoose.Schema({
         id: String
     }
 });
+// schema.plugin(deepPopulate);
 
 // generateSalt, encryptPassword and the pre 'save' and 'correctPassword' operations
 // are all used for local authentication security.

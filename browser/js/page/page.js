@@ -11,5 +11,6 @@ app.config(function ($stateProvider) {
 
 app.controller('PageCtrl', function ($scope, AuthService, $state, page) {
   $scope.page = page;
+  console.log($scope.page.story)
 
 });
