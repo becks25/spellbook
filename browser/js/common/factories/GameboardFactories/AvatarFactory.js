@@ -14,7 +14,9 @@ app.factory('AvatarFactory', function(MapObjectFactory){
 
     newPos: function(x, y){
       MapObjectFactory.setMapPos(x, y);
-    }
+    },
+
+    type: 'Avatar'
 
   };
 
