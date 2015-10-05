@@ -10,4 +10,7 @@ make an array of all the component objs
 loop through and call executeCommand(compObj)
 	obj with keys of each axn name
 		values- functions to execute
-			{'move': {}, pickUp: {}
+			{'move': {functionality}, pickUp: {}}
+
+
+			move: {}

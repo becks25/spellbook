@@ -57,6 +57,11 @@ Class.subclass('Program', {
     }
   },
   
+  //grab items in spell box
+  //make (if nec) objects with action prop, and poss others
+  // make array of component objs
+  parse: function(){}
+
   // parse: function() {
   //   var self = this;
   //   var source = $('#program').val();
@@ -91,14 +96,14 @@ Class.subclass('Program', {
   //   }
   // },    
 
-  addBug: function(lineNum, msg) {
-    this.ok = false;
-    this.errors[lineNum] = msg;
-  },
+  // addBug: function(lineNum, msg) {
+  //   this.ok = false;
+  //   this.errors[lineNum] = msg;
+  // },
 
-  validCommand: function(code) {
-    return $.inArray(code, Program.CODES) >= 0;
-  },
+  // validCommand: function(code) {
+  //   return $.inArray(code, Program.CODES) >= 0;
+  // },
   
   execute: function() {
     this.running = true;
@@ -152,17 +157,19 @@ Class.subclass('Program', {
       
       case 'move':
         // Move forward
-        var newPos = tank.getMapPos().addDir(component.direction, component.distance);
+        var newPos = tank.getMapPos().addDir(component.direction, 1);
         if (map.isPassable(newPos)) {
           // Do the move!
-          app.audio.play('move-tank');
+          // app.audio.play('move-tank');
+          //????what does this do????!
           tank.tween({x: newPos.x*64, y: newPos.y*64}, 45, function() {
-            app.audio.stop('move-tank');
+            // app.audio.stop('move-tank');
             tank.setMapPos(newPos);
             program.unlock();
           });
         } else {
           // Bump!
+
           var curPos = tank.getScreenPos();
           var newPos = curPos.dup().addDir(tank.getDir(), 8);
           tank.tween({x: newPos.x, y: newPos.y}, 3, function() {
