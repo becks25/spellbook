@@ -1,4 +1,4 @@
-app.factory('spellFactory', function(){
+app.factory('spellFactory', function(TilesizeFactory){
 	// List of valid commands
   //var CODES = ['move', 'if', 'loop', 'pickUp', 'putDown', 'ask', 'tell'];
 
@@ -67,7 +67,7 @@ app.factory('spellFactory', function(){
 		//hard coded for testing
 		return [{
 			action: 'move',
-			direction: 'up',
+			direction: 'down',
 			distance: 2
 		}];
 	}
@@ -105,7 +105,8 @@ app.factory('spellFactory', function(){
 	//cycles all events on a particular position
 	cycle(position) {
 	    if (!this.running) return; 
-	    console.log(this.map);
+	    console.log('cycle, map', this.map);
+	    console.log('position', position);
 	    this.map.mapArray[position.x][position.y].forEach(obj=>obj.onCycle()); 
     	
 	}
@@ -114,7 +115,6 @@ app.factory('spellFactory', function(){
 	    //component is an obj that was part of the array of components dragged to the spell
 	    //has props for action, and any other additional props
 	    var spell = this;
-	    console.log(this);
 	    var avatar = this.avatar;
 	    var map = this.map;
 	    
@@ -159,7 +159,7 @@ app.factory('spellFactory', function(){
 	        if (spell.map.isPassable(newPos)) {
 	          // Do the move!
 	          //????what does this do????!
-	          avatar.tween({x: newPos.x*64, y: newPos.y*64}, 45, function() {
+	          avatar.entity.tween({x: newPos.x*TilesizeFactory.TILESIZE, y: newPos.y*TilesizeFactory.TILESIZE}, 45, function() {
 	            // app.audio.stop('move-avatar');
 	            avatar.setMapPos(newPos);
 	            this.unlock();

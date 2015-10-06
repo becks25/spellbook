@@ -12,7 +12,7 @@ app.factory('MapObjectFactory', function(PosFactory, TilesizeFactory){
       }
 
       basicEntity(sprite) {
-        var e = Crafty.e('2D, Canvas, ' + sprite);
+        var e = Crafty.e('2D, Tween, Canvas, ' + sprite);
         e._attr({w: TilesizeFactory.TILESIZE, h: TilesizeFactory.TILESIZE, rotation: 0});
         e.origin('top left');
 
