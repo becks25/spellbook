@@ -45,13 +45,17 @@ app.factory('MapFactory', function(ClassFactory) {
         }
 
         getObjects (position) {
-            return this.mapArray[position.x][position.y]
+            return this.mapArray[position.x][position.y];
         }
 
         addObject (obj, position) {
             this.removeObject(obj);
             this.objects.push(obj);
+            console.log(this.getObjects(position));
+
             this.getObjects(position).push(obj);
+
+            console.log(this.getObjects(position));
         }
 
         removeObject (obj) {
@@ -76,7 +80,6 @@ app.factory('MapFactory', function(ClassFactory) {
             var len = mapData.length;
             for(x = 0; x< len; x++) {
                 for(y = 0; y < len; y++) {
-                    console.log(mapData[x][y]);
                     mapData[x][y].forEach(object => {
                         this.loadObject(object, x, y);
                     })
@@ -90,6 +93,7 @@ app.factory('MapFactory', function(ClassFactory) {
                 if(obj.type === 'Avatar' )
                     this.avatar = obj;
             }
+
             obj.setMap(this);
             var position = {x: x, y: y};
 

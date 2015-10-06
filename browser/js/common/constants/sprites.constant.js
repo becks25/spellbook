@@ -2,9 +2,9 @@ app.constant('SPRITES', {
     tank: [0,3],
     turret: [7,3],
     tree: [1,0],
-    base: [2,0],
-    mine: [7,0],
-    rock1: [0,1],
+    Mountain: [2,0], //base
+    Potion: [7,0], //mine
+    Rock: [0,1], //rock1
     rock2: [1,1],
     'wall-horizontal': [2,1],
     'wall-vertical': [3,1],
