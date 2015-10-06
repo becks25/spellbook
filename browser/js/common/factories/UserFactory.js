@@ -5,11 +5,11 @@ app.factory('UserFactory', function(DS, $http) {
         relations: {
             hasMany: {
                 stories: {
-                    localKey: 'completedStories',
+                    localKeys: 'completedStories',
                     localField: '_completedStories'
                 },
                 pages: {
-                    localKey: 'unfinishedPages',
+                    localKeys: 'unfinishedPages',
                     localField: '_unfinishedPages'
                 }
             }
