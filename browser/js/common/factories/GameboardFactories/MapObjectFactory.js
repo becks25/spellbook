@@ -1,18 +1,23 @@
-app.factory('MapObjectFactory', function(PosFactory){
+app.factory('MapObjectFactory', function(PosFactory, TilesizeFactory){
 
     class MapObject {
       constructor(name, position, action, variables){
+        console.log(name);
         this.name = name;
         this.position = new PosFactory(position.x, position.y);
         this.action = action || null;
         this.variables = variables || null;
 
+        this.entity = this.basicEntity(name);
+
       }
 
       basicEntity(sprite) {
         var e = Crafty.e('2D, Canvas, ' + sprite);
-        e.attr({w: 64, h: 64, rotation: 0});
-        e.origin(32, 32);
+        e._attr({w: TilesizeFactory.TILESIZE, h: TilesizeFactory.TILESIZE, rotation: 0});
+        e.origin('top left');
+
+        console.log('entity', e);
         return e;
       }
 
@@ -23,6 +28,8 @@ app.factory('MapObjectFactory', function(PosFactory){
       setMapPos(position) {
         this.map.addObject(this, position);
         this.position = position;
+        this.entity.x = position.x * TilesizeFactory.TILESIZE;
+        this.entity.y = position.y * TilesizeFactory.TILESIZE;
 
       }
 

@@ -1,4 +1,4 @@
-app.factory('PosFactory', function(){
+app.factory('PosFactory', function(TilesizeFactory){
   class Position {
     constructor(x, y){
       this.x = x;
@@ -36,7 +36,7 @@ app.factory('PosFactory', function(){
     toScreenPos(){
       if(this.isScreenPos) return this.dup();
       else {
-        var newScreenPos = new ScreenPosFactory(this.x * tileSize, this.y * tileSize);
+        var newScreenPos = new ScreenPosFactory(this.x * TilesizeFactory.TILESIZE, this.y * TilesizeFactory.TILESIZE);
         newScreenPos.isScreenPos = true;
 
         return newScreenPos;

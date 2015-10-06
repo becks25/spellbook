@@ -1,0 +1,56 @@
+
+
+
+
+#cr-stage{
+    background: url(images/stage-bg.png);
+
+}
+
+.section {
+  margin-bottom: 10px;
+}
+
+.indent {
+  margin-left: 15px;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.boxed {
+  background: #ddd;
+  padding: 18px; 
+  box-shadow: 1px 3px 8px #000;
+  border: 2px solid #aaa;
+  border-radius: 8px;
+}
+
+
+table {
+  border-collapse: collapse;
+}
+td {
+  padding: 4px;
+}
+
+.level {
+  cursor: pointer;
+  width: 24px;
+  height: 24px;
+  line-height: 24px;
+  font-weight: bold;
+  float: left;
+  margin-right: 10px;
+  border: 1px solid #fff;
+  text-align: center;
+}
+.level:hover {
+  background: #444; 
+}
+.level.completed {
+  background: #553;
+  color: #ffa;
+  border-color: #aa6; 
+}
