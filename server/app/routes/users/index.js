@@ -20,7 +20,7 @@ router.get('/', (req, res, next) => {
 //get one
 router.get('/:userId', (req, res, next) => {
     console.log(req.user)
-    if (!req.user.isAdmin && (req.user._id !== req.foundUser._id)){
+    if (!req.user.isAdmin && (req.user._id.toString() !== req.foundUser._id.toString())){
         res.sendStatus(401);
         return;
     }
