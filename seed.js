@@ -25,6 +25,19 @@ var User = Promise.promisifyAll(mongoose.model('User'));
 var Story = Promise.promisifyAll(mongoose.model('Story'));
 var Page = Promise.promisifyAll(mongoose.model('Page'));
 
+User.remove({}, function(err, removed) {
+  if (err) console.log(err);
+});
+
+Story.remove({}, function(err, removed) {
+  if (err) console.log(err);
+});
+
+Page.remove({}, function(err, removed) {
+  if (err) console.log(err);
+});
+
+
 
 
 var concepts = ['loops', 'if-statements', 'functions', 'recursion', 'asynch']
@@ -55,8 +68,8 @@ var seedPages = function(stories){
                 variables: ['Omri', 'Zeke', 'Joe', 'Say hi'],
                 concepts: [concepts[Math.floor(Math.random()*concepts.length)]],
                 hint: 'Try harder',
-                gameboard: [],
-                requirements: [
+                requirements: [],
+                gameboard: [
                     [ 
                         [], 
                         [], 
