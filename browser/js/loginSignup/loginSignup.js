@@ -15,6 +15,7 @@ app.controller('LoginSignupCtrl', function ($rootScope, AUTH_EVENTS, $scope, Aut
     $scope.signup = {};
     $scope.loginError = null;
     $scope.signupError = null;
+    $scope.user;
 
   //   $scope.validateForm = function() {
   //   var x = document.forms['signupForm', 'email'].value;
@@ -26,8 +27,9 @@ app.controller('LoginSignupCtrl', function ($rootScope, AUTH_EVENTS, $scope, Aut
         $scope.loginError = null;
 
         AuthService.login(loginInfo)
-        .then(function () {
-            $state.go('home');
+        .then(function (user) {
+            $scope.user = user;
+            $state.go('user', {id: $scope.user._id});
         }).catch(function () {
             $scope.error = 'Invalid login credentials.';
         });
@@ -38,12 +40,11 @@ app.controller('LoginSignupCtrl', function ($rootScope, AUTH_EVENTS, $scope, Aut
 
   $scope.createUser = function(userInfo) {
     $scope.signupError = null;
-    console.log("made it here", userInfo)
     UserFactory.create(userInfo)
-    .then(function() {
-        console.log("this is the created User");
-        $state.go('home');
+    .then(function(createdUser) {
         $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
+        $scope.user = createdUser;
+        $state.go('user', {id: $scope.user._id});
       }).catch(function() {
         $scope.signupError = 'User already exists';
       });
