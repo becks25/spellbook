@@ -1,8 +1,8 @@
-app.factory('LevelFactory', function(PageFactory, UserFactory, AuthService){
+app.factory('LevelFactory', function(PageFactory, UserFactory, AuthService, MapFactory){
   class Level {
     constructor(page){
       this.page = page;
-      this.map = page.gameboard;
+      this.map = MapFactory.init(page.gameboard);
       this.win = page.requirements;
       this.hint = page.hint;
       this.concepts = page.concepts;
@@ -10,6 +10,10 @@ app.factory('LevelFactory', function(PageFactory, UserFactory, AuthService){
 
       //the background for the challenge, not the story
       this.background = page.image;
+    }
+
+    resetMap(){
+      this.map = MapFactory.init(this.page.gameboard);
     }
 
     win(){
