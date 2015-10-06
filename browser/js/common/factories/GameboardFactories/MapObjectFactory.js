@@ -24,10 +24,12 @@ app.factory('MapObjectFactory', function(PosFactory, TilesizeFactory){
       }
 
       setMapPos(position) {
-        this.map.addObject(this, position);
-        this.position = position;
-        this.entity.x = position.x * TilesizeFactory.TILESIZE;
-        this.entity.y = position.y * TilesizeFactory.TILESIZE;
+        var pos = new PosFactory(position.x, position.y);
+       // this.map.removeObject(this);
+       // this.map.addObject(this, pos);
+        this.position = pos;
+        this.entity.x = pos.x * TilesizeFactory.TILESIZE;
+        this.entity.y = pos.y * TilesizeFactory.TILESIZE;
 
       }
 
@@ -35,15 +37,20 @@ app.factory('MapObjectFactory', function(PosFactory, TilesizeFactory){
         var newPos = new PosFactory(this.position.x, this.position.y);
         newPos.addDir(dir, amt);
 
-        this.setMapPos(this.position);
+        if(this.map.isPassable(newPos)){
+          return newPos;
+        }else{
+          return false;
+        }
 
-        return this.position;
+
 
       }
 
       getMapPos(){
         return this.position;
       }
+
 
       onCycle(){
         //go through all the actions on the object

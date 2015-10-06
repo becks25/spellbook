@@ -12,17 +12,17 @@ app.factory('PosFactory', function(TilesizeFactory){
     }
 
     addDir(dir, amt){
-      switch(dir) {
-        case dir.UP:
+      switch(dir.direction) {
+        case 'up':
           this.y -= amt;
           break;
-        case dir.RIGHT:
+        case 'right':
           this.x += amt;
           break;
-        case dir.DOWN:
+        case 'down':
           this.y += amt;
           break;
-        case dir.LEFT:
+        case 'left':
           this.x -= amt;
           break;
       }

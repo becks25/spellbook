@@ -20,9 +20,11 @@ app.factory('MapFactory', function(ClassFactory) {
             this.load(mapData);
         }
         destroy () {
-            MapFactory.each(obj => {
-                obj.destroy();
-            });
+            // this.each(obj => {
+            //     obj.destroy();
+            // });
+
+
             this.objects = [];
             this.mapArray = null;
         }
@@ -49,18 +51,26 @@ app.factory('MapFactory', function(ClassFactory) {
         }
 
         addObject (obj, position) {
-            this.removeObject(obj);
+            // this.removeObject(obj);
             this.objects.push(obj);
 
-            this.getObjects(position).push(obj);
+            //this.getObjects(position).push(obj);
         }
 
         removeObject (obj) {
-            this.objects = this.arrayRemove(this.objects, obj);
+            var index= this.objects.indexOf(obj);
+
+            this.objects.splice(index, 1);
             var oldPos = obj.getMapPos();
             if (this.onMap(oldPos)) {
-                var objs = this.getObjects(oldPos);
-                this.mapArray[oldPos.x][oldPos.y] = this.arrayRemove(objs, obj);
+                // var objs = this.getObjects(oldPos);
+                // var i = this.mapArray[oldPos.x][oldPos.y].indexOf(obj);
+                // this.mapArray[oldPos.x][oldPos.y].splice(i, 1);
+                console.log('haha!', obj.getMapPos());
+                console.log('yes?', obj.position);
+                var i= this.getObjects(oldPos).indexOf(obj);
+                console.log(this.getObjects(oldPos));
+                this.getObjects(oldPos).splice(i, 1);
             }
         }
 
@@ -113,7 +123,10 @@ app.factory('MapFactory', function(ClassFactory) {
             //     }
             // });
 
-            passable= this.mapArray[position.x][position.y].every(obj => obj.passable);
+            passable = this.mapArray[position.x][position.y].every(obj => {
+                obj.passable === false;
+                console.log('obj', obj);
+            });
             return passable;
         }
 
@@ -121,6 +134,7 @@ app.factory('MapFactory', function(ClassFactory) {
                 if(x < 0 || y < 0 || x >= this.mapArray.length || y >= this.mapArray.length) return false;
                 return true;
             }
+
 
    }
     return Map;

@@ -105,8 +105,7 @@ app.factory('spellFactory', function(TilesizeFactory){
 	//cycles all events on a particular position
 	cycle(position) {
 	    if (!this.running) return; 
-	    console.log('cycle, map', this.map);
-	    console.log('position', position);
+
 	    this.map.mapArray[position.x][position.y].forEach(obj=>obj.onCycle()); 
     	
 	}
@@ -156,21 +155,19 @@ app.factory('spellFactory', function(TilesizeFactory){
 
 	    function moveOne(direction){
 	    	var newPos = avatar.move(direction, 1);
-	        if (spell.map.isPassable(newPos)) {
+	        if (newPos) {
 	          // Do the move!
-	          //????what does this do????!
-	          avatar.entity.tween({x: newPos.x*TilesizeFactory.TILESIZE, y: newPos.y*TilesizeFactory.TILESIZE}, 45, function() {
+	          avatar.entity.tween({x: newPos.x*TilesizeFactory.TILESIZE, y: newPos.y*TilesizeFactory.TILESIZE}, 200, function() {
 	            // app.audio.stop('move-avatar');
 	            avatar.setMapPos(newPos);
 	            this.unlock();
 	          });
 	        } else {
 	          // Bump!
-	          //not sure how this works?
-	          var curPos = avatar.getScreenPos();
-	          var newPos = curPos.dup().addDir(direction, 8);
-	          avatar.tween({x: newPos.x, y: newPos.y}, 3, function() {
-	            avatar.tween({x: curPos.x, y: curPos.y}, 3, function() {
+	          var curPos = avatar.entity;
+	          // var newPos = curPos.dup().addDir(direction, 8);
+	          avatar.entity.tween({x: curPos.x + TilesizeFactory.TILESIZE, y: curPos.y + TilesizeFactory.TILESIZE}, 100, function() {
+	            avatar.entity.tween({x: curPos.x, y: curPos.y}, 100, function() {
 	              setTimeout(() =>{this.unlock()}, 800);
 	            });
 	          });

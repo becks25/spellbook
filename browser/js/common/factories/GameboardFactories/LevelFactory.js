@@ -13,6 +13,7 @@ app.factory('LevelFactory', function(PageFactory, UserFactory, AuthService, MapF
     }
 
     resetMap(){
+
       this.map = new MapFactory(this.page.gameboard);
     }
 
