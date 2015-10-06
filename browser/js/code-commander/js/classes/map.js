@@ -1,8 +1,8 @@
 
 Class.subclass('Map', {
-  
+
 }, {
-  
+
   init: function(mapData) {
     this.tank = null;
     this.objects = [];
@@ -16,10 +16,10 @@ Class.subclass('Map', {
       [[],[],[],[],[],[],[],[]],
       [[],[],[],[],[],[],[],[]]
     ];
-    
+
     this.load(mapData);
   },
-  
+
   destroy: function() {
     this.each(function(obj) {
       obj.destroy();
@@ -31,7 +31,7 @@ Class.subclass('Map', {
   getTank: function() {
     return this.tank;
   },
-  
+
   each: function(x, y, callback) {
     var pos;
     var objs = null;
@@ -41,7 +41,7 @@ Class.subclass('Map', {
     } else {
       if (MapPos.isPos(x)) {
         pos = x.dup();
-        callback = y; 
+        callback = y;
       } else {
         pos = MapPos.parse(x,y);
       }
@@ -57,7 +57,7 @@ Class.subclass('Map', {
     var pos;
     if (MapPos.isPos(x)) {
       pos = x.dup();
-      klass = y; 
+      klass = y;
     } else {
       pos = MapPos.parse(x,y);
     }
@@ -65,7 +65,7 @@ Class.subclass('Map', {
     for (var i = 0; i < objs.length; i++) {
       if (objs[i].classRef.className == klass) {
         return objs[i];
-      } 
+      }
     }
     return null;
   },
@@ -91,7 +91,7 @@ Class.subclass('Map', {
     var objs = this.getObjects(x,y);
     objs.push(obj);
   },
-  
+
   removeObject: function(obj) {
     this.objects = this.arrayRemove(this.objects, obj);
     var oldPos = obj.getMapPos();
@@ -100,7 +100,7 @@ Class.subclass('Map', {
       this.mapArray[oldPos.y][oldPos.x] = this.arrayRemove(objs, obj);
     }
   },
-  
+
   arrayRemove: function(array, obj) {
     var newArray = [];
     for (var i = 0; i < array.length; i++) {
@@ -110,7 +110,7 @@ Class.subclass('Map', {
     }
     return newArray;
   },
-  
+
   load: function(mapData) {
     var x, y;
     for (y = 0;y < 8;y++) {
@@ -120,7 +120,7 @@ Class.subclass('Map', {
       }
     }
   },
-  
+
   loadObject: function(key, x, y) {
     var obj = this.createObject(key);
     if (obj) {
@@ -130,9 +130,9 @@ Class.subclass('Map', {
       obj.setMapPos(x,y);
     }
   },
-  
+
   createObject: function(key) {
-    switch (key) {  
+    switch (key) {
       case 'T':
         return new Tree(this);
       case '*':
@@ -162,10 +162,10 @@ Class.subclass('Map', {
         return null;
     }
   },
-  
+
   isPassable: function(x, y) {
     if (!this.onMap(x,y)) { return false; }
-    
+
     var pos = MapPos.parse(x,y);
     var passable = true;
     this.each(pos.x, pos.y, function(obj) {
@@ -175,13 +175,13 @@ Class.subclass('Map', {
     });
     return passable;
   },
-  
+
   onMap: function(x, y) {
     var pos = MapPos.parse(x,y);
-    
+
     if (!pos || pos.x === null) { return false; }
-    if (pos.x < 0 || pos.y < 0 || pos.x >= 8 || pos.y >= 8) { return false; }
+    if (pos.x < 0 || pos.y < 0 || pos.x >=  || pos.y >= 8) { return false; }
     return true;
   }
-  
+
 });
