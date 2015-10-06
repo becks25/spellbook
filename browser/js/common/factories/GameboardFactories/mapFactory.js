@@ -51,11 +51,8 @@ app.factory('MapFactory', function(ClassFactory) {
         addObject (obj, position) {
             this.removeObject(obj);
             this.objects.push(obj);
-            console.log(this.getObjects(position));
 
             this.getObjects(position).push(obj);
-
-            console.log(this.getObjects(position));
         }
 
         removeObject (obj) {
@@ -110,11 +107,13 @@ app.factory('MapFactory', function(ClassFactory) {
 
             var passable = true;
 
-            this.each(position.x, position.y, obj => {
-                if (!obj.isPassable()) {
-                    passable = false;
-                }
-            });
+            // this.each(position.x, position.y, obj => {
+            //     if (!obj.isPassable()) {
+            //         passable = false;
+            //     }
+            // });
+
+            passable= this.mapArray[position.x][position.y].every(obj => obj.passable);
             return passable;
         }
 

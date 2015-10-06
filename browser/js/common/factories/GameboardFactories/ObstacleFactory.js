@@ -4,6 +4,7 @@ app.factory('ObstacleFactory', function(MapObjectFactory){
   		constructor(name, position, action, variables){
   		super(name, position, action, variables)
       	this.type = 'Obstacle';
+        this.passable = false;
   		}
 	}
 
