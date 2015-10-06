@@ -10,7 +10,7 @@ app.config(function ($stateProvider) {
 });
 
 app.controller('PageCtrl', function ($scope, AuthService, $state, page, ClassFactory, SPRITES, LevelFactory, $window) {
-  $scope.page = page;  
+  $scope.page = page;
 
   $scope.squareSize = ($window.innerWidth/2)*8/10;
 

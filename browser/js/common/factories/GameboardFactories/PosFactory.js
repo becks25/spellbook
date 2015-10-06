@@ -1,9 +1,10 @@
-app.factory('PosFactory', function(ScreenPosFactory){
+app.factory('PosFactory', function(){
   class Position {
     constructor(x, y){
       this.x = x;
       this.y = y;
       this.type = "Position";
+      this.isScreenPos = false;
     }
 
     dup(){
@@ -34,7 +35,12 @@ app.factory('PosFactory', function(ScreenPosFactory){
 
     toScreenPos(){
       if(this.isScreenPos) return this.dup();
-      else return new ScreenPosFactory(this.x * tileSize, this.y * tileSize);
+      else {
+        var newScreenPos = new ScreenPosFactory(this.x * tileSize, this.y * tileSize);
+        newScreenPos.isScreenPos = true;
+
+        return newScreenPos;
+      }
     }
   }
 

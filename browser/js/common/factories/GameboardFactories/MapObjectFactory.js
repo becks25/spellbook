@@ -1,9 +1,9 @@
-app.factory('MapObjectFactory', function(){
+app.factory('MapObjectFactory', function(PosFactory){
 
     class MapObject {
       constructor(name, position, action, variables){
         this.name = name;
-        this.position = new Pos(position.x, position.y);
+        this.position = new PosFactory(position.x, position.y);
         this.action = action || null;
         this.variables = variables || null;
 
@@ -21,9 +21,13 @@ app.factory('MapObjectFactory', function(){
       }
 
       setMapPos(position) {
-        map.addObject(this, position);
+        this.map.addObject(this, position);
         this.position = position;
 
+      }
+
+      getMapPos(){
+        return this.position;
       }
 
     }

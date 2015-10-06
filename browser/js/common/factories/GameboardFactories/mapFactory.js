@@ -51,7 +51,7 @@ app.factory('MapFactory', function(ClassFactory) {
         addObject (obj, position) {
             this.removeObject(obj);
             this.objects.push(obj);
-            this.getObjects(position.x, position.y).push(obj);
+            this.getObjects(position).push(obj);
         }
 
         removeObject (obj) {
@@ -59,7 +59,7 @@ app.factory('MapFactory', function(ClassFactory) {
             var oldPos = obj.getMapPos();
             if (this.onMap(oldPos)) {
                 var objs = this.getObjects(oldPos);
-                this.mapArray[oldPos.y][oldPos.x] = this.arrayRemove(objs, obj);
+                this.mapArray[oldPos.x][oldPos.y] = this.arrayRemove(objs, obj);
             }
         }
 
@@ -73,25 +73,32 @@ app.factory('MapFactory', function(ClassFactory) {
 
         load (mapData) {
             var x, y;
-            for(y = 0; y<8; y++) {
-                var row = mapData[y].split('');
-                for(x = 0; x < 8; x++) {
-                    this.loadObject(row[x], x, y);
+            var len = mapData.length;
+            for(x = 0; x< len; x++) {
+                for(y = 0; y < len; y++) {
+                    console.log(mapData[x][y]);
+                    mapData[x][y].forEach(object => {
+                        this.loadObject(object, x, y);
+                    })
                 }
             }
         }
 
         loadObject (key, x, y) {
-            var obj = this.createObject(key);
+            var obj = this.createObject(key, x, y);
             if(obj) {
                 if(obj.type === 'Avatar' )
                     this.avatar = obj;
             }
-            obj.setMapPos(x,y)
+            obj.setMap(this);
+            var position = {x: x, y: y};
+
+            obj.setMapPos(position);
         }
 
-        createObject (obj) {
-            return new ClassFactory[obj.type]();
+        createObject (obj, x, y) {
+            var position = {x: x, y: y};
+            return new ClassFactory[obj.type](obj.name, position, obj.action || null, obj.variables || null);
         }
 
         isPassable (position) {

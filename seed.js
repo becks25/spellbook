@@ -55,8 +55,8 @@ var seedPages = function(stories){
                 variables: ['Omri', 'Zeke', 'Joe', 'Say hi'],
                 concepts: [concepts[Math.floor(Math.random()*concepts.length)]],
                 hint: 'Try harder',
-                gameboard: [],
-                requirements: [
+                requirements: [],
+                gameboard: [
                     [ 
                         [], 
                         [], 
