@@ -93,26 +93,22 @@ app.factory('MapFactory', function(ClassFactory) {
         createObject (obj) {
             return new ClassFactory[obj.type]();
         }
-        //TODO: look through the array and check if anything non passable
-        //isPassable (position) {
-        //    if (!this.onMap(x,y)) return false;
-        //
-        //    var pos = MapPos.parse(x,y);
-        //    var passable = true;
-        //
-        //    this.each(pos.x, pos.y, function(obj) {
-        //        if (!obj.isPassable()) {
-        //            passable = false;
-        //        }
-        //    });
-        //    return passable;
-        //}
 
+        isPassable (position) {
+            if (!this.onMap(position.x,position.y)) return false;
+
+            var passable = true;
+
+            this.each(position.x, position.y, obj => {
+                if (!obj.isPassable()) {
+                    passable = false;
+                }
+            });
+            return passable;
+        }
 
         onMap (x,y) {
-                var pos = MapPos.parse(x, y);
-                if(!pos || pos.x === null) return false;
-                if(pos.x < 0 || pos.y < 0 || pos.x >= this.mapArray.length || pos.y >= this.mapArray.length) return false;
+                if(x < 0 || y < 0 || x >= this.mapArray.length || y >= this.mapArray.length) return false;
                 return true;
             }
 
