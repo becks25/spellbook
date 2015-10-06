@@ -2,7 +2,7 @@ app.factory('LevelFactory', function(PageFactory, UserFactory, AuthService, MapF
   class Level {
     constructor(page){
       this.page = page;
-      this.map = MapFactory.init(page.gameboard);
+      this.map = new MapFactory(page.gameboard);
       this.win = page.requirements;
       this.hint = page.hint;
       this.concepts = page.concepts;
@@ -13,7 +13,7 @@ app.factory('LevelFactory', function(PageFactory, UserFactory, AuthService, MapF
     }
 
     resetMap(){
-      this.map = MapFactory.init(this.page.gameboard);
+      this.map = new MapFactory(this.page.gameboard);
     }
 
     win(){

@@ -9,7 +9,7 @@ app.config(function ($stateProvider) {
     });
 });
 
-app.controller('PageCtrl', function ($scope, AuthService, $state, page, ClassFactory, SPRITES) {
+app.controller('PageCtrl', function ($scope, AuthService, $state, page, ClassFactory, SPRITES, LevelFactory, $window) {
   $scope.page = page;  
 
   $scope.squareSize = ($window.innerWidth/2)*8/10;
@@ -20,7 +20,7 @@ app.controller('PageCtrl', function ($scope, AuthService, $state, page, ClassFac
 
   Crafty.sprite(64, '/images/sprites.png', SPRITES);
 
-  $scope.level = new ClassFactory.Level($scope.page);
+  $scope.level = new LevelFactory($scope.page);
 
 
   $scope.resetLevel = function(){

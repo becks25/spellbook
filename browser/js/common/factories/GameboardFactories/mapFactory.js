@@ -4,7 +4,7 @@
 app.factory('MapFactory', function(ClassFactory) {
     class Map {
         // fat arrows allow for this to reference MapFactory and not the inner function
-        init (mapData) {
+        constructor (mapData) {
             this.avatar = null;
             this.objects = [];
             this.mapArray = [
@@ -113,5 +113,5 @@ app.factory('MapFactory', function(ClassFactory) {
             }
 
    }
-    return map;
+    return Map;
 });
