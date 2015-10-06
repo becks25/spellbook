@@ -1,4 +1,4 @@
-app.factory('spellFactory', function(TilesizeFactory){
+app.factory('SpellFactory', function(TilesizeFactory){
 	// List of valid commands
   //var CODES = ['move', 'if', 'loop', 'pickUp', 'putDown', 'ask', 'tell'];
 

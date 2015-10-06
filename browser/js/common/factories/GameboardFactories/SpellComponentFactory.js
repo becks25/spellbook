@@ -1,3 +1,57 @@
+app.factory('SpellComponentFactory', function(){
+	return {
+		makeToolObj: function(toolStr) {
+		  var toolObj = {};
+	      switch (tool) {
+	        case 'move':
+	          toolObj.action = 'move';
+	          toolObj.direction = 'UP';
+	          toolObj.distance = 1;
+	          break;
+	        case 'pickUp':
+	          toolObj.action = 'pickUp';
+	          toolObj.variable = null;
+	          break;
+	        case 'putDown':
+	          toolObj.action = 'putDown';
+	          toolObj.variable = null;
+	          break;
+	        case 'ifStatement':
+	          toolObj.action = 'ifStatement';
+	          toolObj.condition = null;
+	          toolObj.expression = null;
+	          toolObj.elseExpr = null;
+	          break;
+	        case 'forLoop':
+	          toolObj.action = 'forLoop';
+	          toolObj.number = 1;
+	          toolObj.expression = null;
+	          break;
+	        case 'whileLoop':
+	          toolObj.action = 'whileLoop';
+	          toolObj.condition = null;
+	          toolObj.expression = null;
+	          break;
+	        case 'ask':
+	          toolObj.action = 'ask';
+	          toolObj.person = null;
+	          toolObj.question = null;
+	          break;
+	        case 'tell':
+	          toolObj.action = 'tell';
+	          toolObj.person = null;
+	          toolObj.question = null;
+	          break;
+	      }
+	      return toolObj;
+		}
+	};
+
+});
+
+
+
+
 
 // move: {
 // 	action: 'move',
