@@ -9,6 +9,8 @@ app.factory('LevelFactory', function(PageFactory){
       //the background for the challenge, not the story
       this.background = page.image;
     }
+
+
   }
 
   return Level;
