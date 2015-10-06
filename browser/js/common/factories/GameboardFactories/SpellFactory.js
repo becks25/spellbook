@@ -44,6 +44,7 @@ app.factory('spellFactory', function(LevelFactory){
 	// 	Level.setState(this.key, state);
 	// }
 
+	//runs the whole program, acts if solved/unsolved
 	run(){
 		// this.save();
 		this.reset();
@@ -63,43 +64,37 @@ app.factory('spellFactory', function(LevelFactory){
 		//do we need to translate them?
   	}
 
- //  	execute() {
-	//     this.running = true;
-	//     this.cycle(this.avatar.position);
+  	stepThrough(){
 
-	//     this.executeCommand()
-	// }
 
-	// //cycles all events on a particular position
-	// cycle(positionObj) {
-	//     if (!this.running) { return; }
-	//       this.map.each(function(obj) {
-	//         obj.onCycle();
-	//       });
- //    	}
-	// }
-      
- //    // Get command and run it!
- //    if (!this.running) { return; }
- //    var cmd = this.commands[this.currentCommand];
- //    var amt = cmd.amt;
- //    if (amt === null) { amt = 1; }
- //    // for (var times=0;times < amt; times++) {
- //    this.executeCommand(cmd.code);
- //    // }
- //  },
+  	}
 
-	// executeCommand (component) {
-	//     //component is an obj that was part of the array of components dragged to the spell
-	//     //has props for action, and any other additional props
-	//     var spell = this;
-	//     var avatar = this.avatar;
-	//     var map = this.map;
+  	//executes the spell
+  	execute() {
+	    this.running = true;
+	    this.cycle(this.avatar.position);
+	    var spellArr = parse();
+	    spellArr.forEach(this.executeCommand)
+	}
+
+	//cycles all events on a particular position
+	cycle(position) {
+	    if (!this.running) { return; }
+	      this.map[position.x][position.y].forEach(obj=>obj.onCycle()) 
+    	}
+	}
+
+	executeCommand (component) {
+	    //component is an obj that was part of the array of components dragged to the spell
+	    //has props for action, and any other additional props
+	    var spell = this;
+	    var avatar = this.avatar;
+	    var map = this.map;
 	    
-	//     // Lock for initial command, more locks may be applied by animations, etc.
-	//     program.lock();
+	    // Lock for initial command, more locks may be applied by animations, etc.
+	    program.lock();
 	    
-	// }
+	}
   return Spell;
 
 
