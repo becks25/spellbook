@@ -62,6 +62,4 @@ app.factory('spellFactory', function(LevelFactory){
   return Spell;
 
 
-  }
-  
-};
+  });
