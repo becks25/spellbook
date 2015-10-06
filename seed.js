@@ -56,7 +56,42 @@ var seedPages = function(stories){
                 concepts: [concepts[Math.floor(Math.random()*concepts.length)]],
                 hint: 'Try harder',
                 gameboard: [],
-                requirements: [],
+                requirements: [
+                    [ 
+                        [], 
+                        [], 
+                        [{
+                            type: 'Obstacle',
+                            name: 'Rock'
+                        }],
+                        []
+
+                    ],
+                    [
+                        [],
+                        [{
+                            type: 'Collectible',
+                            name: 'Potion'
+                        }],
+                        [],
+                        []
+                    ],
+                    [
+                        [],
+                        [],
+                        [],
+                        [],
+                    ],
+                    [
+                        [],
+                        [{
+                            type: 'Obstacle',
+                            name: 'Mountain'
+                        }],
+                        [],
+                        []
+                    ]
+                ],
                 pageNumber: i
             });
         }
