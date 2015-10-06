@@ -1,6 +1,6 @@
 app.factory('spellFactory', function(LevelFactory){
 	// List of valid commands
-  var CODES = ['move', 'if', 'loop', 'pickUp', 'putDown', 'ask', 'tell'];
+  //var CODES = ['move', 'if', 'loop', 'pickUp', 'putDown', 'ask', 'tell'];
 
   class Spell {
   	constructor(level){
@@ -59,28 +59,55 @@ app.factory('spellFactory', function(LevelFactory){
 	//grab items in spell box
 	//make (if nec) objects with action prop, and poss others
 	// make array of component objs
-	parse(){}
+	parse(){
+
 		//todo - how are spells being stored/passed in???
 		//do we need to translate them?
+
+		//hard coded for testing
+		return [{
+			action: 'move',
+			direction: 'up',
+			distance: 2
+		}];
+	}
+		
   	}
 
+  	//steps through program one command at a time
+  	// spell box can be changed betwee steps (other than current command)
+  	// resets board if first step
+  	// sets current command to null if last step (will prompt reset on next stepthrough)
   	stepThrough(){
-
-
+  		var spellArr = parse();
+  		if(!this.currentCommand) {
+  			this.reset();
+  			this.currentCommand = spellArr[0];
+  		} else {
+  			var prevIndex = spellArr.indexOf(this.currentCommand);
+  			//checks whether the prevIndex was the last command
+  			this.currentCommand = prevIndex <spellArr.length-2 ? spellArr[prevIndex+1] : null;
+  		} 
+  		if (this.currentCommand){
+  			this.running = true;
+  			executeCommand(this.currentCommand);
+  			this.running = false;
+  		} 
   	}
 
   	//executes the spell
-  	execute() {
+  	execute(){
 	    this.running = true;
 	    this.cycle(this.avatar.position);
 	    var spellArr = parse();
-	    spellArr.forEach(this.executeCommand)
+	    spellArr.forEach(this.executeCommand);
+	    this.running = false;
 	}
 
 	//cycles all events on a particular position
 	cycle(position) {
 	    if (!this.running) { return; }
-	      this.map[position.x][position.y].forEach(obj=>obj.onCycle()) 
+	      this.map[position.x][position.y].forEach(obj=>obj.onCycle()); 
     	}
 	}
 
@@ -93,9 +120,61 @@ app.factory('spellFactory', function(LevelFactory){
 	    
 	    // Lock for initial command, more locks may be applied by animations, etc.
 	    program.lock();
+
+	    switch(component.action){
+
+	    	case 'move':
+	    		for(i=0; i<component.distance; i++){
+	    			moveOne(component);
+	    		}
+	    		this.cycle();
+	    		break;
+	    	case 'pickUp':
+	    	case 'putDown':
+	    		// collectable obj (ref) has to be passed into the function as .variable
+	    		component.variable.holding = !component.variable.holding;
+	    		break; 
+	    	case 'ifStatement':
+	    		if (component.condition) executeCommand(component.expression);
+	    		else if (component.elseExpr) executeCommand(component.elseExpr);
+	    		break;
+	    	case 'whileLoop':
+	    		while (component.condition) executeCommand(component.expression);
+	    		break;
+	    	case 'forLoop':
+	    		for (i=0; i<component.number; i++) executeCommand(component.expression);
+	    		break;
+	    	case 'ask':
+	    	//not sure what these do
+	    		console.log('asking')
+	    		break;
+	    	case 'tell':
+	    		console.log('telling')
+	    		break;
+	    }
 	    
+	    moveOne = (direction) => {
+	    	var newPos = avatar.getMapPos().addDir(direction, 1);
+	        if (spell.map.isPassable(newPos)) {
+	          // Do the move!
+	          //????what does this do????!
+	          avatar.tween({x: newPos.x*64, y: newPos.y*64}, 45, function() {
+	            // app.audio.stop('move-avatar');
+	            avatar.setMapPos(newPos);
+	            program.unlock();
+	          });
+	        } else {
+	          // Bump!
+	          //not sure how this works?
+	          var curPos = avatar.getScreenPos();
+	          var newPos = curPos.dup().addDir(direction, 8);
+	          avatar.tween({x: newPos.x, y: newPos.y}, 3, function() {
+	            avatar.tween({x: curPos.x, y: curPos.y}, 3, function() {
+	              setTimeout(function() {program.unlock();}, 800);
+	            });
+	          });
+	      	}
+	    };
 	}
   return Spell;
-
-
   });
