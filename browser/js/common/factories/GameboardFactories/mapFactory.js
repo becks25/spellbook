@@ -112,7 +112,7 @@ app.factory('MapFactory', function(ClassFactory) {
         onMap (x,y) {
                 var pos = MapPos.parse(x, y);
                 if(!pos || pos.x === null) return false;
-                if(pos.x < 0 || pos.y < || pos.x >= this.mapArray.length || pos.y >= this.mapArray.length) return false;
+                if(pos.x < 0 || pos.y < 0 || pos.x >= this.mapArray.length || pos.y >= this.mapArray.length) return false;
                 return true;
             }
 
