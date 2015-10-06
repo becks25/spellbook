@@ -9,8 +9,10 @@ app.config(function ($stateProvider) {
     });
 });
 
-app.controller('PageCtrl', function ($scope, AuthService, $state, page, ClassFactory, SPRITES, LevelFactory, TilesizeFactory) {
+app.controller('PageCtrl', function ($scope, AuthService, $state, page, ClassFactory, SPRITES, LevelFactory, TilesizeFactory, spellFactory) {
   $scope.page = page;
+  $scope.tools = $scope.page.tools;
+  $scope.variables = $scope.page.variables;
 
   TilesizeFactory.NumTiles = $scope.page.gameboard.length;
   Crafty.load(['/images/sprites.png']);
@@ -20,14 +22,15 @@ app.controller('PageCtrl', function ($scope, AuthService, $state, page, ClassFac
   Crafty.sprite(64, '/images/sprites.png', SPRITES);
 
   $scope.level = new LevelFactory($scope.page);
-
+  $scope.spell = new spellFactory($scope.level);
 
   $scope.resetLevel = function(){
 
   }
 
   $scope.runSpell = function(){
-
+    console.log('here?');
+    $scope.spell.run();
   }
 
 });

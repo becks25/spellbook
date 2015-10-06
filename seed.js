@@ -71,7 +71,10 @@ var seedPages = function(stories){
                 requirements: [],
                 gameboard: [
                     [ 
-                        [], 
+                        [{
+                            type: 'Avatar',
+                            name: 'tank'
+                        }], 
                         [], 
                         [{
                             type: 'Obstacle',

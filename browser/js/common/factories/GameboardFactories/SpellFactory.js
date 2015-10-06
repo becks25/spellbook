@@ -1,4 +1,4 @@
-app.factory('spellFactory', function(LevelFactory){
+app.factory('spellFactory', function(TilesizeFactory){
 	// List of valid commands
   //var CODES = ['move', 'if', 'loop', 'pickUp', 'putDown', 'ask', 'tell'];
 
@@ -67,7 +67,7 @@ app.factory('spellFactory', function(LevelFactory){
 		//hard coded for testing
 		return [{
 			action: 'move',
-			direction: 'up',
+			direction: 'down',
 			distance: 2
 		}];
 	}
@@ -97,15 +97,17 @@ app.factory('spellFactory', function(LevelFactory){
   	execute(){
 	    this.running = true;
 	    this.cycle(this.avatar.position);
-	    var spellArr = parse();
-	    spellArr.forEach(this.executeCommand);
+	    var spellArr = this.parse();
+	    spellArr.forEach(spell => this.executeCommand(spell));
 	    this.running = false;
 	}
 
 	//cycles all events on a particular position
 	cycle(position) {
 	    if (!this.running) return; 
-	    this.map[position.x][position.y].forEach(obj=>obj.onCycle()); 
+	    console.log('cycle, map', this.map);
+	    console.log('position', position);
+	    this.map.mapArray[position.x][position.y].forEach(obj=>obj.onCycle()); 
     	
 	}
 
@@ -117,12 +119,12 @@ app.factory('spellFactory', function(LevelFactory){
 	    var map = this.map;
 	    
 	    // Lock for initial command, more locks may be applied by animations, etc.
-	    program.lock();
+	    this.lock();
 
 	    switch(component.action){
 
 	    	case 'move':
-	    		for(i=0; i<component.distance; i++){
+	    		for(var i=0; i<component.distance; i++){
 	    			moveOne(component);
 	    		}
 	    		this.cycle();
@@ -140,7 +142,7 @@ app.factory('spellFactory', function(LevelFactory){
 	    		while (component.condition) executeCommand(component.expression);
 	    		break;
 	    	case 'forLoop':
-	    		for (i=0; i<component.number; i++) executeCommand(component.expression);
+	    		for (var i=0; i<component.number; i++) executeCommand(component.expression);
 	    		break;
 	    	case 'ask':
 	    	//not sure what these do
@@ -150,16 +152,17 @@ app.factory('spellFactory', function(LevelFactory){
 	    		console.log('telling')
 	    		break;
 	    }
-	    
-	    moveOne = (direction) => {
-	    	var newPos = avatar.getMapPos().addDir(direction, 1);
+
+
+	    function moveOne(direction){
+	    	var newPos = avatar.move(direction, 1);
 	        if (spell.map.isPassable(newPos)) {
 	          // Do the move!
 	          //????what does this do????!
-	          avatar.tween({x: newPos.x*64, y: newPos.y*64}, 45, function() {
+	          avatar.entity.tween({x: newPos.x*TilesizeFactory.TILESIZE, y: newPos.y*TilesizeFactory.TILESIZE}, 45, function() {
 	            // app.audio.stop('move-avatar');
 	            avatar.setMapPos(newPos);
-	            program.unlock();
+	            this.unlock();
 	          });
 	        } else {
 	          // Bump!
@@ -168,12 +171,17 @@ app.factory('spellFactory', function(LevelFactory){
 	          var newPos = curPos.dup().addDir(direction, 8);
 	          avatar.tween({x: newPos.x, y: newPos.y}, 3, function() {
 	            avatar.tween({x: curPos.x, y: curPos.y}, 3, function() {
-	              setTimeout(() =>{program.unlock()}, 800);
+	              setTimeout(() =>{this.unlock()}, 800);
 	            });
 	          });
 	      	}
 	    };
+	    
+	    
 	}
+
+
+
   }
   return Spell;
   });
