@@ -1,8 +1,9 @@
-app.factory('Class', function(AvatarFactory, ObstacleFactory){
+app.factory('Class', function(AvatarFactory, ObstacleFactory, CollectiblesFactory){
 
   return{
     //all other factories! together!
     Avatar: AvatarFactory,
-    Obstacle: ObstacleFactory
+    Obstacle: ObstacleFactory,
+    Collectible: CollectiblesFactory
   };
 });
