@@ -1,9 +1,6 @@
 app.factory('LevelFactory', function(PageFactory){
   class Level {
-    constructor(pageId){
-      //get page by id
-      var page = PageFactory.find({_id: pageId});
-
+    constructor(page){
       this.map = page.gameboard;
       this.win = page.requirements;
       this.hint = page.hint;
