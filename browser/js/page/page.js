@@ -9,10 +9,50 @@ app.config(function ($stateProvider) {
     });
 });
 
-app.controller('PageCtrl', function ($scope, AuthService, $state, page, ClassFactory, SPRITES, LevelFactory, TilesizeFactory, spellFactory) {
+app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPRITES, LevelFactory, TilesizeFactory, SpellFactory, SpellComponentFactory) => {
   $scope.page = page;
-  $scope.tools = $scope.page.tools;
-  $scope.variables = $scope.page.variables;
+  $scope.spellTools = [];
+  $scope.spellVars = [{
+    name: 'UP',
+    text: 'up',
+    value: false,
+  },{
+    name: 'DOWN',
+    text: 'down',
+    value: false,
+  },
+  {
+    name: 'LEFT',
+    text: 'left',
+    value: false,
+  },
+  {
+    name: 'RIGHT',
+    text: 'right',
+    value: false,
+  }];
+
+  //scope.page.tools is an array of strings - .action of the objs
+  // takes vars and tools from page model and makes command objs
+  // pushes each obj to spellTools arr
+  var spellToolConstr = () => {
+    $scope.page.tools.forEach((tool)=>{
+      var newTool = SpellComponentFactory.makeToolObj(tool);
+      $scope.spellTools.push(newTool);
+    });
+  };
+  //construct the spellTools arr on load
+  spellToolConstr();
+
+  spellVarConstr = () => {
+    //variables are stored as strings
+    $scope.page.variables.forEach((variable)=>{
+      var name = variable.split(' ').join('');
+      $scope.spellVars.push({name: name, text: variable, value: false})
+    });
+  };
+
+
 
   TilesizeFactory.NumTiles = $scope.page.gameboard.length;
   Crafty.load(['/images/sprites.png']);
