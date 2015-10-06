@@ -1,8 +1,11 @@
 app.factory('AvatarFactory', function(MapObjectFactory){
 
   class Avatar extends MapObjectFactory {
-      this.type = 'Avatar';
+  	constructor(name, position, action, variables){
+  		super(name, position, action, variables)
+      	this.type = 'Avatar';
   }
+}
 
   return Avatar;
 
