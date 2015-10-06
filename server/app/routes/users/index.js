@@ -34,8 +34,12 @@ router.post('/', (req, res, next) => {
     }
     //console.log(req.body)
     User.create(req.body)
-
-    .then(user => res.status(201).send(user))
+    .then(function(newUser){
+        req.login(newUser, function(err){
+            if (err) next(err);
+            else res.status(201).send(newUser)
+        });
+    })
     .then(null, next);
 });
 
