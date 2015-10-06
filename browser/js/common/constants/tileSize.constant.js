@@ -1,8 +1,10 @@
 app.factory('TilesizeFactory',function($window){
     var numTiles = 6;
 
+    var width = document.querySelector('#right-page').clientWidth;
+
     return {
-      TILESIZE: $window.innerWidth/(2 * numTiles),
+      TILESIZE: width/numTiles,
       NumTiles: numTiles
     }
 

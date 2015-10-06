@@ -12,8 +12,6 @@ app.config(function ($stateProvider) {
 app.controller('PageCtrl', function ($scope, AuthService, $state, page, ClassFactory, SPRITES, LevelFactory, TilesizeFactory) {
   $scope.page = page;
 
-  //$scope.squareSize = ($window.innerWidth/2)*(8/10);
-
   TilesizeFactory.NumTiles = $scope.page.gameboard.length;
   Crafty.load(['/images/sprites.png']);
   Crafty.init(TilesizeFactory.TILESIZE * TilesizeFactory.NumTiles, TilesizeFactory.TILESIZE* TilesizeFactory.NumTiles);
