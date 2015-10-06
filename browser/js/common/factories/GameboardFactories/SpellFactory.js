@@ -71,8 +71,6 @@ app.factory('spellFactory', function(LevelFactory){
 			distance: 2
 		}];
 	}
-		
-  	}
 
   	//steps through program one command at a time
   	// spell box can be changed betwee steps (other than current command)
@@ -106,9 +104,9 @@ app.factory('spellFactory', function(LevelFactory){
 
 	//cycles all events on a particular position
 	cycle(position) {
-	    if (!this.running) { return; }
-	      this.map[position.x][position.y].forEach(obj=>obj.onCycle()); 
-    	}
+	    if (!this.running) return; 
+	    this.map[position.x][position.y].forEach(obj=>obj.onCycle()); 
+    	
 	}
 
 	executeCommand (component) {
@@ -170,11 +168,12 @@ app.factory('spellFactory', function(LevelFactory){
 	          var newPos = curPos.dup().addDir(direction, 8);
 	          avatar.tween({x: newPos.x, y: newPos.y}, 3, function() {
 	            avatar.tween({x: curPos.x, y: curPos.y}, 3, function() {
-	              setTimeout(function() {program.unlock();}, 800);
+	              setTimeout(() =>{program.unlock()}, 800);
 	            });
 	          });
 	      	}
 	    };
 	}
+  }
   return Spell;
   });
