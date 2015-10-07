@@ -11,8 +11,8 @@ app.config(function ($stateProvider) {
 
 app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPRITES, LevelFactory, TilesizeFactory, SpellFactory, SpellComponentFactory) => {
   $scope.page = page;
-  $scope.spellTools = [];
-  $scope.spellVars = [{
+  $scope.spellComponents = []; // update from db if saved version is present
+  $scope.spellTools = [{
     name: 'UP',
     text: 'up',
     value: false,
@@ -37,6 +37,7 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
   // pushes each obj to spellTools arr
   var spellToolConstr = () => {
     $scope.page.tools.forEach((tool)=>{
+      console.log('tool in forEach', tool)
       var newTool = SpellComponentFactory.makeToolObj(tool);
       $scope.spellTools.push(newTool);
     });
@@ -48,9 +49,19 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
     //variables are stored as strings
     $scope.page.variables.forEach((variable)=>{
       var name = variable.split(' ').join('');
-      $scope.spellVars.push({name: name, text: variable, value: false})
+      $scope.spellTools.push({name: name, text: variable, value: false})
     });
   };
+  spellVarConstr();
+
+  $scope.sortableOptions = {
+    stop: function(e, ui){
+      var spellItem = ui.item.scope().tool;
+      $scope.spellComponents.push(spellItem);
+      console.log('tools', $scope.spellTools)
+      console.log('comp', $scope.spellComponents)
+    }
+  }
 
 
 
