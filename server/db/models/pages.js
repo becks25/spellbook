@@ -14,7 +14,8 @@ var schema = new mongoose.Schema({
     hint: String,
     gameboard: [],
     requirements: [],
-    pageNumber: Number
+    pageNumber: Number,
+    boardBackground: {type: String, default: 'images/flower-field.png'}
 });
 
 
