@@ -50,12 +50,12 @@ app.factory('MapFactory', function(ClassFactory) {
             return this.mapArray[position.x][position.y];
         }
 
-        addObject (obj, position) {
-            // this.removeObject(obj);
-            this.objects.push(obj);
+        // addObject (obj, position) {
+        //     // this.removeObject(obj);
+        //     this.objects.push(obj);
 
-            //this.getObjects(position).push(obj);
-        }
+        //     //this.getObjects(position).push(obj);
+        // }
 
         removeObject (obj) {
             var index= this.objects.indexOf(obj);

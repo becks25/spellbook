@@ -28,7 +28,7 @@ app.factory('SpellFactory', function(TilesizeFactory){
 	unlock (){
 		this.locks -= 1;
 		if (this.locks === 0) {
-		  this.cycle();
+		  this.cycle(this.avatar.position);
 		}
 	}
 
@@ -52,8 +52,16 @@ app.factory('SpellFactory', function(TilesizeFactory){
 		if (this.ok) {
 		  this.execute();
 		}
-		if (isSolved()) return this.level.win();
+
+		if (this.isSolved()) return this.level.win();
 		else return this.level.lose();
+	}
+
+
+	//TODO: actually check if the puzzle has been solved
+	isSolved(){
+		//need to compare spellVars to the requirements
+		return true;
 	}
 
 	//grab items in spell box
@@ -126,7 +134,7 @@ app.factory('SpellFactory', function(TilesizeFactory){
 	    		for(var i=0; i<component.distance; i++){
 	    			moveOne(component);
 	    		}
-	    		this.cycle();
+	    		this.cycle(avatar.position);
 	    		break;
 	    	case 'pickUp':
 	    	case 'putDown':
