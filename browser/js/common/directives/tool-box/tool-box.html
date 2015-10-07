@@ -1,0 +1,12 @@
+<div class="panel">
+	<div class="panel-heading">
+		My Tools
+	</div>
+	<div class="panel-body">
+		<ul ui-sortable ng-model="spellTools">
+		  <li ng-repeat="tool in spellTools" draggable>{{ tool.action }}</li>
+		  <li ng-repeat="variable in spellVars" draggable>{{ variable.text}}</li>
+		</ul>
+
+	</div>
+</div>
