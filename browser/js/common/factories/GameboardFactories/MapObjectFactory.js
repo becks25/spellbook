@@ -25,8 +25,8 @@ app.factory('MapObjectFactory', function(PosFactory, TilesizeFactory){
 
       setMapPos(position) {
         var pos = new PosFactory(position.x, position.y);
-       // this.map.removeObject(this);
-       // this.map.addObject(this, pos);
+       this.map.removeObject(this);
+       this.map.addObject(this, pos);
         this.position = pos;
         this.entity.x = pos.x * TilesizeFactory.TILESIZE;
         this.entity.y = pos.y * TilesizeFactory.TILESIZE;

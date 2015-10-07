@@ -61,7 +61,7 @@ app.factory('SpellFactory', function(TilesizeFactory){
 	//TODO: actually check if the puzzle has been solved
 	isSolved(){
 		//need to compare spellVars to the requirements
-		return true;
+		return false;
 	}
 
 	//grab items in spell box
@@ -162,6 +162,7 @@ app.factory('SpellFactory', function(TilesizeFactory){
 
 
 	    function moveOne(direction){
+	    	console.log('moveOne');
 	    	var newPos = avatar.move(direction, 1);
 	        if (newPos) {
 	          // Do the move!

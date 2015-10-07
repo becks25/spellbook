@@ -5,6 +5,9 @@ app.factory('MapFactory', function(ClassFactory) {
     class Map {
         // fat arrows allow for this to reference MapFactory and not the inner function
         constructor (mapData) {
+            console.log('map', mapData);
+
+            this.originalMap = mapData;
             this.avatar = null;
             this.objects = [];
             this.mapArray = [
@@ -17,17 +20,32 @@ app.factory('MapFactory', function(ClassFactory) {
                 [[],[],[],[],[],[],[],[]],
                 [[],[],[],[],[],[],[],[]]
             ];
+
             this.load(mapData);
         }
-        destroy () {
-            // this.each(obj => {
-            //     obj.destroy();
-            // });
+        // destroy () {
+        //     // this.each(obj => {
+        //     //     obj.destroy();
+        //     // });
 
 
-            this.objects = [];
-            this.mapArray = null;
+        //     this.objects = [];
+
+        //     // this.mapArray = null;
+
+
+        // }
+
+        resetMap(){
+            console.log('map reset', this);
+            Crafty("2D").each(function(i) {
+                if(i % 2 === 0) {
+                    this.destroy();
+                }
+            });
+            this.load(this.originalMap);
         }
+
         getAvatar (){
             return this.avatar
         }
@@ -50,12 +68,12 @@ app.factory('MapFactory', function(ClassFactory) {
             return this.mapArray[position.x][position.y];
         }
 
-        // addObject (obj, position) {
-        //     // this.removeObject(obj);
-        //     this.objects.push(obj);
+        addObject (obj, position) {
+            // this.removeObject(obj);
+            this.objects.push(obj);
 
-        //     //this.getObjects(position).push(obj);
-        // }
+            //this.getObjects(position).push(obj);
+        }
 
         removeObject (obj) {
             var index= this.objects.indexOf(obj);
@@ -66,10 +84,8 @@ app.factory('MapFactory', function(ClassFactory) {
                 // var objs = this.getObjects(oldPos);
                 // var i = this.mapArray[oldPos.x][oldPos.y].indexOf(obj);
                 // this.mapArray[oldPos.x][oldPos.y].splice(i, 1);
-                console.log('haha!', obj.getMapPos());
-                console.log('yes?', obj.position);
+
                 var i= this.getObjects(oldPos).indexOf(obj);
-                console.log(this.getObjects(oldPos));
                 this.getObjects(oldPos).splice(i, 1);
             }
         }
@@ -83,6 +99,7 @@ app.factory('MapFactory', function(ClassFactory) {
         }
 
         load (mapData) {
+            console.log('loading');
             var x, y;
             var len = mapData.length;
             for(x = 0; x< len; x++) {
@@ -100,6 +117,9 @@ app.factory('MapFactory', function(ClassFactory) {
                 if(obj.type === 'Avatar' )
                     this.avatar = obj;
             }
+
+            console.log(obj);
+            this.objects.push(obj);
 
             obj.setMap(this);
             var position = {x: x, y: y};

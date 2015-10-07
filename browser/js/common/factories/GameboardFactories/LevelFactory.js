@@ -13,8 +13,7 @@ app.factory('LevelFactory', function(PageFactory, UserFactory, AuthService, MapF
     }
 
     resetMap(){
-
-      this.map = new MapFactory(this.page.gameboard);
+      this.map.resetMap();
     }
 
     win(){
@@ -24,6 +23,7 @@ app.factory('LevelFactory', function(PageFactory, UserFactory, AuthService, MapF
       //get the currently logged in user
       AuthService.getLoggedInUser()
         .then(user => {
+          if(!user) return;
           UserFactory.find(user.id)
             .then(userInfo => {
               //remove the current page from their unfinishedPages
