@@ -28,7 +28,7 @@ app.factory('SpellFactory', function(TilesizeFactory){
 	unlock (){
 		this.locks -= 1;
 		if (this.locks === 0) {
-		  this.cycle();
+		  this.cycle(this.avatar.position);
 		}
 	}
 
@@ -52,8 +52,16 @@ app.factory('SpellFactory', function(TilesizeFactory){
 		if (this.ok) {
 		  this.execute();
 		}
-		if (isSolved()) return this.level.win();
+
+		if (this.isSolved()) return this.level.win();
 		else return this.level.lose();
+	}
+
+
+	//TODO: actually check if the puzzle has been solved
+	isSolved(){
+		//need to compare spellVars to the requirements
+		return false;
 	}
 
 	//grab items in spell box
@@ -105,8 +113,7 @@ app.factory('SpellFactory', function(TilesizeFactory){
 	//cycles all events on a particular position
 	cycle(position) {
 	    if (!this.running) return; 
-	    console.log('cycle, map', this.map);
-	    console.log('position', position);
+
 	    this.map.mapArray[position.x][position.y].forEach(obj=>obj.onCycle()); 
     	
 	}
@@ -127,7 +134,7 @@ app.factory('SpellFactory', function(TilesizeFactory){
 	    		for(var i=0; i<component.distance; i++){
 	    			moveOne(component);
 	    		}
-	    		this.cycle();
+	    		this.cycle(avatar.position);
 	    		break;
 	    	case 'pickUp':
 	    	case 'putDown':
@@ -155,22 +162,21 @@ app.factory('SpellFactory', function(TilesizeFactory){
 
 
 	    function moveOne(direction){
+	    	console.log('moveOne');
 	    	var newPos = avatar.move(direction, 1);
-	        if (spell.map.isPassable(newPos)) {
+	        if (newPos) {
 	          // Do the move!
-	          //????what does this do????!
-	          avatar.entity.tween({x: newPos.x*TilesizeFactory.TILESIZE, y: newPos.y*TilesizeFactory.TILESIZE}, 45, function() {
+	          avatar.entity.tween({x: newPos.x*TilesizeFactory.TILESIZE, y: newPos.y*TilesizeFactory.TILESIZE}, 200, function() {
 	            // app.audio.stop('move-avatar');
 	            avatar.setMapPos(newPos);
 	            this.unlock();
 	          });
 	        } else {
 	          // Bump!
-	          //not sure how this works?
-	          var curPos = avatar.getScreenPos();
-	          var newPos = curPos.dup().addDir(direction, 8);
-	          avatar.tween({x: newPos.x, y: newPos.y}, 3, function() {
-	            avatar.tween({x: curPos.x, y: curPos.y}, 3, function() {
+	          var curPos = avatar.entity;
+	          // var newPos = curPos.dup().addDir(direction, 8);
+	          avatar.entity.tween({x: curPos.x + TilesizeFactory.TILESIZE, y: curPos.y + TilesizeFactory.TILESIZE}, 100, function() {
+	            avatar.entity.tween({x: curPos.x, y: curPos.y}, 100, function() {
 	              setTimeout(() =>{this.unlock()}, 800);
 	            });
 	          });
