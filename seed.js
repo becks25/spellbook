@@ -73,12 +73,12 @@ var seedPages = function(stories){
                     [ 
                         [{
                             type: 'Avatar',
-                            name: 'tank'
+                            name: 'House2'
                         }], 
                         [], 
                         [{
                             type: 'Obstacle',
-                            name: 'Rock'
+                            name: 'Rock1'
                         }],
                         []
 
@@ -87,7 +87,7 @@ var seedPages = function(stories){
                         [],
                         [{
                             type: 'Collectible',
-                            name: 'Potion'
+                            name: 'Potion2'
                         }],
                         [],
                         []
@@ -102,7 +102,7 @@ var seedPages = function(stories){
                         [],
                         [{
                             type: 'Obstacle',
-                            name: 'Mountain'
+                            name: 'Tree2'
                         }],
                         [],
                         []
