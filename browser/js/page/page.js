@@ -1,4 +1,4 @@
-app.config(function ($stateProvider) {
+app.config( $stateProvider => {
     $stateProvider.state('page', {
         url: '/page/:id',
         templateUrl: 'js/page/page.html',
@@ -61,7 +61,7 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
       console.log('tools', $scope.spellTools)
       console.log('comp', $scope.spellComponents)
     }
-  }
+  };
 
 
 
@@ -77,7 +77,7 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
 
   $scope.resetLevel = function(){
 
-  }
+  };
 
   $scope.runSpell = function(){
     console.log('here?');

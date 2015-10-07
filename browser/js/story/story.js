@@ -4,16 +4,15 @@
 app.config($stateProvider => {
     $stateProvider.state('story', {
         url: '/story',
-        templateUrl: 'ja/story/story.html',
+        templateUrl: 'js/story/story.html',
         resolve: {
-            stories: (StoryFactory) => StoryFactory.find()
+            stories: (StoryFactory) => StoryFactory.findAll()
         },
         controller: 'StoryCtrl'
     })
 });
 
-app.controller('StoryCtrl', ($scope, $state) => {
+app.controller('StoryCtrl', ($scope, $state, stories) => {
     $scope.stories = stories;
-
-
+    console.log('here', $scope.stories);
 });
