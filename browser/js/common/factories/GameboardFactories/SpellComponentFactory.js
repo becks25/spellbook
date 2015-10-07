@@ -2,7 +2,7 @@ app.factory('SpellComponentFactory', function(){
 	return {
 		makeToolObj: function(toolStr) {
 		  var toolObj = {};
-	      switch (tool) {
+	      switch (toolStr) {
 	        case 'move':
 	          toolObj.action = 'move';
 	          toolObj.direction = 'UP';

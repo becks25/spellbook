@@ -3,7 +3,7 @@ app.factory('LevelFactory', function(PageFactory, UserFactory, AuthService, MapF
     constructor(page){
       this.page = page;
       this.map = new MapFactory(page.gameboard);
-      this.win = page.requirements;
+      this.requirements = page.requirements;
       this.hint = page.hint;
       this.concepts = page.concepts;
       this.points = 50;
@@ -13,15 +13,17 @@ app.factory('LevelFactory', function(PageFactory, UserFactory, AuthService, MapF
     }
 
     resetMap(){
-      this.map = new MapFactory(this.page.gameboard);
+      this.map.resetMap();
     }
 
     win(){
-      var nextPage = PageFactory.getNext();
+
+      var nextPage = PageFactory.methods.getNext(this.page);
 
       //get the currently logged in user
-      AuthService.getLoggedInUser
+      AuthService.getLoggedInUser()
         .then(user => {
+          if(!user) return;
           UserFactory.find(user.id)
             .then(userInfo => {
               //remove the current page from their unfinishedPages

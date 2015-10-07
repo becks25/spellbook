@@ -44,7 +44,7 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
   //construct the spellTools arr on load
   spellToolConstr();
 
-  spellVarConstr = () => {
+  var spellVarConstr = () => {
     //variables are stored as strings
     $scope.page.variables.forEach((variable)=>{
       var name = variable.split(' ').join('');
@@ -62,7 +62,7 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
   Crafty.sprite(64, '/images/sprites.png', SPRITES);
 
   $scope.level = new LevelFactory($scope.page);
-  $scope.spell = new spellFactory($scope.level);
+  $scope.spell = new SpellFactory($scope.level);
 
   $scope.resetLevel = function(){
 
