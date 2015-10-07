@@ -14,7 +14,10 @@
 	<!--Right side of the page-->
 	<div class="col-md-6 col-sm-12" id="right-page">
 		<div id="canvas">
-			<div id="cr-stage"></div>
+			<div id="cr-stage">
+			<div ng-repeat="i in grid track by $index" style="height:{{size}}; width:{{size}}" class="square"></div>
+
+			</div>
 
 		</div>
 		

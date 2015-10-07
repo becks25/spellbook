@@ -79,9 +79,19 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
 
   }
 
+  $scope.grid = new Array(TilesizeFactory.NumTiles * TilesizeFactory.NumTiles);
+  // document.querySelectorAll('.square').forEach( elem => {
+  //   elem.style.height = TilesizeFactory.TILESIZE + 'px';
+  //   elem.style.width = TilesizeFactory.TILESIZE + 'px';
+  // })
+
+  $scope.size = TilesizeFactory.TILESIZE + 'px';
+
   $scope.runSpell = function(){
     console.log('here?');
     $scope.spell.run();
   }
+
+  
 
 });
