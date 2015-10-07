@@ -8,7 +8,7 @@ app.factory('SpellFactory', function(TilesizeFactory){
 	    this.map = level.map;
 	    this.key = level.key;
 	    this.avatar = this.map.getAvatar();
-	    this.reset();
+	    //this.reset();
 	    // this.reload();
   	}
 
@@ -18,7 +18,8 @@ app.factory('SpellFactory', function(TilesizeFactory){
 		this.running = false;
 		this.errors = {};
 		this.commands = [];
-		this.level.resetMap();
+		this.map.resetMap();
+		this.avatar = this.map.getAvatar();
 	}
 
 	lock (){
@@ -113,7 +114,6 @@ app.factory('SpellFactory', function(TilesizeFactory){
 	//cycles all events on a particular position
 	cycle(position) {
 	    if (!this.running) return; 
-
 	    this.map.mapArray[position.x][position.y].forEach(obj=>obj.onCycle()); 
     	
 	}
@@ -166,11 +166,13 @@ app.factory('SpellFactory', function(TilesizeFactory){
 	    	var newPos = avatar.move(direction, 1);
 	        if (newPos) {
 	          // Do the move!
-	          avatar.entity.tween({x: newPos.x*TilesizeFactory.TILESIZE, y: newPos.y*TilesizeFactory.TILESIZE}, 200, function() {
-	            // app.audio.stop('move-avatar');
+	          avatar.entity.tween({x: newPos.x*TilesizeFactory.TILESIZE, y: newPos.y*TilesizeFactory.TILESIZE}, 200, function(){
 	            avatar.setMapPos(newPos);
-	            this.unlock();
-	          });
+	            spell.unlock();
+	          })
+	            // app.audio.stop('move-avatar');
+	           
+
 	        } else {
 	          // Bump!
 	          var curPos = avatar.entity;
@@ -182,7 +184,9 @@ app.factory('SpellFactory', function(TilesizeFactory){
 	          });
 	      	}
 	    };
-	    
+
+	    console.log('after', this.avatar);
+	   	Crafty('2D').each(obj => console.log('entity', this));
 	    
 	}
 
