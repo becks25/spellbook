@@ -1,19 +1,27 @@
 app.constant('SPRITES', {
-    tank: [0,3],
-    turret: [7,3],
-    tree: [1,0],
-    Mountain: [2,0], //base
-    Potion: [7,0], //mine
-    Rock: [0,1], //rock1
-    rock2: [1,1],
-    'wall-horizontal': [2,1],
-    'wall-vertical': [3,1],
-    'wall-corner': [4,1],
-    bullet: [7,1],
-    'tower-off': [0,2],
-    'tower-on1': [1,2],
-    'tower-on2': [2,2],
-    'tower-on3': [3,2],
-    'tower-beam-h': [4,2],
-    'tower-beam-v': [5,2]
+    Rock1: [1,0],
+    Rock2: [2,0],
+    Rock3: [3,0],
+    Tree1: [4,0],
+    Tree2: [5,0],
+    Tree3: [6,0],
+    Chest1: [7,0],
+    Chest2: [0,1],
+    Chest3: [1,1],
+    Potion1: [2,1],
+    Potion2: [3,1],
+    Potion3: [4,1],
+    House1: [5,1],
+    House2: [6,1],
+    House3: [7,1],
+    Castle1: [0,2],
+    Castle2: [1,2],
+    Castle3: [2,2],
+    Crystal1: [3,2],
+    Crystal2: [4,2],
+    Crystal3: [5,2],
+    Gem1: [6,2],
+    Gem2: [7,2],
+    Gem3: [0,3]
+
   });
