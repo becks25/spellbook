@@ -39,9 +39,9 @@ app.factory('MapFactory', function(ClassFactory) {
         resetMap(){
             console.log('map reset', this);
             Crafty("2D").each(function(i) {
-                if(i % 2 === 0) {
+                console.log('entity', this);
                     this.destroy();
-                }
+                
             });
             this.load(this.originalMap);
         }
@@ -69,25 +69,30 @@ app.factory('MapFactory', function(ClassFactory) {
         }
 
         addObject (obj, position) {
-            // this.removeObject(obj);
+            this.removeObject(obj);
             this.objects.push(obj);
 
             //this.getObjects(position).push(obj);
         }
 
         removeObject (obj) {
-            var index= this.objects.indexOf(obj);
-
+            var index= -1;
+            this.objects.forEach((item, i) => {
+                if(item.name === obj.name){
+                    index= i;
+                }
+            });
             this.objects.splice(index, 1);
-            var oldPos = obj.getMapPos();
-            if (this.onMap(oldPos)) {
-                // var objs = this.getObjects(oldPos);
-                // var i = this.mapArray[oldPos.x][oldPos.y].indexOf(obj);
-                // this.mapArray[oldPos.x][oldPos.y].splice(i, 1);
 
-                var i= this.getObjects(oldPos).indexOf(obj);
-                this.getObjects(oldPos).splice(i, 1);
-            }
+            // var oldPos = obj.getMapPos();
+            // if (this.onMap(oldPos)) {
+            //     // var objs = this.getObjects(oldPos);
+            //     // var i = this.mapArray[oldPos.x][oldPos.y].indexOf(obj);
+            //     // this.mapArray[oldPos.x][oldPos.y].splice(i, 1);
+
+            //     var i= this.getObjects(oldPos).indexOf(obj);
+            //     this.getObjects(oldPos).splice(i, 1);
+            // }
         }
 
         arrayRemove (array, obj) {
@@ -119,7 +124,7 @@ app.factory('MapFactory', function(ClassFactory) {
             }
 
             console.log(obj);
-            this.objects.push(obj);
+            //this.objects.push(obj);
 
             obj.setMap(this);
             var position = {x: x, y: y};
