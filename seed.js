@@ -45,13 +45,15 @@ var descr = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiu
 
 var seedStories = function(){
     var titles = ['Happy Dance', 'Omri', 'Joe\'s Salt', 'Adventures of Mark'];
+    //var images = ['http://www.smashingmagazine.com/images/book-covers/book-covers-18.jpg', 'https://s-media-cache-ak0.pinimg.com/236x/31/b0/7f/31b07f4c094b63a20fba3d7a3143b69c.jpg', 'https://geekybooksnob.files.wordpress.com/2012/11/200px-life_of_pi_cover.png', 'http://www.adweek.com/galleycat/files/2012/08/8-bit-book-cover-The-Two-Towers.jpg']
 
     var stories = titles.map(function(title){
         return {
             title: title,
             description: descr,
             difficulty: Math.floor(Math.random()*10),
-            concepts: [concepts[Math.floor(Math.random()*concepts.length)]]
+            concepts: [concepts[Math.floor(Math.random()*concepts.length)]],
+            cover: 'http://www.smashingmagazine.com/images/book-covers/book-covers-18.jpg'
         };
     });
      return Story.createAsync(stories);
@@ -70,12 +72,12 @@ var seedPages = function(stories){
                 hint: 'Try harder',
                 requirements: [],
                 gameboard: [
-                    [ 
+                    [
                         [{
                             type: 'Avatar',
                             name: 'House2'
-                        }], 
-                        [], 
+                        }],
+                        [],
                         [{
                             type: 'Obstacle',
                             name: 'Rock1'
