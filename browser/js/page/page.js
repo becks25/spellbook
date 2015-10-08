@@ -8,7 +8,6 @@ app.config( $stateProvider => {
         controller: 'PageCtrl'
       });
 
-    });
 });
 
 app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPRITES, LevelFactory, TilesizeFactory, SpellFactory, SpellComponentFactory, SPRITE_AVATARS, orderByFilter) => {
