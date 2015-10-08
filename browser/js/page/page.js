@@ -1,4 +1,4 @@
-    app.config( $stateProvider => {
+app.config( $stateProvider => {
     $stateProvider.state('page', {
         url: '/page/:id',
         templateUrl: 'js/page/page.html',
@@ -7,9 +7,8 @@
         },
         controller: 'PageCtrl'
     });
-    });
 
-    app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPRITES, LevelFactory, TilesizeFactory, SpellFactory, SpellComponentFactory, orderByFilter) => {
+    app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPRITES, LevelFactory, TilesizeFactory, SpellFactory, SpellComponentFactory, SPRITE_AVATARS, orderByFilter) => {
     $scope.page = page;
     $scope.spellComponents = []; // update from db if saved version is present
     $scope.spellVars = [];
@@ -112,8 +111,8 @@
   Crafty.init(TilesizeFactory.TILESIZE * TilesizeFactory.NumTiles, TilesizeFactory.TILESIZE* TilesizeFactory.NumTiles);
   Crafty.canvas.init();
 
-
-    Crafty.sprite(64, '/images/sprites.png', SPRITES);
+  Crafty.sprite(64, '/images/sprites.png', SPRITES);
+  Crafty.sprite(64, '/images/SpriteAvatars.png', SPRITE_AVATARS);
 
     $scope.level = new LevelFactory($scope.page);
     $scope.spell = new SpellFactory($scope.level);
@@ -127,15 +126,15 @@
   $scope.grid = new Array(TilesizeFactory.NumTiles * TilesizeFactory.NumTiles);
 
 
-    $scope.size = TilesizeFactory.TILESIZE + 'px';
+  $scope.size = TilesizeFactory.TILESIZE + 'px';
 
-    $scope.runSpell = argArr => $scope.spell.run(argArr);
+  $scope.runSpell = argArr => $scope.spell.run(argArr);
 
-    $scope.stepThrough = (argArr)=>{
+  $scope.stepThrough = (argArr)=>{
     $scope.spell.stepThrough(argArr);
-    }
+  }
 
 
 
 
-    });
+});
