@@ -12,24 +12,33 @@ app.config(function ($stateProvider) {
 app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPRITES, LevelFactory, TilesizeFactory, SpellFactory, SpellComponentFactory) => {
   $scope.page = page;
   $scope.spellComponents = []; // update from db if saved version is present
-  $scope.spellTools = [{
+  $scope.spellVars = [];
+  $scope.spellTools = [];
+  $scope.directions = [{
     name: 'UP',
     text: 'up',
     value: false,
+    type: 'direction'
   },{
     name: 'DOWN',
     text: 'down',
     value: false,
+    type: 'direction'
+
   },
   {
     name: 'LEFT',
     text: 'left',
     value: false,
+    type: 'direction'
+
   },
   {
     name: 'RIGHT',
     text: 'right',
     value: false,
+    type: 'direction'
+
   }];
 
   //scope.page.tools is an array of strings - .action of the objs
@@ -49,7 +58,7 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
     //variables are stored as strings
     $scope.page.variables.forEach((variable)=>{
       var name = variable.split(' ').join('');
-      $scope.spellTools.push({name: name, text: variable, value: false})
+      $scope.spellVars.push({name: name, text: variable, value: false, type: 'variable'})
     });
   };
   spellVarConstr();
@@ -76,7 +85,7 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
   $scope.spell = new SpellFactory($scope.level);
 
   $scope.resetLevel = function(){
-
+    $scope.level.map.resetMap();
   }
 
   $scope.grid = new Array(TilesizeFactory.NumTiles * TilesizeFactory.NumTiles);
