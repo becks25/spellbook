@@ -18,8 +18,15 @@ app.config(function ($stateProvider) {
 
 app.controller('UserCtrl', function ($scope, AuthService, UserFactory, $state, user) {
   $scope.user = user;
-  console.log(user)
-  $scope.getScore = UserFactory.getScore;
-  console.log('user', user)
+  // $scope.getScore = UserFactory.methods.getScore();
+  // console.log('score', $scope.getScore);
+
+  $scope.totalPoints = (function(){
+    var total = 0;
+
+    $scope.user.mastery.forEach(concept => total+= concept.pointsEarned);
+
+    return total;
+  })();
 
 });
