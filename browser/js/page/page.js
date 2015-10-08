@@ -62,12 +62,32 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
   };
   spellVarConstr();
 
-  $scope.sortableOptions = {
-    stop: function(e, ui){
-      var spellItem = ui.item.scope().tool;
-      $scope.spellComponents.push(spellItem);
-    }
-  };
+  //$scope.sortableOptions = {
+  //  stop: function(e, ui){
+  //    var spellItem = ui.item.scope().tool;
+  //    $scope.spellComponents.push(spellItem);
+  //  }
+  //};
+
+    console.log('here!',$scope.spellTools);
+
+
+    $scope.availableFields = $scope.spells;
+
+    $scope.dropzoneFields = false;
+
+    $scope.draggable = {
+        connectWith: '.dropzone',
+        update: (e, ui) => {
+            if (ui.item.sortable.dropTarget[0].classList[0] !== "dropzone") {
+                ui.item.sortable.cancel();
+            }
+            else {
+                var spellItem = ui.item.scope().tool;
+                $scope.spellComponents.push(spellItem);
+            }
+        }
+    };
 
 
 
@@ -80,6 +100,7 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
 
   $scope.level = new LevelFactory($scope.page);
   $scope.spell = new SpellFactory($scope.level);
+
 
   $scope.resetLevel = function(){
     $scope.level.map.resetMap();
@@ -101,6 +122,8 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
   $scope.stepThrough = (argArr)=>{
     $scope.spell.stepThrough(argArr);
   }
-    
+
+
+
 
 });

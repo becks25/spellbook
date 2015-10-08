@@ -5,8 +5,6 @@ app.factory('MapFactory', function(ClassFactory) {
     class Map {
         // fat arrows allow for this to reference MapFactory and not the inner function
         constructor (mapData) {
-            console.log('map', mapData);
-
             this.originalMap = mapData;
             this.avatar = null;
             this.objects = [];
@@ -22,8 +20,6 @@ app.factory('MapFactory', function(ClassFactory) {
             ];
 
             this.load(mapData);
-            console.log('%%%%%%%%%% mapArray after load', this.mapArray) //empty
-            console.log('objects on map?', this.objects) //only tree2????
         }
         // destroy () {
         //     // this.each(obj => {
@@ -41,9 +37,8 @@ app.factory('MapFactory', function(ClassFactory) {
         resetMap(){
             console.log('map reset', this);
             Crafty("2D").each(function(i) {
-                console.log('entity', this);
                     this.destroy();
-                
+
             });
             this.load(this.originalMap);
         }
@@ -126,7 +121,6 @@ app.factory('MapFactory', function(ClassFactory) {
                     this.avatar = obj;
             }
 
-            console.log(obj);
             //this.objects.push(obj);
 
             obj.setMap(this);
@@ -141,12 +135,10 @@ app.factory('MapFactory', function(ClassFactory) {
         }
 
         isPassable (position) {
-            console.log('running map.isPassable')
-            console.log('mapArray', typeof this.mapArray[position.x][position.y], this.mapArray[position.x][position.y])
-            console.log('))))))))) looking for map objects', this.objects) //just the avatar, though sometimes an Avatar and sometimes and Obstacle
+           
             if (!this.onMap(position.x,position.y)) return false;
 
-            
+
 
             // this.each(position.x, position.y, obj => {
             //     if (!obj.isPassable()) {
@@ -155,9 +147,9 @@ app.factory('MapFactory', function(ClassFactory) {
             // });
 
             var passable = this.mapArray[position.x][position.y].every(obj => { //never run bc array is empty
-                console.log('$$$$$$$$$$$$$ passible obj?', obj); 
+                console.log('$$$$$$$$$$$$$ passible obj?', obj);
                 return obj.passable === true;
-                
+
             });
             return passable;
         }

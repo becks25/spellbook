@@ -60,7 +60,6 @@ app.factory('SpellComponentFactory', function(){
 	          toolObj.type = 'tool';
 	          break;
 	      }
-	      console.log(toolObj)
 	      return toolObj;
 		}
 	};

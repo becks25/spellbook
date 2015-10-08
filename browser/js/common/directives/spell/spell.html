@@ -2,8 +2,8 @@
 	<div class="panel-heading">
 		My spell
 	</div>
-	<div class="panel-body" droppable>
-		<ul ui-sortable >
+	<div class="panel-body">
+		<ul class="dropzone" ui-sortable="draggable" >
 		  <li ng-repeat="tool in spellComponents track by $index"><span class="{{tool.type}}">{{ tool.text }}</span></li>
 		</ul>
 
