@@ -13,7 +13,7 @@ app.factory('SpellFactory', function(TilesizeFactory){
   	}
 
 	reset (){
-		this.locks = 0;
+		// this.locks = 0;
 		this.ok = true;
 		this.running = false;
 		this.errors = {};
@@ -51,13 +51,14 @@ app.factory('SpellFactory', function(TilesizeFactory){
 		this.reset();
 		// this.parse();
 		if (this.ok) {
-		  this.execute();
+		  return this.execute()
+		  .then(()=>{
+			if (this.isSolved()) return this.level.win();
+			else return this.level.lose();
+		  });
 		}
-
-		if (this.isSolved()) return this.level.win();
-		else return this.level.lose();
 	}
-
+	
 
 	//TODO: actually check if the puzzle has been solved
 	isSolved(){
@@ -74,10 +75,23 @@ app.factory('SpellFactory', function(TilesizeFactory){
 		//do we need to translate them?
 
 		//hard coded for testing
+		console.log('parsing')
 		return [{
+			action: 'move',
+			direction: 'right',
+			distance: 2
+		}, {
 			action: 'move',
 			direction: 'down',
 			distance: 2
+		// }, {
+		// 	action: 'forLoop',
+		// 	number: 3,
+		// 	expression: {
+		// 		action: 'move',
+		// 		direction: 'right',
+		// 		distance: 1
+		// 	}
 		}];
 	}
 
@@ -96,24 +110,34 @@ app.factory('SpellFactory', function(TilesizeFactory){
   			this.currentCommand = prevIndex <spellArr.length-2 ? spellArr[prevIndex+1] : null;
   		} 
   		if (this.currentCommand){
-  			this.running = true;
+  			// this.running = true;
   			executeCommand(this.currentCommand);
-  			this.running = false;
+  			// this.running = false;
   		} 
   	}
 
   	//executes the spell
   	execute(){
-	    this.running = true;
+	    // this.running = true;
 	    this.cycle(this.avatar.position);
-	    var spellArr = this.parse();
-	    spellArr.forEach(spell => this.executeCommand(spell));
-	    this.running = false;
+	    var noPromSpellArr = this.parse()
+	    var spellArr = Promise.map(noPromSpellArr, (spell)=>{
+	    	console.log('lalala', spell);
+	    	return spell})
+	    // .then((spells)=>{
+	    // 	console.log('spells are ready')
+	    // 	return spells
+	    // });
+	    
+	    // run async execute command fn on each of the commands in the spell, serially
+	    return spellArr.each((component) => this.executeCommand(component));
+	    // this.running = false;
+	    // return Promise.resolve(spellArr)
 	}
 
 	//cycles all events on a particular position
 	cycle(position) {
-	    if (!this.running) return; 
+	    // if (!this.running) return; 
 	    this.map.mapArray[position.x][position.y].forEach(obj=>obj.onCycle()); 
     	
 	}
@@ -131,26 +155,40 @@ app.factory('SpellFactory', function(TilesizeFactory){
 	    switch(component.action){
 
 	    	case 'move':
-	    		for(var i=0; i<component.distance; i++){
-	    			moveOne(component);
+	    		var distArr = [];
+	    		for(var i = 0; i<component.distance; i++){
+	    			distArr.push(i);
 	    		}
-	    		this.cycle(avatar.position);
-	    		break;
+	    		var promArr = Promise.map(distArr, (num)=>num)
+	    		return promArr.each(()=>moveOne(component.direction))
+	    		.then(()=>this.cycle(avatar.position));
 	    	case 'pickUp':
 	    	case 'putDown':
 	    		// collectable obj (ref) has to be passed into the function as .variable
 	    		component.variable.holding = !component.variable.holding;
 	    		break; 
-	    	case 'ifStatement':
-	    		if (component.condition) executeCommand(component.expression);
-	    		else if (component.elseExpr) executeCommand(component.elseExpr);
-	    		break;
-	    	case 'whileLoop':
-	    		while (component.condition) executeCommand(component.expression);
-	    		break;
-	    	case 'forLoop':
-	    		for (var i=0; i<component.number; i++) executeCommand(component.expression);
-	    		break;
+	    	// case 'ifStatement':
+	    	// 	if (component.condition){
+	    	// 		var expression = Promise.map(component.expression, (command)=>command);
+	    	// 		return epressions.each(command=> this.executeCommand(command));
+	    	// 	}  
+	    	// 	else if (component.elseExpr) {
+	    	// 		var expression = Promise.map(component.elseExpr, (command)=>command);
+	    	// 		return expression.each(command=> this.executeCommand(command));
+	    	// 	}
+	    	// 	break;
+	    	// case 'whileLoop':
+	    	// 	return promiseWhile(component.condition, executeExpression)
+	    	// 	break;
+	    	// case 'forLoop':
+	    	// 	console.log('for loop')
+	    	// 	var numArr
+	    	// 	for(var i = 0; i<component.number; i++){
+	    	// 		numArr.push(i);
+	    	// 	}
+	    	// 	promArr = Promise.map(numArr, (num)=>num)
+	    	// 	return promArr.each(()=>component.expression.each((command)=> this.executeCommand(command)))
+	    	// 	break;
 	    	case 'ask':
 	    	//not sure what these do
 	    		console.log('asking')
@@ -160,33 +198,50 @@ app.factory('SpellFactory', function(TilesizeFactory){
 	    		break;
 	    }
 
+	    // ??component is inside the scope of the function that executeExpression is called in???
+	    // used as action for promiseWhile()
+	    // function executeExpressions(){
+	    // 	return component.expression.each((command)=>this.executeCommand(command))
+	    // }
+
+	    //action is a function
+	 //    var promiseWhile = Promise.method((condition, action)=>{
+		//     if (!condition()) return;
+		//     return action().then(promiseWhile.bind(null, condition, action));
+		// });
 
 	    function moveOne(direction){
 	    	console.log('moveOne');
 	    	var newPos = avatar.move(direction, 1);
+	    	console.log('newPos', newPos)
 	        if (newPos) {
 	          // Do the move!
-	          avatar.entity.tween({x: newPos.x*TilesizeFactory.TILESIZE, y: newPos.y*TilesizeFactory.TILESIZE}, 200, function(){
-	            avatar.setMapPos(newPos);
-	            spell.unlock();
-	          })
-	            // app.audio.stop('move-avatar');
-	           
+	          return avatar.promTweenQueen({x: newPos.x*TilesizeFactory.TILESIZE, y: newPos.y*TilesizeFactory.TILESIZE}, 200)
+	          .then(()=>{
+		          console.log('before setpos', avatar.position)
+		          avatar.setMapPos(newPos);
+		            // app.audio.stop('move-avatar');
+		           console.log('after setpos', avatar.position)
+	            // spell.unlock();
+	          });
 
 	        } else {
 	          // Bump!
 	          var curPos = avatar.entity;
 	          // var newPos = curPos.dup().addDir(direction, 8);
-	          avatar.entity.tween({x: curPos.x + TilesizeFactory.TILESIZE, y: curPos.y + TilesizeFactory.TILESIZE}, 100, function() {
-	            avatar.entity.tween({x: curPos.x, y: curPos.y}, 100, function() {
-	              setTimeout(() =>{this.unlock()}, 800);
-	            });
+	          return avatar.entity.promTweenQueen({x: curPos.x + TilesizeFactory.TILESIZE, y: curPos.y + TilesizeFactory.TILESIZE}, 100)
+	          .then(()=>{
+	            return avatar.entity.promTweenQueen({x: curPos.x, y: curPos.y}, 100)
+	          }).then(()=>{
+	            return Promise.delay(400);
 	          });
 	      	}
-	    };
 
-	    console.log('after', this.avatar);
-	   	Crafty('2D').each(obj => console.log('entity', this));
+	    }
+	    
+
+	    // console.log('after', this.avatar);
+	   	// Crafty('2D').each(obj => console.log('entity', this));
 	    
 	}
 
