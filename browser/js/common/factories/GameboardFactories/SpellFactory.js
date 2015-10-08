@@ -89,7 +89,7 @@ app.factory('SpellFactory', function(TilesizeFactory){
 		}, {
 			action: 'forLoop',
 			number: 3,
-			expression: [{
+			expressions: [{
 				action: 'move',
 				direction: 'right',
 				distance: 1
@@ -170,12 +170,12 @@ app.factory('SpellFactory', function(TilesizeFactory){
 	    		break; 
 	    	case 'ifStatement':
 	    		if (component.condition){
-	    			var expression = Promise.map(component.expression, (command)=>command);
-	    			return epressions.each(command=> this.executeCommand(command));
+	    			var expressions = Promise.map(component.expressions, (command)=>command);
+	    			return expressions.each(command=> this.executeCommand(command));
 	    		}  
 	    		else if (component.elseExpr) {
-	    			var expression = Promise.map(component.elseExpr, (command)=>command);
-	    			return expression.each(command=> this.executeCommand(command));
+	    			var expressions = Promise.map(component.elseExpr, (command)=>command);
+	    			return expressions.each(command=> this.executeCommand(command));
 	    		}
 	    		break;
 	    	case 'whileLoop':
@@ -188,8 +188,8 @@ app.factory('SpellFactory', function(TilesizeFactory){
 	    			numArr.push(i);
 	    		}
 	    		promArr = Promise.map(numArr, (num)=>num)
-	    		var expression = Promise.map(component.expression, (command)=>command);
-	    		return promArr.each(()=>expression.each((command)=> this.executeCommand(command)))
+	    		var expressions = Promise.map(component.expressions, (command)=>command);
+	    		return promArr.each(()=>expressions.each((command)=> this.executeCommand(command)))
 	    		break;
 	    	case 'ask':
 	    	//not sure what these do
