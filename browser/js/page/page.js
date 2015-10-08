@@ -85,7 +85,7 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
   $scope.spell = new SpellFactory($scope.level);
 
   $scope.resetLevel = function(){
-
+    $scope.level.map.resetMap();
   }
 
   $scope.grid = new Array(TilesizeFactory.NumTiles * TilesizeFactory.NumTiles);
