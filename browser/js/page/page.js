@@ -80,7 +80,7 @@
     });
 
     $scope.spellList = [];
-
+//made some changes
   TilesizeFactory.NumTiles = $scope.page.gameboard.length;
   Crafty.load(['/images/sprites.png']);
   Crafty.init(TilesizeFactory.TILESIZE * TilesizeFactory.NumTiles, TilesizeFactory.TILESIZE* TilesizeFactory.NumTiles);
