@@ -10,5 +10,5 @@ app.config($stateProvider => {
 });
 
 app.controller('IndivStoryCtrl', ($scope, $state) => {
-        
+
 });

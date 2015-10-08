@@ -15,6 +15,6 @@ app.config($stateProvider => {
 app.controller('StoryCtrl', ($scope, $state, stories, $timeout) => {
     $scope.stories = stories;
     console.log('here', $scope.stories);
-
+    $scope.pop = false;
 
 });
