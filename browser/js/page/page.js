@@ -77,6 +77,8 @@
     refresh();
 
 
+    $scope.tools = $scope.spellTools.slice();
+
     var baseConfig = {
         placeholder: "beingDragged",
         tolerance: 'pointer',
@@ -84,9 +86,18 @@
     };
 
     $scope.toolConfig = angular.extend({}, baseConfig, {
-        helper: (e, ui) => {
-            refresh();
-            return ui.clone();
+        update: (e, ui) => {
+            if(ui.item.sortable.droptarget.hasClass('first')) {
+                ui.item.sortable.cancel();
+                refresh();
+            }
+        },
+        stop: (e, ui) => {
+            if ($(e.target).hasClass('first') &&
+                e.target != ui.item.sortable.droptarget[0]) {
+                $scope.spellTools = $scope.tools.slice();
+                refresh();
+            }
         },
         connectWith: ".spellComponents"
     });
@@ -95,7 +106,6 @@
         connectWith: ".spellTools"
     });
 
-    $scope.spellList = [];
 //made some changes
   TilesizeFactory.NumTiles = $scope.page.gameboard.length;
   Crafty.load(['/images/sprites.png']);
