@@ -77,26 +77,26 @@ app.factory('SpellFactory', function(TilesizeFactory){
 		//hard coded for testing
 		console.log('parsing')
 		console.log(argArr)
-		return argArr.filter((command)=>command.type==='tool');
-		// return [{
-		// // 	action: 'move',
-		// // 	direction: 'right',
-		// // 	distance: 2
-		// // }, {
+		// return argArr.filter((command)=>command.type==='tool');
+		return [{
 		// 	action: 'move',
-		// 	direction: 'down',
-		// 	distance: 3
+		// 	direction: 'right',
+		// 	distance: 2
 		// }, {
-		// 	action: 'forLoop',
-		// 	number: 3,
-		// 	expression: [{
-		// 		action: 'move',
-		// 		direction: 'right',
-		// 		distance: 1
-		// 	}, {action: 'move',
-		// 		direction: 'up',
-		// 		distance: 1}]
-		// }];
+			action: 'move',
+			direction: 'down',
+			distance: 3
+		}, {
+			action: 'forLoop',
+			number: 3,
+			expression: [{
+				action: 'move',
+				direction: 'right',
+				distance: 1
+			}, {action: 'move',
+				direction: 'up',
+				distance: 1}]
+		}];
 	}
 
   	//steps through program one command at a time
