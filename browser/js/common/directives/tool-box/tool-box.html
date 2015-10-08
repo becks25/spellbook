@@ -3,10 +3,28 @@
 		My Tools
 	</div>
 	<div class="panel-body">
-		<ul ui-sortable='sortableOptions' ng-model="spellTools">
-		  <li ng-repeat="tool in spellTools" draggable>{{ tool.text }}</li>
-		  <li ng-repeat="tool in spellVars track by $index" draggable>{{ tool.text}}</li>
-		</ul>
+		<div class="col-md-4 col-sm-12">
+			<b>Tools</b>
+				<ul ui-sortable='sortableOptions' ng-model="spellTools">
+		  			<li ng-repeat="tool in spellTools" draggable><span class="tool">{{ tool.text }}</span></li>
+		  		</ul>
+
+		</div>
+		<div class="col-md-4 col-sm-12">
+			<b>Directions</b>
+				<ul ui-sortable='sortableOptions' ng-model="spellTools">
+		  			<li ng-repeat="tool in directions" draggable><span class="direction" >{{ tool.text }}</span></li>
+		  		</ul>
+
+		</div>
+		<div class="col-md-4 col-sm-12">
+			<b>Variables</b>
+				<ul ui-sortable='sortableOptions' ng-model="spellTools">
+		  			<li ng-repeat="tool in spellVars track by $index" draggable><span class="variable" >{{ tool.text}}</span></li>
+		  		</ul>
+
+		</div>
+		
 
 	</div>
 </div>

@@ -4,12 +4,12 @@
 	</div>
 	<div class="panel-body" droppable>
 		<ul ui-sortable >
-		  <li ng-repeat="tool in spellComponents track by $index">{{ tool.text }}</li>
+		  <li ng-repeat="tool in spellComponents track by $index"><span class="{{tool.type}}">{{ tool.text }}</span></li>
 		</ul>
 
 	</div>
 	<div class="text-center center-block">
-		<button class="btn">Clear</button>
+		<button class="btn" ng-click="resetLevel()">Clear</button>
 		<button class="btn" ng-click="runSpell()">Run</button>
 		<button class="btn">Step</button>
 
