@@ -93,11 +93,11 @@ app.factory('SpellFactory', function(TilesizeFactory){
 			current: false
 		}, {
 			action: 'move',
-			direction: 'right',
+			direction: 'down',
 			distance: 2,
 			current: 2
 		}, {
-			action: 'whileLoop',
+			action: 'ifStatement',
 			condition: true,
 			expressions: [{
 				action: 'ifStatement',
@@ -157,11 +157,12 @@ app.factory('SpellFactory', function(TilesizeFactory){
   	execute(argArr){
 	    // this.running = true;
 	    this.cycle(this.avatar.position);
-	    var noPromSpellArr = this.parse(argArr)
-	    var spellArr = Promise.map(noPromSpellArr, (spell)=>{
-	    	return spell})
+	    var spellArr = this.parse(argArr);
+	    // var spellArr = Promise.map(noPromSpellArr, (spell)=>{
+	    	// return spell})
 	    // run async execute command fn on each of the commands in the spell, serially
-	    return spellArr.each((component) => this.executeCommand(component));
+	    return Promise.reduce(spellArr, (nothing, component) => this.executeCommand(component));
+	    // return spellArr.each((component) => this.executeCommand(component));
 	    // this.running = false;
 	    // return Promise.resolve(spellArr)
 	}
@@ -190,9 +191,9 @@ app.factory('SpellFactory', function(TilesizeFactory){
 	    		for(var i = 0; i<component.distance; i++){
 	    			distArr.push(i);
 	    		}
-	    		var promArr = Promise.map(distArr, (num)=>num)
-	    		return promArr.each(()=>moveOne(component.direction))
-	    		.then(()=>this.cycle(avatar.position));
+	    		// var promArr = Promise.map(distArr, (num)=>num)
+	    		return Promise.reduce(distArr, (nothing, num)=>moveOne(component.direction))
+	    		.then(()=>spell.cycle(avatar.position));
 	    	case 'give':
             	// collectable obj (ref) has to be passed into the function as .variable
     			component.variable.holding = !component.variable.holding;
@@ -200,7 +201,7 @@ app.factory('SpellFactory', function(TilesizeFactory){
 	    	case 'pickUp':
 	    		//search the map objects on that position for the one that matches component.variable,
 	    		this.mapArray[this.avatar.position.x][this.avatar.position.y].some(obj => {
-                	if(obj.name === component.name) this.map.removeObj(obj);
+                	if(obj.name === component.name) spell.map.removeObj(obj);
                 	// collectable obj (ref) has to be passed into the function as .variable
 	    			component.variable.holding = !component.variable.holding;
                 	return true;
@@ -208,12 +209,12 @@ app.factory('SpellFactory', function(TilesizeFactory){
 	    		break;
 	    	case 'ifStatement':
 	    		if (component.condition){
-	    			var expressions = Promise.map(component.expressions, (command)=>command);
-	    			return expressions.each(command=> this.executeCommand(command));
+	    			// var expressions = Promise.map(component.expressions, (command)=>command);
+	    			return Promise.reduce(component.expressions,(nothing, command)=> spell.executeCommand(command));
 	    		}
 	    		else if (component.elseExpr) {
-	    			var expressions = Promise.map(component.elseExpr, (command)=>command);
-	    			return expressions.each(command=> this.executeCommand(command));
+	    			// var expressions = Promise.map(component.elseExpr, (command)=>command);
+	    			return Promise.reduce(component.expressions, (nothing, command)=> spell.executeCommand(command));
 	    		}
 	    		break;
 	    	case 'whileLoop':
@@ -225,9 +226,9 @@ app.factory('SpellFactory', function(TilesizeFactory){
 	    		for(var i = 0; i<component.number; i++){
 	    			numArr.push(i);
 	    		}
-	    		promArr = Promise.map(numArr, (num)=>num)
-	    		var expressions = Promise.map(component.expressions, (command)=>command);
-	    		return promArr.each(()=>expressions.each((command)=> this.executeCommand(command)))
+	    		// promArr = Promise.map(numArr, (num)=>num)
+	    		// var expressions = Promise.map(component.expressions, (command)=>command);
+	    		return Promise.reduce(numArr, (nothing)=>expressions.each((command)=> spell.executeCommand(command)));
 	    		break;
 	    	case 'ask':
 	    	//not sure what these do
