@@ -58,7 +58,7 @@ app.factory('SpellFactory', function(TilesizeFactory){
 		  });
 		}
 	}
-	
+
 
 	//TODO: actually check if the puzzle has been solved
 	isSolved(){
@@ -75,8 +75,7 @@ app.factory('SpellFactory', function(TilesizeFactory){
 		//do we need to translate them?
 
 		//hard coded for testing
-		console.log('parsing')
-		console.log(argArr)
+
 		// return argArr.filter((command)=>command.type==='tool');
 		return [{
 		// 	action: 'move',
@@ -115,7 +114,7 @@ app.factory('SpellFactory', function(TilesizeFactory){
 			},{action: 'move',
 			direction: 'up',
 			distance: 2
-		
+
 		}];
 	}
 
@@ -136,7 +135,7 @@ app.factory('SpellFactory', function(TilesizeFactory){
   			// this.running = true;
   			return this.executeCommand(this.currentCommand);
   			// this.running = false;
-  		} 
+  		}
   	}
 
   	//executes the spell
@@ -145,7 +144,7 @@ app.factory('SpellFactory', function(TilesizeFactory){
 	    this.cycle(this.avatar.position);
 	    var noPromSpellArr = this.parse(argArr)
 	    var spellArr = Promise.map(noPromSpellArr, (spell)=>{
-	    	return spell}) 
+	    	return spell})
 	    // run async execute command fn on each of the commands in the spell, serially
 	    return spellArr.each((component) => this.executeCommand(component));
 	    // this.running = false;
@@ -154,9 +153,9 @@ app.factory('SpellFactory', function(TilesizeFactory){
 
 	//cycles all events on a particular position
 	cycle(position) {
-	    // if (!this.running) return; 
-	    this.map.mapArray[position.x][position.y].forEach(obj=>obj.onCycle()); 
-    	
+	    // if (!this.running) return;
+	    this.map.mapArray[position.x][position.y].forEach(obj=>obj.onCycle());
+
 	}
 
 	executeCommand (component) {
@@ -165,7 +164,7 @@ app.factory('SpellFactory', function(TilesizeFactory){
 	    var spell = this;
 	    var avatar = this.avatar;
 	    var map = this.map;
-	    
+
 	    // Lock for initial command, more locks may be applied by animations, etc.
 	    this.lock();
 
@@ -183,12 +182,12 @@ app.factory('SpellFactory', function(TilesizeFactory){
 	    	case 'putDown':
 	    		// collectable obj (ref) has to be passed into the function as .variable
 	    		component.variable.holding = !component.variable.holding;
-	    		break; 
+	    		break;
 	    	case 'ifStatement':
 	    		if (component.condition){
 	    			var expressions = Promise.map(component.expressions, (command)=>command);
 	    			return expressions.each(command=> this.executeCommand(command));
-	    		}  
+	    		}
 	    		else if (component.elseExpr) {
 	    			var expressions = Promise.map(component.elseExpr, (command)=>command);
 	    			return expressions.each(command=> this.executeCommand(command));
@@ -269,8 +268,8 @@ app.factory('SpellFactory', function(TilesizeFactory){
 	      	}
 
 	    }
-	    
-	    
+
+
 	}
 
 
