@@ -12,24 +12,20 @@ app.factory('PosFactory', function(TilesizeFactory){
     }
 
     addDir(dir, amt){
-      console.log('pos.adDir', this, typeof dir)
       switch(dir) {
         case 'up':
           this.y -= amt;
           break;
         case 'right':
-          console.log('amt', amt)
           this.x += amt;
           break;
         case 'down':
-          console.log('going down', amt)
           this.y += amt;
           break;
         case 'left':
           this.x -= amt;
           break;
       }
-      console.log('new pos', this)
       return this;
     }
 

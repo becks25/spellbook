@@ -46,12 +46,12 @@ app.factory('SpellFactory', function(TilesizeFactory){
 	// }
 
 	//runs the whole program, acts if solved/unsolved
-	run(){
+	run(argArr){
 		// this.save();
 		this.reset();
 		// this.parse();
 		if (this.ok) {
-		  return this.execute()
+		  return this.execute(argArr)
 		  .then(()=>{
 			if (this.isSolved()) return this.level.win();
 			else return this.level.lose();
@@ -69,68 +69,63 @@ app.factory('SpellFactory', function(TilesizeFactory){
 	//grab items in spell box
 	//make (if nec) objects with action prop, and poss others
 	// make array of component objs
-	parse(){
+	parse(argArr){
 
 		//todo - how are spells being stored/passed in???
 		//do we need to translate them?
 
 		//hard coded for testing
 		console.log('parsing')
-		return [{
+		console.log(argArr)
+		return argArr.filter((command)=>command.type==='tool');
+		// return [{
+		// // 	action: 'move',
+		// // 	direction: 'right',
+		// // 	distance: 2
+		// // }, {
 		// 	action: 'move',
-		// 	direction: 'right',
-		// 	distance: 2
+		// 	direction: 'down',
+		// 	distance: 3
 		// }, {
-			action: 'move',
-			direction: 'down',
-			distance: 3
-		}, {
-			action: 'forLoop',
-			number: 3,
-			expression: [{
-				action: 'move',
-				direction: 'right',
-				distance: 1
-			}, {action: 'move',
-				direction: 'up',
-				distance: 1}]
-		}];
+		// 	action: 'forLoop',
+		// 	number: 3,
+		// 	expression: [{
+		// 		action: 'move',
+		// 		direction: 'right',
+		// 		distance: 1
+		// 	}, {action: 'move',
+		// 		direction: 'up',
+		// 		distance: 1}]
+		// }];
 	}
 
   	//steps through program one command at a time
   	// spell box can be changed betwee steps (other than current command)
   	// resets board if first step
   	// sets current command to null if last step (will prompt reset on next stepthrough)
-  	stepThrough(){
-  		var spellArr = parse();
+  	stepThrough(argArr){
+  		var spellArr = this.parse(argArr);
   		if(!this.currentCommand) {
   			this.reset();
   			this.currentCommand = spellArr[0];
   		} else {
-  			var prevIndex = spellArr.indexOf(this.currentCommand);
-  			//checks whether the prevIndex was the last command
-  			this.currentCommand = prevIndex <spellArr.length-2 ? spellArr[prevIndex+1] : null;
-  		} 
+  			var prevIndex = _.findIndex(spellArr, this.currentCommand);
+  			this.currentCommand = prevIndex < spellArr.length-1 ? spellArr[prevIndex+1] : null;
+  		}
   		if (this.currentCommand){
   			// this.running = true;
-  			executeCommand(this.currentCommand);
+  			return this.executeCommand(this.currentCommand);
   			// this.running = false;
   		} 
   	}
 
   	//executes the spell
-  	execute(){
+  	execute(argArr){
 	    // this.running = true;
 	    this.cycle(this.avatar.position);
-	    var noPromSpellArr = this.parse()
+	    var noPromSpellArr = this.parse(argArr)
 	    var spellArr = Promise.map(noPromSpellArr, (spell)=>{
-	    	console.log('lalala', spell);
-	    	return spell})
-	    // .then((spells)=>{
-	    // 	console.log('spells are ready')
-	    // 	return spells
-	    // });
-	    
+	    	return spell}) 
 	    // run async execute command fn on each of the commands in the spell, serially
 	    return spellArr.each((component) => this.executeCommand(component));
 	    // this.running = false;
@@ -214,17 +209,12 @@ app.factory('SpellFactory', function(TilesizeFactory){
 		// });
 
 	    function moveOne(direction){
-	    	console.log('moveOne');
 	    	var newPos = avatar.move(direction, 1);
-	    	console.log('newPos', newPos)
 	        if (newPos) {
 	          // Do the move!
 	          return avatar.promTweenQueen({x: newPos.x*TilesizeFactory.TILESIZE, y: newPos.y*TilesizeFactory.TILESIZE}, 200)
 	          .then(()=>{
-		          console.log('before setpos', avatar.position)
 		          avatar.setMapPos(newPos);
-		            // app.audio.stop('move-avatar');
-		           console.log('after setpos', avatar.position)
 	            // spell.unlock();
 	          });
 
@@ -242,9 +232,6 @@ app.factory('SpellFactory', function(TilesizeFactory){
 
 	    }
 	    
-
-	    // console.log('after', this.avatar);
-	   	// Crafty('2D').each(obj => console.log('entity', this));
 	    
 	}
 
