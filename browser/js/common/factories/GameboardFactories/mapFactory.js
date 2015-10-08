@@ -5,29 +5,13 @@ app.factory('MapFactory', function(ClassFactory, TilesizeFactory) {
     class Map {
         // fat arrows allow for this to reference MapFactory and not the inner function
         constructor (mapData) {
-            console.log('map', mapData);
-
             this.originalMap = mapData;
             this.avatar = null;
             this.objects = [];
             this.mapArray = this.makeBoard();
 
             this.load(mapData);
-            console.log('%%%%%%%%%% mapArray after load', this.mapArray) //empty
-            console.log('objects on map?', this.objects) //only tree2????
         }
-        // destroy () {
-        //     // this.each(obj => {
-        //     //     obj.destroy();
-        //     // });
-
-
-        //     this.objects = [];
-
-        //     // this.mapArray = null;
-
-
-        // }
 
         makeBoard (){
             var board = [];
@@ -41,9 +25,7 @@ app.factory('MapFactory', function(ClassFactory, TilesizeFactory) {
         }
 
         resetMap(){
-            console.log('map reset', this);
             Crafty("2D").each(function(i) {
-                console.log('entity', this);
                     this.destroy();
                 
             });
@@ -53,9 +35,6 @@ app.factory('MapFactory', function(ClassFactory, TilesizeFactory) {
         getAvatar (){
             return this.avatar
         }
-
-        //took out each function, this is where it would have gone
-        //it checked each tile in the path for the tank and saw if a bullet would hit anything
 
         // position is an object with x and y coordinates
         getObject (position, type) {
@@ -76,8 +55,6 @@ app.factory('MapFactory', function(ClassFactory, TilesizeFactory) {
             this.removeObject(obj);
             this.objects.push(obj);
             this.mapArray[position.x][position.y].push(obj);
-
-            //this.getObjects(position).push(obj);
         }
 
         removeObject (obj) {
@@ -89,15 +66,6 @@ app.factory('MapFactory', function(ClassFactory, TilesizeFactory) {
             });
             this.objects.splice(index, 1);
 
-            // var oldPos = obj.getMapPos();
-            // if (this.onMap(oldPos)) {
-            //     // var objs = this.getObjects(oldPos);
-            //     // var i = this.mapArray[oldPos.x][oldPos.y].indexOf(obj);
-            //     // this.mapArray[oldPos.x][oldPos.y].splice(i, 1);
-
-            //     var i= this.getObjects(oldPos).indexOf(obj);
-            //     this.getObjects(oldPos).splice(i, 1);
-            // }
         }
 
         arrayRemove (array, obj) {
@@ -109,7 +77,6 @@ app.factory('MapFactory', function(ClassFactory, TilesizeFactory) {
         }
 
         load (mapData) {
-            console.log('loading');
             var x, y;
             var len = mapData.length;
             for(x = 0; x< len; x++) {
@@ -127,10 +94,6 @@ app.factory('MapFactory', function(ClassFactory, TilesizeFactory) {
                 if(obj.type === 'Avatar' )
                     this.avatar = obj;
             }
-
-            console.log(obj);
-            //this.objects.push(obj);
-
             obj.setMap(this);
             var position = {x: x, y: y};
 
@@ -143,21 +106,9 @@ app.factory('MapFactory', function(ClassFactory, TilesizeFactory) {
         }
 
         isPassable (position) {
-            console.log('running map.isPassable')
-            console.log('mapArray', typeof this.mapArray[position.x][position.y], this.mapArray[position.x][position.y])
-            console.log('))))))))) looking for map objects', this.objects) //just the avatar, though sometimes an Avatar and sometimes and Obstacle
             if (!this.onMap(position.x,position.y)) return false;
 
-            
-
-            // this.each(position.x, position.y, obj => {
-            //     if (!obj.isPassable()) {
-            //         passable = false;
-            //     }
-            // });
-
-            var passable = this.mapArray[position.x][position.y].every(obj => { //never run bc array is empty
-                console.log('$$$$$$$$$$$$$ passible obj?', obj); 
+            var passable = this.mapArray[position.x][position.y].every(obj => { 
                 return obj.passable === true;
                 
             });

@@ -91,12 +91,24 @@ app.factory('SpellFactory', function(TilesizeFactory){
 			direction: 'down',
 			distance: 2
 		}, {
-			action: 'forLoop',
-			number: 3,
+			action: 'ifStatement',
+			condition: true,
 			expressions: [{
-				action: 'move',
-				direction: 'right',
-				distance: 1
+				action: 'ifStatement',
+				condition: true,
+				expressions: [{
+						action: 'forLoop',
+						number: 1,
+						expressions: [{
+								action: 'move',
+								direction: 'right',
+								distance: 1
+							}, {
+								action: 'move',
+								direction: 'down',
+								distance: 1
+							}]
+			}]
 			}, {action: 'move',
 				direction: 'down',
 				distance: 1}]
@@ -183,7 +195,7 @@ app.factory('SpellFactory', function(TilesizeFactory){
 	    		}
 	    		break;
 	    	case 'whileLoop':
-	    		return promiseWhile(component.condition, executeExpression)
+	    		return promiseWhile(component.condition, executeExpressions)
 	    		break;
 	    	case 'forLoop':
 	    		console.log('for loop')
@@ -206,15 +218,16 @@ app.factory('SpellFactory', function(TilesizeFactory){
 
 	    // ??component is inside the scope of the function that executeExpression is called in???
 	    // used as action for promiseWhile()
-	    // function executeExpressions(){
-	    // 	return component.expression.each((command)=>this.executeCommand(command))
-	    // }
+	    function executeExpressions(){
+	    	var expressions = Promise.map(component.expressions, (command)=>command);
+	    	return expressions.each((command)=>spell.executeCommand(command))
+	    }
 
-	    //action is a function
-	 //    var promiseWhile = Promise.method((condition, action)=>{
-		//     if (!condition()) return;
-		//     return action().then(promiseWhile.bind(null, condition, action));
-		// });
+	    // action is a function
+	    function promiseWhile (condition, action){
+		    if (!condition) return;
+		    return action().then(promiseWhile.bind(null, condition, action));
+		}
 
 	    function moveOne(direction){
 	    	var newPos = avatar.move(direction, 1);
@@ -249,7 +262,6 @@ app.factory('SpellFactory', function(TilesizeFactory){
 	          }
 	          return avatar.promTweenQueen({x: curPos.x + latBump, y: curPos.y + heightBump}, 100)
 	          .then(()=>{
-	          	console.log('running this', avatar.position, curPos)
 	            return avatar.promTweenQueen({x: curPos.x - latBump, y: curPos.y - heightBump}, 100)
 	          }).then(()=>{
 	            return Promise.delay(400);
