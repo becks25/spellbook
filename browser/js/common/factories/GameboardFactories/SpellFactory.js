@@ -77,21 +77,23 @@ app.factory('SpellFactory', function(TilesizeFactory){
 		//hard coded for testing
 		console.log('parsing')
 		return [{
-			action: 'move',
-			direction: 'right',
-			distance: 2
-		}, {
+		// 	action: 'move',
+		// 	direction: 'right',
+		// 	distance: 2
+		// }, {
 			action: 'move',
 			direction: 'down',
-			distance: 2
-		// }, {
-		// 	action: 'forLoop',
-		// 	number: 3,
-		// 	expression: {
-		// 		action: 'move',
-		// 		direction: 'right',
-		// 		distance: 1
-		// 	}
+			distance: 3
+		}, {
+			action: 'forLoop',
+			number: 3,
+			expression: [{
+				action: 'move',
+				direction: 'right',
+				distance: 1
+			}, {action: 'move',
+				direction: 'up',
+				distance: 1}]
 		}];
 	}
 
@@ -167,28 +169,29 @@ app.factory('SpellFactory', function(TilesizeFactory){
 	    		// collectable obj (ref) has to be passed into the function as .variable
 	    		component.variable.holding = !component.variable.holding;
 	    		break; 
-	    	// case 'ifStatement':
-	    	// 	if (component.condition){
-	    	// 		var expression = Promise.map(component.expression, (command)=>command);
-	    	// 		return epressions.each(command=> this.executeCommand(command));
-	    	// 	}  
-	    	// 	else if (component.elseExpr) {
-	    	// 		var expression = Promise.map(component.elseExpr, (command)=>command);
-	    	// 		return expression.each(command=> this.executeCommand(command));
-	    	// 	}
-	    	// 	break;
-	    	// case 'whileLoop':
-	    	// 	return promiseWhile(component.condition, executeExpression)
-	    	// 	break;
-	    	// case 'forLoop':
-	    	// 	console.log('for loop')
-	    	// 	var numArr
-	    	// 	for(var i = 0; i<component.number; i++){
-	    	// 		numArr.push(i);
-	    	// 	}
-	    	// 	promArr = Promise.map(numArr, (num)=>num)
-	    	// 	return promArr.each(()=>component.expression.each((command)=> this.executeCommand(command)))
-	    	// 	break;
+	    	case 'ifStatement':
+	    		if (component.condition){
+	    			var expression = Promise.map(component.expression, (command)=>command);
+	    			return epressions.each(command=> this.executeCommand(command));
+	    		}  
+	    		else if (component.elseExpr) {
+	    			var expression = Promise.map(component.elseExpr, (command)=>command);
+	    			return expression.each(command=> this.executeCommand(command));
+	    		}
+	    		break;
+	    	case 'whileLoop':
+	    		return promiseWhile(component.condition, executeExpression)
+	    		break;
+	    	case 'forLoop':
+	    		console.log('for loop')
+	    		var numArr = [];
+	    		for(var i = 0; i<component.number; i++){
+	    			numArr.push(i);
+	    		}
+	    		promArr = Promise.map(numArr, (num)=>num)
+	    		var expression = Promise.map(component.expression, (command)=>command);
+	    		return promArr.each(()=>expression.each((command)=> this.executeCommand(command)))
+	    		break;
 	    	case 'ask':
 	    	//not sure what these do
 	    		console.log('asking')
