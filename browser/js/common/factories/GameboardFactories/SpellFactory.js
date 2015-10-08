@@ -85,7 +85,11 @@ app.factory('SpellFactory', function(TilesizeFactory){
 		// }, {
 			action: 'move',
 			direction: 'down',
-			distance: 1
+			distance: 2
+		}, {
+			action: 'move',
+			direction: 'down',
+			distance: 2
 		}, {
 			action: 'forLoop',
 			number: 3,
@@ -226,9 +230,27 @@ app.factory('SpellFactory', function(TilesizeFactory){
 	          // Bump!
 	          var curPos = avatar.entity;
 	          // var newPos = curPos.dup().addDir(direction, 8);
-	          return avatar.entity.promTweenQueen({x: curPos.x + TilesizeFactory.TILESIZE, y: curPos.y + TilesizeFactory.TILESIZE}, 100)
+	          var heightBump = 0;
+	          var latBump = 0;
+	          switch (direction){
+	          	case 'down':
+	          		heightBump = TilesizeFactory.TILESIZE/4;
+	          		break;
+	          	case 'up':
+	          		heightBump = 0 - TilesizeFactory.TILESIZE/4;
+	          		break;
+	          	case 'left':
+	          		latBump = 0 - TilesizeFactory.TILESIZE/4;
+	          		break;
+	          	case 'right':
+	          		latBump = TilesizeFactory.TILESIZE/4;
+	          		break;
+
+	          }
+	          return avatar.promTweenQueen({x: curPos.x + latBump, y: curPos.y + heightBump}, 100)
 	          .then(()=>{
-	            return avatar.entity.promTweenQueen({x: curPos.x, y: curPos.y}, 100)
+	          	console.log('running this', avatar.position, curPos)
+	            return avatar.promTweenQueen({x: curPos.x - latBump, y: curPos.y - heightBump}, 100)
 	          }).then(()=>{
 	            return Promise.delay(400);
 	          });
