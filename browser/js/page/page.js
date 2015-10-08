@@ -6,7 +6,8 @@ app.config( $stateProvider => {
           page: (PageFactory, $stateParams) => PageFactory.find($stateParams.id)
         },
         controller: 'PageCtrl'
-    });
+      });
+
 });
 
 app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPRITES, LevelFactory, TilesizeFactory, SpellFactory, SpellComponentFactory, SPRITE_AVATARS, orderByFilter) => {
@@ -80,6 +81,14 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
 
 
     $scope.tools = $scope.spellTools.slice();
+
+    $scope.removeFromSpell = (tool) => {
+      console.log("the spell", $scope.spellComponents)
+      console.log("calling this", tool)
+      $scope.spellComponents = $scope.spellComponents.filter(function(e){
+          return e !== tool;
+        })
+      }
 
     var baseConfig = {
         placeholder: "beingDragged",
