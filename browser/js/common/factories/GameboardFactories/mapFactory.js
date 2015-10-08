@@ -1,23 +1,14 @@
 /**
  * Created by Austin on 10/5/15.
  */
-app.factory('MapFactory', function(ClassFactory) {
+app.factory('MapFactory', function(ClassFactory, TilesizeFactory) {
     class Map {
         // fat arrows allow for this to reference MapFactory and not the inner function
         constructor (mapData) {
             this.originalMap = mapData;
             this.avatar = null;
             this.objects = [];
-            this.mapArray = [
-                [[],[],[],[],[],[],[],[]],
-                [[],[],[],[],[],[],[],[]],
-                [[],[],[],[],[],[],[],[]],
-                [[],[],[],[],[],[],[],[]],
-                [[],[],[],[],[],[],[],[]],
-                [[],[],[],[],[],[],[],[]],
-                [[],[],[],[],[],[],[],[]],
-                [[],[],[],[],[],[],[],[]]
-            ];
+            this.mapArray = this.makeBoard();
 
             this.load(mapData);
         }
@@ -33,6 +24,17 @@ app.factory('MapFactory', function(ClassFactory) {
 
 
         // }
+
+        makeBoard (){
+            var board = [];
+            for(var i=0; i<TilesizeFactory.NumTiles; i++){
+                board.push([]);
+                for(var j=0; j<TilesizeFactory.NumTiles; j++){
+                    board[i].push([]);
+                } 
+            }
+            return board;
+        }
 
         resetMap(){
             console.log('map reset', this);

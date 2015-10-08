@@ -27,7 +27,7 @@ app.factory('SpellComponentFactory', function(){
 	          toolObj.action = 'ifStatement';
 	          toolObj.text = 'if';
 	          toolObj.condition = null;
-	          toolObj.expression = null;
+	          toolObj.expressions = [];
 	          toolObj.elseExpr = null;
 	          toolObj.type = 'tool';
 	          break;
@@ -35,14 +35,14 @@ app.factory('SpellComponentFactory', function(){
 	          toolObj.action = 'forLoop';
 	          toolObj.text = 'repeat';
 	          toolObj.number = 1;
-	          toolObj.expression = null;
+	          toolObj.expressions = [];
 	          toolObj.type = 'tool';
 	          break;
 	        case 'whileLoop':
 	          toolObj.action = 'whileLoop';
 	          toolObj.text = 'repeat while';
 	          toolObj.condition = null;
-	          toolObj.expression = null;
+	          toolObj.expressions = [];
 	          toolObj.type = 'tool';
 	          break;
 	        case 'ask':

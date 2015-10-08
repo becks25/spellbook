@@ -1,6 +1,7 @@
 app.controller('DragAndDropCtrl', function ($scope, DraggedFactory) {
 
     $scope.handleDragStart = function (e) {
+        becks.log(['started drag', e]);
         e.stopPropagation();
         DraggedFactory.dragged=this;
         this.style.opacity = '0.4';
@@ -13,6 +14,7 @@ app.controller('DragAndDropCtrl', function ($scope, DraggedFactory) {
         e.preventDefault();
         e.stopPropagation();
 
+        console.log('droppable', this);
         var draggedElem = angular.element(DraggedFactory.dragged);
         var left = e.pageX;
         var top = e.pageY/2;
@@ -20,7 +22,6 @@ app.controller('DragAndDropCtrl', function ($scope, DraggedFactory) {
         draggedElem.css('left', left + 'px');
         draggedElem.css('top', top + 'px');
         draggedElem.css('position', 'absolute');
-
 
         this.style.transform = 'scale(1.0)';
     };
