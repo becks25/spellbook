@@ -85,7 +85,7 @@ app.factory('SpellFactory', function(TilesizeFactory){
 		// }, {
 			action: 'move',
 			direction: 'down',
-			distance: 3
+			distance: 1
 		}, {
 			action: 'forLoop',
 			number: 3,
@@ -94,8 +94,12 @@ app.factory('SpellFactory', function(TilesizeFactory){
 				direction: 'right',
 				distance: 1
 			}, {action: 'move',
-				direction: 'up',
+				direction: 'down',
 				distance: 1}]
+			},{action: 'move',
+			direction: 'up',
+			distance: 2
+		
 		}];
 	}
 
