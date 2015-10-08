@@ -1,4 +1,4 @@
-app.directive('draggable', function () {
+app.directive('draggabled', function () {
   return {
     restrict: 'A',
     link: function (scope, element, attrs) {

@@ -348,7 +348,7 @@
 }
 
 .noFields {
-  padding: 14px;
+  padding: 2px;
   border: 2px dashed grey;
 }
 
@@ -359,4 +359,15 @@ ul {
 li {
   border: 1px dashed grey;
   padding: 14px;
+}
+
+.beingDragged {
+  height: 24px;
+  margin-bottom: .5em !important;
+  border: 2px dotted #ccc !important;
+  background: none !important;
+}
+
+.spellBox {
+  min-height: 25px;
 }
