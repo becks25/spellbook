@@ -73,6 +73,7 @@ app.factory('MapFactory', function(ClassFactory) {
         addObject (obj, position) {
             this.removeObject(obj);
             this.objects.push(obj);
+            this.mapArray[position.x][position.y].push(obj);
 
             //this.getObjects(position).push(obj);
         }
