@@ -82,12 +82,11 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
 
     $scope.tools = $scope.spellTools.slice();
 
-    $scope.removeFromSpell = (tool) => {
-      console.log("the spell", $scope.spellComponents)
-      console.log("calling this", tool)
-      $scope.spellComponents = $scope.spellComponents.filter(function(e){
-          return e !== tool;
-        })
+    $scope.removeFromSpell = (tool, index) => {
+      //console.log("index", index);
+      $scope.spellComponents.splice(index, 1);
+
+      console.log("the spell", $scope.spellComponents);
       }
 
     var baseConfig = {
