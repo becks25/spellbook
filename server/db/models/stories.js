@@ -10,7 +10,8 @@ var schema = new mongoose.Schema({
     description: {type: String, required: true},
     author: {type: Schema.Types.ObjectId, ref: 'User'},
     difficulty: Number,
-    concepts: [String]
+    concepts: [String],
+    cover: String
 });
 
 mongoose.model('Story', schema);

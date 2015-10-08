@@ -8,10 +8,10 @@ var Story = mongoose.model('Story');
 
 //get all users
 router.get('/', (req, res, next) => {
-    if (!req.user.isAdmin){
-        res.sendStatus(401);
-        return;
-    }
+    //if (!req.user.isAdmin){
+    //    res.sendStatus(401);
+    //    return;
+    //}
     User.find().exec()
     .then(users => res.send(users))
     .then(null, next);
@@ -19,7 +19,7 @@ router.get('/', (req, res, next) => {
 
 //get one
 router.get('/:userId', (req, res, next) => {
-    console.log(req.user)
+    console.log(req.user);
     if (!req.user.isAdmin && (req.user._id.toString() !== req.foundUser._id.toString())){
         res.sendStatus(401);
         return;
