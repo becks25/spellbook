@@ -15,51 +15,53 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
     $scope.spellVars = [];
     $scope.spellTools = [];
     $scope.directions = [{
-        name: 'UP',
-        text: 'up',
-        value: false,
-        type: 'direction'
-    }, {
-        name: 'DOWN',
-        text: 'down',
-        value: false,
-        type: 'direction'
+      name: 'UP',
+      text: 'up',
+      value: false,
+      type: 'direction'
+      },{
+      name: 'DOWN',
+      text: 'down',
+      value: false,
+      type: 'direction'
 
-    },
-        {
-            name: 'LEFT',
-            text: 'left',
-            value: false,
-            type: 'direction'
+      },
+      {
+      name: 'LEFT',
+      text: 'left',
+      value: false,
+      type: 'direction'
 
-        },
-        {
-            name: 'RIGHT',
-            text: 'right',
-            value: false,
-            type: 'direction'
-
+      },
+      {
+      name: 'RIGHT',
+      text: 'right',
+      value: false,
+      type: 'direction'
         }];
 
     //scope.page.tools is an array of strings - .action of the objs
     // takes vars and tools from page model and makes command objs
     // pushes each obj to spellTools arr
     var spellToolConstr = () => {
-        $scope.page.tools.forEach((tool)=> {
-            var newTool = SpellComponentFactory.makeToolObj(tool);
-            $scope.spellTools.push(newTool);
-        });
-    };
+
+      $scope.page.tools.forEach((tool)=>{
+        var newTool = SpellComponentFactory.makeToolObj(tool);
+        $scope.spellTools.push(newTool);
+      });
+    }
     //construct the spellTools arr on load
     spellToolConstr();
 
     var spellVarConstr = () => {
+
         //variables are stored as strings
         $scope.page.variables.forEach((variable)=> {
             var name = variable.split(' ').join('');
             $scope.spellVars.push({name: name, text: variable, value: false, type: 'variable'})
         });
     };
+
     spellVarConstr();
 
 
@@ -106,10 +108,11 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
         connectWith: ".spellTools"
     });
 
-//made some changes
+    //made some changes
     TilesizeFactory.NumTiles = $scope.page.gameboard.length;
     Crafty.load(['/images/sprites.png']);
-    Crafty.init(TilesizeFactory.TILESIZE * TilesizeFactory.NumTiles, TilesizeFactory.TILESIZE * TilesizeFactory.NumTiles);
+    Crafty.init(TilesizeFactory.TILESIZE * TilesizeFactory.NumTiles, TilesizeFactory.TILESIZE* TilesizeFactory.NumTiles);
+
     Crafty.canvas.init();
 
     Crafty.sprite(64, '/images/sprites.png', SPRITES);
@@ -134,5 +137,6 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
     $scope.stepThrough = (argArr)=> {
         $scope.spell.stepThrough(argArr);
     }
+
 
 });
