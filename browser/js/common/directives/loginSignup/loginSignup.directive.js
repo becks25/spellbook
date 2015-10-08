@@ -16,6 +16,6 @@ app.directive('signup', function() {
 app.directive('login', function() {
   return {
     restrict: 'E',
-    templateUrl: '/js/common/directives/loginSignup/login.html',
+    templateUrl: '/js/common/directives/loginSignup/login.html'
   };
 });

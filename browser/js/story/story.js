@@ -17,15 +17,4 @@ app.controller('StoryCtrl', ($scope, $state, stories, $timeout) => {
     console.log('here', $scope.stories);
 
 
-    $timeout(() => {
-        $(".flipbook").turn({
-            width: 400,
-            height: 300,
-            autoCenter: true
-        });
-
-    }, 1000);
-
-
-
 });
