@@ -69,8 +69,6 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
     }
   };
 
-
-
   TilesizeFactory.NumTiles = $scope.page.gameboard.length;
   Crafty.load(['/images/sprites.png']);
   Crafty.init(TilesizeFactory.TILESIZE * TilesizeFactory.NumTiles, TilesizeFactory.TILESIZE* TilesizeFactory.NumTiles);
@@ -85,12 +83,7 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
     $scope.level.map.resetMap();
   };
 
-
   $scope.grid = new Array(TilesizeFactory.NumTiles * TilesizeFactory.NumTiles);
-  // document.querySelectorAll('.square').forEach( elem => {
-  //   elem.style.height = TilesizeFactory.TILESIZE + 'px';
-  //   elem.style.width = TilesizeFactory.TILESIZE + 'px';
-  // })
 
   $scope.size = TilesizeFactory.TILESIZE + 'px';
 
