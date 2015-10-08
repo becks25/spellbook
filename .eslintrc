@@ -44,6 +44,7 @@
 
   "rules": {
     ////////// Possible Errors //////////
+    "no-comma-dangle": 0,
     "no-cond-assign": 0,          // disallow assignment in conditional expressions
     "no-console": 0,                      // disallow use of console (off by default in the node environment)
     "no-constant-condition": 0,                 // disallow use of constant expressions in conditions
