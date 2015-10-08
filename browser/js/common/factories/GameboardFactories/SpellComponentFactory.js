@@ -8,16 +8,20 @@ app.factory('SpellComponentFactory', function(){
 	          toolObj.text = 'move';
 	          toolObj.direction = 'UP';
 	          toolObj.distance = 1;
+	          toolObj.type = 'tool';
 	          break;
 	        case 'pickUp':
 	          toolObj.action = 'pickUp';
 	          toolObj.text = 'pick up';
 	          toolObj.variable = null;
+	          toolObj.type = 'tool';
+
 	          break;
 	        case 'putDown':
 	          toolObj.action = 'putDown';
 	          toolObj.text = 'put down';
 	          toolObj.variable = null;
+	          toolObj.type = 'tool';
 	          break;
 	        case 'ifStatement':
 	          toolObj.action = 'ifStatement';
@@ -25,30 +29,35 @@ app.factory('SpellComponentFactory', function(){
 	          toolObj.condition = null;
 	          toolObj.expression = null;
 	          toolObj.elseExpr = null;
+	          toolObj.type = 'tool';
 	          break;
 	        case 'forLoop':
 	          toolObj.action = 'forLoop';
 	          toolObj.text = 'repeat';
 	          toolObj.number = 1;
 	          toolObj.expression = null;
+	          toolObj.type = 'tool';
 	          break;
 	        case 'whileLoop':
 	          toolObj.action = 'whileLoop';
 	          toolObj.text = 'repeat while';
 	          toolObj.condition = null;
 	          toolObj.expression = null;
+	          toolObj.type = 'tool';
 	          break;
 	        case 'ask':
 	          toolObj.action = 'ask';
 	          toolObj.text = 'ask';
 	          toolObj.person = null;
 	          toolObj.question = null;
+	          toolObj.type = 'tool';
 	          break;
 	        case 'tell':
 	          toolObj.action = 'tell';
 	          toolObj.text = 'tell';
 	          toolObj.person = null;
 	          toolObj.question = null;
+	          toolObj.type = 'tool';
 	          break;
 	      }
 	      console.log(toolObj)

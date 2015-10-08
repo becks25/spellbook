@@ -42,6 +42,7 @@ Page.remove({}, function(err, removed) {
 
 var concepts = ['loops', 'if-statements', 'functions', 'recursion', 'asynch']
 var descr = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad.";
+var backgrounds= ['images/space.png', 'images/flower-field.png', 'images/underwater.png'];
 
 var seedStories = function(){
     var titles = ['Happy Dance', 'Omri', 'Joe\'s Salt', 'Adventures of Mark'];
@@ -110,7 +111,8 @@ var seedPages = function(stories){
                         []
                     ]
                 ],
-                pageNumber: i
+                pageNumber: i,
+                boardBackground: backgrounds[i]
             });
         }
     });
