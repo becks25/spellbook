@@ -12,7 +12,20 @@ app.config($stateProvider => {
     })
 });
 
-app.controller('StoryCtrl', ($scope, $state, stories) => {
+app.controller('StoryCtrl', ($scope, $state, stories, $timeout) => {
     $scope.stories = stories;
     console.log('here', $scope.stories);
+
+
+    $timeout(() => {
+        $(".flipbook").turn({
+            width: 400,
+            height: 300,
+            autoCenter: true
+        });
+
+    }, 1000);
+
+
+
 });

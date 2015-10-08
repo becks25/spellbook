@@ -1,9 +1,27 @@
-<div class="col-md-4">
-	<img ng-src={{story.cover}} class='col-md-6'>
-	<div class="'col-md-6">
-		<h3>{{story.title}}</h3>
-		<p ng-show="story.author">Author: {{story.author}}</p>
-		<p>Practice concepts: <span ng-repeat='concept in story.concepts'>{{concept}}, </span></p>
-		<p>{{story.description | limitTo: 100}}</p>
-	</div>
+<!--<div class="col-md-4">-->
+	<!--<img ng-src={{story.cover}} class='col-md-6'>-->
+	<!--<div class="'col-md-6">-->
+		<!--<h3>{{story.title}}</h3>-->
+		<!--<p ng-show="story.author">Author: {{story.author}}</p>-->
+		<!--<p>Practice concepts: <span ng-repeat='concept in story.concepts'>{{concept}}, </span></p>-->
+		<!--<p>{{story.description | limitTo: 100}}</p>-->
+	<!--</div>-->
+<!--</div>-->
+
+<!--<div class="canvas col-md-4">-->
+    <!--<div class="sj-book">-->
+        <!--<div class="hard"><div class="side"></div></div>-->
+    <!--</div>-->
+<!--</div>-->
+
+<div class="flipbook col-md-6">
+    <div class="hard"><img ng-src={{story.cover}}></div>
+    <div class="hard"></div>
+    <div> Page 1 </div>
+    <div> Page 2 </div>
+    <div> Page 3 </div>
+    <div> Page 4 </div>
+    <div class="hard"></div>
+    <div class="hard"></div>
 </div>
+
