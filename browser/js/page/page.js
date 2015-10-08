@@ -9,7 +9,7 @@
     });
     });
 
-    app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPRITES, LevelFactory, TilesizeFactory, SpellFactory, SpellComponentFactory) => {
+    app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPRITES, LevelFactory, TilesizeFactory, SpellFactory, SpellComponentFactory, orderByFilter) => {
     $scope.page = page;
     $scope.spellComponents = []; // update from db if saved version is present
     $scope.spellVars = [];
@@ -62,6 +62,21 @@
     };
     spellVarConstr();
 
+
+    var refresh = () => {
+        $scope.$watchCollection('spellComponents', () => {
+            $scope.spellTools = orderByFilter($scope.spellTools, ['text']);
+        });
+        $scope.$watchCollection('spellVars', () => {
+            $scope.spellVars = orderByFilter($scope.spellVars, ['text']);
+        });
+        $scope.$watchCollection('directions', () => {
+            $scope.directions = orderByFilter($scope.directions, ['text']);
+        });
+    };
+    refresh();
+
+
     var baseConfig = {
         placeholder: "beingDragged",
         tolerance: 'pointer',
@@ -69,14 +84,15 @@
     };
 
     $scope.toolConfig = angular.extend({}, baseConfig, {
+        helper: (e, ui) => {
+            refresh();
+            return ui.clone();
+        },
         connectWith: ".spellComponents"
     });
 
     $scope.spellConfig = angular.extend({}, baseConfig, {
-        connectWith: ".spellTools",
-        receive: (e, ui) => {
-            console.log(ui.item);
-        }
+        connectWith: ".spellTools"
     });
 
     $scope.spellList = [];
