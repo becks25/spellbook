@@ -105,12 +105,9 @@ app.factory('SpellFactory', function(TilesizeFactory){
   	// sets current command to null if last step (will prompt reset on next stepthrough)
   	stepThrough(argArr){
   		var spellArr = this.parse(argArr);
-  		console.log('**********', spellArr)
   		if(!this.currentCommand) {
   			this.reset();
   			this.currentCommand = spellArr[0];
-  			console.log('&&&&&&&&&', this.currentCommand)
-  			console.log(_.findIndex(spellArr, this.currentCommand))
   		} else {
   			var prevIndex = _.findIndex(spellArr, this.currentCommand);
   			this.currentCommand = prevIndex < spellArr.length-1 ? spellArr[prevIndex+1] : null;
@@ -127,7 +124,6 @@ app.factory('SpellFactory', function(TilesizeFactory){
 	    // this.running = true;
 	    this.cycle(this.avatar.position);
 	    var noPromSpellArr = this.parse(argArr)
-	    console.log('^^^^^^^', noPromSpellArr)
 	    var spellArr = Promise.map(noPromSpellArr, (spell)=>{
 	    	return spell}) 
 	    // run async execute command fn on each of the commands in the spell, serially
