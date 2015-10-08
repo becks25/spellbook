@@ -30,7 +30,6 @@ app.factory('MapObjectFactory', function(PosFactory, TilesizeFactory){
         this.position = pos;
         this.entity.x = pos.x * TilesizeFactory.TILESIZE;
         this.entity.y = pos.y * TilesizeFactory.TILESIZE;
-        console.log('!!!!!!!!!!!!!!!!!!!in set pos', this)
 
       }
 
@@ -39,6 +38,7 @@ app.factory('MapObjectFactory', function(PosFactory, TilesizeFactory){
         newPos.addDir(dir, amt);
 
         if(this.map.isPassable(newPos)){
+          console.log('***************** passing', this.map.isPassable(newPos))
           return newPos;
         }else{
           return false;
@@ -51,7 +51,6 @@ app.factory('MapObjectFactory', function(PosFactory, TilesizeFactory){
       }
 
       tween(attrs, duration, callback){
-        console.log('in tween')
         this.entity.requires('Tween');
         this.entity.tween(attrs,duration);
         // Set up callback to run once at end of tweening...
@@ -68,7 +67,6 @@ app.factory('MapObjectFactory', function(PosFactory, TilesizeFactory){
       promTweenQueen(attrs, duration){
         console.log('I\'m a prom tween queen')
         var self = this;
-        console.log('self for obj', self)
         return new Promise(function(resolve, reject){
           self.tween(attrs, duration, function(err, res){
             if(err) reject(err);

@@ -22,6 +22,8 @@ app.factory('MapFactory', function(ClassFactory) {
             ];
 
             this.load(mapData);
+            console.log('%%%%%%%%%% mapArray after load', this.mapArray) //empty
+            console.log('objects on map?', this.objects) //only tree2????
         }
         // destroy () {
         //     // this.each(obj => {
@@ -71,6 +73,7 @@ app.factory('MapFactory', function(ClassFactory) {
         addObject (obj, position) {
             this.removeObject(obj);
             this.objects.push(obj);
+            this.mapArray[position.x][position.y].push(obj);
 
             //this.getObjects(position).push(obj);
         }
@@ -138,9 +141,12 @@ app.factory('MapFactory', function(ClassFactory) {
         }
 
         isPassable (position) {
+            console.log('running map.isPassable')
+            console.log('mapArray', typeof this.mapArray[position.x][position.y], this.mapArray[position.x][position.y])
+            console.log('))))))))) looking for map objects', this.objects) //just the avatar, though sometimes an Avatar and sometimes and Obstacle
             if (!this.onMap(position.x,position.y)) return false;
 
-            var passable = true;
+            
 
             // this.each(position.x, position.y, obj => {
             //     if (!obj.isPassable()) {
@@ -148,15 +154,16 @@ app.factory('MapFactory', function(ClassFactory) {
             //     }
             // });
 
-            passable = this.mapArray[position.x][position.y].every(obj => {
-                obj.passable === false;
-                console.log('obj', obj);
+            var passable = this.mapArray[position.x][position.y].every(obj => { //never run bc array is empty
+                console.log('$$$$$$$$$$$$$ passible obj?', obj); 
+                return obj.passable === true;
+                
             });
             return passable;
         }
 
         onMap (x,y) {
-                if(x < 0 || y < 0 || x >= this.mapArray.length || y >= this.mapArray.length) return false;
+                if(x < 0 || y < 0 || x >= this.mapArray.length || y >= this.mapArray[0].length) return false;
                 return true;
             }
 
