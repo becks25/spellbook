@@ -6,7 +6,7 @@ app.factory('SpellComponentFactory', function(){
 	        case 'move':
 	          toolObj.action = 'move';
 	          toolObj.text = 'move';
-	          toolObj.direction = 'UP';
+	          toolObj.direction = 'down';
 	          toolObj.distance = 1;
 	          toolObj.type = 'tool';
 	          break;

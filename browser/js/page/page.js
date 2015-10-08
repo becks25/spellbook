@@ -46,7 +46,6 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
   // pushes each obj to spellTools arr
   var spellToolConstr = () => {
     $scope.page.tools.forEach((tool)=>{
-      console.log('tool in forEach', tool)
       var newTool = SpellComponentFactory.makeToolObj(tool);
       $scope.spellTools.push(newTool);
     });
@@ -67,8 +66,6 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
     stop: function(e, ui){
       var spellItem = ui.item.scope().tool;
       $scope.spellComponents.push(spellItem);
-      console.log('tools', $scope.spellTools)
-      console.log('comp', $scope.spellComponents)
     }
   }
 
@@ -96,10 +93,14 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
 
   $scope.size = TilesizeFactory.TILESIZE + 'px';
 
-  $scope.runSpell = function(){
-    console.log('here?');
-    $scope.spell.run();
+  $scope.runSpell = (argArr)=>{
+    $scope.spell.run(argArr);
   }
+
+  $scope.stepThrough = (argArr)=>{
+    $scope.spell.stepThrough(argArr);
+  }
+
 
   
 
