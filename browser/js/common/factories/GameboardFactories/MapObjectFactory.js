@@ -38,7 +38,6 @@ app.factory('MapObjectFactory', function(PosFactory, TilesizeFactory){
         newPos.addDir(dir, amt);
 
         if(this.map.isPassable(newPos)){
-          console.log('***************** passing', this.map.isPassable(newPos))
           return newPos;
         }else{
           return false;

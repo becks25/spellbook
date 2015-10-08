@@ -75,8 +75,7 @@ app.factory('SpellFactory', function(TilesizeFactory){
 		//do we need to translate them?
 
 		//hard coded for testing
-		console.log('parsing')
-		console.log(argArr)
+
 		// return argArr.filter((command)=>command.type==='tool');
 		return [{
 		// 	action: 'move',

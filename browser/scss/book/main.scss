@@ -326,3 +326,47 @@
 //  margin-top: 7px;
 //  margin-left:18px;
 //}
+.dropzone {
+  position: relative;
+  padding: 14px;
+  border: 2px dashed grey;
+  margin-bottom: 14px;
+  border-radius: 5px;
+  font-size: 60px;
+  height: 100px;
+  color: grey;
+  text-align: center;
+}
+
+.dropzone:after {
+  content: 'drop zone';
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+}
+
+.noFields {
+  padding: 2px;
+  border: 2px dashed grey;
+}
+
+ul {
+  cursor: move;
+}
+
+li {
+  border: 1px dashed grey;
+}
+
+.beingDragged {
+  height: 24px;
+  margin-bottom: .5em !important;
+  border: 2px dotted #ccc !important;
+  background: none !important;
+}
+
+.spellBox {
+  min-height: 25px;
+}

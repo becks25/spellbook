@@ -76,7 +76,7 @@ var seedPages = function(stories){
                     [
                         [{
                             type: 'Avatar',
-                            name: 'House2'
+                            name: 'WizardBoy2'
                         }],
                         [],
                         [{

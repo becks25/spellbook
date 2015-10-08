@@ -5,31 +5,22 @@
 		<div class="">
 			{{page.text}}
 		</div>
-
-
 	</div>
-
 
 	<!--Right side of the page-->
 	<div class="col-md-6 col-sm-12" id="right-page">
 		<div id="canvas" class="img-square">
 			<div id="cr-stage" ng-style="{background: url({{page.boardBackground}})}" class="text-center center-block">
 			<div ng-repeat="i in grid track by $index" style="height:{{size}}; width:{{size}}" class="square"></div>
-
 			</div>
-
 		</div>
-		
-
 	</div>
-
-
 	<div class="col-md-6 col-sm-12">
 		<!--the page's toolbox-->
 		<tool-box></tool-box>
 	</div>
 
-	<div class="col-md-6 col-sm-12" id="right-page">
+	<div class="col-md-6 col-sm-12">
 		<!--Drop box for spells/instructions-->
 		<spell></spell>
 	</div>
