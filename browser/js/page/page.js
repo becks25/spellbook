@@ -106,12 +106,19 @@
 
     $scope.spellList = [];
 
+<<<<<<< HEAD
 
 
     TilesizeFactory.NumTiles = $scope.page.gameboard.length;
     Crafty.load(['/images/sprites.png']);
     Crafty.init(TilesizeFactory.TILESIZE * TilesizeFactory.NumTiles, TilesizeFactory.TILESIZE* TilesizeFactory.NumTiles);
     Crafty.canvas.init();
+=======
+  TilesizeFactory.NumTiles = $scope.page.gameboard.length;
+  Crafty.load(['/images/sprites.png']);
+  Crafty.init(TilesizeFactory.TILESIZE * TilesizeFactory.NumTiles, TilesizeFactory.TILESIZE* TilesizeFactory.NumTiles);
+  Crafty.canvas.init();
+>>>>>>> master
 
     Crafty.sprite(64, '/images/sprites.png', SPRITES);
 
@@ -123,12 +130,16 @@
     $scope.level.map.resetMap();
     };
 
+<<<<<<< HEAD
 
     $scope.grid = new Array(TilesizeFactory.NumTiles * TilesizeFactory.NumTiles);
     // document.querySelectorAll('.square').forEach( elem => {
     //   elem.style.height = TilesizeFactory.TILESIZE + 'px';
     //   elem.style.width = TilesizeFactory.TILESIZE + 'px';
     // })
+=======
+  $scope.grid = new Array(TilesizeFactory.NumTiles * TilesizeFactory.NumTiles);
+>>>>>>> master
 
     $scope.size = TilesizeFactory.TILESIZE + 'px';
 

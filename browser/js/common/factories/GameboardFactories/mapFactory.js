@@ -12,18 +12,6 @@ app.factory('MapFactory', function(ClassFactory, TilesizeFactory) {
 
             this.load(mapData);
         }
-        // destroy () {
-        //     // this.each(obj => {
-        //     //     obj.destroy();
-        //     // });
-
-
-        //     this.objects = [];
-
-        //     // this.mapArray = null;
-
-
-        // }
 
         makeBoard (){
             var board = [];
@@ -31,13 +19,12 @@ app.factory('MapFactory', function(ClassFactory, TilesizeFactory) {
                 board.push([]);
                 for(var j=0; j<TilesizeFactory.NumTiles; j++){
                     board[i].push([]);
-                } 
+                }
             }
             return board;
         }
 
         resetMap(){
-            console.log('map reset', this);
             Crafty("2D").each(function(i) {
                     this.destroy();
 
@@ -48,9 +35,6 @@ app.factory('MapFactory', function(ClassFactory, TilesizeFactory) {
         getAvatar (){
             return this.avatar
         }
-
-        //took out each function, this is where it would have gone
-        //it checked each tile in the path for the tank and saw if a bullet would hit anything
 
         // position is an object with x and y coordinates
         getObject (position, type) {
@@ -71,8 +55,6 @@ app.factory('MapFactory', function(ClassFactory, TilesizeFactory) {
             this.removeObject(obj);
             this.objects.push(obj);
             this.mapArray[position.x][position.y].push(obj);
-
-            //this.getObjects(position).push(obj);
         }
 
         removeObject (obj) {
@@ -84,15 +66,6 @@ app.factory('MapFactory', function(ClassFactory, TilesizeFactory) {
             });
             this.objects.splice(index, 1);
 
-            // var oldPos = obj.getMapPos();
-            // if (this.onMap(oldPos)) {
-            //     // var objs = this.getObjects(oldPos);
-            //     // var i = this.mapArray[oldPos.x][oldPos.y].indexOf(obj);
-            //     // this.mapArray[oldPos.x][oldPos.y].splice(i, 1);
-
-            //     var i= this.getObjects(oldPos).indexOf(obj);
-            //     this.getObjects(oldPos).splice(i, 1);
-            // }
         }
 
         arrayRemove (array, obj) {
@@ -104,7 +77,6 @@ app.factory('MapFactory', function(ClassFactory, TilesizeFactory) {
         }
 
         load (mapData) {
-            console.log('loading');
             var x, y;
             var len = mapData.length;
             for(x = 0; x< len; x++) {
@@ -122,9 +94,6 @@ app.factory('MapFactory', function(ClassFactory, TilesizeFactory) {
                 if(obj.type === 'Avatar' )
                     this.avatar = obj;
             }
-
-            //this.objects.push(obj);
-
             obj.setMap(this);
             var position = {x: x, y: y};
 
@@ -137,19 +106,10 @@ app.factory('MapFactory', function(ClassFactory, TilesizeFactory) {
         }
 
         isPassable (position) {
-           
             if (!this.onMap(position.x,position.y)) return false;
 
+            var passable = this.mapArray[position.x][position.y].every(obj => {
 
-
-            // this.each(position.x, position.y, obj => {
-            //     if (!obj.isPassable()) {
-            //         passable = false;
-            //     }
-            // });
-
-            var passable = this.mapArray[position.x][position.y].every(obj => { //never run bc array is empty
-                console.log('$$$$$$$$$$$$$ passible obj?', obj);
                 return obj.passable === true;
 
             });
