@@ -1,9 +1,15 @@
 app.config(function ($stateProvider) {
     $stateProvider.state('user', {
-        url: '/user/:id',
+        url: '/me',
         templateUrl: 'js/user/user.html',
         resolve: {
-          user: (UserFactory, $stateParams) => UserFactory.find($stateParams.id),
+          user: (UserFactory, AuthService) => {
+            return AuthService.getLoggedInUser()
+            .then(user => {
+                return UserFactory.find(user._id);
+
+            })
+          }
           // completedStories: (user, StoryFactory)
         },
         controller: 'UserCtrl'
