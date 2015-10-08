@@ -1,4 +1,4 @@
-app.config(function ($stateProvider) {
+app.config( $stateProvider => {
     $stateProvider.state('page', {
         url: '/page/:id',
         templateUrl: 'js/page/page.html',
@@ -67,7 +67,7 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
       var spellItem = ui.item.scope().tool;
       $scope.spellComponents.push(spellItem);
     }
-  }
+  };
 
 
 
@@ -83,7 +83,8 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
 
   $scope.resetLevel = function(){
     $scope.level.map.resetMap();
-  }
+  };
+
 
   $scope.grid = new Array(TilesizeFactory.NumTiles * TilesizeFactory.NumTiles);
   // document.querySelectorAll('.square').forEach( elem => {
@@ -100,8 +101,6 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
   $scope.stepThrough = (argArr)=>{
     $scope.spell.stepThrough(argArr);
   }
-
-
-  
+    
 
 });

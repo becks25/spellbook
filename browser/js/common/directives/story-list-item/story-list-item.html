@@ -1,10 +1,10 @@
-<div>
-	<div img-src={{story.cover}} class='col-xs-3'>
-	</div>
-	<div>
+<div class="col-md-4">
+	<img ng-src={{story.cover}} class='col-md-6'>
+	<div class="'col-md-6">
 		<h3>{{story.title}}</h3>
 		<p ng-show="story.author">Author: {{story.author}}</p>
 		<p>Practice concepts: <span ng-repeat='concept in story.concepts'>{{concept}}, </span></p>
 		<p>{{story.description | limitTo: 100}}</p>
 	</div>
 </div>
+
