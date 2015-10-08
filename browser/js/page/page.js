@@ -8,9 +8,7 @@ app.config( $stateProvider => {
         controller: 'PageCtrl'
     });
 
-  });
-
-app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPRITES, LevelFactory, TilesizeFactory, SpellFactory, SpellComponentFactory, SPRITE_AVATARS) => {
+    app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPRITES, LevelFactory, TilesizeFactory, SpellFactory, SpellComponentFactory, SPRITE_AVATARS, orderByFilter) => {
     $scope.page = page;
     $scope.spellComponents = []; // update from db if saved version is present
     $scope.spellVars = [];
@@ -63,6 +61,23 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
     };
     spellVarConstr();
 
+
+    var refresh = () => {
+        $scope.$watchCollection('spellComponents', () => {
+            $scope.spellTools = orderByFilter($scope.spellTools, ['text']);
+        });
+        $scope.$watchCollection('spellVars', () => {
+            $scope.spellVars = orderByFilter($scope.spellVars, ['text']);
+        });
+        $scope.$watchCollection('directions', () => {
+            $scope.directions = orderByFilter($scope.directions, ['text']);
+        });
+    };
+    refresh();
+
+
+    $scope.tools = $scope.spellTools.slice();
+
     var baseConfig = {
         placeholder: "beingDragged",
         tolerance: 'pointer',
@@ -70,17 +85,26 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
     };
 
     $scope.toolConfig = angular.extend({}, baseConfig, {
+        update: (e, ui) => {
+            if(ui.item.sortable.droptarget.hasClass('first')) {
+                ui.item.sortable.cancel();
+                refresh();
+            }
+        },
+        stop: (e, ui) => {
+            if ($(e.target).hasClass('first') &&
+                e.target != ui.item.sortable.droptarget[0]) {
+                $scope.spellTools = $scope.tools.slice();
+                refresh();
+            }
+        },
         connectWith: ".spellComponents"
     });
 
     $scope.spellConfig = angular.extend({}, baseConfig, {
-        connectWith: ".spellTools",
-        receive: (e, ui) => {
-            console.log(ui.item);
-        }
+        connectWith: ".spellTools"
     });
 
-    $scope.spellList = [];
 //made some changes
   TilesizeFactory.NumTiles = $scope.page.gameboard.length;
   Crafty.load(['/images/sprites.png']);
