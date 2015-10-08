@@ -4,7 +4,7 @@
 	</div>
 	<div class="panel-body" droppable>
 		<ul ui-sortable >
-		  <li ng-repeat="tool in spellComponents track by $index">{{ tool.text }}</li>
+		  <li ng-repeat="tool in spellComponents track by $index"><span class="{{tool.type}}">{{ tool.text }}</span></li>
 		</ul>
 
 	</div>

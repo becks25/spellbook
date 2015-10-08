@@ -1,0 +1,31 @@
+tool-box, spell{
+	li{
+		list-style-type: none;
+
+	}
+
+	ul{
+		padding:0;
+		margin: 0;
+	}
+
+	.tool, .direction, .variable{
+		padding:1vh;
+		display:inline-block;
+		border-radius:5px;
+		border:2px solid white;
+
+	}
+
+	.tool{
+		background-color: #18b8c2;
+	}
+
+	.direction{
+		background-color: #8843b9;
+	}
+
+	.variable{
+		background-color: #b8f166;
+	}
+}
