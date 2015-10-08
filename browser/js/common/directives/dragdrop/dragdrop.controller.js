@@ -14,7 +14,6 @@ app.controller('DragAndDropCtrl', function ($scope, DraggedFactory) {
         e.preventDefault();
         e.stopPropagation();
 
-        console.log('droppable', this);
         var draggedElem = angular.element(DraggedFactory.dragged);
         var left = e.pageX;
         var top = e.pageY/2;
