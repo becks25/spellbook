@@ -64,7 +64,6 @@ app.factory('MapObjectFactory', function(PosFactory, TilesizeFactory){
       }
 
       promTweenQueen(attrs, duration){
-        console.log('I\'m a prom tween queen')
         var self = this;
         return new Promise(function(resolve, reject){
           self.tween(attrs, duration, function(err, res){

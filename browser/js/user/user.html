@@ -32,7 +32,8 @@
 			<!-- list of stories - links with sref -->
 			<div ng-repeat='story in user.completedStories'> 
 				<story-list-item story='story' class='col-xs-10'></story-list-item>
-				<button class='btn btn-success col-xs-2' ui-sref='page({story: story._id, pageNumber: 1})'>Go</button>
+				<p>{{story.sayMyName()}} story</p>
+				<button class='btn btn-success col-xs-2' ng-click='story.goToPage(1)'>Go</button>
 			</div>
 
 		</div>

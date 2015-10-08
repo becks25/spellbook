@@ -16,36 +16,36 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
     $scope.spellVars = [];
     $scope.spellTools = [];
     $scope.directions = [{
-      name: 'UP',
-      text: 'up',
-      value: false,
-      type: 'direction'
+          name: 'up',
+          text: 'up',
+          value: false,
+          type: 'direction'
       },{
-      name: 'DOWN',
-      text: 'down',
-      value: false,
-      type: 'direction'
+          name: 'down',
+          text: 'down',
+          value: false,
+          type: 'direction'
 
       },
       {
-      name: 'LEFT',
-      text: 'left',
-      value: false,
-      type: 'direction'
+          name: 'left',
+          text: 'left',
+          value: false,
+          type: 'direction'
 
       },
       {
-      name: 'RIGHT',
-      text: 'right',
-      value: false,
-      type: 'direction'
+          name: 'right',
+          text: 'right',
+          value: false,
+          type: 'direction'
         }];
 
     //scope.page.tools is an array of strings - .action of the objs
     // takes vars and tools from page model and makes command objs
     // pushes each obj to spellTools arr
     var spellToolConstr = () => {
-
+        console.log('&&&&&& page tools', $scope.page.tools)
       $scope.page.tools.forEach((tool)=>{
         var newTool = SpellComponentFactory.makeToolObj(tool);
         $scope.spellTools.push(newTool);

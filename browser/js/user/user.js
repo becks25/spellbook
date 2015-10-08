@@ -16,11 +16,14 @@ app.config(function ($stateProvider) {
     });
 });
 
-app.controller('UserCtrl', function ($scope, AuthService, UserFactory, $state, user) {
+app.controller('UserCtrl', function ($scope, AuthService, UserFactory, $state, user, StoryFactory) {
   $scope.user = user;
   // $scope.getScore = UserFactory.methods.getScore();
   // console.log('score', $scope.getScore);
-
+  // $scope.goToPage = (pageNum)=>{
+  //   StoryFactory.goToPage(pageNum);
+  // };
+  
   $scope.totalPoints = (function(){
     var total = 0;
 
