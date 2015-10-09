@@ -32,4 +32,71 @@ app.controller('UserCtrl', function ($scope, AuthService, UserFactory, $state, u
     return total;
   })();
 
+
+  //need array of [points, possible-points]
+  // var dataset = {
+  //   apples: [40, 60],
+  // };
+
+
+  var dataArr = [];
+
+  function Dataset(concept, points, possible) {
+    this.label= concept;
+    this.points= points;
+    this.possible= possible-points;
+    this.data= [this.points, this.possible];
+  };
+
+  $scope.user.mastery.forEach(concept =>{
+    var data = new Dataset(concept.topic, concept.pointsEarned, concept.pointsPossible);
+
+    dataArr.push(data);
+  });
+
+
+  console.log($scope.user.mastery);
+  var width = document.querySelector('#mastery').clientWidth/4;
+
+  var radius = Math.min(width, width) / 2;
+
+  var color = d3.scale.category20c();
+
+  var pie = d3.layout.pie()
+      .sort(null);
+
+  var arc = d3.svg.arc()
+      .innerRadius(radius - radius/2)
+      .outerRadius(radius - radius/4);
+
+
+      console.log('colors', color);
+  dataArr.forEach((data, index) => {
+    var svg = d3.select("#mastery").append("svg")
+        .attr("width", width)
+        .attr("height", width)
+        .append("g")
+        .attr("transform", "translate(" + width / 2 + "," + width / 2 + ")");
+
+    var path = svg.selectAll("path")
+        .data(pie(data.data))
+      .enter().append("path")
+        .attr("fill", function(d, i) { return color((index*4) + i); })
+        .attr("d", arc)
+        .transition() //animate the pies!
+        .ease("exp")
+        .duration(2000)
+        .attrTween("d", tweenPie);
+
+
+    svg.append("text")
+       .attr("text-anchor", "middle")
+       .text(function(d, i){return data.label});
+
+   });
+
+  function tweenPie(b) {
+    var i = d3.interpolate({startAngle: 1.1*Math.PI, endAngle: 1.1*Math.PI}, b);
+    return function(t) { return arc(i(t)); };
+  }
 });
