@@ -1,7 +1,12 @@
 app.config(function ($stateProvider) {
     $stateProvider.state('user', {
         url: '/me',
-        templateUrl: 'js/user/user.html',
+        views: {
+            'main': {
+                controller: 'UserCtrl',
+                templateUrl: 'js/user/user.html'
+            }
+        },
         resolve: {
           user: (UserFactory, AuthService) => {
             return AuthService.getLoggedInUser()
@@ -11,19 +16,19 @@ app.config(function ($stateProvider) {
             })
           }
           // completedStories: (user, StoryFactory)
-        },
-        controller: 'UserCtrl'
+        }
     });
 });
 
-app.controller('UserCtrl', function ($scope, AuthService, UserFactory, $state, user, StoryFactory) {
+app.controller('UserCtrl', function ($scope, AuthService, UserFactory, $state, user, StoryFactory, LARGE_AVATARS) {
   $scope.user = user;
   // $scope.getScore = UserFactory.methods.getScore();
   // console.log('score', $scope.getScore);
   // $scope.goToPage = (pageNum)=>{
   //   StoryFactory.goToPage(pageNum);
   // };
-  
+  $scope.allAvatars = LARGE_AVATARS;
+
   $scope.totalPoints = (function(){
     var total = 0;
 
@@ -32,11 +37,29 @@ app.controller('UserCtrl', function ($scope, AuthService, UserFactory, $state, u
     return total;
   })();
 
+  $scope._ = _;
 
-  //need array of [points, possible-points]
-  // var dataset = {
-  //   apples: [40, 60],
-  // };
+  $scope.ranger = _.range(3,19);
+  $scope.userCopy = _.create($scope.user);
+
+  $scope.editing=false;
+
+  $scope.toggleEditing = function(){
+    $scope.editing = !$scope.editing;
+  }
+
+  $scope.selectCharacter = (character) => {
+    $scope.user.character.picture = character;
+  };
+
+  $scope.restoreValuesToSaved = () => {
+    $scope.user = _.create($scope.userCopy);
+  };
+
+
+  $scope.saveProfile = () =>{
+    UserFactory.update($scope.user._id, $scope.user);
+  };
 
 
   var dataArr = [];
@@ -55,7 +78,6 @@ app.controller('UserCtrl', function ($scope, AuthService, UserFactory, $state, u
   });
 
 
-  console.log($scope.user.mastery);
   var width = document.querySelector('#mastery').clientWidth/4;
 
   var radius = Math.min(width, width) / 2;
@@ -70,7 +92,6 @@ app.controller('UserCtrl', function ($scope, AuthService, UserFactory, $state, u
       .outerRadius(radius - radius/4);
 
 
-      console.log('colors', color);
   dataArr.forEach((data, index) => {
     var svg = d3.select("#mastery").append("svg")
         .attr("width", width)
