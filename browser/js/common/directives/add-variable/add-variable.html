@@ -1,7 +1,11 @@
 
 	<div class="panel-body">
-		<ul ui-sortable="dirComponentConfig" ng-model="spellComponentDirs" class="spellComponentDirs dirBox">
-		  <li ng-repeat="variable in spellComponentDirs track by $index"><span class="{{variable.type}}">{{ variable.text }}<button ng-click="removeFromTool($index)">X</button></span></li>
+		<ul ui-sortable="dirComponentConfig" ng-model="tool.expressions" class="spellComponentDirs dirBox">
+		  <li>{{tool.condition.text}}</li>
+		  <li>{{tool.direction}}</li>
+		  <li>{{tool.distance}}</li>
+		  <li>{{tool.number}}</li>
+		  <li ng-repeat="variable in tool.expressions track by $index"><span class="{{variable.type}}">{{ variable.text }}<button ng-click="removeFromTool($index)">X</button></span></li>
 		</ul>
 	</div>
 

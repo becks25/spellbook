@@ -144,20 +144,36 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
  //save a copy of the directions
   $scope.spellDirsBox = $scope.directions.slice();
 
+var newVar={}
   $scope.dirConfig = angular.extend({}, baseConfig, {
+        //this only runs if valid drop
         update: (e, ui) => {
           console.log("this is the e item", ui.item.scope())
+          //set newVar to clone of dragged variable
+          newVar = _.cloneDeep(ui.item.scope().tool);
+
+          //ensures that drop target is a sortable item
             if (ui.item.sortable.droptarget.hasClass('first')) {
                 ui.item.sortable.cancel();
                 refresh();
             }
         },
         stop: (e, ui) => {
-            if ($(e.target).hasClass('first')) {
+            //runs on drop
+            if ($(e.target).hasClass('spellTool')) {
+                //recopies the list of directions
                 $scope.directions = $scope.spellDirsBox.slice();
-                console.log("this is the ui", ui)
-                $scope.spellComponents[0].direction = ui.item
-                refresh();
+                console.log("this is the ui", ui.item)
+                //set prop on droppee
+                // $scope.spellComponents[0].direction = newVar;
+                // if(thingBeingDroppedOn[newVar.type]){
+                //     if(thingBeingDroppedOn[newVar.type].isArray) {
+                //       $scope.thingBeingDroppedOn[newVar.type].push(newVar) ;
+                //     }
+                //     $scope.thingBeingDroppedOn[newVar.type] = newVar.name;
+                //     newDir = null;
+                //     refresh();
+                // }
                 console.log("Now look", $scope.spellComponents);
             }
         },
@@ -197,44 +213,6 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
     $scope.dirComponentConfig = angular.extend({}, baseConfig, {
         connectWith: ".spellVars"
     });
-
-
-//a different approach
-
-  //$scope.spellDirsBox = $scope.directions.slice();
-
-  // $scope.dirConfig = angular.extend({}, baseConfig, {
-  //       update: (e, ui) => {
-  //         console.log("this is the ui item", ui.item)
-  //           if (ui.item.sortable.droptarget.hasClass('first')) {
-  //               ui.item.sortable.cancel();
-  //               refresh();
-  //           }
-  //       },
-  //       stop: (e, ui) => {
-  //           if ($(e.target).hasClass('first')) {
-  //               $scope.directions = $scope.spellDirsBox.slice();
-  //               refresh();
-  //           }
-  //       },
-  //       connectWith: ".spellComponentDirs"
-  //   });
-
-
-  //   $scope.dirComponentConfig = angular.extend({}, baseConfig, {
-  //       connectWith: ".spellDirs"
-  //   });
-
-
-
-
-
-
-
-
-
-
-
 
     //made some changes
     TilesizeFactory.NumTiles = $scope.page.gameboard.length;
