@@ -1,11 +1,16 @@
 app.config($stateProvider => {
     $stateProvider.state('page', {
         url: '/page/:id',
-        templateUrl: 'js/page/page.html',
         resolve: {
             page: (PageFactory, $stateParams) => PageFactory.find($stateParams.id)
         },
-        controller: 'PageCtrl'
+        views: {
+            main: {
+                templateUrl: 'js/page/page.html',
+                    controller: 'PageCtrl'
+
+            }
+        }
     });
 
 });
@@ -41,16 +46,19 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
             type: 'direction'
         }];
 
+    //this is for testing ig spell directions is working...
+    //$scope.spellDirections = [];
+    $scope.spellComponentDirs = [];
+
     //scope.page.tools is an array of strings - .action of the objs
     // takes vars and tools from page model and makes command objs
     // pushes each obj to spellTools arr
     var spellToolConstr = () => {
-        console.log('&&&&&& page tools', $scope.page.tools)
         $scope.page.tools.forEach((tool)=> {
             var newTool = SpellComponentFactory.makeToolObj(tool);
             $scope.spellTools.push(newTool);
         });
-    }
+    };
     //construct the spellTools arr on load
     spellToolConstr();
 
@@ -75,18 +83,26 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
         $scope.$watchCollection('directions', () => {
             $scope.directions = orderByFilter($scope.directions, ['text']);
         });
+
+        $scope.$watchCollection('spellComponentDirs', () => {
+            $scope.spellComponentDirs = orderByFilter($scope.spellComponentDirs, ['text']);
+        });
     };
     refresh();
 
-
+//save a copy of all tools on the scope
     $scope.tools = $scope.spellTools.slice();
 
-    $scope.removeFromSpell = (tool, index) => {
-        //console.log("index", index);
+//remove a tool from the spell
+    $scope.removeFromSpell = (index) => {
         $scope.spellComponents.splice(index, 1);
+      };
 
-        console.log("the spell", $scope.spellComponents);
-    };
+//remove a variable from the tool
+//this will need to change as soon as correctly adding vars to tools
+    $scope.removeFromTool = (index) => {
+        $scope.spellComponentDirs.splice(index, 1);
+      };
 
     var baseConfig = {
         placeholder: "beingDragged",
@@ -94,6 +110,8 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
         revert: 100
     };
 
+
+//add tools to the spell components array
     $scope.toolConfig = angular.extend({}, baseConfig, {
         update: (e, ui) => {
             if (ui.item.sortable.droptarget.hasClass('first')) {
@@ -102,6 +120,7 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
             }
         },
         stop: (e, ui) => {
+
             if (e.target) {
                 if ($(e.target).hasClass('first')) {
                     $scope.spellTools = $scope.tools.slice();
@@ -111,10 +130,72 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
         },
         connectWith: ".spellComponents"
     });
+
+
+
     $scope.spellConfig = angular.extend({}, baseConfig, {
         connectWith: ".spellTools"
     });
-    //fixes
+
+//this currently only handles adding directions
+  //drag directions to tools
+
+ //save a copy of the directions
+  $scope.spellDirsBox = $scope.directions.slice();
+
+  $scope.dirConfig = angular.extend({}, baseConfig, {
+        update: (e, ui) => {
+          console.log("this is the ui item", ui.item)
+            if (ui.item.sortable.droptarget.hasClass('first')) {
+                ui.item.sortable.cancel();
+                refresh();
+            }
+        },
+        stop: (e, ui) => {
+            if ($(e.target).hasClass('first')) {
+                $scope.directions = $scope.spellDirsBox.slice();
+                refresh();
+            }
+        },
+        connectWith: ".spellComponentDirs"
+    });
+
+
+    $scope.dirComponentConfig = angular.extend({}, baseConfig, {
+        connectWith: ".spellDirs"
+    });
+
+
+
+    //this handles dragging variables to tools
+
+    //save a copy of the spellVars
+  $scope.spellVarsBox = $scope.spellVars.slice();
+
+  $scope.varConfig = angular.extend({}, baseConfig, {
+        update: (e, ui) => {
+          console.log("this is the ui item", ui.item)
+            if (ui.item.sortable.droptarget.hasClass('first')) {
+                ui.item.sortable.cancel();
+                refresh();
+            }
+        },
+        stop: (e, ui) => {
+            if ($(e.target).hasClass('first')) {
+                $scope.spellVars = $scope.spellVarsBox.slice();
+                refresh();
+            }
+        },
+        connectWith: ".spellComponentDirs"
+    });
+
+
+    $scope.dirComponentConfig = angular.extend({}, baseConfig, {
+        connectWith: ".spellVars"
+    });
+
+
+
     //made some changes
     TilesizeFactory.NumTiles = $scope.page.gameboard.length;
     Crafty.load(['/images/sprites.png']);

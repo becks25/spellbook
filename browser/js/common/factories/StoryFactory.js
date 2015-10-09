@@ -13,18 +13,23 @@ app.factory('StoryFactory', (DS, $http, $state, PageFactory) => {
                     localField: 'author'
                 }
             }
-        }, 
+        },
         methods: {
             goToPage: (pageNum) => {
-                console.log('going to page', pageNum)
                 PageFactory.find({story: this._id, pageNumber: pageNum})
                 .then((page)=>{
-                    $state.go('Page', {id:page._id});
+                    $state.go('page', {id:page._id});
                 });
             },
+            goToStory: (storyId) => {
+                $state.go('story.indivStory', {storyId: storyId});
+            },
             sayMyName: () => {
-
                 return this;
+            },
+            getAllPages: (storyId) => {
+                return $http.get(`api/pages/story/${storyId}`)
+                    .then(response => response.data)
             }
         }
     })
