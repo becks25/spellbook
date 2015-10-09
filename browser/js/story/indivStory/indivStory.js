@@ -6,25 +6,32 @@ app.config($stateProvider => {
         url: '/:storyId',
         views: {
             'content': {
-                templateUrl: 'js/story/indivStory/indivStory.html'
-            },
-            params: {
-                story: null
-            },
-            resolve: {
-                story: (StoryFactory) => StoryFactory.find(story)
+                resolve: {
+                    story: (StoryFactory, $stateParams) => StoryFactory.find($stateParams.storyId)
+                },
+                templateUrl: 'js/story/indivStory/indivStory.html',
+                controller: 'indivStoryCtrl'
             }
-        },
-        controller: 'indivStoryCtrl'
+        }
 
     });
 });
 
-app.controller('indivStoryCtrl', ($scope, $state, $stateParams, story) => {
-    $scope.story = story;
-    console.log('hi');
-    $scope.func = () => console.log('hi');
-    //$scope.hide = true;
-//    templateUrl: 'js/story/indivStory/indivStory.html'}
+app.controller('indivStoryCtrl', ($scope, $state, $stateParams, StoryFactory, story, $timeout) => {
+    story.getAllPages($stateParams.storyId)
+        .then(pages => {
+            console.log(pages);
+            $scope.pages = pages;
+        });
+    $scope.cover = story.cover;
+
+    $timeout(() => {
+        $("#flipbook").turn({
+            width: 400,
+            height: 300,
+            autoCenter: true
+        });
+    }, 0);
+
 
 });

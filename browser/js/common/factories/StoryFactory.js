@@ -26,6 +26,10 @@ app.factory('StoryFactory', (DS, $http, $state, PageFactory) => {
             },
             sayMyName: () => {
                 return this;
+            },
+            getAllPages: (storyId) => {
+                return $http.get(`api/pages/story/${storyId}`)
+                    .then(response => response.data)
             }
         }
     })
