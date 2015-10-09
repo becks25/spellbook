@@ -20,7 +20,7 @@
         </div>
         <div class="col-md-4 col-sm-12">
             <b>Variables</b>
-            <ul>
+            <ul ng-model="spellVars" ui-sortable="varConfig" class="spellVars first">
                 <li ng-repeat="tool in spellVars track by $index" draggable="true"><span
                         class="variable">{{ tool.text}}</span></li>
             </ul>

@@ -87,12 +87,18 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
     };
     refresh();
 
-
+//save a copy of all tools on the scope
     $scope.tools = $scope.spellTools.slice();
 
+//remove a tool from the spell
     $scope.removeFromSpell = (index) => {
-        //console.log("index", index);
         $scope.spellComponents.splice(index, 1);
+      };
+
+//remove a variable from the tool
+//this will need to change as soon as correctly adding vars to tools
+    $scope.removeFromTool = (index) => {
+        $scope.spellComponentDirs.splice(index, 1);
       };
 
     var baseConfig = {
@@ -158,7 +164,34 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
 
 
 
-    //then need to add drag variables to tools
+    //this handles dragging variables to tools
+
+    //save a copy of the spellVars
+  $scope.spellVarsBox = $scope.spellVars.slice();
+
+  $scope.varConfig = angular.extend({}, baseConfig, {
+        update: (e, ui) => {
+          console.log("this is the ui item", ui.item)
+            if (ui.item.sortable.droptarget.hasClass('first')) {
+                ui.item.sortable.cancel();
+                refresh();
+            }
+        },
+        stop: (e, ui) => {
+            if ($(e.target).hasClass('first')) {
+                $scope.spellVars = $scope.spellVarsBox.slice();
+                refresh();
+            }
+        },
+        connectWith: ".spellComponentDirs"
+    });
+
+
+    $scope.dirComponentConfig = angular.extend({}, baseConfig, {
+        connectWith: ".spellVars"
+    });
+
+
 
     //made some changes
     TilesizeFactory.NumTiles = $scope.page.gameboard.length;
