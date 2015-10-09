@@ -93,6 +93,7 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
 //remove a tool from the spell
     $scope.removeFromSpell = (index) => {
         $scope.spellComponents.splice(index, 1);
+        console.log($scope.spellComponents)
       };
 
 //remove a variable from the tool
@@ -142,7 +143,7 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
 
   $scope.dirConfig = angular.extend({}, baseConfig, {
         update: (e, ui) => {
-          console.log("this is the ui item", ui.item)
+          console.log("this is the e item", ui.item.scope())
             if (ui.item.sortable.droptarget.hasClass('first')) {
                 ui.item.sortable.cancel();
                 refresh();
@@ -151,7 +152,10 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
         stop: (e, ui) => {
             if ($(e.target).hasClass('first')) {
                 $scope.directions = $scope.spellDirsBox.slice();
+                console.log("this is the ui", ui)
+                $scope.spellComponents[0].direction = ui.item
                 refresh();
+                console.log("Now look", $scope.spellComponents);
             }
         },
         connectWith: ".spellComponentDirs"
@@ -190,6 +194,42 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
     $scope.dirComponentConfig = angular.extend({}, baseConfig, {
         connectWith: ".spellVars"
     });
+
+
+//a different approach
+
+  //$scope.spellDirsBox = $scope.directions.slice();
+
+  // $scope.dirConfig = angular.extend({}, baseConfig, {
+  //       update: (e, ui) => {
+  //         console.log("this is the ui item", ui.item)
+  //           if (ui.item.sortable.droptarget.hasClass('first')) {
+  //               ui.item.sortable.cancel();
+  //               refresh();
+  //           }
+  //       },
+  //       stop: (e, ui) => {
+  //           if ($(e.target).hasClass('first')) {
+  //               $scope.directions = $scope.spellDirsBox.slice();
+  //               refresh();
+  //           }
+  //       },
+  //       connectWith: ".spellComponentDirs"
+  //   });
+
+
+  //   $scope.dirComponentConfig = angular.extend({}, baseConfig, {
+  //       connectWith: ".spellDirs"
+  //   });
+
+
+
+
+
+
+
+
+
 
 
 

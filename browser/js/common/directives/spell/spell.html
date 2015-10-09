@@ -4,7 +4,7 @@
 	</div>
 	<div class="panel-body">
 		<ul ui-sortable="spellConfig" ng-model="spellComponents" class="spellComponents spellBox">
-		  <li ng-repeat="tool in spellComponents track by $index"><span class="{{tool.type}}">{{ tool.text }}<add-variable></add-variable><button ng-click="removeFromSpell($index)">X</button></span></li>
+		  <li ng-repeat="tool in spellComponents track by $index"><span class="{{tool.type}}">{{ tool.text }} <add-variable></add-variable><button ng-click="removeFromSpell($index)">X</button></span></li>
 		</ul>
 	</div>
 
