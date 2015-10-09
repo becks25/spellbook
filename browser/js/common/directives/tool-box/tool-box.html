@@ -12,7 +12,7 @@
 		</div>
 		<div class="col-md-4 col-sm-12">
 			<b>Directions</b>
-				<ul>
+				<ul ng-model="directions" ui-sortable="dirConfig" class="spellDirs first">
 		  			<li ng-repeat="tool in directions" draggable="true"><span class="direction" >{{ tool.text }}</span></li>
 		  		</ul>
 

@@ -1,0 +1,9 @@
+
+	<div class="panel-body">
+		<ul ui-sortable="dirComponentConfig" ng-model="spellComponentDirs" class="spellComponentDirs first">
+		  <li ng-repeat="variable in spellComponentDirs "><span class="{{variable.type}}">{{ variable.text }}<button ng-click="removeFromSpell(tool, $index)">X</button></span></li>
+		</ul>
+	</div>
+
+
+<!-- track by $index -->

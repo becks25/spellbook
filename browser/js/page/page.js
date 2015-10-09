@@ -41,6 +41,10 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
           type: 'direction'
         }];
 
+    //this is for testing ig spell directions is working...
+    //$scope.spellDirections = [];
+    $scope.spellComponentDirs = [];
+
     //scope.page.tools is an array of strings - .action of the objs
     // takes vars and tools from page model and makes command objs
     // pushes each obj to spellTools arr
@@ -76,17 +80,19 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
         $scope.$watchCollection('directions', () => {
             $scope.directions = orderByFilter($scope.directions, ['text']);
         });
+
+        $scope.$watchCollection('spellComponentDirs', () => {
+            $scope.spellComponentDirs = orderByFilter($scope.spellComponentDirs, ['text']);
+        });
     };
     refresh();
 
 
     $scope.tools = $scope.spellTools.slice();
 
-    $scope.removeFromSpell = (tool, index) => {
-      //console.log("index", index);
-      $scope.spellComponents.splice(index, 1);
-
-      console.log("the spell", $scope.spellComponents);
+    $scope.removeFromSpell = (index) => {
+        //console.log("index", index);
+        $scope.spellComponents.splice(index, 1);
       }
 
     var baseConfig = {
@@ -95,6 +101,8 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
         revert: 100
     };
 
+
+//add tools to the spell components array
     $scope.toolConfig = angular.extend({}, baseConfig, {
         update: (e, ui) => {
             if (ui.item.sortable.droptarget.hasClass('first')) {
@@ -103,8 +111,7 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
             }
         },
         stop: (e, ui) => {
-            if ($(e.target).hasClass('first') &&
-                e.target != ui.item.sortable.droptarget[0]) {
+            if ($(e.target).hasClass('first')) {
                 $scope.spellTools = $scope.tools.slice();
                 refresh();
             }
@@ -112,9 +119,42 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
         connectWith: ".spellComponents"
     });
 
+
     $scope.spellConfig = angular.extend({}, baseConfig, {
         connectWith: ".spellTools"
     });
+
+//this currently only handles adding directions
+  //drag directions to tools
+  $scope.dirConfig = angular.extend({}, baseConfig, {
+        update: (e, ui) => {
+          console.log("this is the ui item", ui.item)
+            if (ui.item.sortable.droptarget.hasClass('first')) {
+                ui.item.sortable.cancel();
+                refresh();
+            }
+        },
+        stop: (e, ui) => {
+            if ($(e.target).hasClass('first')) {
+                $scope.directions = $scope.directions.slice();
+                refresh();
+            }
+        },
+        connectWith: ".spellComponentDirs"
+    });
+
+
+    $scope.dirComponentConfig = angular.extend({}, baseConfig, {
+        connectWith: ".spellDirs"
+    });
+
+
+
+    //then need to add drag variables to tools
+
+
+
+
 
     //made some changes
     TilesizeFactory.NumTiles = $scope.page.gameboard.length;
