@@ -21,6 +21,8 @@ app.factory('SpellFactory', function(TilesizeFactory){
 		this.commands = [];
 		this.map.resetMap();
 		this.avatar = this.map.getAvatar();
+		this.level.resetRequirements();
+		if(this.currentCommand) this.currentCommand = null;
 	}
 
 	lock (){
@@ -54,17 +56,10 @@ app.factory('SpellFactory', function(TilesizeFactory){
 		if (this.ok) {
 		  return this.execute(argArr)
 		  .then(()=>{
-			if (this.isSolved()) return this.level.win();
+			if (this.level.isSolved()) return this.level.win();
 			else return this.level.lose();
 		  });
 		}
-	}
-
-
-	//TODO: actually check if the puzzle has been solved
-	isSolved(){
-		//need to compare spellVars to the requirements
-		return false;
 	}
 
 	//grab items in spell box
@@ -97,29 +92,38 @@ app.factory('SpellFactory', function(TilesizeFactory){
 			direction: 'down',
 			distance: 2,
 			current: 2
-		}, {
-			action: 'ifStatement',
-			condition: true,
-			expressions: [{
-				action: 'ifStatement',
-				condition: true,
-				expressions: [{
-						action: 'forLoop',
-						number: 2,
-						expressions: [{
-								action: 'move',
-								direction: 'right',
-								distance: 1
-							}, {
-								action: 'move',
-								direction: 'down',
-								distance: 1
-							}]
-				}]
-			}, {action: 'move',
-				direction: 'left',
-				distance: 1}]
-			},{action: 'move',
+		// }, {
+		// 	action: 'ifStatement',
+		// 	condition: true,
+		// 	expressions: [{
+		// 		action: 'ifStatement',
+		// 		condition: true,
+		// 		expressions: [{
+		// 				action: 'forLoop',
+		// 				number: 2,
+		// 				expressions: [{
+		// 						action: 'move',
+		// 						direction: 'right',
+		// 						distance: 1
+		// 					}, {
+		// 						action: 'move',
+		// 						direction: 'down',
+		// 						distance: 1
+		// 					}]
+		// 		}]
+		// 	}, {
+		// 	action: 'pickUp',
+		// 	variable: 'GreenPotion',
+		// 	}]
+		// 	},{
+		// 	action: 'move',
+		// 	direction: 'left',
+		// 	distance: 1}]
+			},{
+			action: 'pickUp',
+			variable: 'GreenPotion',
+			},{
+			action: 'move',
 			direction: 'up',
 			distance: 2
 
@@ -187,7 +191,7 @@ app.factory('SpellFactory', function(TilesizeFactory){
 	    	console.log('component', component)
 	     return this.executeCommand(component);
 
-	})
+		});
 	    // return spellArr.each((component) => this.executeCommand(component));
 	    // this.running = false;
 	    // return Promise.resolve(spellArr)
@@ -222,16 +226,25 @@ app.factory('SpellFactory', function(TilesizeFactory){
 	    		.then(()=>spell.cycle(avatar.position));
 	    	case 'give':
             	// collectable obj (ref) has to be passed into the function as .variable
-    			component.variable.holding = !component.variable.holding;
+            	//search map pos for person to give to
+            	var toGive = spell.map.checkPos(this.avatar.position, component.person); 
+	    		if (toGive) {
+    				if(component.variable.holding){
+    					component.variable.holding = !component.variable.holding;	    			
+	    				this.level.updateReq(toGive, 'give', component.variable);
+    				} 
+    			}
     			break;
 	    	case 'pickUp':
+	    		console.log('picking up', component.variable, component.variable.holding)
 	    		//search the map objects on that position for the one that matches component.variable,
-	    		this.mapArray[this.avatar.position.x][this.avatar.position.y].some(obj => {
-                	if(obj.name === component.name) spell.map.removeObj(obj);
+	    		var toPick = spell.map.checkPos(this.avatar.position, component.variable); 
+	    		if (toPick) {
+	    			spell.map.removeObj(toPick);
                 	// collectable obj (ref) has to be passed into the function as .variable
 	    			component.variable.holding = !component.variable.holding;
-                	return true;
-                });
+	    			this.level.updateReq(toPick, 'pickUp', 'true')
+                }
 	    		break;
 	    	case 'ifStatement':
 	    		if (component.condition){

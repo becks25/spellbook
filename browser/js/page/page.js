@@ -55,7 +55,6 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
     spellToolConstr();
 
     var spellVarConstr = () => {
-
         //variables are stored as strings
         $scope.page.variables.forEach((variable)=> {
             var name = variable.split(' ').join('');
@@ -131,7 +130,7 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
 
 
     $scope.resetLevel = function () {
-        $scope.level.map.resetMap();
+        $scope.spell.reset();
     };
 
 
