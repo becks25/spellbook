@@ -143,7 +143,7 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
 
     $scope.stepThrough = (argArr)=> {
         $scope.spell.stepThrough(argArr);
-    }
+    };
 
 
 });
