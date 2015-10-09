@@ -8,6 +8,7 @@ app.factory('SpellFactory', function(TilesizeFactory){
 	    this.map = level.map;
 	    this.key = level.key;
 	    this.avatar = this.map.getAvatar();
+	    this.currentCommand = null;
 	    //this.reset();
 	    // this.reload();
   	}
@@ -125,33 +126,54 @@ app.factory('SpellFactory', function(TilesizeFactory){
 		}];
 	}
 
+
+
   	//steps through program one command at a time
   	// spell box can be changed betwee steps (other than current command)
   	// resets board if first step
   	// sets current command to null if last step (will prompt reset on next stepthrough)
-  	stepThrough(argArr){
+  	// stepThrough(argArr){
+  	// 	var spellArr = this.parse(argArr);
+  	// 	if(!this.currentCommand) {
+  	// 		console.log('starting new round')
+  	// 		this.reset();
+  	// 		this.currentCommand = spellArr[0];
+  	// 		this.currentCommand.current = 3;
+
+  	// 	} else {
+  	// 		console.log(this.currentCommand)
+  	// 		var prevIndex = _.findIndex(spellArr, {'current': 2});
+  	// 		console.log(spellArr)
+  	// 		this.currentCommand.current = false;
+  	// 		this.currentCommand = prevIndex < spellArr.length-1 ? spellArr[prevIndex+1] : null;
+  	// 		if(this.currentCommand) this.currentCommand.current = true;
+  	// 		console.log(prevIndex, this.currentCommand);
+  	// 	}
+  	// 	if (this.currentCommand){
+  	// 		// this.running = true;
+  	// 		return this.executeCommand(this.currentCommand);
+  	// 		// this.running = false;
+  	// 	}
+  	// }
+
+  	//this stepThough function runs through spell components by index, 
+  	//which solves the problem of repeated commands
+  	// spell arr can't be changed during function (the stuff already stepped through can't change)
+	stepThrough(argArr){
   		var spellArr = this.parse(argArr);
-  		if(!this.currentCommand) {
-  			console.log('starting new round')
+  		if(this.currentCommand === null) {
   			this.reset();
-  			this.currentCommand = spellArr[0];
-  			this.currentCommand.current = 3;
+  			this.currentCommand = 0;
 
   		} else {
   			console.log(this.currentCommand)
-  			var prevIndex = _.findIndex(spellArr, {'current': 2});
-  			console.log(spellArr)
-  			this.currentCommand.current = false;
-  			this.currentCommand = prevIndex < spellArr.length-1 ? spellArr[prevIndex+1] : null;
-  			if(this.currentCommand) this.currentCommand.current = true;
-  			console.log(prevIndex, this.currentCommand);
+  			this.currentCommand < spellArr.length-1 ? this.currentCommand ++ : this.currentCommand = null;
   		}
   		if (this.currentCommand){
-  			// this.running = true;
-  			return this.executeCommand(this.currentCommand);
-  			// this.running = false;
+  			return this.executeCommand(spellArr[this.currentCommand]);
   		}
   	}
+
 
   	//executes the spell
   	execute(argArr){
@@ -161,7 +183,11 @@ app.factory('SpellFactory', function(TilesizeFactory){
 	    // var spellArr = Promise.map(noPromSpellArr, (spell)=>{
 	    	// return spell})
 	    // run async execute command fn on each of the commands in the spell, serially
-	    return Promise.reduce(spellArr, (nothing, component) => this.executeCommand(component));
+	    return Promise.reduce(spellArr, (nothing, component) => {
+	    	console.log('component', component)
+	     return this.executeCommand(component);
+
+	})
 	    // return spellArr.each((component) => this.executeCommand(component));
 	    // this.running = false;
 	    // return Promise.resolve(spellArr)
@@ -256,14 +282,17 @@ app.factory('SpellFactory', function(TilesizeFactory){
 	    	var newPos = avatar.move(direction, 1);
 	        if (newPos) {
 	          // Do the move!
+	          console.log(newPos)
 	          return avatar.promTweenQueen({x: newPos.x*TilesizeFactory.TILESIZE, y: newPos.y*TilesizeFactory.TILESIZE}, 200)
 	          .then(()=>{
+	          		console.log('set avatar to ', newPos)
 		          avatar.setMapPos(newPos);
 	            // spell.unlock();
 	          });
 
 	        } else {
 	          // Bump!
+	          console.log('bump', curPos)
 	          var curPos = avatar.entity;
 	          // var newPos = curPos.dup().addDir(direction, 8);
 	          var heightBump = 0;
