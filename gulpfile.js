@@ -32,7 +32,7 @@ gulp.task('reloadCSS', function () {
 
 gulp.task('lintJS', function () {
 
-    return gulp.src(['./browser/js/**/*.js', './server/**/*.js'])
+    return gulp.src(['./browser/js/**/*.js', './server/**/*.js', '!./browser/js/turnjs/**/*.js'])
         .pipe(eslint())
         .pipe(eslint.format())
         .pipe(eslint.failOnError());

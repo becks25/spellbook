@@ -24,14 +24,13 @@ var schema = new mongoose.Schema({
     },
     username: {
         type: String,
-        required: true,
-        unique: true
+        required: true
     },
     character: {
         name: {type: String},
         picture: {
             type: String,
-            default: 'https://s-media-cache-ak0.pinimg.com/236x/6e/7f/a3/6e7fa3580e6632889fc74411fcf36545.jpg'
+            default: 'Giraffe1'
         }
     },
     isAdmin: {
@@ -85,6 +84,9 @@ var encryptPassword = function (plainText, salt) {
 
 schema.pre('save', function (next) {
 
+    if(!this.character.name){
+        this.character.name = this.username;
+    }
     if (this.isModified('password')) {
         this.salt = this.constructor.generateSalt();
         this.password = this.constructor.encryptPassword(this.password, this.salt);
