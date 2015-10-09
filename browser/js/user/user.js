@@ -31,12 +31,26 @@ app.controller('UserCtrl', function ($scope, AuthService, UserFactory, $state, u
 
     return total;
   })();
+  $scope._ = _;
+
+  $scope.ranger = _.range(3,19);
+  $scope.userCopy = _.create($scope.user);
+
+  $scope.editing=false;
+
+  $scope.toggleEditing = function(){
+    $scope.editing = !$scope.editing;
+  }
 
 
-  //need array of [points, possible-points]
-  // var dataset = {
-  //   apples: [40, 60],
-  // };
+  $scope.restoreValuesToSaved = () => {
+    $scope.user = _.create($scope.userCopy);
+    };
+
+
+  $scope.saveProfile = () =>{
+    UserFactory.update($scope.user._id, $scope.user);
+  };
 
 
   var dataArr = [];
@@ -55,7 +69,6 @@ app.controller('UserCtrl', function ($scope, AuthService, UserFactory, $state, u
   });
 
 
-  console.log($scope.user.mastery);
   var width = document.querySelector('#mastery').clientWidth/4;
 
   var radius = Math.min(width, width) / 2;
@@ -70,7 +83,6 @@ app.controller('UserCtrl', function ($scope, AuthService, UserFactory, $state, u
       .outerRadius(radius - radius/4);
 
 
-      console.log('colors', color);
   dataArr.forEach((data, index) => {
     var svg = d3.select("#mastery").append("svg")
         .attr("width", width)
