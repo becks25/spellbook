@@ -230,7 +230,7 @@ app.factory('SpellFactory', function(TilesizeFactory){
             	var toGive = spell.map.checkPos(this.avatar.position, component.person); 
 	    		if (toGive) {
     				if(component.variable.holding){
-    					component.variable.holding = !component.variable.holding;	    			
+    					component.variable.holding = false;	    			
 	    				this.level.updateReq(toGive, 'give', component.variable);
     				} 
     			}
@@ -242,7 +242,8 @@ app.factory('SpellFactory', function(TilesizeFactory){
 	    		if (toPick) {
 	    			spell.map.removeObj(toPick);
                 	// collectable obj (ref) has to be passed into the function as .variable
-	    			component.variable.holding = !component.variable.holding;
+                	toPick.holding = true;
+	    			component.variable.holding = true;
 	    			this.level.updateReq(toPick, 'pickUp', 'true')
                 }
 	    		break;
