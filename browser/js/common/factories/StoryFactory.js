@@ -22,7 +22,7 @@ app.factory('StoryFactory', (DS, $http, $state, PageFactory) => {
                 });
             },
             goToStory: (storyId) => {
-                $state.go('indivStory', {storyId: storyId});
+                $state.go('story.indivStory', {storyId: storyId});
             },
             sayMyName: () => {
                 return this;

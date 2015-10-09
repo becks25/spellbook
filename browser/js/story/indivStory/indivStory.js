@@ -2,20 +2,29 @@
  * Created by Austin on 10/7/15.
  */
 app.config($stateProvider => {
-    $stateProvider.state('indivStory', {
-        url: 'story/:storyId',
+    $stateProvider.state('story.indivStory', {
+        url: '/:storyId',
         views: {
-            'content': { templateUrl: 'js/story/indivStory/indivStory.html'}
+            'content': {
+                templateUrl: 'js/story/indivStory/indivStory.html'
+            },
+            params: {
+                story: null
+            },
+            resolve: {
+                story: (StoryFactory) => StoryFactory.find(story)
+            }
         },
-        //resolve: {
-        //    story: (StoryFactory, $stateParams) => StoryFactory.find($stateParams.id)
-        //},
-        controller: 'IndivStoryCtrl'
+        controller: 'indivStoryCtrl'
 
     });
 });
 
-app.controller('IndivStoryCtrl', ($scope, $state) => {
-    //$scope.story = story;
+app.controller('indivStoryCtrl', ($scope, $state, $stateParams, story) => {
+    $scope.story = story;
+    console.log('hi');
+    $scope.func = () => console.log('hi');
+    //$scope.hide = true;
+//    templateUrl: 'js/story/indivStory/indivStory.html'}
 
 });

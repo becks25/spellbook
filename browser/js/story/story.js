@@ -17,12 +17,14 @@ app.config($stateProvider => {
     })
 });
 
-app.controller('StoryCtrl', ($scope, $state, stories, $timeout, StoryFactory) => {
+app.controller('StoryCtrl', ($scope, $state, stories, $timeout, StoryFactory, $stateParams) => {
     $scope.stories = stories;
     $scope.pop = false;
 
+    $scope.hide = false;
+
     $scope.goToStoryPage = story => {
-        console.log(story._id);
+        $scope.hide = true;
         story.goToStory(story._id);
     }
 });

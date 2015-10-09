@@ -1,4 +1,5 @@
-<div class="test">
-    <story-list-item class="test" ng-repeat="story in stories" story="story"></story-list-item>
+<div class="test" ng-hide="hide">
+    <story-list-item class="test" ng-repeat="story in stories" story="story" ng-click="goToStoryPage(story)"></story-list-item>
 </div>
-<!--ng-click="goToStoryPage(story)"-->
+<div ui-view="content"></div>
+
