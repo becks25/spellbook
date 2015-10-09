@@ -130,6 +130,10 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
 
 //this currently only handles adding directions
   //drag directions to tools
+
+ //save a copy of the directions
+  $scope.spellDirsBox = $scope.directions.slice();
+
   $scope.dirConfig = angular.extend({}, baseConfig, {
         update: (e, ui) => {
           console.log("this is the ui item", ui.item)
@@ -140,7 +144,7 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
         },
         stop: (e, ui) => {
             if ($(e.target).hasClass('first')) {
-                $scope.directions = $scope.directions.slice();
+                $scope.directions = $scope.spellDirsBox.slice();
                 refresh();
             }
         },
