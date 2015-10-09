@@ -16,4 +16,7 @@ app.controller('StoryCtrl', ($scope, $state, stories, $timeout) => {
     $scope.stories = stories;
     $scope.pop = false;
 
+    $scope.goToStoryPage = storyId => $state.go(`/story/${storyId}`);
+
+
 });

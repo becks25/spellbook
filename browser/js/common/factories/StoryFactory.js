@@ -13,7 +13,7 @@ app.factory('StoryFactory', (DS, $http, $state, PageFactory) => {
                     localField: 'author'
                 }
             }
-        }, 
+        },
         methods: {
             goToPage: (pageNum) => {
                 console.log('going to page', pageNum)
@@ -21,7 +21,7 @@ app.factory('StoryFactory', (DS, $http, $state, PageFactory) => {
                 .then((page)=>{
                     $state.go('Page', {id:page._id});
                 });
-            },
+            }
             sayMyName: () => {
 
                 return this;
