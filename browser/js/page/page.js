@@ -1,11 +1,16 @@
 app.config($stateProvider => {
     $stateProvider.state('page', {
         url: '/page/:id',
-        templateUrl: 'js/page/page.html',
         resolve: {
             page: (PageFactory, $stateParams) => PageFactory.find($stateParams.id)
         },
-        controller: 'PageCtrl'
+        views: {
+            main: {
+                templateUrl: 'js/page/page.html',
+                    controller: 'PageCtrl'
+
+            }
+        }
     });
 
 });
@@ -49,17 +54,15 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
     // takes vars and tools from page model and makes command objs
     // pushes each obj to spellTools arr
     var spellToolConstr = () => {
-        console.log('&&&&&& page tools', $scope.page.tools)
         $scope.page.tools.forEach((tool)=> {
             var newTool = SpellComponentFactory.makeToolObj(tool);
             $scope.spellTools.push(newTool);
         });
-    }
+    };
     //construct the spellTools arr on load
     spellToolConstr();
 
     var spellVarConstr = () => {
-
         //variables are stored as strings
         $scope.page.variables.forEach((variable)=> {
             var name = variable.split(' ').join('');
@@ -208,7 +211,7 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
 
 
     $scope.resetLevel = function () {
-        $scope.level.map.resetMap();
+        $scope.spell.reset();
     };
 
 

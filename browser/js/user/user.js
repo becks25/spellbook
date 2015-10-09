@@ -1,7 +1,12 @@
 app.config(function ($stateProvider) {
     $stateProvider.state('user', {
         url: '/me',
-        templateUrl: 'js/user/user.html',
+        views: {
+            'main': {
+                controller: 'UserCtrl',
+                templateUrl: 'js/user/user.html'
+            }
+        },
         resolve: {
           user: (UserFactory, AuthService) => {
             return AuthService.getLoggedInUser()
@@ -11,8 +16,7 @@ app.config(function ($stateProvider) {
             })
           }
           // completedStories: (user, StoryFactory)
-        },
-        controller: 'UserCtrl'
+        }
     });
 });
 

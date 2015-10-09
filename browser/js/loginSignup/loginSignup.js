@@ -2,15 +2,18 @@ app.config(function ($stateProvider) {
 
     $stateProvider.state('loginSignup', {
         url: '/login',
-        templateUrl: 'js/loginSignup/loginSignup.html',
-        controller: 'LoginSignupCtrl'
+        views: {
+            'main': {
+                controller: 'LoginSignupCtrl',
+                templateUrl: 'js/loginSignup/loginSignup.html'
+            }
+        }
     });
 
 });
 
 
 app.controller('LoginSignupCtrl', function ($rootScope, AUTH_EVENTS, $scope, AuthService, $state, UserFactory) {
-
     $scope.login = {};
     $scope.signup = {};
     $scope.loginError = null;
