@@ -16,14 +16,15 @@ app.factory('StoryFactory', (DS, $http, $state, PageFactory) => {
         },
         methods: {
             goToPage: (pageNum) => {
-                console.log('going to page', pageNum)
                 PageFactory.find({story: this._id, pageNumber: pageNum})
                 .then((page)=>{
-                    $state.go('Page', {id:page._id});
+                    $state.go('page', {id:page._id});
                 });
-            }
+            },
+            goToStory: (storyId) => {
+                $state.go('indivStory', {storyId: storyId});
+            },
             sayMyName: () => {
-
                 return this;
             }
         }

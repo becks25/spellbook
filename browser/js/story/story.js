@@ -4,7 +4,12 @@
 app.config($stateProvider => {
     $stateProvider.state('story', {
         url: '/story',
-        templateUrl: 'js/story/story.html',
+        views: {
+            'main': {
+                controller: 'StoryCtrl',
+                templateUrl: 'js/story/story.html'
+            }
+        },
         resolve: {
             stories: (StoryFactory) => StoryFactory.findAll()
         },
@@ -12,11 +17,12 @@ app.config($stateProvider => {
     })
 });
 
-app.controller('StoryCtrl', ($scope, $state, stories, $timeout) => {
+app.controller('StoryCtrl', ($scope, $state, stories, $timeout, StoryFactory) => {
     $scope.stories = stories;
     $scope.pop = false;
 
-    $scope.goToStoryPage = storyId => $state.go(`/story/${storyId}`);
-
-
+    $scope.goToStoryPage = story => {
+        console.log(story._id);
+        story.goToStory(story._id);
+    }
 });

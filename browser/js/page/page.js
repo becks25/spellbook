@@ -1,11 +1,16 @@
 app.config($stateProvider => {
     $stateProvider.state('page', {
         url: '/page/:id',
-        templateUrl: 'js/page/page.html',
         resolve: {
             page: (PageFactory, $stateParams) => PageFactory.find($stateParams.id)
         },
-        controller: 'PageCtrl'
+        views: {
+            main: {
+                templateUrl: 'js/page/page.html',
+                    controller: 'PageCtrl'
+
+            }
+        }
     });
 
 });
