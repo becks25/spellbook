@@ -45,7 +45,7 @@ router.post('/', (req, res, next) => {
 
 //edit one
 router.put('/:userId', (req, res, next) => {
-    if (!req.user.isAdmin || (req.user._id.toString() !== req.foundUser._id.toString())){
+    if (!req.user.isAdmin && (req.user._id.toString() !== req.foundUser._id.toString())){
         res.sendStatus(401);
         return;
     }

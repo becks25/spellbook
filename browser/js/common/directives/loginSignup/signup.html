@@ -1,7 +1,7 @@
 <!-- Signup -->
 <div class="col-md-6">
   
-  <form  class="form-horizontal loginbox" id="signup-form" name="signupForm" ng-submit="signupForm.$valid &&createUser(signup)">
+  <form  class="form-horizontal loginbox" id="signup-form" name="signupForm" ng-submit="signupForm.$valid &&createUser(signup)" novalidate>
     <h4>Signup</h4>
     <!-- Error alert -->
     <alert type="danger" ng-show="signupError">
@@ -9,9 +9,9 @@
     </alert>
     <!-- username input -->
     <div class="form-group">
-      <label class="control-label col-md-4" for="username">Username<span class="required">*</span></label>
+      <label class="control-label col-md-4" for="username">Name<span class="required">*</span></label>
       <div class="col-md-8">
-        <input required type="text" ng-model="signup.username" class="form-control" id="username" placeholder="Username">
+        <input required type="text" ng-model="signup.username" class="form-control" id="username" placeholder="Name">
       </div>
     </div>
     <!-- Email input -->
@@ -39,7 +39,13 @@
     <div class="form-group">
       <label class="control-label col-md-4" for="gender">Gender</label>
       <div class="col-md-8">
-        <input required type="text" ng-model="signup.gender" class="form-control" id="gender" placeholder="Gender">
+        <select ng-model="signup.gender" class="form-control" id="gender" placeholder="Gender">
+          <option value="" selected disabled>Please select</option>
+          <option value="male">Boy</option>
+          <option value="female">Girl</option>
+          <option value="other">Other</option>
+          <option value="rather not say">I'd rather not say</option>
+        </select>
       </div>
     </div>
 

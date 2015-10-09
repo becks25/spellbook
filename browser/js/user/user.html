@@ -33,14 +33,7 @@
 				<p><b>Stories in progress: </b>{{user.unfinishedPages.length}}</p>
 			</div>
 
-			<form ng-show="editing" role="form" autocomplete="off">
-		        <div class="form-group">
-		          <div class="full-size-photo">
-		            <p>image?</p>
-		          </div>
-		          
-
-		        </div>
+			<form ng-show="editing" role="form" autocomplete="off" novalidate>
 		        <div class="form-group form-inline">
 		          <label for="name">Character Name:</label>
 		          <input type="text" class="form-control" id="name" ng-model="user.character.name">

@@ -58,6 +58,7 @@ app.controller('UserCtrl', function ($scope, AuthService, UserFactory, $state, u
 
 
   $scope.saveProfile = () =>{
+    console.log('saving');
     UserFactory.update($scope.user._id, $scope.user);
   };
 
