@@ -68,10 +68,10 @@ var seedPages = function(stories){
                 story: story._id,
                 text: descr,
                 tools: ['move', 'pickUp', 'give', 'ask', 'tell', 'ifStatement', 'forLoop', 'whileLoop'],
-                variables: ['Omri', 'Zeke', 'Joe', 'Say hi'],
+                variables: ['Omri', 'Zeke', 'Joe', 'Say hi', 'Green Potion'],
                 concepts: [concepts[Math.floor(Math.random()*concepts.length)]],
                 hint: 'Try harder',
-                requirements: [],
+                requirements: {},
                 gameboard: [
                     [
                         [{
@@ -90,7 +90,8 @@ var seedPages = function(stories){
                         [],
                         [{
                             type: 'Collectible',
-                            name: 'Potion2'
+                            name: 'Potion2',
+                            variable: 'GreenPotion'
                         }],
                         [],
                         []

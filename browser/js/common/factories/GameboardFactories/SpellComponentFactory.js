@@ -20,6 +20,7 @@ app.factory('SpellComponentFactory', function(){
 	        case 'give':
 	          toolObj.action = 'give';
 	          toolObj.text = 'give';
+	          toolObj.person = null;
 	          toolObj.variable = null;
 	          toolObj.type = 'tool';
 	          break;
@@ -49,14 +50,14 @@ app.factory('SpellComponentFactory', function(){
 	          toolObj.action = 'ask';
 	          toolObj.text = 'ask';
 	          toolObj.person = null;
-	          toolObj.question = null;
+	          toolObj.variable = null;
 	          toolObj.type = 'tool';
 	          break;
 	        case 'tell':
 	          toolObj.action = 'tell';
 	          toolObj.text = 'tell';
 	          toolObj.person = null;
-	          toolObj.question = null;
+	          toolObj.variable = null;
 	          toolObj.type = 'tool';
 	          break;
 	      }

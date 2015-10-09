@@ -1,4 +1,4 @@
-app.directive('storyListItem', function() {
+app.directive('storyListItem', () => {
   return {
     restrict: 'E',
     templateUrl: '/js/common/directives/story-list-item/story-list-item.html',

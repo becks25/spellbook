@@ -16,6 +16,14 @@ router.get('/', (req, res, next) => {
         .then(null, next);
 });
 
+//find all in a certain story
+router.get('/story/:storyId', (req, res, next) => {
+    Page.find()
+        .where({story: req.params.storyId})
+        .then(pages => res.send(pages))
+        .then(null, next);
+});
+
 //get one
 router.get('/:pageId', (req, res, next) => {
     res.send(req.page);
