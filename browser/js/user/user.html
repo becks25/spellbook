@@ -2,21 +2,25 @@
 	<!-- user avatar - Might end up center (large screens) but haven't figured out how, or top(small) -->
 	<div class="center-block avatar">
 		<div class='clearfix col-sm-6'>
-			<img ng-hide="editing" ng-src={{user.character.picture}} class="">
+			<div class="center-block text-center">
+				<img ng-hide="editing" ng-src={{allAvatars[user.character.picture]}} class="avatar-img">
 
-		
-			<uib-carousel ng-show="editing" no-wrap="false" class="col-sm-8">
-		      <uib-slide ng-repeat="(key, value) in allAvatars" >
-		        <img ng-src="{{value}}" style="margin:auto;">
-		        
-		      </uib-slide>
-		    </uib-carousel>
+			
+				<uib-carousel ng-show="editing" no-wrap="false">
+			      <uib-slide ng-repeat="(key, value) in allAvatars">
+			        <img ng-src="{{value}}" style="margin:auto;" class="avatar-img">
+			        <button ng-hide="key === user.character.picture" class="btn btn-default" ng-click="selectCharacter(key)">Select this character</button>
+			        <button ng-show="key === user.character.picture" class="btn btn-default">This is your character</button>
+			      </uib-slide>
+			    </uib-carousel>
+
+			</div>
 
 		</div>
 
 		<div class="col-sm-6">
 			<span class="glyphicon glyphicon-pencil" aria-hidden="true" ng-hide="editing" ng-click="toggleEditing()"></span>
-			<span class="glyphicon glyphicon-floppy-disk" aria-hidden="true" ng-show="editing" ng-click="toggleEditing()"></span>
+			<span class="glyphicon glyphicon-floppy-disk" aria-hidden="true" ng-show="editing" ng-click='saveProfile(); toggleEditing()'></span>
 			<h3 style="display:inline-block">About me!</h3>
 			<!--TODO: add an edit button for character, age, gender, password-->
 

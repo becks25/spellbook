@@ -28,6 +28,7 @@ app.controller('UserCtrl', function ($scope, AuthService, UserFactory, $state, u
   //   StoryFactory.goToPage(pageNum);
   // };
   $scope.allAvatars = LARGE_AVATARS;
+
   $scope.totalPoints = (function(){
     var total = 0;
 
@@ -35,6 +36,7 @@ app.controller('UserCtrl', function ($scope, AuthService, UserFactory, $state, u
 
     return total;
   })();
+
   $scope._ = _;
 
   $scope.ranger = _.range(3,19);
@@ -46,10 +48,13 @@ app.controller('UserCtrl', function ($scope, AuthService, UserFactory, $state, u
     $scope.editing = !$scope.editing;
   }
 
+  $scope.selectCharacter = (character) => {
+    $scope.user.character.picture = character;
+  };
 
   $scope.restoreValuesToSaved = () => {
     $scope.user = _.create($scope.userCopy);
-    };
+  };
 
 
   $scope.saveProfile = () =>{

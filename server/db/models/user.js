@@ -31,7 +31,7 @@ var schema = new mongoose.Schema({
         name: {type: String},
         picture: {
             type: String,
-            default: 'https://s-media-cache-ak0.pinimg.com/236x/6e/7f/a3/6e7fa3580e6632889fc74411fcf36545.jpg'
+            default: 'Giraffe1'
         }
     },
     isAdmin: {
