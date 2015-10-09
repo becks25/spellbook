@@ -1,12 +1,12 @@
-app.config( $stateProvider => {
+app.config($stateProvider => {
     $stateProvider.state('page', {
         url: '/page/:id',
         templateUrl: 'js/page/page.html',
         resolve: {
-          page: (PageFactory, $stateParams) => PageFactory.find($stateParams.id)
+            page: (PageFactory, $stateParams) => PageFactory.find($stateParams.id)
         },
         controller: 'PageCtrl'
-      });
+    });
 
 });
 
@@ -16,29 +16,29 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
     $scope.spellVars = [];
     $scope.spellTools = [];
     $scope.directions = [{
-          name: 'up',
-          text: 'up',
-          value: false,
-          type: 'direction'
-      },{
-          name: 'down',
-          text: 'down',
-          value: false,
-          type: 'direction'
+        name: 'up',
+        text: 'up',
+        value: false,
+        type: 'direction'
+    }, {
+        name: 'down',
+        text: 'down',
+        value: false,
+        type: 'direction'
 
-      },
-      {
-          name: 'left',
-          text: 'left',
-          value: false,
-          type: 'direction'
+    },
+        {
+            name: 'left',
+            text: 'left',
+            value: false,
+            type: 'direction'
 
-      },
-      {
-          name: 'right',
-          text: 'right',
-          value: false,
-          type: 'direction'
+        },
+        {
+            name: 'right',
+            text: 'right',
+            value: false,
+            type: 'direction'
         }];
 
     //scope.page.tools is an array of strings - .action of the objs
@@ -46,10 +46,10 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
     // pushes each obj to spellTools arr
     var spellToolConstr = () => {
         console.log('&&&&&& page tools', $scope.page.tools)
-      $scope.page.tools.forEach((tool)=>{
-        var newTool = SpellComponentFactory.makeToolObj(tool);
-        $scope.spellTools.push(newTool);
-      });
+        $scope.page.tools.forEach((tool)=> {
+            var newTool = SpellComponentFactory.makeToolObj(tool);
+            $scope.spellTools.push(newTool);
+        });
     }
     //construct the spellTools arr on load
     spellToolConstr();
@@ -83,11 +83,11 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
     $scope.tools = $scope.spellTools.slice();
 
     $scope.removeFromSpell = (tool, index) => {
-      //console.log("index", index);
-      $scope.spellComponents.splice(index, 1);
+        //console.log("index", index);
+        $scope.spellComponents.splice(index, 1);
 
-      console.log("the spell", $scope.spellComponents);
-      }
+        console.log("the spell", $scope.spellComponents);
+    };
 
     var baseConfig = {
         placeholder: "beingDragged",
@@ -103,23 +103,23 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
             }
         },
         stop: (e, ui) => {
-            if ($(e.target).hasClass('first') &&
-                e.target != ui.item.sortable.droptarget[0]) {
-                $scope.spellTools = $scope.tools.slice();
-                refresh();
+            if (e.target) {
+                if ($(e.target).hasClass('first')) {
+                    $scope.spellTools = $scope.tools.slice();
+                    refresh();
+                }
             }
         },
         connectWith: ".spellComponents"
     });
-
     $scope.spellConfig = angular.extend({}, baseConfig, {
         connectWith: ".spellTools"
     });
-
+    //fixes
     //made some changes
     TilesizeFactory.NumTiles = $scope.page.gameboard.length;
     Crafty.load(['/images/sprites.png']);
-    Crafty.init(TilesizeFactory.TILESIZE * TilesizeFactory.NumTiles, TilesizeFactory.TILESIZE* TilesizeFactory.NumTiles);
+    Crafty.init(TilesizeFactory.TILESIZE * TilesizeFactory.NumTiles, TilesizeFactory.TILESIZE * TilesizeFactory.NumTiles);
 
     Crafty.canvas.init();
 
