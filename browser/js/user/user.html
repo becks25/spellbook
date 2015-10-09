@@ -1,12 +1,20 @@
 <div class="col-xs-12">
-	<!-- user avitar - Might end up center (large screens) but haven't figured out how, or top(small) -->
-	<div class="center-block avitar">
-		<div class="col-sm-2 col-xs-0"></div>
-		<div class='clearfix col-sm-4 col-xs-6'>
-			<img ng-src={{user.character.picture}} class="">
+	<!-- user avatar - Might end up center (large screens) but haven't figured out how, or top(small) -->
+	<div class="center-block avatar">
+		<div class='clearfix col-sm-6'>
+			<img ng-hide="editing" ng-src={{user.character.picture}} class="">
+
+		
+			<uib-carousel ng-show="editing" no-wrap="false" class="col-sm-8">
+		      <uib-slide ng-repeat="(key, value) in allAvatars" >
+		        <img ng-src="{{value}}" style="margin:auto;">
+		        
+		      </uib-slide>
+		    </uib-carousel>
+
 		</div>
 
-		<div class="col-sm-4 col-xs-6">
+		<div class="col-sm-6">
 			<span class="glyphicon glyphicon-pencil" aria-hidden="true" ng-hide="editing" ng-click="toggleEditing()"></span>
 			<span class="glyphicon glyphicon-floppy-disk" aria-hidden="true" ng-show="editing" ng-click="toggleEditing()"></span>
 			<h3 style="display:inline-block">About me!</h3>

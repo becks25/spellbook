@@ -16,14 +16,14 @@ app.config(function ($stateProvider) {
     });
 });
 
-app.controller('UserCtrl', function ($scope, AuthService, UserFactory, $state, user, StoryFactory) {
+app.controller('UserCtrl', function ($scope, AuthService, UserFactory, $state, user, StoryFactory, LARGE_AVATARS) {
   $scope.user = user;
   // $scope.getScore = UserFactory.methods.getScore();
   // console.log('score', $scope.getScore);
   // $scope.goToPage = (pageNum)=>{
   //   StoryFactory.goToPage(pageNum);
   // };
-  
+  $scope.allAvatars = LARGE_AVATARS;
   $scope.totalPoints = (function(){
     var total = 0;
 
