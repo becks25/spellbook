@@ -19,7 +19,6 @@ router.get('/', (req, res, next) => {
 
 //get one
 router.get('/:userId', (req, res, next) => {
-    console.log(req.user);
     if (!req.user.isAdmin && (req.user._id.toString() !== req.foundUser._id.toString())){
         res.sendStatus(401);
         return;
@@ -29,10 +28,9 @@ router.get('/:userId', (req, res, next) => {
 
 //create one
 router.post('/', (req, res, next) => {
-    if (!req.user || !req.user.isAdmin){
+    if (!req.user && !req.user.isAdmin){
         req.body.isAdmin = false;
     }
-    //console.log(req.body)
     User.create(req.body)
     .then(function(newUser){
         req.login(newUser, function(err){
@@ -57,7 +55,7 @@ router.put('/:userId', (req, res, next) => {
 
 //delete one
 router.delete('/:userId', (req, res, next) => {
-    if (!req.user.isAdmin || (req.user._id.toString() !== req.foundUser._id.toString())){
+    if (!req.user.isAdmin && (req.user._id.toString() !== req.foundUser._id.toString())){
         res.sendStatus(401);
         return;
     }
