@@ -356,9 +356,9 @@ ul {
   cursor: move;
 }
 
-li {
-  border: 1px dashed grey;
-}
+//li {
+//  border: 1px dashed grey;
+//}
 
 .beingDragged {
   height: 24px;
@@ -370,3 +370,7 @@ li {
 .spellBox {
   min-height: 25px;
 }
+
+.dirBox {
+ min-height: 25px;
+ }

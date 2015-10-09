@@ -1,9 +1,15 @@
+@import url(https://fonts.googleapis.com/css?family=Happy+Monkey);
+@import url(https://fonts.googleapis.com/css?family=Henny+Penny);
+
+$font-default: 'Happy Monkey', cursive;
+$font-title: 'Henny Penny', cursive;
 * {
   box-sizing: border-box;
 }
 
 body {
   background: #fdfdfd;
+  font-family: $font-default;
 }
 
 @mixin clearfix {
