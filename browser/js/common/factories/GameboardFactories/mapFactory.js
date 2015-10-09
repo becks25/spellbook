@@ -60,7 +60,7 @@ app.factory('MapFactory', function(ClassFactory, TilesizeFactory) {
         removeObject (obj) {
             var index= -1;
             this.objects.forEach((item, i) => {
-                if(item.name === obj.name){
+                if(item.name === obj.name || item.variable === obj.name){
                     index= i;
                 }
             });
@@ -86,6 +86,14 @@ app.factory('MapFactory', function(ClassFactory, TilesizeFactory) {
                     })
                 }
             }
+        }
+
+        //checks a map position for a given item and returns item or false
+        checkPos (pos, itemName){
+            this.mapArray[pos.x][pos.y].some(obj => {
+                    if(obj.variable === itemName) return obj;
+                });
+            return false;
         }
 
         loadObject (key, x, y) {
