@@ -5,37 +5,58 @@
 	<div class="panel-body">
 		<!--User related stats-->
 		<div class="col-sm-6 col-xs-12">
-			<p>
-				<b>Number of Users: </b> {{users.length}}
-			</p>
-			<p>
-				<b>Average user rating: </b> {{findPercentage(averageRating[0], averageRating[1])}}
-			</p>
-			
-			<!--Average rating for each concept-->
+			<div class="col-sm-6 col-xs-12">
+				<p>
+					<b>Number of Users: </b> {{users.length}}
+				</p>
+				<p>
+					<b>Average user rating: </b> {{findPercentage(averageRating[0], averageRating[1])}}
+				</p>
+				
+				<p>
+					<b>Number of Stories: </b> {{stories.length}}
+				</p>
+				<p>
+					<b>Number of Authors: </b> {{authors.length}}
+				</p>
+				<p>
+					<b>Most popular story: </b> {{mostPopular[0]}}
+				</p>
+			</div>
 
-			<p>
-				<b>Average mastery by concept: </b>
-			</p>
-			<ul>
-				<li ng-repeat="(key, val) in averageMastery">
-					<b>{{key}}: </b> {{findPercentage(val[0], val[1])}}
-				</li>
-			</ul>
+			<div class="col-sm-6 col-xs-12">
+				<div id="genderChart"></div>
+			</div>
+			
+		<!--TODO:
+			-Pie chart of genders
+			-Distribution of age (bar/histogram)
+		-->
+
+			<div class="text-center center-block">
+				<div id="ageChart"></div>
+				<p>Age of users</p>
+			</div>
+			
+			
 		</div>
 
 
-		<!--Story related stats-->
+		<!--Right side stats-->
 		<div class="col-sm-6 col-xs-12">
 			<p>
-				<b>Number of Stories: </b> {{stories.length}}
+				<b>Average mastery by concept: </b>
 			</p>
-			<p>
-				<b>Number of Authors: </b> {{authors.length}}
-			</p>
-			<p>
-				<b>Most popular story: </b> {{mostPopular[0]}}
-			</p>
+
+			<div class="center-block" style="width:75%" ng-repeat="(key, val) in averageMastery">
+				{{key}}:
+				<div class="progress">
+					<div class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="{{val[0]}}" aria-valuemin="0" aria-valuemax="{{val[1]}}" style="width: {{findPercentage(val[0], val[1])}}">
+						{{findPercentage(val[0], val[1])}}  
+					</div>
+				  
+				</div>
+			</div>
 		</div>
 	</div>
 </div>
