@@ -2,7 +2,14 @@ app.config($stateProvider => {
     $stateProvider.state('page', {
         url: '/page/:id',
         resolve: {
-            page: (PageFactory, $stateParams) => PageFactory.find($stateParams.id)
+            page: (PageFactory, $stateParams) => PageFactory.find($stateParams.id),
+            user: (UserFactory, AuthService) => {
+                return AuthService.getLoggedInUser()
+                .then(user => {
+                    return UserFactory.find(user._id);
+
+                })
+              }
         },
         views: {
             main: {
