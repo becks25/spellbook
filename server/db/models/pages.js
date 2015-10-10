@@ -9,7 +9,7 @@ var schema = new mongoose.Schema({
     text: String,
     image: String,
     tools: [String],
-    variables: [String],
+    variables: [],
     concepts: [String],
     hint: String,
     gameboard: [],

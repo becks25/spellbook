@@ -2,14 +2,7 @@ app.config($stateProvider => {
     $stateProvider.state('page', {
         url: '/page/:id',
         resolve: {
-            page: (PageFactory, $stateParams) => PageFactory.find($stateParams.id),
-            user: (UserFactory, AuthService) => {
-                return AuthService.getLoggedInUser()
-                .then(user => {
-                    return UserFactory.find(user._id);
-
-                })
-              }
+            page: (PageFactory, $stateParams) => PageFactory.find($stateParams.id)
         },
         views: {
             main: {
@@ -31,27 +24,29 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
         name: 'up',
         text: 'up',
         value: false,
-        type: 'direction'
+        type: 'direction',
+        varType: 'direction'
     }, {
         name: 'down',
         text: 'down',
         value: false,
-        type: 'direction'
-
+        type: 'direction',
+        varType: 'direction'
     },
-        {
-            name: 'left',
-            text: 'left',
-            value: false,
-            type: 'direction'
-
-        },
-        {
-            name: 'right',
-            text: 'right',
-            value: false,
-            type: 'direction'
-        }];
+    {
+        name: 'left',
+        text: 'left',
+        value: false,
+        type: 'direction',
+        varType: 'direction'
+    },
+    {
+        name: 'right',
+        text: 'right',
+        value: false,
+        type: 'direction',
+        varType: 'direction'
+    }];
 
     //this is for testing if spell directions is working...
     //$scope.spellDirections = [];
@@ -72,8 +67,8 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
     var spellVarConstr = () => {
         //variables are stored as strings
         $scope.page.variables.forEach((variable)=> {
-            var name = variable.split(' ').join('');
-            $scope.spellVars.push({name: name, text: variable, value: false, type: 'variable'})
+            var name = variable.text.split(' ').join('');
+            $scope.spellVars.push({name: name, text: variable.text, value: false, type: 'variable', varType: variable.varType})
         });
     };
     //construct the spellVars array on load
@@ -192,12 +187,12 @@ var newVar={};
                 
                 //set prop on droppee
                 console.log('dirstuff', dirStuff)
-                if(dropTargetIndex>-1 && $scope.spellComponents[dropTargetIndex].hasOwnProperty(newVar.type)){
+                if(dropTargetIndex>-1 && $scope.spellComponents[dropTargetIndex].hasOwnProperty(newVar.varType)){
                 //     if(thingBeingDroppedOn[newVar.type].isArray) {
                 //       $scope.thingBeingDroppedOn[newVar.type].push(newVar) ;
                 //     }
                     // $scope.thingBeingDroppedOn[newVar.type] = newVar.name;
-                    $scope.spellComponents[dropTargetIndex][newVar.type] = newVar.name;
+                    $scope.spellComponents[dropTargetIndex][newVar.varType] = newVar.name;
                     // newDir = null;
                     refresh();
                 // }
@@ -214,30 +209,30 @@ var newVar={};
 
 
 
-    this handles dragging variables to tools
+    //this handles dragging variables to tools
 
 
-  $scope.varConfig = angular.extend({}, baseConfig, {
-        update: (e, ui) => {
-          console.log("this is the ui item", ui.item)
-            if (ui.item.sortable.droptarget.hasClass('first')) {
-                ui.item.sortable.cancel();
-                refresh();
-            }
-        },
-        stop: (e, ui) => {
-            if ($(e.target).hasClass('first')) {
-                $scope.spellVars = $scope.spellVarsBox.slice();
-                refresh();
-            }
-        },
-        connectWith: ".spellComponentDirs"
-    });
+  // $scope.varConfig = angular.extend({}, baseConfig, {
+  //       update: (e, ui) => {
+  //         console.log("this is the ui item", ui.item)
+  //           if (ui.item.sortable.droptarget.hasClass('first')) {
+  //               ui.item.sortable.cancel();
+  //               refresh();
+  //           }
+  //       },
+  //       stop: (e, ui) => {
+  //           if ($(e.target).hasClass('first')) {
+  //               $scope.spellVars = $scope.spellVarsBox.slice();
+  //               refresh();
+  //           }
+  //       },
+  //       connectWith: ".spellComponentDirs"
+  //   });
 
 
-    $scope.dirComponentConfig = angular.extend({}, baseConfig, {
-        connectWith: ".spellVars"
-    });
+    // $scope.dirComponentConfig = angular.extend({}, baseConfig, {
+    //     connectWith: ".spellVars"
+    // });
 
     //made some changes
     TilesizeFactory.NumTiles = $scope.page.gameboard.length;
