@@ -72,8 +72,8 @@
 				</button>
 
 
-				<ul class="dropdown-menu fixed-height-menu" role="menu" aria-labelledby="single-button">
-					<li ng-repeat="concept in concepts" ng-click="toggleConcept(concept, $event)">
+				<ul class="list-group dropdown-menu concept-menu" role="menu" aria-labelledby="single-button">
+					<li ng-repeat="concept in concepts" ng-click="toggleConcept(concept, $event)" class="list-group-item">
 						<input type="checkbox" ng-model="clickedConcepts[concept]"/> {{concept}}
 					</li>
 				</ul>
