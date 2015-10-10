@@ -62,7 +62,7 @@ app.config(function ($stateProvider) {
 
 });
 
-app.controller('AdminController', function ($scope, stories, users, mastery, popularStory) {
+app.controller('AdminController', function ($scope, stories, users, mastery, popularStory, CONCEPTS) {
     $scope.stories = stories;
     $scope.users = users;
     $scope.averageMastery = mastery[0];
@@ -77,6 +77,19 @@ app.controller('AdminController', function ($scope, stories, users, mastery, pop
         min: 0,
         max: 100
     };
+    $scope.searchTitle;
+    $scope.searchAuthor;
+
+    $scope.concepts = CONCEPTS;
+
+    $scope.clickedConcepts = {};
+
+    $scope.toggleConcept = (concept, e) => {
+        e.stopPropagation()
+        $scope.clickedConcepts[concept] = !$scope.clickedConcepts[concept];
+    }
+
+    $scope.concepts.forEach(concept => $scope.clickedConcepts[concept] = true);
 
     $scope.findPercentage = (part, total) => {
         if(part === 0 || total === 0) return '0%';
@@ -99,6 +112,22 @@ app.filter('rangeFilter', function() {
                 filtered.push(user);
             }
         });
+
+        return filtered;
+    };
+});
+
+app.filter('inArray', function(){
+    return function(stories, clickedConcepts){
+        console.log(stories, clickedConcepts);
+        var filtered = [];
+
+        stories.forEach(story => {
+            story.concepts.forEach(concept => {
+                if(clickedConcepts[concept]) filtered.push(story);
+            })
+        })
+        
 
         return filtered;
     };
