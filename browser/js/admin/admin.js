@@ -10,7 +10,26 @@ app.config(function ($stateProvider) {
         },
         resolve: {
             stories: (StoryFactory) => StoryFactory.findAll(),
-            users: (UserFactory) => UserFactory.findAll(),
+            users: (UserFactory) => {
+                return UserFactory.findAll()
+                    .then(users => {
+                        users.forEach(user => {
+                            var earned = 0;
+                            var total = 0;
+
+                            user.mastery.forEach(concept => {
+                                earned += concept.pointsEarned;
+                                total += concept.pointsPossible;
+                            });
+
+                            if(earned === 0 || total === 0) user.averageScore = 0;
+                            else user.averageScore = Math.floor(earned/total * 100);
+
+                        });
+
+                        return users; 
+                    })
+            },
             mastery: (users) => {
                 var averageMastery = {};
                 var averageRating = [0,0];
@@ -53,8 +72,9 @@ app.controller('AdminController', function ($scope, stories, users, mastery, pop
 
     $scope.mostPopular = _.max($scope.storyPopularity, (story) => story[1]);
 
-
+    $scope.searchUsers = '';
     $scope.findPercentage = (part, total) => {
+        if(part === 0 || total === 0) return '0%';
         return Math.floor(part/total * 100) + '%'
     }
 

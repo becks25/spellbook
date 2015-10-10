@@ -1,6 +1,9 @@
 <div>
 	<h4>{{user.username}}</h4>
 	<p>{{user.email}}</p>
+	<p>
+		<b>Average rating: </b> {{user.averageScore}}%
+	</p>
 	<p ng-click="toggleView()" ng-hide="more">
 		<span class="glyphicon glyphicon-triangle-right"></span>See more
 	</p>

@@ -10,7 +10,13 @@
 				-search by name
 				-score (range)
 			-->
+		<div class="clearfix">
+			<div class="col-sm-4 col-xs-12">
+				<input type="text" class="form-control" ng-model="searchUsers" placeholder="Search by username">
 
-			<admin-users class="col-sm-4 col-xs-6" ng-repeat="user in users" user="user" percent="findPercentage"><admin-users>
+			</div>
+		</div>
+
+		<admin-users class="col-sm-4 col-xs-6" ng-repeat="user in users | filter:{username: searchUsers}" user="user" percent="findPercentage"><admin-users>
 	</div>
 </div>
