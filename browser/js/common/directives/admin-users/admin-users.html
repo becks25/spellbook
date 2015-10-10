@@ -1,0 +1,48 @@
+<div>
+	<h4>{{user.username}}</h4>
+	<p>{{user.email}}</p>
+	<p>
+		<b>Average rating: </b> {{user.averageScore}}%
+	</p>
+	<div class="checkbox">
+	  <label>
+	    <input type="checkbox" ng-model="user.isAdmin" ng-change="changeAdmin()">
+	    	Admin
+	  </label>
+	</div>
+	<p ng-click="toggleView()" ng-hide="more">
+		<span class="glyphicon glyphicon-triangle-right"></span>See more
+	</p>
+	<p ng-click="toggleView()" ng-show="more">
+		<span class="glyphicon glyphicon-triangle-bottom"></span>See less
+	</p>
+
+	<div ng-show="more" class="container">
+
+		<p>
+			<b>Mastery: </b>
+		</p>
+		<ul>
+			<li ng-repeat="concept in user.mastery">
+				<b>{{concept.topic}}: </b> {{findPercentage(concept.pointsEarned, concept.pointsPossible)}}
+			</li>
+		</ul>
+
+		<p>
+			<b>Completed Stories: </b>
+			{{user.completedStories.length}}
+		</p>
+
+		<p>
+			<b>Stories in progress: </b>
+			{{user.unfinishedPages.length}}
+		</p>
+
+		<p>
+			<b>Completion rate: </b>
+			{{findPercentage(user.completedStories.length, user.unfinishedPages.length + user.completedStories.length)}}
+		</p>
+
+
+	</div>
+</div>

@@ -1,0 +1,8 @@
+<div>
+	<!--TODO: links go to right url, but not right view-->
+	<h3><a ui-sref="story.indivStory({storyId: story._id})">{{story.title}}</a></h3>
+	<p><b>Author: </b> {{story.author}} </p>
+	<p><b>Difficulty: </b> {{story.difficulty}}</p>
+	<p><b>Concepts: </b> {{story.concepts.join(', ')}}</p>
+
+</div>
