@@ -125,6 +125,8 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
             if (e.target) {
                 if ($(e.target).hasClass('first')) {
                     $scope.spellTools = $scope.tools.slice();
+                    $scope.spellComponents = $scope.spellComponents.slice();
+                    console.log('made a copy')
                     refresh();
                     console.log('$scope.spellComponents', $scope.spellComponents)
                 }
@@ -145,7 +147,7 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
  //save a copy of the directions
   $scope.spellDirsBox = $scope.directions.slice();
 var dirStuff = [];
-var dropTarget;
+var dropTargetIndex;
 var newVar={};
   $scope.dirConfig = angular.extend({}, baseConfig, {
         //this only runs if valid drop
@@ -161,8 +163,9 @@ var newVar={};
           } else {
               //set newVar to clone of dragged variable
               newVar = _.cloneDeep(ui.item.scope().tool);
-              console.log('dropTarget', ui.item.sortable.droptarget)
-              dropTarget = ui.item.sortable.droptarget;
+              // console.log('dropTarget', ui.item.sortable.droptarget)
+              // console.log('data', ui.item.sortable.droptarget.data('index'))
+              dropTargetIndex = ui.item.sortable.droptarget.data('index');
           }
         },
         stop: (e, ui) => {
@@ -173,9 +176,9 @@ var newVar={};
                 //recopies the list of directions
                 // $scope.directions = $scope.spellDirsBox.slice();
                 console.log("this is the ui", ui.item)
-                console.log(dropTarget)
+                
                 //set prop on droppee
-                $scope.spellComponents[0].direction = newVar.name;
+                $scope.spellComponents[dropTargetIndex].direction = newVar.name;
                 console.log('dirstuff', dirStuff)
                 // if(thingBeingDroppedOn[newVar.type]){
                 //     if(thingBeingDroppedOn[newVar.type].isArray) {
