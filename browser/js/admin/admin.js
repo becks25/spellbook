@@ -2,6 +2,10 @@ app.config(function ($stateProvider) {
 
     $stateProvider.state('admin', {
         url: '/admin',
+        data: {
+          adminOnly: true,
+          authenticate: true
+        },
         views: {
             main: {
                 templateUrl: 'js/admin/admin.html',

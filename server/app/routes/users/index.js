@@ -28,7 +28,7 @@ router.get('/:userId', (req, res, next) => {
 
 //create one
 router.post('/', (req, res, next) => {
-    if (!req.user && !req.user.isAdmin){
+    if (!req.user){
         req.body.isAdmin = false;
     }
     User.create(req.body)
