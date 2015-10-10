@@ -68,7 +68,7 @@ var seedPages = function(stories){
                 story: story._id,
                 text: descr,
                 tools: ['move', 'pickUp', 'give', 'ask', 'tell', 'ifStatement', 'forLoop', 'whileLoop'],
-                variables: ['Omri', 'Zeke', 'Joe', 'Say hi', 'Green Potion'],
+                variables: [{text: 'Omri', varType: 'person'}, {text: 'Zeke', varType: 'person'}, {text: 'Joe', varType: 'person'}, {text: 'Say hi', varType: 'variable'}, {text: 'Green Potion', varType: 'variable'}, {text: 'The potion is green', varType: 'condition'}],
                 concepts: [concepts[Math.floor(Math.random()*concepts.length)]],
                 hint: 'Try harder',
                 requirements: {},
