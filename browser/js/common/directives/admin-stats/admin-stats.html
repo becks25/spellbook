@@ -1,0 +1,41 @@
+<div id="stats" class="panel">
+	<div class="panel-heading">
+		<h3>Overview</h3>
+	</div>
+	<div class="panel-body">
+		<!--User related stats-->
+		<div class="col-sm-6 col-xs-12">
+			<p>
+				<b>Number of Users: </b> {{users.length}}
+			</p>
+			<p>
+				<b>Average user rating: </b> {{findPercentage(averageRating[0], averageRating[1])}}
+			</p>
+			
+			<!--Average rating for each concept-->
+
+			<p>
+				<b>Average mastery by concept: </b>
+			</p>
+			<ul>
+				<li ng-repeat="(key, val) in averageMastery">
+					<b>{{key}}: </b> {{findPercentage(val[0], val[1])}}
+				</li>
+			</ul>
+		</div>
+
+
+		<!--Story related stats-->
+		<div class="col-sm-6 col-xs-12">
+			<p>
+				<b>Number of Stories: </b> {{stories.length}}
+			</p>
+			<p>
+				<b>Number of Authors: </b> {{authors.length}}
+			</p>
+			<p>
+				<b>Most popular story: </b> {{mostPopular[0]}}
+			</p>
+		</div>
+	</div>
+</div>

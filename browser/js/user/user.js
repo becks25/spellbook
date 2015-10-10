@@ -1,6 +1,9 @@
 app.config(function ($stateProvider) {
     $stateProvider.state('user', {
         url: '/me',
+        data: {
+          authenticate: true
+        },
         views: {
             'main': {
                 controller: 'UserCtrl',
