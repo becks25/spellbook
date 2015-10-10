@@ -59,14 +59,21 @@ app.config(function ($stateProvider) {
                     });
                 });
 
+
                 return storyPopularity;
+            },
+            usersData: (users) => {
+                var genderDist = _.countBy(users, 'gender');
+                var ageDist = _.countBy(users, 'age');
+
+                return [genderDist, ageDist];
             }
         }
     });
 
 });
 
-app.controller('AdminController', function ($scope, stories, users, mastery, popularStory, CONCEPTS) {
+app.controller('AdminController', function ($scope, stories, users, mastery, popularStory, CONCEPTS, usersData) {
     $scope.stories = stories;
     $scope.users = users;
     $scope.averageMastery = mastery[0];
@@ -81,6 +88,10 @@ app.controller('AdminController', function ($scope, stories, users, mastery, pop
         min: 0,
         max: 100
     };
+
+    $scope.genderDist = usersData[0];
+    $scope.ageDist = usersData[1];
+    console.log(Object.keys($scope.ageDist).length);
     $scope.searchTitle;
     $scope.searchAuthor;
 
@@ -99,6 +110,8 @@ app.controller('AdminController', function ($scope, stories, users, mastery, pop
         if(part === 0 || total === 0) return '0%';
         return Math.floor(part/total * 100) + '%'
     }
+
+    
 
 });
 
@@ -123,7 +136,6 @@ app.filter('rangeFilter', function() {
 
 app.filter('inArray', function(){
     return function(stories, clickedConcepts){
-        console.log(stories, clickedConcepts);
         var filtered = [];
 
         stories.forEach(story => {

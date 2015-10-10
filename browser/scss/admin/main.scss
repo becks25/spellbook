@@ -11,3 +11,14 @@
 	border:0;
 	-webkit-box-shadow:none;
 }
+
+
+.axis{
+	font-size:small;
+}
+.axis path,
+	.axis line {
+	  fill: none;
+	  stroke: #000;
+	  shape-rendering: crispEdges;
+	}
