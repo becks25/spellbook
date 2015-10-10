@@ -5,7 +5,7 @@
 	<div class="panel-body">
 		<ul ui-sortable="spellConfig" ng-model="spellComponents" class="spellComponents spellBox">
 		  <li ng-repeat="tool in spellComponents track by $index" class='{{tool.action}}'>
-		  	<span class="{{tool.type}} spellTool">{{ tool.text }}: {{tool.direction}} {{tool.condition}}
+		  	<span class="{{tool.type}} spellTool">{{ tool.text }}: {{tool.direction}} {{tool.condition}} {{tool.variable}}
 		  		<div ui-sortable="dirComponentConfig" ng-model="dirStuff" class="spellCompVars dirBox {{tool.action}} spellCompExpr" data-index='{{$index}}' data-array='spellComponents'>
 		  		</div>
 		  		<add-variable tool='tool' removeFn='removeFromSpell'></add-variable>
