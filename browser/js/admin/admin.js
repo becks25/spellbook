@@ -73,9 +73,33 @@ app.controller('AdminController', function ($scope, stories, users, mastery, pop
     $scope.mostPopular = _.max($scope.storyPopularity, (story) => story[1]);
 
     $scope.searchUsers = '';
+    $scope.score= {
+        min: 0,
+        max: 100
+    };
+
     $scope.findPercentage = (part, total) => {
         if(part === 0 || total === 0) return '0%';
         return Math.floor(part/total * 100) + '%'
     }
 
+});
+
+app.filter('rangeFilter', function() {
+    return function( users, rangeInfo ) {
+        var filtered = [];
+        var min = parseInt(rangeInfo.min);
+        var max = parseInt(rangeInfo.max);
+
+        if(isNaN(min)) min = 0;
+        if(isNaN(max)) max = 100;
+
+        users.forEach(user => {
+            if( user.averageScore >= min && user.averageScore <= max ) {
+                filtered.push(user);
+            }
+        });
+
+        return filtered;
+    };
 });

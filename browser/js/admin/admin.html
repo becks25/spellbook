@@ -11,12 +11,33 @@
 				-score (range)
 			-->
 		<div class="clearfix">
-			<div class="col-sm-4 col-xs-12">
-				<input type="text" class="form-control" ng-model="searchUsers" placeholder="Search by username">
+			<div class="form-inline">
+				<div class="form-group col-sm-4 col-xs-12">
+					<label>User: </label>
+					<input type="text" class="form-control" ng-model="searchUsers" placeholder="Search by username"/>
 
+				</div>
+
+				<div class="form-group col-sm-4 col-xs-12">
+					<label>Min score: </label>
+					<div class="input-group">
+						<input type="number" class="form-control" ng-model="score.min" placeholder="0"/>
+						<div class="input-group-addon">%</div>
+					</div>
+
+				</div>
+
+				<div class="form-group col-sm-4 col-xs-12">
+					<label>Max score: </label>
+					<div class="input-group">
+						<input type="number" class="form-control" ng-model="score.max" placeholder="100"/>
+						<div class="input-group-addon">%</div>
+
+					</div>
+				</div>
 			</div>
 		</div>
 
-		<admin-users class="col-sm-4 col-xs-6" ng-repeat="user in users | filter:{username: searchUsers}" user="user" percent="findPercentage"><admin-users>
+		<admin-users class="col-sm-4 col-xs-6" ng-repeat="user in users | filter:{username: searchUsers} | rangeFilter: score" user="user" percent="findPercentage"><admin-users>
 	</div>
 </div>
