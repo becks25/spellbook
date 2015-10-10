@@ -12,6 +12,10 @@ app.directive('adminUsers', function(UserFactory) {
       scope.toggleView = () => scope.more = !scope.more;
 
       scope.findPercentage = scope.percent;
+
+      scope.changeAdmin = () => {
+        UserFactory.update(scope.user._id, scope.user);
+      }
     }
   };
 });

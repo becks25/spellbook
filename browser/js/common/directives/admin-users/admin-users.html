@@ -4,6 +4,12 @@
 	<p>
 		<b>Average rating: </b> {{user.averageScore}}%
 	</p>
+	<div class="checkbox">
+	  <label>
+	    <input type="checkbox" ng-model="user.isAdmin" ng-change="changeAdmin()">
+	    	Admin
+	  </label>
+	</div>
 	<p ng-click="toggleView()" ng-hide="more">
 		<span class="glyphicon glyphicon-triangle-right"></span>See more
 	</p>
