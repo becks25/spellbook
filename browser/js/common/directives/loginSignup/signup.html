@@ -8,31 +8,31 @@
       {{ signupError }}
     </alert>
     <!-- username input -->
-    <div class="form-group">
+    <div class="form-group" ng-class="{'has-error': signupForm.username.$dirty && signupForm.username.$invalid || signupForm.username.$invalid && signupForm.$submitted}">
       <label class="control-label col-md-4" for="username">Name<span class="required">*</span></label>
       <div class="col-md-8">
-        <input required type="text" ng-model="signup.username" class="form-control" id="username" placeholder="Name">
+        <input required type="text" ng-model="signup.username" class="form-control" id="username" name="username" placeholder="Name">
       </div>
     </div>
     <!-- Email input -->
-    <div class="form-group">
+    <div class="form-group" ng-class="{'has-error': signupForm.email.$dirty && signupForm.email.$invalid || signupForm.email.$invalid && signupForm.$submitted}">
       <label class="control-label col-md-4" for="email">Email<span class="required">*</span></label>
       <div class="col-md-8">
         <input required name='email' type="text" ng-model="signup.email" class="form-control" id="email" placeholder="Email">
       </div>
     </div>
     <!-- Password input -->
-    <div class="form-group">
+    <div class="form-group" ng-class="{'has-error': signupForm.password.$dirty && signupForm.password.$invalid || signupForm.password.$invalid && signupForm.$submitted}">
       <label class="control-label col-md-4" for="signup-password">Password<span class="required">*</span></label>
       <div class="col-md-8">
-        <input required type="password" ng-model="signup.password" class="form-control" id="signup-password" placeholder="Password">
+        <input required type="password" name="password" ng-model="signup.password" class="form-control" id="signup-password" placeholder="Password">
       </div>
     </div>
     <!-- Age input -->
     <div class="form-group">
       <label class="control-label col-md-4" for="age">Age</label>
       <div class="col-md-8">
-        <input required type="text" ng-model="signup.age" class="form-control" id="age" placeholder="Age">
+        <input type="text" ng-model="signup.age" class="form-control" id="age" placeholder="Age">
       </div>
     </div>
     <!-- Gender input -->
