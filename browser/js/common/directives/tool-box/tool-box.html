@@ -6,14 +6,14 @@
         <div class="col-md-4 col-sm-12">
             <b>Tools</b>
             <ul ng-model="spellTools" ui-sortable="toolConfig" class="spellTools first">
-                <li ng-repeat="tool in spellTools" draggable><span class="tool">{{ tool.text }}</span></li>
+                <li ng-repeat="tool in spellTools" class="tool" draggable><span class="">{{ tool.text }}</span></li>
             </ul>
 
 		</div>
 		<div class="col-md-4 col-sm-12">
 			<b>Directions</b>
 				<ul ng-model="directions" ui-sortable="dirConfig" class="spellDirs first">
-		  			<li ng-repeat="tool in directions" draggable="true"><span class="direction" >{{ tool.text }}</span></li>
+		  			<li ng-repeat="tool in directions" class="direction" draggable="true"><span class="" >{{ tool.text }}</span></li>
 		  		</ul>
 
 
@@ -21,8 +21,8 @@
         <div class="col-md-4 col-sm-12">
             <b>Variables</b>
             <ul ng-model="spellVars" ui-sortable="dirConfig" class="spellVars first">
-                <li ng-repeat="tool in spellVars track by $index" draggable="true"><span
-                        class="variable">{{ tool.text}}</span></li>
+                <li ng-repeat="tool in spellVars track by $index" class="variable" draggable="true"><span
+                        class="">{{ tool.text}}</span></li>
             </ul>
         </div>
     </div>
