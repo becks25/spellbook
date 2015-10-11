@@ -2,7 +2,7 @@ $purple: #8843b9;
 $turqoise: #18b8c2;
 $green: #b8f166;
 
-tool-box, spell{
+tool-box, spell, add-variable{
 	li{
 		list-style-type: none;
 
@@ -21,6 +21,10 @@ tool-box, spell{
 		font-family:$font-title;
 	}
 
+	.ui-sortable>li {
+		border:2px solid white;
+	}
+
 	.glyphicon-remove{
 		cursor:pointer;
 	}
@@ -37,15 +41,15 @@ tool-box, spell{
 	.inline{
 
 		display:inline-block !important;
+		width:auto !important;
 
 		&.move{
-			input:disabled{
 
 				background-color:$purple !important;
 				font-family: $font-default;
 				text-align:center;
 				margin-bottom:0;
-			}
+			
 
 		}
 
@@ -54,6 +58,12 @@ tool-box, spell{
 				font-family: $font-default;
 				text-align:center;
 			
+
+		}
+
+		input{
+			font-family: $font-default;
+			text-align:center;
 
 		}
 	}
@@ -76,10 +86,12 @@ tool-box, spell{
 		background-color: transparent;
 		border:2px solid $turqoise;
 		padding: 0;
+		margin-bottom:0;
 	}
 
 	.panel-body{
-				font-family: $font-default;
+		font-family: $font-default;
 
 	}
+
 }

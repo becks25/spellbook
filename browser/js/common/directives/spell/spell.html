@@ -2,7 +2,7 @@
 	<div class="panel-heading">
 		My spell
 	</div>
-	<div class="panel-body">
+	<div class="panel-body components">
 		<ul ui-sortable="spellConfig" ng-model="spellComponents" class="spellComponents spellBox">
 		  <li ng-repeat="tool in spellComponents track by $index" class='{{tool.action}}'>
 		  	<div class="spellTool panel {{tool.type}}">
@@ -13,9 +13,15 @@
 			  			{{ tool.text.toUpperCase() }}
 			  		</h4>
 
-			  		<p ng-if="tool.action == 'move'" class="inline {{tool.action}}">
-			  			<input type="text" placeholder="{{tool.direction}}" disabled class="form-control inline" />
-			  		</p>
+			  		<div ng-if="tool.action == 'move'" class="inline">
+
+			  			<p ui-sortable="dirComponentConfig" ng-model="dirStuff" class="inline form-control spellCompVars dirBox {{tool.action}} spellCompExpr" data-index='{{$index}}' data-array='spellComponents'>
+			  				{{tool.direction || 'Drop direction here'}}
+				  		</p>
+
+				  		<input type="Number" ng-model="tool.distance" class="inline form-control"/>
+
+			  		</div>
 
 			  		<div ng-if="tool.action == 'pickUp'" class="inline">
 			  			<p ui-sortable="dirComponentConfig" ng-model="dirStuff" class="inline form-control spellCompVars dirBox {{tool.action}} spellCompExpr" data-index='{{$index}}' data-array='spellComponents'>
@@ -32,7 +38,7 @@
 
 
 			  	</div>
-			  	<div ng-if="tool.action!=='pickUp'" class="panel-body">
+			  	<div ng-if="tool.action!=='pickUp' && tool.action !== 'move'" class="panel-body">
 			  		 {{tool.condition}} {{tool.variable}} {{tool.person}}
 
 			  		 {{tool}}
