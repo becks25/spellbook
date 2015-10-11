@@ -2,15 +2,13 @@
 	<div class="panel-heading">
 		My spell
 	</div>
-	<div class="panel-body">
+	<div class="panel-body components">
 		<ul ui-sortable="spellConfig" ng-model="spellComponents" class="spellComponents spellBox">
 		  <li ng-repeat="tool in spellComponents track by $index" class='{{tool.action}}'>
-		  	<span class="{{tool.type}} spellTool">{{ tool.text }}: {{tool.direction}} {{tool.condition}} {{tool.variable}} {{tool.person}}
-		  		<div ui-sortable="dirComponentConfig" ng-model="dirStuff" class="spellCompVars dirBox {{tool.action}} spellCompExpr" data-index='{{$index}}' data-array='spellComponents'>
-		  		</div>
-		  		<add-variable tool='tool' removeFn='removeFromSpell'></add-variable>
-		  		<button ng-click="removeFromSpell($index, spellComponents)">X</button>
-		  	</span>
+		  	<action-tools ng-if="tool.action === 'pickUp' || tool.action==='tell' || tool.action==='give' || tool.action==='ask'" actiontool="tool" model="dirStuff" index="$index" parent="spellComponents" remove="removeFromSpell"></action-tools>
+		  	<move-tool ng-if="tool.action==='move'" movetool="tool" model="dirStuff" index="$index" parent="spellComponents" remove="removeFromSpell"></move-tool>
+		  	<logic-tools ng-if="tool.action === 'ifStatement' || tool.action === 'whileLoop' || tool.action==='forLoop'" logictool="tool" model="dirStuff" index="$index" parent="spellComponents" remove="removeFromSpell"></logic-tools>
+		  	
 		  </li>
 		</ul>
 	</div>

@@ -1,0 +1,39 @@
+	<div class="spellTool panel {{logictool.type}}">
+		<div class="panel-heading {{logictool.type}}">
+  		<span class="glyphicon glyphicon-remove pull-right" ng-click="remove(index, parent)"></span>
+
+  		<h4 class="inline">
+  			{{ logictool.text.toUpperCase() }}
+  		</h4>
+
+  		<div class="inline">
+  			<p ng-if="logictool.action !== 'forLoop'" ui-sortable="dirComponentConfig" ng-model="logictool.condition" class="inline form-control spellCompVars dirBox {{logictool.action}} variable spellCompExpr" data-index='{{index}}' data-array='{{parent}}'>
+  				{{logictool.condition.replace(re, ' ') || 'Drop item here'}}
+	  		</p>
+  			
+  			<input ng-if="logictool.action ==='forLoop'" type="Number" ng-model="logictool.number" class="inline form-control"/>
+
+
+  		</div>
+
+  	</div>
+  	<div class="panel-body">
+  		 {{logictool.condition}} {{logictool.variable}} {{logictool.person}}
+
+  		 {{logictool}}
+
+  		<div ui-sortable="dirComponentConfig" ng-model="logictool.expressions" class="spellCompVars dirBox {{logictool.action}} spellCompExpr" data-index='{{index}}' data-array='{{parent}}'>
+  		</div>
+
+       <!--  <ul ui-sortable="dirComponentConfig" ng-model="logictool.expressions" class="spellComponentDirs dirBox spellCompExpr">
+              <li ng-repeat="variable in logictool.expressions track by $index" class="{{variable.type}}">
+                {{variable}}
+                    <action-tools ng-if="variable.action === 'pickUp' || variable.action==='tell' || variable.action==='give' || variable.action==='ask'" actiontool="variable"></action-tools>
+              </li>
+
+        </ul> -->
+
+<!--   		<add-variable tool='logictool' removeFn='removeFromSpell'></add-variable>
+ -->  	</div>
+
+	</div>
