@@ -53,8 +53,9 @@ app.factory('LevelFactory', function(PageFactory, UserFactory, AuthService, MapF
     }
 
     win(){
+      console.log('yay you won!')
+      // var nextPage = PageFactory.methods.getNext(this.page);
 
-      var nextPage = PageFactory.methods.getNext(this.page);
 
       //get the currently logged in user
       AuthService.getLoggedInUser()
