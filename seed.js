@@ -71,17 +71,19 @@ var seedPages = function(stories){
                 variables: [{text: 'Omri', varType: 'person'}, {text: 'Zeke', varType: 'person'}, {text: 'Joe', varType: 'person'}, {text: 'Say hi', varType: 'variable'}, {text: 'Green Potion', varType: 'variable'}, {text: 'The potion is green', varType: 'condition'}],
                 concepts: [concepts[Math.floor(Math.random()*concepts.length)]],
                 hint: 'Try harder',
-                requirements: {},
+                requirements: {GreenPotion: {pickUp: {val: false}}},
                 gameboard: [
                     [
                         [{
                             type: 'Avatar',
-                            name: 'WizardBoy2'
+                            name: 'WizardBoy2',
+                            varName: 'me'
                         }],
                         [],
                         [{
                             type: 'Obstacle',
-                            name: 'Rock1'
+                            name: 'Rock1',
+                            varName: 'rock'
                         }],
                         []
 
@@ -91,7 +93,7 @@ var seedPages = function(stories){
                         [{
                             type: 'Collectible',
                             name: 'Potion2',
-                            variable: 'GreenPotion'
+                            varName: 'GreenPotion'
                         }],
                         [],
                         []
@@ -106,7 +108,8 @@ var seedPages = function(stories){
                         [],
                         [{
                             type: 'Obstacle',
-                            name: 'Tree2'
+                            name: 'Tree2',
+                            varName: 'tree'
                         }],
                         [],
                         []

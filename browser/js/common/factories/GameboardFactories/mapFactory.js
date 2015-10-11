@@ -57,13 +57,29 @@ app.factory('MapFactory', function(ClassFactory, TilesizeFactory) {
             this.mapArray[position.x][position.y].push(obj);
         }
 
-        removeObject (obj) {
+        removeObject (obj, position) {
             var index= -1;
-            this.objects.forEach((item, i) => {
-                if(item.name === obj.name || item.variable === obj.name){
-                    index= i;
-                }
-            });
+            var indices = [];
+            // optional position arg for removing obj from specific place
+            if(position){
+            console.log('removing', obj, this.mapArray[position.x][position.y])
+                this.mapArray[position.x][position.y].forEach((item, i) => {
+                    if(item.name === obj.name || item.variable === obj.name){
+                        indices.push(i);
+                    }
+                });
+            } else {
+                //this runs for removing the avatar
+                this.objects.forEach((item, i) => {
+                    if(item.name === obj.name || item.variable === obj.name){
+                        index= i;
+                    }
+                });
+            }
+            for(let i=indices.length-1; i>=0; i--){
+                this.mapArray[position.x][position.y].splice(indices[i], 1);
+            }
+            if (position) console.log('new objs', this.mapArray[position.x][position.y])
             this.objects.splice(index, 1);
 
         }
@@ -90,10 +106,16 @@ app.factory('MapFactory', function(ClassFactory, TilesizeFactory) {
 
         //checks a map position for a given item and returns item or false
         checkPos (pos, itemName){
+            console.log('in checkPos')
+            console.log(pos, itemName, this.mapArray[pos.x][pos.y])
+            var foundObj;
             this.mapArray[pos.x][pos.y].some(obj => {
-                    if(obj.variable === itemName) return obj;
+                    if(obj.varName === itemName){
+                        foundObj = obj;
+                        return true;
+                    }
                 });
-            return false;
+            return foundObj;
         }
 
         loadObject (key, x, y) {
@@ -110,7 +132,7 @@ app.factory('MapFactory', function(ClassFactory, TilesizeFactory) {
 
         createObject (obj, x, y) {
             var position = {x: x, y: y};
-            return new ClassFactory[obj.type](obj.name, position, obj.action || null, obj.variables || null);
+            return new ClassFactory[obj.type](obj.name, position, obj.action || null, obj.varName || null, obj.variables || null);
         }
 
         isPassable (position) {
