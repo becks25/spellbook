@@ -1,7 +1,7 @@
 
-	<div class="">
+	<div class="panel-body components">
 		<ul ui-sortable="dirComponentConfig" ng-model="tool.expressions" class="spellComponentDirs dirBox spellCompExpr">
-		  <li ng-repeat="variable in tool.expressions track by $index" class="{{variable.type}}">
+		  <li ng-repeat="variable in tool.expressions track by $index" class="{{variable.action}}">
 
 		  	<action-tools ng-if="variable.action === 'pickUp' || variable.action==='tell' || variable.action==='give' || variable.action==='ask'" actiontool="variable" model="variable.expressions" index="$index" parent="tool.expressions" remove="removeFromTool"></action-tools>
 
