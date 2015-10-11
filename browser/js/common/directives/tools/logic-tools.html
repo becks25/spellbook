@@ -13,27 +13,8 @@
   			
   			<input ng-if="logictool.action ==='forLoop'" type="Number" ng-model="logictool.number" class="inline form-control"/>
 
+        <png-if="logictool.action ==='forLoop'"> Time(s)</p>
 
   		</div>
-
   	</div>
-  	<div class="panel-body">
-  		 {{logictool.condition}} {{logictool.variable}} {{logictool.person}}
-
-  		 {{logictool}}
-
-  	<!-- 	<div ui-sortable="dirComponentConfig" ng-model="model" class="spellCompVars dirBox {{logictool.action}} spellCompExpr" data-index='{{index}}' data-array='{{parent}}'>
-  		</div> -->
-
-       <!--  <ul ui-sortable="dirComponentConfig" ng-model="logictool.expressions" class="spellComponentDirs dirBox spellCompExpr">
-              <li ng-repeat="variable in logictool.expressions track by $index" class="{{variable.type}}">
-                {{variable}}
-                    <action-tools ng-if="variable.action === 'pickUp' || variable.action==='tell' || variable.action==='give' || variable.action==='ask'" actiontool="variable"></action-tools>
-              </gtli>
-
-        </ul> -->
-
-<!--   		<add-variable tool='logictool' removeFn='removeFromSpell'></add-variable>
- -->  	</div>
-
 	</div>
