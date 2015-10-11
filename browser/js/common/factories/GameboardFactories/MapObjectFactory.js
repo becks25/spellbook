@@ -1,13 +1,14 @@
 app.factory('MapObjectFactory', function(PosFactory, TilesizeFactory){
 
     class MapObject {
-      constructor(name, position, action, variables){
+      constructor(name, position, action, varName, variables){
         //name matches scope variable from spells tools
         this.name = name;
         this.position = new PosFactory(position.x, position.y);
         this.action = action || null;
         this.variables = variables || null;
         this.passable = true;
+        this.varName = varName;
         this.entity = this.basicEntity(name);
       }
 
