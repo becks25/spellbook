@@ -1,6 +1,5 @@
 app.factory('SpellFactory', function(TilesizeFactory){
 	// List of valid commands
-  //var CODES = ['move', 'if', 'loop', 'pickUp', 'give', 'ask', 'tell'];
 
   class Spell {
   	constructor(level){
@@ -24,7 +23,7 @@ app.factory('SpellFactory', function(TilesizeFactory){
 		this.avatar = this.map.getAvatar();
 		this.level.resetRequirements();
 		if(this.currentCommand) this.currentCommand = null;
-		this.holding = [];
+		this.holding = {};
 	}
 
 	lock (){
@@ -37,18 +36,6 @@ app.factory('SpellFactory', function(TilesizeFactory){
 		  this.cycle(this.avatar.position);
 		}
 	}
-
-	// reload(){
-	// 	var state = Level.map;
-	// 	$('#spell-box').val(state.program || '');
-	// 	$('#spell-box').focus();
-	// }
-
-	// save(){
-	// 	var state = Level.getState(this.key);
-	// 	state.program = $('#spell-box').val();
-	// 	Level.setState(this.key, state);
-	// }
 
 	//runs the whole program, acts if solved/unsolved
 	run(argArr){
@@ -165,8 +152,7 @@ app.factory('SpellFactory', function(TilesizeFactory){
   	//this stepThough function runs through spell components by index, 
   	//which solves the problem of repeated commands
   	// spell arr can't be changed during function (the stuff already stepped through can't change)
-	stepThrough(argArr){
-  		var spellArr = this.parse(argArr);
+	stepThrough(spellArr){
   		if(this.currentCommand === null) {
   			this.reset();
   			this.currentCommand = 0;
@@ -185,27 +171,27 @@ app.factory('SpellFactory', function(TilesizeFactory){
   	execute(argArr){
 	    // this.running = true;
 	    this.cycle(this.avatar.position);
-	    var spellArr = this.parse(argArr);
-	    // var spellArr = Promise.map(noPromSpellArr, (spell)=>{
-	    	// return spell})
+	    // var noPromSpellArr = this.parse(argArr);
+	    //makes a promise for the spell arr to use with Promise.each
+	    var spellArr = Promise.map(argArr, (spell)=>{
+	    	return spell})
 	    // run async execute command fn on each of the commands in the spell, serially
-	    return Promise.reduce(spellArr, (nothing, component) => {
-	    	console.log('component', component)
-	     return this.executeCommand(component);
-
-		});
-	    // return spellArr.each((component) => this.executeCommand(component));
-	    // this.running = false;
-	    // return Promise.resolve(spellArr)
+	    // return Promise.reduce(argArr, (nothing, component) => {
+	    // 	console.log('component', component)
+	    //  return this.executeCommand(component);
+		// });
+	    return spellArr.each((component) => this.executeCommand(component));
+	    this.running = false;
+	    return Promise.resolve(spellArr)
 	}
 
 	//cycles all events on a particular position
 	cycle(position) {
 	    // if (!this.running) return;
 	    this.map.mapArray[position.x][position.y].forEach(obj=>obj.onCycle());
-
 	}
 
+	//executes single step of spell arr
 	executeCommand (component) {
 	    //component is an obj that was part of the array of components dragged to the spell
 	    //has props for action, and any other additional props
@@ -214,25 +200,27 @@ app.factory('SpellFactory', function(TilesizeFactory){
 	    var map = this.map;
 
 	    // Lock for initial command, more locks may be applied by animations, etc.
-	    this.lock();
+	    // this.lock();
 
 	    switch(component.action){
-
 	    	case 'move':
 	    		var distArr = [];
 	    		for(var i = 0; i<component.distance; i++){
 	    			distArr.push(i);
 	    		}
-	    		// var promArr = Promise.map(distArr, (num)=>num)
-	    		return Promise.reduce(distArr, (nothing, num)=>moveOne(component.direction))
+	    		var promArr = Promise.map(distArr, (num)=>num)
+	    		return promArr.each(()=>moveOne(component.direction))
 	    		.then(()=>spell.cycle(avatar.position));
+
+	    		// return Promise.reduce(distArr, (nothing, num)=>moveOne(component.direction))
+	    		// .then(()=>spell.cycle(avatar.position));
 	    	case 'give':
             	// collectable obj (ref) has to be passed into the function as .variable
             	//search map pos for person to give to
             	var toGive = spell.map.checkPos(this.avatar.position, component.person); 
 	    		if (toGive) {
-    				if(component.variable.holding){
-    					component.variable.holding = false;	    			
+    				if(spell.holding[component.variable]){
+    					spell.holding[component.variable] = false;	    			
 	    				this.level.updateReq(toGive, 'give', component.variable);
     				} 
     			}
@@ -241,32 +229,28 @@ app.factory('SpellFactory', function(TilesizeFactory){
 	    		console.log('picking up', component.variable)
 	    		//search the map objects on that position for the one that matches component.variable,
 	    		var toPick = spell.map.checkPos(this.avatar.position, component.variable); 
-	    		console.log('is it here?', toPick)
 	    		if (toPick) {
-	    			// console.log('going to remove', toPick, this.avatar.position)
 	    			spell.map.removeObject(toPick, this.avatar.position);
-                	// collectable obj (ref) has to be passed into the function as .variable
-                	// toPick.holding = true;
-                	console.log('variable', component.variable)
-	    			spell.holding.push(component.variable)
-	    			console.log('holding', spell.holding)
+	    			spell.holding[component.variable] = true;
 	    			spell.level.updateReq(component.variable, 'pickUp', 'true')
-	    			console.log('req', spell.level.requirements)
-
                 }
 	    		break;
 	    	case 'ifStatement':
 	    		if (component.condition){
-	    			// var expressions = Promise.map(component.expressions, (command)=>command);
-	    			return Promise.reduce(component.expressions,(nothing, command)=> spell.executeCommand(command));
+	    			var expressions = Promise.map(component.expressions, (command)=>command);
+	    			return expressions.each(command => spell.executeCommand(command));
+
+	    			// return Promise.reduce(component.expressions,(nothing, command)=> spell.executeCommand(command));
 	    		}
 	    		else if (component.elseExpr) {
-	    			// var expressions = Promise.map(component.elseExpr, (command)=>command);
-	    			return Promise.reduce(component.expressions, (nothing, command)=> spell.executeCommand(command));
+	    			var expressions = Promise.map(component.elseExpr, (command)=>command);
+	    			return expressions.each(command => spell.executeCommand(command));
+	    			
+	    			// return Promise.reduce(component.expressions, (nothing, command)=> spell.executeCommand(command));
 	    		}
 	    		break;
 	    	case 'whileLoop':
-	    		return promiseWhile(component.condition, executeExpressions)
+	    		return promiseWhile(component.condition, executeExpressions);
 	    		break;
 	    	case 'forLoop':
 	    		console.log('for loop')
@@ -274,17 +258,26 @@ app.factory('SpellFactory', function(TilesizeFactory){
 	    		for(var i = 0; i<component.number; i++){
 	    			numArr.push(i);
 	    		}
-	    		// promArr = Promise.map(numArr, (num)=>num)
-	    		// var expressions = Promise.map(component.expressions, (command)=>command);
-	    		return Promise.reduce(numArr, (nothing)=>expressions.each((command)=> spell.executeCommand(command)));
+	    		promArr = Promise.map(numArr, (num)=>num)
+	    		var expressions = Promise.map(component.expressions, (command)=>command);
+	    		return promArr.each(()=>expressions.each((command)=> this.executeCommand(command)));
+	    		// return Promise.reduce(numArr, (nothing)=>expressions.each((command)=> spell.executeCommand(command)));
 	    		break;
 	    	case 'ask':
 	    	//not sure what these do
 	    		console.log('asking')
+	    		var toAsk = spell.map.checkPos(this.avatar.position, component.person); 
+	    		if (toAsk) {
+	    			this.level.updateReq(toAsk, 'ask', component.variable);
+    			}
 	    		break;
 	    	case 'tell':
 	    		console.log('telling')
-	    		break;
+	    		var toAsk = spell.map.checkPos(this.avatar.position, component.person); 
+	    		if (toAsk) {
+	    			this.level.updateReq(toAsk, 'ask', component.variable);
+    			}
+	    		break;	    		
 	    }
 
 	    // ??component is inside the scope of the function that executeExpression is called in???
