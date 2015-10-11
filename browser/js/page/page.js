@@ -35,36 +35,36 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
 
 
     //construct the directions with a function to fix drop and drag bug
-    // var spellDirConstr = () => {
-    //   $scope.directions = [{
-    //     name: 'up',
-    //     text: 'up',
-    //     value: false,
-    //     type: 'direction',
-    //     varType: 'direction'
-    //   }, {
-    //     name: 'down',
-    //     text: 'down',
-    //     value: false,
-    //     type: 'direction',
-    //     varType: 'direction'
-    //   },
-    //   {
-    //     name: 'left',
-    //     text: 'left',
-    //     value: false,
-    //     type: 'direction',
-    //     varType: 'direction'
-    //   },
-    //   {
-    //     name: 'right',
-    //     text: 'right',
-    //     value: false,
-    //     type: 'direction',
-    //     varType: 'direction'
-    //   }];
-    // }
-    //  spellDirConstr();
+    var spellDirConstr = () => {
+      $scope.directions = [{
+        name: 'up',
+        text: 'up',
+        value: false,
+        type: 'direction',
+        varType: 'direction'
+      }, {
+        name: 'down',
+        text: 'down',
+        value: false,
+        type: 'direction',
+        varType: 'direction'
+      },
+      {
+        name: 'left',
+        text: 'left',
+        value: false,
+        type: 'direction',
+        varType: 'direction'
+      },
+      {
+        name: 'right',
+        text: 'right',
+        value: false,
+        type: 'direction',
+        varType: 'direction'
+      }];
+    }
+     spellDirConstr();
 
     //scope.page.tools is an array of strings - .action of the objs
     // takes vars and tools from page model and makes command objs
