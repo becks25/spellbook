@@ -1,13 +1,14 @@
 /**
  * Created by Austin on 10/5/15.
  */
-app.factory('MapFactory', function(ClassFactory, TilesizeFactory) {
+app.factory('MapFactory', function(ClassFactory, TilesizeFactory, AuthService, UserFactory) {
     class Map {
         // fat arrows allow for this to reference MapFactory and not the inner function
         constructor (mapData) {
             this.originalMap = mapData;
-            this.avatar = null;
+            this.avatar = this.getAvatar();
             this.objects = [];
+            this.user = null;
             this.mapArray = this.makeBoard();
 
             this.load(mapData);
@@ -24,6 +25,14 @@ app.factory('MapFactory', function(ClassFactory, TilesizeFactory) {
             return board;
         }
 
+        getUser(){
+            return AuthService.getLoggedInUser()
+                .then(function(user){
+                    console.log("the user", user)
+                    return user;
+                })
+        }
+
         resetMap(){
             Crafty("2D").each(function(i) {
                     this.destroy();
@@ -33,8 +42,15 @@ app.factory('MapFactory', function(ClassFactory, TilesizeFactory) {
         }
 
         getAvatar (){
-            return this.avatar
+            console.log("getting the avatar...", this.getUser())
+            return this.getUser()
+                .then(function(user){
+                    console.log("inside get avatar", user)
+                    console.log(user.character)
+                    return user.character
+                })
         }
+
 
         // position is an object with x and y coordinates
         getObject (position, type) {

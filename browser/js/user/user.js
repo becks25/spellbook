@@ -31,6 +31,7 @@ app.controller('UserCtrl', function ($scope, AuthService, UserFactory, $state, u
   //   StoryFactory.goToPage(pageNum);
   // };
   $scope.allAvatars = LARGE_AVATARS;
+  //$scope.user.character.picture;
 
   $scope.totalPoints = (function(){
     var total = 0;
