@@ -1,30 +1,39 @@
-	<div class="spellTool panel {{tool.type}}">
-		<div class="panel-heading {{tool.type}}">
-  		<span class="glyphicon glyphicon-remove pull-right" ng-click="removeFromSpell($index, spellComponents)"></span>
+	<div class="spellTool panel {{logictool.type}}">
+		<div class="panel-heading {{logictool.type}}">
+  		<span class="glyphicon glyphicon-remove pull-right" ng-click="remove(index, parent)"></span>
 
   		<h4 class="inline">
-  			{{ tool.text.toUpperCase() }}
+  			{{ logictool.text.toUpperCase() }}
   		</h4>
 
   		<div class="inline">
-  			<p ng-if="tool.action !== 'forLoop'" ui-sortable="dirComponentConfig" ng-model="dirStuff" class="inline form-control spellCompVars dirBox {{tool.action}} variable spellCompExpr" data-index='{{$index}}' data-array='spellComponents'>
-  				{{tool.condition || 'Drop item here'}}
+  			<p ng-if="logictool.action !== 'forLoop'" ui-sortable="dirComponentConfig" ng-model="model" class="inline form-control spellCompVars dirBox {{logictool.action}} variable spellCompExpr" data-index='{{index}}' data-array='{{parent}}'>
+  				{{logictool.condition || 'Drop item here'}}
 	  		</p>
   			
-  			<input ng-if="tool.action ==='forLoop'" type="Number" ng-model="tool.number" class="inline form-control"/>
+  			<input ng-if="logictool.action ==='forLoop'" type="Number" ng-model="logictool.number" class="inline form-control"/>
 
 
   		</div>
 
   	</div>
   	<div class="panel-body">
-  		 {{tool.condition}} {{tool.variable}} {{tool.person}}
+  		 {{logictool.condition}} {{logictool.variable}} {{logictool.person}}
 
-  		 {{tool}}
+  		 {{logictool}}
 
-  		<div ui-sortable="dirComponentConfig" ng-model="dirStuff" class="spellCompVars dirBox {{tool.action}} spellCompExpr" data-index='{{$index}}' data-array='spellComponents'>
+  		<div ui-sortable="dirComponentConfig" ng-model="model" class="spellCompVars dirBox {{logictool.action}} spellCompExpr" data-index='{{index}}' data-array='{{parent}}'>
   		</div>
-  		<add-variable tool='tool' removeFn='removeFromSpell'></add-variable>
-  	</div>
+
+       <!--  <ul ui-sortable="dirComponentConfig" ng-model="logictool.expressions" class="spellComponentDirs dirBox spellCompExpr">
+              <li ng-repeat="variable in logictool.expressions track by $index" class="{{variable.type}}">
+                {{variable}}
+                    <action-tools ng-if="variable.action === 'pickUp' || variable.action==='tell' || variable.action==='give' || variable.action==='ask'" actiontool="variable"></action-tools>
+              </li>
+
+        </ul> -->
+
+<!--   		<add-variable tool='logictool' removeFn='removeFromSpell'></add-variable>
+ -->  	</div>
 
 	</div>
