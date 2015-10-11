@@ -57,13 +57,22 @@ var seedStories = function(){
             cover: 'http://www.smashingmagazine.com/images/book-covers/book-covers-18.jpg'
         };
     });
+
+    stories.push({
+        title: 'Jerry the Super Giraffe',
+        description: "Being a super giraffe is a lot of work- can you help Jerry?",
+        difficulty: 2,
+        concepts: ['Loops', 'If-statements'],
+        cover: 'http://www.smashingmagazine.com/images/book-covers/book-covers-18.jpg'
+
+    });
      return Story.createAsync(stories);
 };
 
 var seedPages = function(stories){
     var pages = [];
     stories.forEach(function(story){
-        for (i=0; i<3; i++){
+        for (i=0; i<4; i++){
             pages.push({
                 story: story._id,
                 text: descr,
@@ -133,6 +142,26 @@ var seedUsers = function (stories, pages) {
         {
             email: 'obama@gmail.com',
             password: 'potus',
+            isAdmin: true
+        },
+        {
+            email: 'beckylee@gmail.com',
+            password: 'becks',
+            isAdmin: true
+        },
+        {
+            email: 'austin@gmail.com',
+            password: 'austin',
+            isAdmin: true
+        },
+        {
+            email: 'chandra@gmail.com',
+            password: 'chandra',
+            isAdmin: true
+        },
+        {
+            email: 'emily@gmail.com',
+            password: 'emily',
             isAdmin: true
         }
     ];
