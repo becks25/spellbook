@@ -17,6 +17,8 @@ app.directive('logicTools', function ($rootScope, $state, $compile) {
 `);
             $compile(elem.contents())(scope);
           }
+
+          scope.re = /_/g;
         }
     }
   });

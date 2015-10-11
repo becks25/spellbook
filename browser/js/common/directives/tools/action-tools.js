@@ -9,6 +9,10 @@ app.directive('actionTools', function ($rootScope, $state) {
           index: "=",
           parent: "=",
           remove: "="
+        },
+        link: scope => {
+          scope.re = /_/g;
+
         }
     }
   });
