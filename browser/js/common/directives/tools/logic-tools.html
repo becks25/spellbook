@@ -1,0 +1,30 @@
+	<div class="spellTool panel {{tool.type}}">
+		<div class="panel-heading {{tool.type}}">
+  		<span class="glyphicon glyphicon-remove pull-right" ng-click="removeFromSpell($index, spellComponents)"></span>
+
+  		<h4 class="inline">
+  			{{ tool.text.toUpperCase() }}
+  		</h4>
+
+  		<div class="inline">
+  			<p ng-if="tool.action !== 'forLoop'" ui-sortable="dirComponentConfig" ng-model="dirStuff" class="inline form-control spellCompVars dirBox {{tool.action}} variable spellCompExpr" data-index='{{$index}}' data-array='spellComponents'>
+  				{{tool.condition || 'Drop item here'}}
+	  		</p>
+  			
+  			<input ng-if="tool.action ==='forLoop'" type="Number" ng-model="tool.number" class="inline form-control"/>
+
+
+  		</div>
+
+  	</div>
+  	<div class="panel-body">
+  		 {{tool.condition}} {{tool.variable}} {{tool.person}}
+
+  		 {{tool}}
+
+  		<div ui-sortable="dirComponentConfig" ng-model="dirStuff" class="spellCompVars dirBox {{tool.action}} spellCompExpr" data-index='{{$index}}' data-array='spellComponents'>
+  		</div>
+  		<add-variable tool='tool' removeFn='removeFromSpell'></add-variable>
+  	</div>
+
+	</div>

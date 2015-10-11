@@ -5,50 +5,10 @@
 	<div class="panel-body components">
 		<ul ui-sortable="spellConfig" ng-model="spellComponents" class="spellComponents spellBox">
 		  <li ng-repeat="tool in spellComponents track by $index" class='{{tool.action}}'>
-		  	<div class="spellTool panel {{tool.type}}">
-		  		<div class="panel-heading {{tool.type}}">
-			  		<span class="glyphicon glyphicon-remove pull-right" ng-click="removeFromSpell($index, spellComponents)"></span>
-
-			  		<h4 class="inline">
-			  			{{ tool.text.toUpperCase() }}
-			  		</h4>
-
-			  		<div ng-if="tool.action == 'move'" class="inline">
-
-			  			<p ui-sortable="dirComponentConfig" ng-model="dirStuff" class="inline form-control spellCompVars dirBox {{tool.action}} spellCompExpr" data-index='{{$index}}' data-array='spellComponents'>
-			  				{{tool.direction || 'Drop direction here'}}
-				  		</p>
-
-				  		<input type="Number" ng-model="tool.distance" class="inline form-control"/>
-
-			  		</div>
-
-			  		<div ng-if="tool.action == 'pickUp'" class="inline">
-			  			<p ui-sortable="dirComponentConfig" ng-model="dirStuff" class="inline form-control spellCompVars dirBox {{tool.action}} spellCompExpr" data-index='{{$index}}' data-array='spellComponents'>
-			  				{{tool.variable || 'Drop item here'}}
-				  		</p>
-
-			  		</div>
-
-			  		<p ng-if="tool.action === 'ifStatement' || tool.action === 'whileLoop'" class="inline {{tool.action}}" inline {{tool.action}}>
-			  			<input type="text" placeholder="{{tool.condition}}" disabled class="form-control inline" />
-			  		</p>
-
-
-
-
-			  	</div>
-			  	<div ng-if="tool.action!=='pickUp' && tool.action !== 'move'" class="panel-body">
-			  		 {{tool.condition}} {{tool.variable}} {{tool.person}}
-
-			  		 {{tool}}
-		
-			  		<div ui-sortable="dirComponentConfig" ng-model="dirStuff" class="spellCompVars dirBox {{tool.action}} spellCompExpr" data-index='{{$index}}' data-array='spellComponents'>
-			  		</div>
-			  		<add-variable tool='tool' removeFn='removeFromSpell'></add-variable>
-			  	</div>
-
-		  	</div>
+		  	<action-tools ng-if="tool.action === 'pickUp' || tool.action==='tell' || tool.action==='give' || tool.action==='ask'"></action-tools>
+		  	<move-tool ng-if="tool.action==='move'"></move-tool>
+		  	<logic-tools ng-if="tool.action === 'ifStatement' || tool.action === 'whileLoop' || tool.action==='forLoop'"></logic-tools>
+		  	
 		  </li>
 		</ul>
 	</div>

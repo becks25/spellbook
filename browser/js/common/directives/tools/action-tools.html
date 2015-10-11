@@ -1,0 +1,22 @@
+<div class="spellTool panel {{tool.type}}">
+		  		<div class="panel-heading {{tool.type}}">
+			  		<span class="glyphicon glyphicon-remove pull-right" ng-click="removeFromSpell($index, spellComponents)"></span>
+
+			  		<h4 class="inline">
+			  			{{ tool.text.toUpperCase() }}
+			  		</h4>
+
+			  		<div class="inline">
+			  			<p ng-if="tool.action !== 'pickUp'" ui-sortable="dirComponentConfig" ng-model="dirStuff" class="inline form-control spellCompVars dirBox {{tool.action}} variable spellCompExpr" data-index='{{$index}}' data-array='spellComponents'>
+			  				{{tool.person || 'Drop person here'}}
+				  		</p>
+
+				  		<p ui-sortable="dirComponentConfig" ng-model="dirStuff" class="inline form-control spellCompVars dirBox {{tool.action}} variable spellCompExpr" data-index='{{$index}}' data-array='spellComponents'>
+			  				{{tool.variable || 'Drop item here'}}
+				  		</p>
+			  		</div>
+
+
+			  	</div>
+
+		  	</div>

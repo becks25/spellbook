@@ -53,7 +53,7 @@ tool-box, spell, add-variable{
 
 		}
 
-		&.pickUp, &.ifStatement, &.whileLoop{
+		&.pickUp, &.ifStatement, &.whileLoop, &.variable{
 				background-color:$green !important;
 				font-family: $font-default;
 				text-align:center;
