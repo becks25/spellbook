@@ -5,6 +5,11 @@
 		<div class="storyText">
 			{{page.text}}
 		</div>
+
+		<div class="hint">
+			<button ng-show="!hintRequested" ng-click="getHint()">Get Hint</button>
+			<p ng-show="hintRequested">{{page.hint}}</p>
+		</div>
 	</div>
 
 	<!--Right side of the page-->

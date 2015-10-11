@@ -20,37 +20,51 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
     $scope.spellComponents = []; // update from db if saved version is present
     $scope.spellVars = [];
     $scope.spellTools = [];
-    $scope.directions = [{
-        name: 'up',
-        text: 'up',
-        value: false,
-        type: 'direction',
-        varType: 'direction'
-    }, {
-        name: 'down',
-        text: 'down',
-        value: false,
-        type: 'direction',
-        varType: 'direction'
-    },
-    {
-        name: 'left',
-        text: 'left',
-        value: false,
-        type: 'direction',
-        varType: 'direction'
-    },
-    {
-        name: 'right',
-        text: 'right',
-        value: false,
-        type: 'direction',
-        varType: 'direction'
-    }];
+    $scope.directions = [];
+
+
+    $scope.hintRequested = false;
+
+    $scope.getHint = () => {
+      $scope.hintRequested = true;
+    }
 
     //this is for testing if spell directions is working...
     //$scope.spellDirections = [];
     $scope.spellComponentDirs = [];
+
+
+    //construct the directions with a function to fix drop and drag bug
+    // var spellDirConstr = () => {
+    //   $scope.directions = [{
+    //     name: 'up',
+    //     text: 'up',
+    //     value: false,
+    //     type: 'direction',
+    //     varType: 'direction'
+    //   }, {
+    //     name: 'down',
+    //     text: 'down',
+    //     value: false,
+    //     type: 'direction',
+    //     varType: 'direction'
+    //   },
+    //   {
+    //     name: 'left',
+    //     text: 'left',
+    //     value: false,
+    //     type: 'direction',
+    //     varType: 'direction'
+    //   },
+    //   {
+    //     name: 'right',
+    //     text: 'right',
+    //     value: false,
+    //     type: 'direction',
+    //     varType: 'direction'
+    //   }];
+    // }
+    //  spellDirConstr();
 
     //scope.page.tools is an array of strings - .action of the objs
     // takes vars and tools from page model and makes command objs
@@ -187,6 +201,8 @@ var newVar={};
               //$scope.directions = $scope.spellDirsBox.slice();
               $scope.spellVars = [];
               spellVarConstr()
+              $scope.directions = [];
+              spellDirConstr()
               refresh();
           }
         },
@@ -208,6 +224,8 @@ var newVar={};
                     // $scope.thingBeingDroppedOn[newVar.type] = newVar.name;
                     $scope.spellVars = [];
                     spellVarConstr()
+                    $scope.directions = [];
+                    spellDirConstr()
                     $scope.spellComponents[dropTargetIndex][newVar.varType] = newVar.name;
                     // newDir = null;
                     refresh();
