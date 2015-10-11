@@ -81,12 +81,13 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
     var spellVarConstr = () => {
         //variables are stored as strings
         $scope.page.variables.forEach((variable)=> {
-            var name = variable.text.split(' ').join('');
+            var name = variable.text.split(' ').join('_');
             $scope.spellVars.push({name: name, text: variable.text, value: false, type: 'variable', varType: variable.varType})
         });
     };
     //construct the spellVars array on load
     spellVarConstr();
+    $scope.showSpaces = (str)=> str.split('_').join(' ');
 
     //ensures that tool box can't be rearranged by reordering back to orig order
     var refresh = () => {

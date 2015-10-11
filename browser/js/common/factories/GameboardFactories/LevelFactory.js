@@ -2,8 +2,9 @@ app.factory('LevelFactory', function(PageFactory, UserFactory, AuthService, MapF
   class Level {
     constructor(page){
       this.page = page;
+      console.log('page requirements?', this.page.requirements)
       this.map = new MapFactory(page.gameboard);
-      this.requirements = page.requirements;
+      this.requirements = this.page.requirements;
       this.hint = page.hint;
       this.concepts = page.concepts;
       this.points = 50;
@@ -45,7 +46,10 @@ app.factory('LevelFactory', function(PageFactory, UserFactory, AuthService, MapF
 
     //check and update requirements
     updateReq(variable, action, val){
-        if (this.requirements[variable][action][val] === false) this.requirements[variable][action][val] = true;
+        if (_.has(this.requirements, variable, action, val)){
+           this.requirements[variable][action][val] = true;
+        }
+
     }
 
     win(){

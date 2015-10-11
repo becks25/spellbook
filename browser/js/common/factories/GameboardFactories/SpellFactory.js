@@ -9,6 +9,7 @@ app.factory('SpellFactory', function(TilesizeFactory){
 	    this.key = level.key;
 	    this.avatar = this.map.getAvatar();
 	    this.currentCommand = null;
+	   	this.holding = [];
 	    //this.reset();
 	    // this.reload();
   	}
@@ -23,6 +24,7 @@ app.factory('SpellFactory', function(TilesizeFactory){
 		this.avatar = this.map.getAvatar();
 		this.level.resetRequirements();
 		if(this.currentCommand) this.currentCommand = null;
+		this.holding = [];
 	}
 
 	lock (){
@@ -236,15 +238,21 @@ app.factory('SpellFactory', function(TilesizeFactory){
     			}
     			break;
 	    	case 'pickUp':
-	    		console.log('picking up', component.variable, component.variable.holding)
+	    		console.log('picking up', component.variable)
 	    		//search the map objects on that position for the one that matches component.variable,
 	    		var toPick = spell.map.checkPos(this.avatar.position, component.variable); 
+	    		console.log('is it here?', toPick)
 	    		if (toPick) {
-	    			spell.map.removeObj(toPick);
+	    			// console.log('going to remove', toPick, this.avatar.position)
+	    			spell.map.removeObject(toPick, this.avatar.position);
                 	// collectable obj (ref) has to be passed into the function as .variable
-                	toPick.holding = true;
-	    			component.variable.holding = true;
-	    			this.level.updateReq(toPick, 'pickUp', 'true')
+                	// toPick.holding = true;
+                	console.log('variable', component.variable)
+	    			spell.holding.push(component.variable)
+	    			console.log('holding', spell.holding)
+	    			spell.level.updateReq(component.variable, 'pickUp', 'true')
+	    			console.log('req', spell.level.requirements)
+
                 }
 	    		break;
 	    	case 'ifStatement':
