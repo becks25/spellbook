@@ -6,14 +6,10 @@
 	  			{{ actiontool.text.toUpperCase() }}
 	  		</h4>
 
-	  		{{parent}}{{index}}
-
   		<div class="inline">
   			<p ng-if="actiontool.action !== 'pickUp'" ui-sortable="dirComponentConfig" ng-model="model" class="inline form-control spellCompVars dirBox {{actiontool.action}} variable spellCompExpr" data-index='{{index}}' data-array='{{parent}}'>
   				{{actiontool.person || 'Drop person here'}}
 	  		</p>
-
-	  		{{model}}
 
 	  		<p ui-sortable="dirComponentConfig" ng-model="model" class="inline form-control spellCompVars dirBox {{actiontool.action}} variable spellCompExpr" data-index='{{index}}' data-array='{{parent}}'>
   				{{actiontool.variable.replace(re, ' ') || 'Drop item here'}}

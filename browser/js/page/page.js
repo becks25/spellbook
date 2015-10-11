@@ -85,7 +85,6 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
     };
     //construct the spellVars array on load
     spellVarConstr();
-    $scope.showSpaces = (str)=> str.split('_').join(' ');
 
     //ensures that tool box can't be rearranged by reordering back to orig order
     var refresh = () => {
