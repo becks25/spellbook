@@ -138,6 +138,7 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
                 if ($(e.target).hasClass('first')) {
                     $scope.spellTools = $scope.tools.slice();
                     //$scope.spellComponents = $scope.spellComponents.slice();
+                    $scope.spellTools = [];
                     spellToolConstr()
                     console.log('made a copy')
                     refresh();
@@ -184,6 +185,8 @@ var newVar={};
               //refresh variable and direction lists
               //$scope.spellVars = $scope.spellVarsBox.slice();
               //$scope.directions = $scope.spellDirsBox.slice();
+              $scope.spellVars = [];
+              spellVarConstr()
               refresh();
           }
         },
@@ -203,6 +206,8 @@ var newVar={};
                 //       $scope.thingBeingDroppedOn[newVar.type].push(newVar) ;
                 //     }
                     // $scope.thingBeingDroppedOn[newVar.type] = newVar.name;
+                    $scope.spellVars = [];
+                    spellVarConstr()
                     $scope.spellComponents[dropTargetIndex][newVar.varType] = newVar.name;
                     // newDir = null;
                     refresh();
