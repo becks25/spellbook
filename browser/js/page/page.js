@@ -121,13 +121,25 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
                 ui.item.sortable.cancel();
                 refresh();
             }
+            // else{
+            //    var clone = {};
+            //     for (var prop in ui.item)
+            //       console.log("the props", prop)
+            //     if (ui.hasOwnProperty(prop)){
+            //     clone[prop] = ui[prop].clone();
+            //   }
+
+            //     return clone;
+            // }
         },
-        stop: (e, ui) => {
+        stop: (e, clone) => {
 
             if (e.target) {
                 if ($(e.target).hasClass('first')) {
                     $scope.spellTools = $scope.tools.slice();
-                    $scope.spellComponents = $scope.spellComponents.slice();
+                    //$scope.spellComponents = $scope.spellComponents.slice();
+                    $scope.spellTools = [];
+                    spellToolConstr()
                     console.log('made a copy')
                     refresh();
                     console.log('$scope.spellComponents', $scope.spellComponents)
@@ -147,9 +159,9 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
   //drag directions to tools
 
  //save a copy of the directions
-  $scope.spellDirsBox = $scope.directions.slice();
+  //$scope.spellDirsBox = $scope.directions.slice();
     //save a copy of the spellVars
-  $scope.spellVarsBox = $scope.spellVars.slice();
+  //$scope.spellVarsBox = $scope.spellVars.slice();
 var dirStuff = [];
 var dropTargetIndex;
 var newVar={};
@@ -171,8 +183,10 @@ var newVar={};
               // console.log('data', ui.item.sortable.droptarget.data('index'))
               dropTargetIndex = ui.item.sortable.droptarget.data('index');
               //refresh variable and direction lists
-              $scope.spellVars = $scope.spellVarsBox.slice();
-              $scope.directions = $scope.spellDirsBox.slice();
+              //$scope.spellVars = $scope.spellVarsBox.slice();
+              //$scope.directions = $scope.spellDirsBox.slice();
+              $scope.spellVars = [];
+              spellVarConstr()
               refresh();
           }
         },
@@ -192,6 +206,8 @@ var newVar={};
                 //       $scope.thingBeingDroppedOn[newVar.type].push(newVar) ;
                 //     }
                     // $scope.thingBeingDroppedOn[newVar.type] = newVar.name;
+                    $scope.spellVars = [];
+                    spellVarConstr()
                     $scope.spellComponents[dropTargetIndex][newVar.varType] = newVar.name;
                     // newDir = null;
                     refresh();
