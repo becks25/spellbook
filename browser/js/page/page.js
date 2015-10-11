@@ -155,9 +155,7 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
                     //$scope.spellComponents = $scope.spellComponents.slice();
                     $scope.spellTools = [];
                     spellToolConstr()
-                    console.log('made a copy')
                     refresh();
-                    console.log('$scope.spellComponents', $scope.spellComponents)
                 }
             }
         },
@@ -180,10 +178,11 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
 var dirStuff = [];
 var dropTargetIndex;
 var newVar={};
+var parentArray;
   $scope.dirConfig = angular.extend({}, baseConfig, {
         //this only runs if valid drop
         update: (e, ui) => {
-          console.log("this is the e item", ui.item.scope());
+          // console.log("this is the e item", ui.item.scope());
 
 
           if (ui.item.sortable.droptarget.hasClass('first')) {
@@ -194,12 +193,18 @@ var newVar={};
           } else {
               //set newVar to clone of dragged variable
               newVar = _.cloneDeep(ui.item.scope().tool);
+              console.log('parent from scope?', ui.item.sortable.droptarget.scope().parent)
               // console.log('dropTarget', ui.item.sortable.droptarget)
               // console.log('data', ui.item.sortable.droptarget.data('index'))
               dropTargetIndex = ui.item.sortable.droptarget.data('index');
+              parentArray = ui.item.sortable.droptarget.scope().parent
+              console.log('parentArray', parentArray)
+              console.log($scope.spellComponents, parentArray)
               //refresh variable and direction lists
               //$scope.spellVars = $scope.spellVarsBox.slice();
               //$scope.directions = $scope.spellDirsBox.slice();
+
+
               $scope.spellVars = [];
               spellVarConstr()
               $scope.directions = [];
@@ -209,16 +214,18 @@ var newVar={};
         },
         stop: (e, ui) => {
             //runs on drop
-            console.log('e.target', e.target)
+            // console.log('e.target', e.target)
             //this will only run if a tool is being dropped
             // if ($(e.target).hasClass('spellDirs')) {
                 //recopies the list of directions
                 // $scope.directions = $scope.spellDirsBox.slice();
-                console.log("this is the ui", ui.item)
+                // console.log("this is the ui", ui.item)
                 
                 //set prop on droppee
                 console.log('dirstuff', dirStuff)
-                if(dropTargetIndex>-1 && $scope.spellComponents[dropTargetIndex].hasOwnProperty(newVar.varType)){
+                console.log('dropping into', newVar.varType, parentArray[dropTargetIndex])
+                console.log(parentArray[dropTargetIndex].hasOwnProperty(newVar.varType))
+                if(dropTargetIndex>-1 && parentArray[dropTargetIndex].hasOwnProperty(newVar.varType)){
                 //     if(thingBeingDroppedOn[newVar.type].isArray) {
                 //       $scope.thingBeingDroppedOn[newVar.type].push(newVar) ;
                 //     }
@@ -227,7 +234,9 @@ var newVar={};
                     spellVarConstr()
                     $scope.directions = [];
                     spellDirConstr()
-                    $scope.spellComponents[dropTargetIndex][newVar.varType] = newVar.name;
+                    console.log('should place it', parentArray[dropTargetIndex][newVar.varType])
+                    console.log(newVar.name)
+                    parentArray[dropTargetIndex][newVar.varType] = newVar.name;
                     // newDir = null;
                     refresh();
                 // }
