@@ -50,7 +50,6 @@ app.factory('LevelFactory', function(PageFactory, UserFactory, AuthService, MapF
 
     //check and update requirements
     updateReq(variable, action, val){
-      // console.log('updating', variable, action, val)
         if (_.has(this.requirements, variable, action, val)){
           // console.log('updating from', this.requirements[variable][action][val])           
            this.requirements[variable][action][val] = true;

@@ -191,16 +191,16 @@ var seedPages = function(stories){
                 concepts: ['forLoop'],
                 hint: 'You can use a repeat to do an action more than once',
                 requirements: {
-                    Banana1: {pickUp:{val: true}},
-                    Banana2: {pickUp:{val: true}},
-                    Banana3: {pickUp:{val: true}}
+                    'Banana&1': {pickUp:{val: true}},
+                    'Banana&2': {pickUp:{val: true}},
+                    'Banana&3': {pickUp:{val: true}}
                 },
                 gameboard: [
                     [
                         [{
                             type:'Collectible',
                             name:'Crystal1',
-                            varName:'Banana3'
+                            varName:'Banana&3'
                         }],
                         [],
                         [],
@@ -211,7 +211,7 @@ var seedPages = function(stories){
                         [{
                             type:'Collectible',
                             name:'Crystal1',
-                            varName:'Banana2'
+                            varName:'Banana&2'
                         }],
                         [{
                             type:'Obstacle',
@@ -225,7 +225,7 @@ var seedPages = function(stories){
                         [{
                             type:'Collectible',
                             name:'Crystal1',
-                            varName:'Banana1'
+                            varName:'Banana&1'
                         }],
                         [{
                             type:'Obstacle',
