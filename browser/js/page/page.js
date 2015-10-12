@@ -121,13 +121,17 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
     //remove a tool from the spell
     $scope.removeFromSpell = (index, loc) => {
         loc.splice(index, 1);
+        // console.log('remove')
+        $scope.resetLevel();
       };
 
-    //remove a variable from the tool
-    //this will need to change as soon as correctly adding vars to tools
-    $scope.removeFromTool = (index) => {
-        $scope.spellComponentDirs.splice(index, 1);
-      };
+    // //remove a variable from the tool
+    // //this will need to change as soon as correctly adding vars to tools
+    // $scope.removeFromTool = (index) => {
+    //     $scope.spellComponentDirs.splice(index, 1);
+    //     $scope.resetLevel();
+
+    //   };
 
     var baseConfig = {
         placeholder: "beingDragged",
@@ -147,11 +151,12 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
 
             if (e.target) {
                 if ($(e.target).hasClass('first')) {
-                    $scope.spellTools = $scope.tools.slice();
+                    // $scope.spellTools = $scope.tools.slice();
                     //$scope.spellComponents = $scope.spellComponents.slice();
                     $scope.spellTools = [];
-                    spellToolConstr()
+                    spellToolConstr();
                     refresh();
+                    $scope.resetLevel();
                 }
             }
         },
@@ -161,6 +166,7 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
     //Handles directions and variables
     //determines if dropped in a valid position and updates target object's property
     var dirStuff = [];
+    var model = [];
     var dropTargetIndex;
     var newVar={};
     var parentArray;
@@ -179,7 +185,7 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
               newVar = _.cloneDeep(ui.item.scope().tool);
               //sets parent array and drop index to keep track of what to modify
               dropTargetIndex = ui.item.sortable.droptarget.data('index');
-              parentArray = ui.item.sortable.droptarget.scope().parent
+              parentArray = ui.item.sortable.droptarget.scope().parent;
 
               //resets tools arrays to create duplication and ensure spell components are clones
               $scope.spellVars = [];
@@ -187,7 +193,7 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
               $scope.directions = [];
               spellDirConstr();
               refresh();
-              $scope.resetLevel();
+              // $scope.resetLevel();
           }
         },
         stop: (e, ui) => {
@@ -197,11 +203,9 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
             //checks that drop target can take this variable
             if(dropTargetIndex>-1 && parentArray[dropTargetIndex].hasOwnProperty(newVar.varType)){
                 $scope.spellVars = [];
-                spellVarConstr()
+                spellVarConstr();
                 $scope.directions = [];
-                spellDirConstr()
-                console.log('should place it', parentArray[dropTargetIndex][newVar.varType])
-                console.log(newVar.name)
+                spellDirConstr();
                 parentArray[dropTargetIndex][newVar.varType] = newVar.name;
                 
                 //reset variables

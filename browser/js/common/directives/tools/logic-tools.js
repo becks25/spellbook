@@ -13,7 +13,7 @@ app.directive('logicTools', function ($rootScope, $state, $compile) {
         },
         link: (scope, elem) => {
           if(angular.isArray(scope.logictool.expressions)){
-            elem.append(`<add-variable tool='logictool' removeFn='removeFromSpell'></add-variable>
+            elem.append(`<add-variable tool='logictool'></add-variable>
 `);
             $compile(elem.contents())(scope);
           }
