@@ -115,7 +115,8 @@ app.factory('MapFactory', function(ClassFactory, TilesizeFactory) {
             var foundObj;
             this.mapArray[pos.x][pos.y].some(obj => {
                 // console.log('mapArray', obj);
-                    if(obj.varName === itemName){
+
+                    if(obj.varName.replace(/\&\w+/, '') === itemName){
                         foundObj = obj;
                         return true;
                     }
