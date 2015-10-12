@@ -1,13 +1,14 @@
 /**
  * Created by Austin on 10/5/15.
  */
-app.factory('MapFactory', function(ClassFactory, TilesizeFactory) {
+app.factory('MapFactory', function(ClassFactory, TilesizeFactory, AuthService, UserFactory) {
     class Map {
         // fat arrows allow for this to reference MapFactory and not the inner function
         constructor (mapData) {
             this.originalMap = mapData;
-            this.avatar = null;
+            this.avatar = null
             this.objects = [];
+            //this.user = null;
             this.mapArray = this.makeBoard();
 
             this.load(mapData);
@@ -23,6 +24,7 @@ app.factory('MapFactory', function(ClassFactory, TilesizeFactory) {
             }
             return board;
         }
+
 
         resetMap(){
             // Crafty("2D").detach();
@@ -41,6 +43,7 @@ app.factory('MapFactory', function(ClassFactory, TilesizeFactory) {
         getAvatar (){
             return this.avatar;
         }
+
 
         // position is an object with x and y coordinates
         getObject (position, type) {
