@@ -25,11 +25,16 @@ app.factory('MapFactory', function(ClassFactory, TilesizeFactory) {
         }
 
         resetMap(){
+            // Crafty("2D").detach();
+
             Crafty("2D").each(function(i) {
-                console.log('destroying', i, this)
+                //console.log('destroying', i, this)
                     this.destroy();
                 
             });
+
+            //Crafty.init(TilesizeFactory.TILESIZE * TilesizeFactory.NumTiles, TilesizeFactory.TILESIZE * TilesizeFactory.NumTiles);
+
             this.load(this.originalMap);
         }
 
@@ -53,7 +58,7 @@ app.factory('MapFactory', function(ClassFactory, TilesizeFactory) {
         }
 
         addObject (obj, position) {
-            this.removeObject(obj);
+            this.removeObject(obj, position);
             this.objects.push(obj);
             this.mapArray[position.x][position.y].push(obj);
         }
@@ -63,7 +68,7 @@ app.factory('MapFactory', function(ClassFactory, TilesizeFactory) {
             var indices = [];
             // optional position arg for removing obj from specific place
             if(position){
-            console.log('removing', obj, this.mapArray[position.x][position.y])
+            // console.log('removing', obj, this.mapArray[position.x][position.y])
                 this.mapArray[position.x][position.y].forEach((item, i) => {
                     if(item.name === obj.name || item.variable === obj.name){
                         indices.push(i);
@@ -80,7 +85,6 @@ app.factory('MapFactory', function(ClassFactory, TilesizeFactory) {
             for(let i=indices.length-1; i>=0; i--){
                 this.mapArray[position.x][position.y].splice(indices[i], 1);
             }
-            if (position) console.log('new objs', this.mapArray[position.x][position.y])
             this.objects.splice(index, 1);
 
         }
@@ -107,10 +111,10 @@ app.factory('MapFactory', function(ClassFactory, TilesizeFactory) {
 
         //checks a map position for a given item and returns item or false
         checkPos (pos, itemName){
-            console.log('in checkPos')
-            console.log(pos, itemName, this.mapArray[pos.x][pos.y])
+            // console.log('checking', pos, itemName);
             var foundObj;
             this.mapArray[pos.x][pos.y].some(obj => {
+                // console.log('mapArray', obj);
                     if(obj.varName === itemName){
                         foundObj = obj;
                         return true;

@@ -11,6 +11,8 @@ app.factory('SpellFactory', function(TilesizeFactory){
 	   	this.holding = [];
 	    //this.reset();
 	    // this.reload();
+ 		console.log(this.map.mapArray);
+
   	}
 
 	reset (){
@@ -24,6 +26,8 @@ app.factory('SpellFactory', function(TilesizeFactory){
 		this.level.resetRequirements();
 		this.currentCommand = null;
 		this.holding = {};
+
+
 	}
 
 	lock (){
@@ -39,6 +43,7 @@ app.factory('SpellFactory', function(TilesizeFactory){
 
 	//runs the whole program, acts if solved/unsolved
 	run(argArr){
+
 		// this.save();
 		this.reset();
 		// this.parse();
@@ -127,15 +132,10 @@ app.factory('SpellFactory', function(TilesizeFactory){
     			}
     			break;
 	    	case 'pickUp':
-	    		console.log('picking up', component.variable)
 	    		//search the map objects on that position for the one that matches component.variable,
 	    		var toPick = spell.map.checkPos(this.avatar.position, component.variable); 
 	    		if (toPick) {
-	    			console.log('found it')
 	    			toPick.entity.destroy();
-	    			// console.log('before set', toPick.entity)
-	    			// toPick.setMapPos({x:3, y:3})
-	    			// spell.map.removeObject(toPick, this.avatar.position);
 	    			spell.holding[component.variable] = true;
 	    			spell.level.updateReq(component.variable, 'pickUp', 'val')
                 }
@@ -202,7 +202,7 @@ app.factory('SpellFactory', function(TilesizeFactory){
 	    	var newPos = avatar.move(direction, 1);
 	        if (newPos) {
 	          // Do the move!
-	          console.log(newPos)
+	          // console.log(newPos)
 	          return avatar.promTweenQueen({x: newPos.x*TilesizeFactory.TILESIZE, y: newPos.y*TilesizeFactory.TILESIZE}, 200)
 	          .then(()=>{
 		          avatar.setMapPos(newPos);
