@@ -1,19 +1,15 @@
 
-	<div class="panel-body">
+	<div class="panel-body components">
 		<ul ui-sortable="dirComponentConfig" ng-model="tool.expressions" class="spellComponentDirs dirBox spellCompExpr">
-		  <li ng-repeat="variable in tool.expressions track by $index"><span class="{{variable.type}}">{{ variable.text }} 
-			  <ul class='panel-body spellCompExpr'ui-sortable='dirComponentConfig' ng-model='variable.expressions'data-index='$index'>
-			  	<li ng-repeat='thing in variable.expressions track by $index'><span class='{{thing.type}}'>{{ thing.text }}</span>
-			  	<button ng-click="removeFromTool($index, variable.expressions)">X</button>
-			  	</li>
-			  </ul>
-			  <button ng-click="removeFromTool($index, tool.expressions)">X</button></span>
+		  <li ng-repeat="variable in tool.expressions track by $index" class="{{variable.action}}">
+
+		  	<action-tools ng-if="variable.action === 'pickUp' || variable.action==='tell' || variable.action==='give' || variable.action==='ask'" actiontool="variable" model="variable.expressions" index="$index" parent="tool.expressions" remove="removeFromTool"></action-tools>
+
+		  	<move-tool ng-if="variable.action==='move'" movetool="variable" model="variable.expressions" index="$index" parent="tool.expressions" remove="removeFromTool"></move-tool>
+
+		  	<logic-tools ng-if="variable.action === 'ifStatement' || variable.action === 'whileLoop' || variable.action==='forLoop'" logictool="variable" model="variable" index="$index" parent="tool.expressions" remove="removeFromTool"></logic-tools>
+			
 		  </li>
+		  Drop action here
 		</ul>
 	</div>
-
-
-<!-- track by $index -->
-
-<!--
-<li ng-repeat="variable in tool.expressions track by $index"><span class="{{variable.type}}">{{ variable.text }}<button ng-click="removeFromTool($index)">X</button></span></li>

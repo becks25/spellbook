@@ -1,0 +1,20 @@
+	<div class="spellTool panel {{logictool.type}}">
+		<div class="panel-heading {{logictool.type}}">
+  		<span class="glyphicon glyphicon-remove pull-right" ng-click="remove(index, parent)"></span>
+
+  		<h4 class="inline">
+  			{{ logictool.text.toUpperCase() }}
+  		</h4>
+
+  		<div class="inline">
+  			<p ng-if="logictool.action !== 'forLoop'" ui-sortable="dirComponentConfig" ng-model="model" class="inline form-control spellCompVars dirBox {{logictool.action}} variable spellCompExpr" data-index='{{index}}' data-array='{{parent}}'>
+  				{{logictool.condition.replace(re, ' ') || 'Drop item here'}}
+	  		</p>
+  			
+  			<input ng-if="logictool.action ==='forLoop'" type="Number" ng-model="logictool.number" class="inline form-control"/>
+
+        <p ng-if="logictool.action ==='forLoop'"> Time(s)</p>
+
+  		</div>
+  	</div>
+	</div>

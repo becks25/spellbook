@@ -2,7 +2,15 @@ app.config($stateProvider => {
     $stateProvider.state('page', {
         url: '/page/:id',
         resolve: {
-            page: (PageFactory, $stateParams) => PageFactory.find($stateParams.id)
+            page: (PageFactory, $stateParams) => PageFactory.find($stateParams.id),
+            user: (UserFactory, AuthService) => {
+                return AuthService.getLoggedInUser()
+                .then(user => {
+                    console.log(user);
+                    return UserFactory.find(user._id);
+
+                })
+              }
         },
         views: {
             main: {
@@ -15,25 +23,26 @@ app.config($stateProvider => {
 
 });
 
-app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPRITES, LevelFactory, TilesizeFactory, SpellFactory, SpellComponentFactory, SPRITE_AVATARS, orderByFilter) => {
+app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPRITES, LevelFactory, TilesizeFactory, SpellFactory, SpellComponentFactory, SPRITE_AVATARS, orderByFilter, $compile, user) => {
     $scope.page = page;
     $scope.spellComponents = []; // update from db if saved version is present
     $scope.spellVars = [];
     $scope.spellTools = [];
     $scope.directions = [];
-
-
+    $scope.user = user;
+    $scope.avatar = "Character name";
+    $scope.text = $compile($scope.page.text)($scope);
+    angular.element(document.getElementById('storyText')).append($scope.text);
 
     $scope.hintRequested = false;
 
     $scope.getHint = () => {
       $scope.hintRequested = true;
-    }
+    };
 
     //this is for testing if spell directions is working...
     //$scope.spellDirections = [];
     $scope.spellComponentDirs = [];
-
 
     //construct the directions with a function to fix drop and drag bug
     var spellDirConstr = () => {
@@ -64,7 +73,7 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
         type: 'direction',
         varType: 'direction'
       }];
-    }
+    };
      spellDirConstr();
 
     //scope.page.tools is an array of strings - .action of the objs
@@ -88,7 +97,6 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
     };
     //construct the spellVars array on load
     spellVarConstr();
-    $scope.showSpaces = (str)=> str.split('_').join(' ');
 
     //ensures that tool box can't be rearranged by reordering back to orig order
     var refresh = () => {
@@ -108,20 +116,23 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
     };
     refresh();
 
-//save a copy of all tools on the scope
+    //save a copy of all tools on the scope
     $scope.tools = $scope.spellTools.slice();
 
-//remove a tool from the spell
+    //remove a tool from the spell
     $scope.removeFromSpell = (index, loc) => {
         loc.splice(index, 1);
-        console.log(loc)
+        // console.log('remove')
+        $scope.resetLevel();
       };
 
-//remove a variable from the tool
-//this will need to change as soon as correctly adding vars to tools
-    $scope.removeFromTool = (index) => {
-        $scope.spellComponentDirs.splice(index, 1);
-      };
+    // //remove a variable from the tool
+    // //this will need to change as soon as correctly adding vars to tools
+    // $scope.removeFromTool = (index) => {
+    //     $scope.spellComponentDirs.splice(index, 1);
+    //     $scope.resetLevel();
+
+    //   };
 
     var baseConfig = {
         placeholder: "beingDragged",
@@ -129,148 +140,87 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
         revert: 100
     };
 
-
-//add tools to the spell components array
+    //add tools to the spell components array
     $scope.toolConfig = angular.extend({}, baseConfig, {
         update: (e, ui) => {
             if (ui.item.sortable.droptarget.hasClass('first')) {
                 ui.item.sortable.cancel();
                 refresh();
             }
-            // else{
-            //    var clone = {};
-            //     for (var prop in ui.item)
-            //       console.log("the props", prop)
-            //     if (ui.hasOwnProperty(prop)){
-            //     clone[prop] = ui[prop].clone();
-            //   }
-
-            //     return clone;
-            // }
         },
         stop: (e, clone) => {
 
             if (e.target) {
                 if ($(e.target).hasClass('first')) {
-                    $scope.spellTools = $scope.tools.slice();
+                    // $scope.spellTools = $scope.tools.slice();
                     //$scope.spellComponents = $scope.spellComponents.slice();
                     $scope.spellTools = [];
-                    spellToolConstr()
-                    console.log('made a copy')
+                    spellToolConstr();
                     refresh();
-                    console.log('$scope.spellComponents', $scope.spellComponents)
+                    $scope.resetLevel();
                 }
             }
         },
         connectWith: ".spellComponents, .spellCompExpr",
     });
 
-
-
-    // $scope.spellConfig = angular.extend({}, baseConfig, {
-    //     // connectWith: ".spellTools"
-    // });
-
-//this currently only handles adding directions
-  //drag directions to tools
-
- //save a copy of the directions
-  //$scope.spellDirsBox = $scope.directions.slice();
-    //save a copy of the spellVars
-  //$scope.spellVarsBox = $scope.spellVars.slice();
-var dirStuff = [];
-var dropTargetIndex;
-var newVar={};
-  $scope.dirConfig = angular.extend({}, baseConfig, {
+    //Handles directions and variables
+    //determines if dropped in a valid position and updates target object's property
+    var dirStuff = [];
+    var model = [];
+    var dropTargetIndex;
+    var newVar={};
+    var parentArray;
+    $scope.dirConfig = angular.extend({}, baseConfig, {
         //this only runs if valid drop
         update: (e, ui) => {
-          console.log("this is the e item", ui.item.scope());
-
+          // console.log("this is the e item", ui.item.scope());
 
           if (ui.item.sortable.droptarget.hasClass('first')) {
-                console.log('hi')
-                console.log(ui.item.sortable.droptarget)
-                ui.item.sortable.cancel();
-                refresh();
+            console.log('hi')
+            console.log(ui.item.sortable.droptarget)
+            ui.item.sortable.cancel();
+            refresh();
           } else {
               //set newVar to clone of dragged variable
               newVar = _.cloneDeep(ui.item.scope().tool);
-              // console.log('dropTarget', ui.item.sortable.droptarget)
-              // console.log('data', ui.item.sortable.droptarget.data('index'))
+              //sets parent array and drop index to keep track of what to modify
               dropTargetIndex = ui.item.sortable.droptarget.data('index');
-              //refresh variable and direction lists
-              //$scope.spellVars = $scope.spellVarsBox.slice();
-              //$scope.directions = $scope.spellDirsBox.slice();
+              parentArray = ui.item.sortable.droptarget.scope().parent;
+
+              //resets tools arrays to create duplication and ensure spell components are clones
               $scope.spellVars = [];
-              spellVarConstr()
+              spellVarConstr();
               $scope.directions = [];
-              spellDirConstr()
+              spellDirConstr();
               refresh();
+              // $scope.resetLevel();
           }
         },
         stop: (e, ui) => {
             //runs on drop
-            console.log('e.target', e.target)
-            //this will only run if a tool is being dropped
-            // if ($(e.target).hasClass('spellDirs')) {
-                //recopies the list of directions
-                // $scope.directions = $scope.spellDirsBox.slice();
-                console.log("this is the ui", ui.item)
+            //this will only run if a tool is being dropped in a valid area            
+            //set prop on droppee
+            //checks that drop target can take this variable
+            if(dropTargetIndex>-1 && parentArray[dropTargetIndex].hasOwnProperty(newVar.varType)){
+                $scope.spellVars = [];
+                spellVarConstr();
+                $scope.directions = [];
+                spellDirConstr();
+                parentArray[dropTargetIndex][newVar.varType] = newVar.name;
                 
-                //set prop on droppee
-                console.log('dirstuff', dirStuff)
-                if(dropTargetIndex>-1 && $scope.spellComponents[dropTargetIndex].hasOwnProperty(newVar.varType)){
-                //     if(thingBeingDroppedOn[newVar.type].isArray) {
-                //       $scope.thingBeingDroppedOn[newVar.type].push(newVar) ;
-                //     }
-                    // $scope.thingBeingDroppedOn[newVar.type] = newVar.name;
-                    $scope.spellVars = [];
-                    spellVarConstr()
-                    $scope.directions = [];
-                    spellDirConstr()
-                    $scope.spellComponents[dropTargetIndex][newVar.varType] = newVar.name;
-                    // newDir = null;
-                    refresh();
-                // }
-                console.log("Now look", $scope.spellComponents);
+                //reset variables
+                newVar = null;
+                parentArray = null;
+                dropTargetIndex = -1;
+                refresh();
+                $scope.resetLevel();
             }
         },
         connectWith: ".spellCompVars"
     });
 
-
-    $scope.dirComponentConfig = angular.extend({}, baseConfig, {
-        // connectWith: ".spellDirs"
-    });
-
-
-
-    //this handles dragging variables to tools
-
-
-  // $scope.varConfig = angular.extend({}, baseConfig, {
-  //       update: (e, ui) => {
-  //         console.log("this is the ui item", ui.item)
-  //           if (ui.item.sortable.droptarget.hasClass('first')) {
-  //               ui.item.sortable.cancel();
-  //               refresh();
-  //           }
-  //       },
-  //       stop: (e, ui) => {
-  //           if ($(e.target).hasClass('first')) {
-  //               $scope.spellVars = $scope.spellVarsBox.slice();
-  //               refresh();
-  //           }
-  //       },
-  //       connectWith: ".spellComponentDirs"
-  //   });
-
-
-    // $scope.dirComponentConfig = angular.extend({}, baseConfig, {
-    //     connectWith: ".spellVars"
-    // });
-
-    //made some changes
+    //loads board and sprites based on screen size
     TilesizeFactory.NumTiles = $scope.page.gameboard.length;
     Crafty.load(['/images/sprites.png']);
     Crafty.init(TilesizeFactory.TILESIZE * TilesizeFactory.NumTiles, TilesizeFactory.TILESIZE * TilesizeFactory.NumTiles);
@@ -292,9 +242,7 @@ var newVar={};
         $scope.spell.reset();
     };
 
-
     $scope.grid = new Array(TilesizeFactory.NumTiles * TilesizeFactory.NumTiles);
-
 
     $scope.size = TilesizeFactory.TILESIZE + 'px';
 

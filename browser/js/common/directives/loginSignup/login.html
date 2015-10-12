@@ -1,23 +1,23 @@
 <!-- Login -->
 <div class="col-md-6">
-  <form class="form-horizontal loginbox" id="login-form" name="loginForm" ng-submit="loginForm.$valid && sendLogin(login)">
+  <form class="form-horizontal loginbox" id="login-form" name="loginForm" ng-submit="loginForm.$valid && sendLogin(login)" novalidate>
     <h4>Login</h4>
     <!-- Error alert -->
     <alert type="danger" ng-show="loginError">
       {{ loginError }}
     </alert>
     <!-- Email input -->
-    <div class="form-group">
+    <div class="form-group" ng-class="{'has-error': loginForm.email.$dirty && loginForm.email.$invalid || loginForm.email.$invalid && loginForm.$submitted}">
       <label class="control-label col-md-4" for="email">Email<span class="required">*</span></label>
       <div class="col-md-8">
-        <input type="text" ng-model="login.email" class="form-control" id="email" placeholder="Email">
+        <input type="text" ng-model="login.email" class="form-control" id="email" name="email" required placeholder="Email">
       </div>
     </div>
     <!-- Password input -->
-    <div class="form-group">
+    <div class="form-group" ng-class="{'has-error': loginForm.password.$dirty && loginForm.password.$invalid || loginForm.password.$invalid && loginForm.$submitted}">
       <label class="control-label col-md-4" for="login-password">Password<span class="required">*</span></label>
       <div class="col-md-8">
-        <input type="password" ng-model="login.password" class="form-control" id="login-password" placeholder="Password">
+        <input required type="password" ng-model="login.password" class="form-control" name="password" id="login-password" placeholder="Password"/>
       </div>
     </div>
     <!-- Submit form -->

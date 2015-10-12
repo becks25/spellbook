@@ -25,12 +25,15 @@ app.factory('MapObjectFactory', function(PosFactory, TilesizeFactory, AuthServic
       }
 
       setMapPos(position) {
+        // console.log('setting postion for', this.entity, position)
         var pos = new PosFactory(position.x, position.y);
         //this.map.removeObject(this);
         this.map.addObject(this, pos);
+        // console.log(this, pos)
         this.position = pos;
         this.entity.x = pos.x * TilesizeFactory.TILESIZE;
         this.entity.y = pos.y * TilesizeFactory.TILESIZE;
+ //       console.log('now should be', this.entity)
 
       }
 

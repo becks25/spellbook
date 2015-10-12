@@ -1,4 +1,8 @@
-tool-box, spell{
+$purple: #8843b9;
+$turqoise: #18b8c2;
+$green: #b8f166;
+
+tool-box, spell, add-variable{
 	li{
 		list-style-type: none;
 
@@ -9,24 +13,87 @@ tool-box, spell{
 		margin: 0;
 	}
 
+
 	.tool, .direction, .variable{
 		padding:1vh;
-		display:inline-block;
 		border-radius:5px;
 		border:2px solid white;
 		font-family:$font-title;
+	}
 
+	.ui-sortable>li {
+		border:2px solid white;
+	}
+
+	.glyphicon-remove{
+		cursor:pointer;
+	}
+
+	.first {
+		cursor:copy;
+		text-align:center;
 	}
 
 	.tool{
-		background-color: #18b8c2;
+		background-color: $turqoise;
+	}
+
+	.inline{
+
+		display:inline-block !important;
+		width:auto !important;
+
+		&.move{
+
+				background-color:$purple !important;
+				font-family: $font-default;
+				text-align:center;
+				margin-bottom:0;
+			
+
+		}
+
+		&.pickUp, &.ifStatement, &.whileLoop, &.variable{
+				background-color:$green !important;
+				font-family: $font-default;
+				text-align:center;
+			
+
+		}
+
+		input{
+			font-family: $font-default;
+			text-align:center;
+			width: 25% !important;
+
+		}
 	}
 
 	.direction{
-		background-color: #8843b9;
+		background-color: $purple;
 	}
 
 	.variable{
-		background-color: #b8f166;
+		background-color: $green;
 	}
+
+	.panel-heading.tool{
+		margin:0;
+		border:none;
+		border-radius:1px;
+	}
+
+	.panel.tool{
+		background-color: transparent;
+		border:2px solid $turqoise;
+		padding: 0;
+		margin-bottom:0;
+	}
+
+
+	.panel-body{
+		font-family: $font-default;
+
+	}
+
 }

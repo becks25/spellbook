@@ -24,8 +24,9 @@
 				</p>
 			</div>
 
-			<div class="col-sm-6 col-xs-12">
-				<div id="genderChart"></div>
+			<div class="col-sm-6 col-xs-12 text-center">
+				<p class="text-center">Gender of users</p>
+				<div class="center-block text-center" id="genderChart"></div>
 			</div>
 			
 		<!--TODO:
@@ -33,9 +34,10 @@
 			-Distribution of age (bar/histogram)
 		-->
 
-			<div class="text-center center-block">
+			<div class="col-xs-12 text-center center-block">
 				<div id="ageChart"></div>
 				<p>Age of users</p>
+				 <span class="small" ng-if="ageDist.undefined">* {{ageDist.undefined}} users chose not to say</span>
 			</div>
 			
 			

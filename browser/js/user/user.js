@@ -50,7 +50,7 @@ app.controller('UserCtrl', function ($scope, AuthService, UserFactory, $state, u
 
   $scope.toggleEditing = function(){
     $scope.editing = !$scope.editing;
-  }
+  };
 
   $scope.selectCharacter = (character) => {
     $scope.user.character.picture = character;
@@ -73,6 +73,7 @@ app.controller('UserCtrl', function ($scope, AuthService, UserFactory, $state, u
     this.label= concept;
     this.points= points;
     this.possible= possible-points;
+    if(possible===0) this.possible = 100;
     this.data= [this.points, this.possible];
   };
 
@@ -82,6 +83,7 @@ app.controller('UserCtrl', function ($scope, AuthService, UserFactory, $state, u
     dataArr.push(data);
   });
 
+  console.log(dataArr);
 
   var width = document.querySelector('#mastery').clientWidth/4;
 
@@ -117,7 +119,9 @@ app.controller('UserCtrl', function ($scope, AuthService, UserFactory, $state, u
 
     svg.append("text")
        .attr("text-anchor", "middle")
-       .text(function(d, i){return data.label});
+       .text(function(d, i){
+          return data.label;
+        });
 
    });
 
