@@ -73,7 +73,7 @@ var seedStories = function(){
 var seedPages = function(stories){
     var pages = [];
     stories.forEach(function(story){
-        if(story.title==='Jerry the Super Giraffe'){
+        if(story.title==='Mopsy and Moopsy'){
             pages.push({
                 story: story._id,
                 text:'<p>{{user.character.name}} was sitting at home, enjoying a nice cup of tea, when their super ears perked up- someone was crying for help!  It\'s Moopsy Monkey! </p><p class="promptText"> Can you help {{user.character.name}} find out what\'s wrong?</p>',
