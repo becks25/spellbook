@@ -41,7 +41,7 @@ Page.remove({}, function(err, removed) {
 
 
 var concepts = ['Loops', 'If-statements', 'Functions', 'Recursion', 'Async']
-var descr = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad.";
+var descr = "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad.</p>";
 var backgrounds= ['images/space.png', 'images/flower-field.png', 'images/underwater.png'];
 
 var seedStories = function(){
