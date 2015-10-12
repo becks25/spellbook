@@ -91,7 +91,7 @@ var seedPages = function(stories){
                         [],
                         [{
                             type: 'Person',
-                            name: 'Giraffe2',
+                            name: 'Monkey2',
                             varName: 'Moopsy_Monkey'
                         }],
                         []
@@ -173,7 +173,8 @@ var seedPages = function(stories){
                         [],
                         [{
                             type: 'Person',
-                            name:'Giraffe2'
+                            name:'Monkey1',
+                            varName:'Mopsy'
                         }]
                     ]
                 ],
@@ -199,7 +200,7 @@ var seedPages = function(stories){
                     [
                         [{
                             type:'Collectible',
-                            name:'Crystal1',
+                            name:'Banana',
                             varName:'Banana&3'
                         }],
                         [],
@@ -210,7 +211,7 @@ var seedPages = function(stories){
                         [],
                         [{
                             type:'Collectible',
-                            name:'Crystal1',
+                            name:'Banana',
                             varName:'Banana&2'
                         }],
                         [{
@@ -224,7 +225,7 @@ var seedPages = function(stories){
                         [],
                         [{
                             type:'Collectible',
-                            name:'Crystal1',
+                            name:'Banana',
                             varName:'Banana&1'
                         }],
                         [{

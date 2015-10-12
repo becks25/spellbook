@@ -24,6 +24,15 @@
 			<div ng-repeat="i in grid track by $index" style="height:{{size}}; width:{{size}}" class="square"></div>
 			</div>
 		</div>
+
+		<!--clear/run/step buttons-->
+		<div class="text-center center-block">
+			<br/>
+			<button class="btn" ng-click="resetLevel()">Clear</button>
+			<button class="btn" ng-click="runSpell(spellComponents)">Run</button>
+			<button class="btn" ng-click='stepThrough(spellComponents)'>Step</button>
+
+		</div>
 	</div>
 
 	<div class="clearfix"></div>

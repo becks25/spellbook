@@ -7,9 +7,9 @@ app.constant('SPRITE_AVATARS', {
     WizardBoy3: [6,0],
     WizardGirl1: [7,0],
     WizardGirl2: [0,1],
-    WizardGirl3: [1,1]
-    // Potion1: [2,1],
-    // Potion2: [3,1],
+    WizardGirl3: [1,1],
+    Monkey1: [2,1],
+    Monkey2: [3,1]
     // Potion3: [4,1],
     // House1: [5,1],
     // House2: [6,1],
