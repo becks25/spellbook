@@ -25,32 +25,14 @@ app.factory('MapObjectFactory', function(PosFactory, TilesizeFactory, AuthServic
       }
 
       setMapPos(position) {
-        // console.log('setting postion for', this.entity, position)
         var pos = new PosFactory(position.x, position.y);
         //this.map.removeObject(this);
         this.map.addObject(this, pos);
-        // console.log(this, pos)
         this.position = pos;
         this.entity.x = pos.x * TilesizeFactory.TILESIZE;
         this.entity.y = pos.y * TilesizeFactory.TILESIZE;
- //       console.log('now should be', this.entity)
 
       }
-
-      // getUser(){
-      //   return AuthService.getLoggedInUser()
-      //   .then(function(user){
-      //    console.log("in get user", user)
-      //     name =  UserFactory.find(user._id).character.name;
-      //   })
-      // }
-
-  //   var placeholder = getUser()
-  // .then(function(user){
-  //   console.log("trying to get name", user)
-  //   name = user.character.name;
-  //   console.log("and here's the name", name)
-  //   })
 
 
       move(dir, amt) {
