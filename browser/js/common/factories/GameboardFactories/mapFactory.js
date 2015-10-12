@@ -6,9 +6,9 @@ app.factory('MapFactory', function(ClassFactory, TilesizeFactory, AuthService, U
         // fat arrows allow for this to reference MapFactory and not the inner function
         constructor (mapData) {
             this.originalMap = mapData;
-            this.avatar = this.getAvatar();
+            this.avatar = null
             this.objects = [];
-            this.user = null;
+            //this.user = null;
             this.mapArray = this.makeBoard();
 
             this.load(mapData);
@@ -25,13 +25,6 @@ app.factory('MapFactory', function(ClassFactory, TilesizeFactory, AuthService, U
             return board;
         }
 
-        getUser(){
-            return AuthService.getLoggedInUser()
-                .then(function(user){
-                    console.log("the user", user)
-                    return user;
-                })
-        }
 
         resetMap(){
             // Crafty("2D").detach();
