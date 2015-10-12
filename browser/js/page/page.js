@@ -33,6 +33,7 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
     $scope.avatar = "Character name";
     $scope.text = $compile($scope.page.text)($scope);
     angular.element(document.getElementById('storyText')).append($scope.text);
+
     $scope.hintRequested = false;
 
     $scope.getHint = () => {
@@ -226,12 +227,16 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
 
     Crafty.canvas.init();
 
+    
+
     Crafty.sprite(64, '/images/sprites.png', SPRITES);
     Crafty.sprite(64, '/images/SpriteAvatars.png', SPRITE_AVATARS);
 
     $scope.level = new LevelFactory($scope.page);
     $scope.spell = new SpellFactory($scope.level);
 
+
+    console.log("so this is the pic", $scope.level.map.avatar.name)
 
     $scope.resetLevel = function () {
         $scope.spell.reset();
