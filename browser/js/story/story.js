@@ -21,10 +21,7 @@ app.controller('StoryCtrl', ($scope, $state, stories, $timeout, StoryFactory, $s
     $scope.stories = stories;
     $scope.pop = false;
 
-    $scope.hide = false;
-
     $scope.goToStoryPage = story => {
-        $scope.hide = true;
         story.goToStory(story._id);
     }
 });

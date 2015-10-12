@@ -374,3 +374,14 @@ ul {
 .dirBox {
  min-height: 25px;
  }
+
+.hover {
+  z-index:2;
+  cursor:none;
+  background-color:white;
+  -webkit-transform: scale3d(1.1, 1.1, 1) translate3d(0, -5px, 0);
+  -moz-transform: scale3d(1.1, 1.1, 1) translate3d(0, -5px, 0);
+  -ms-transform: scale3d(1.1, 1.1, 1) translate3d(0, -5px, 0);
+  -o-transform: scale3d(1.1, 1.1, 1) translate3d(0, -5px, 0);
+  transform: scale3d(1.1, 1.1, 1) translate3d(0, -5px, 0);
+

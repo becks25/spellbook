@@ -7,7 +7,13 @@ app.config($stateProvider => {
         views: {
             'content': {
                 resolve: {
-                    story: (StoryFactory, $stateParams) => StoryFactory.find($stateParams.storyId)
+                    story: (StoryFactory, $stateParams) => StoryFactory.find($stateParams.storyId),
+                    user: (UserFactory, AuthService) => {
+                        return AuthService.getLoggedInUser()
+                            .then(user => {
+                                return UserFactory.find(user._id);
+                            })
+                    }
                 },
                 templateUrl: 'js/story/indivStory/indivStory.html',
                 controller: 'indivStoryCtrl'
@@ -17,21 +23,43 @@ app.config($stateProvider => {
     });
 });
 
-app.controller('indivStoryCtrl', ($scope, $state, $stateParams, StoryFactory, story, $timeout) => {
+app.controller('indivStoryCtrl', ($scope, $state, $stateParams, StoryFactory, story, $timeout, user) => {
+    var intersectingPages = (array1, array2) => {
+        var output = {};
+        for(var i =0; i < array1.length; i++) {
+            for(var j = 0; j < array2.length; j++) {
+                if(array1[i]._id === array2[j]._id)
+                    output = array1[i];
+            }
+        }
+        return output;
+    };
     story.getAllPages($stateParams.storyId)
         .then(pages => {
-            console.log(pages);
             $scope.pages = pages;
+            return pages;
+        })
+        .then(pages => {
+           var current = intersectingPages(pages, user.unfinishedPages);
+            if(Object.keys(current).length > 0) {
+                $scope.currentPage = current;
+            } else {
+                pages.some(p => {
+                    if(p.pageNumber = 1) {
+                        $scope.currentPage = p;
+                        return true;
+                    }
+                })
+            }
         });
+
+
+
     $scope.cover = story.cover;
 
-    $timeout(() => {
-        $("#flipbook").turn({
-            width: 400,
-            height: 300,
-            autoCenter: true
-        });
-    }, 0);
+    $scope.startBook = () => {
+        $state.go('page', {id: $scope.currentPage._id})
+    }
 
 
 });
