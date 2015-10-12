@@ -58,9 +58,10 @@ var seedStories = function(){
         };
     });
 
+
     stories.push({
-        title: 'Jerry the Super Giraffe',
-        description: "Being a super giraffe is a lot of work- can you help Jerry?",
+        title: 'Mopsy and Moopsy',
+        description: "Mopsy and Moopsy are in trouble- can you help them?",
         difficulty: 2,
         concepts: ['Loops', 'If-statements'],
         cover: 'http://www.smashingmagazine.com/images/book-covers/book-covers-18.jpg'
@@ -72,61 +73,236 @@ var seedStories = function(){
 var seedPages = function(stories){
     var pages = [];
     stories.forEach(function(story){
-        for (i=0; i<4; i++){
+        if(story.title==='Mopsy and Moopsy'){
             pages.push({
                 story: story._id,
-                text: descr,
-                tools: ['move', 'pickUp', 'give', 'ask', 'tell', 'ifStatement', 'forLoop', 'whileLoop'],
-                variables: [{text: 'Omri', varType: 'person'}, {text: 'Zeke', varType: 'person'}, {text: 'Joe', varType: 'person'}, {text: 'Say hi', varType: 'variable'}, {text: 'Green Potion', varType: 'variable'}, {text: 'The potion is green', varType: 'condition'}],
-                concepts: [concepts[Math.floor(Math.random()*concepts.length)]],
-                hint: 'Try harder',
-                requirements: {Green_Potion: {pickUp: {val: false}}},
+                text:'<p>{{user.character.name}} was sitting at home, enjoying a nice cup of tea, when their super ears perked up- someone was crying for help!  It\'s Moopsy Monkey! </p><p class="promptText"> Can you help {{user.character.name}} find out what\'s wrong?</p>',
+                tools: ['ifStatement', 'ask', 'move', 'give'],
+                variables: [
+                    {text: 'Moopsy Monkey', varType: 'person'},
+                    {text: 'What\'s wrong', varType: 'variable'}
+                ],
+                concepts: ['If-statements'],
+                hint: 'Make sure you ask Moopsy what\'s wrong',
+                requirements: {Moopsy: {ask:{val: true}}},
                 gameboard: [
+                    [
+                        [],
+                        [],
+                        [{
+                            type: 'Person',
+                            name: 'Giraffe2',
+                            varName: 'Moopsy_Monkey'
+                        }],
+                        []
+                    ],
+                    [
+                        [],
+                        [],
+                        [{
+                            type:'Obstacle',
+                            name:'Tree1'
+                        }],
+                        []
+                    ],
+                    [
+                        [],
+                        [],
+                        [],
+                        [{
+                            type:'Obstacle',
+                            name: 'Tree1'
+                        }]
+                    ],
                     [
                         [{
                             type: 'Avatar',
-                            name: 'WizardBoy2',
-                            varName: 'me'
+                            name:'Giraffe3'
                         }],
                         [],
-                        [{
-                            type: 'Obstacle',
-                            name: 'Rock1',
-                            varName: 'rock'
-                        }],
-                        []
-
-                    ],
-                    [
-                        [],
-                        [{
-                            type: 'Collectible',
-                            name: 'Potion2',
-                            varName: 'Green_Potion'
-                        }],
-                        [],
-                        []
-                    ],
-                    [
-                        [],
-                        [],
-                        [],
-                        [],
-                    ],
-                    [
-                        [],
-                        [{
-                            type: 'Obstacle',
-                            name: 'Tree2',
-                            varName: 'tree'
-                        }],
                         [],
                         []
                     ]
                 ],
-                pageNumber: i,
-                boardBackground: backgrounds[i]
-            });
+                pageNumber: 1,
+                boardBackground: 'image/flower-field.png'
+
+            },{
+                story: story._id,
+                text:'<p>"It\'s my brother," said Moopsy. "He\'s crying and I don\'t know what to do!" </p><p>"Don\'t worry Moopsy, I\'ll go see if I can help"</p><p class="promptText">Can you see if Mopsy needs any help?</p>',
+                tools: ['ifStatement', 'ask', 'move', 'give'],
+                variables: [
+                    {text: 'Mopsy Monkey', varType: 'person'},
+                    {text: 'Mopsy needs help', varType: 'condition'},
+                    {text: 'How can I help?', varType:'variable'}
+                ],
+                concepts: ['If-statements'],
+                hint: 'If Mopsy needs help, ask what you can do!',
+                requirements: {Mopsy: {ask:{val: true}}},
+                gameboard: [
+                    [
+                        [],
+                        [],
+                        [{
+                            type: 'Avatar',
+                            name: 'Giraffe3'
+                        }],
+                        []
+                    ],
+                    [
+                        [],
+                        [],
+                        [{
+                            type:'Obstacle',
+                            name:'Tree1'
+                        }],
+                        []
+                    ],
+                    [
+                        [],
+                        [],
+                        [],
+                        [{
+                            type:'Obstacle',
+                            name: 'Tree1'
+                        }]
+                    ],
+                    [
+                        [],
+                        [],
+                        [],
+                        [{
+                            type: 'Person',
+                            name:'Giraffe2'
+                        }]
+                    ]
+                ],
+                pageNumber: 2,
+                boardBackground: 'image/flower-field.png'
+
+            },{
+                story: story._id,
+                text:'<p>"It\'s terrible," sighed Mopsy. "I\'ve dropped my bananas all over the place.  It\'ll take forever to pick them up again!"</p><p>"Not if I can help it!" exclaimed {{user.character.name}}</p><p class="promptText">Can you get all of Mopsy\'s bananas using only 4 tools?</p>',
+                tools: ['ifStatement', 'pickUp', 'move', 'forLoop'],
+                variables: [
+                    {text: 'Banana', varType: 'variable'},
+                    {text: 'Apple', varType:'variable'}
+                ],
+                concepts: ['forLoop'],
+                hint: 'You can use a repeat to do an action more than once',
+                requirements: {
+                    Banana1: {pickUp:{val: true}},
+                    Banana2: {pickUp:{val: true}},
+                    Banana3: {pickUp:{val: true}}
+                },
+                gameboard: [
+                    [
+                        [{
+                            type:'Collectible',
+                            name:'Crystal1',
+                            varName:'Banana3'
+                        }],
+                        [],
+                        [],
+                        []
+                    ],
+                    [
+                        [],
+                        [{
+                            type:'Collectible',
+                            name:'Crystal1',
+                            varName:'Banana2'
+                        }],
+                        [{
+                            type:'Obstacle',
+                            name:'Tree1'
+                        }],
+                        []
+                    ],
+                    [
+                        [],
+                        [],
+                        [{
+                            type:'Collectible',
+                            name:'Crystal1',
+                            varName:'Banana1'
+                        }],
+                        [{
+                            type:'Obstacle',
+                            name: 'Tree1'
+                        }]
+                    ],
+                    [
+                        [],
+                        [],
+                        [],
+                        [{
+                            type: 'Avatar',
+                            name: 'Giraffe3'
+                        }]
+                    ]
+                ],
+                pageNumber: 3,
+                boardBackground: 'image/flower-field.png'
+
+            }
+
+            );
+        }else{
+            for (i=0; i<3; i++){
+                pages.push({
+                    story: story._id,
+                    text: descr,
+                    tools: ['move', 'pickUp', 'give', 'ask', 'tell', 'ifStatement', 'forLoop', 'whileLoop'],
+                    variables: [{text: 'Omri', varType: 'person'}, {text: 'Zeke', varType: 'person'}, {text: 'Joe', varType: 'person'}, {text: 'Say hi', varType: 'variable'}, {text: 'Green Potion', varType: 'variable'}, {text: 'The potion is green', varType: 'condition'}],
+                    concepts: [concepts[Math.floor(Math.random()*concepts.length)]],
+                    hint: 'Try harder',
+                    requirements: {GreenPotion: {pickUp: {val: false}}},
+                    gameboard: [
+                        [
+                            [{
+                                type: 'Avatar',
+                                name: 'WizardBoy2'
+                            }],
+                            [],
+                            [{
+                                type: 'Obstacle',
+                                name: 'Rock1'
+                            }],
+                            []
+
+                        ],
+                        [
+                            [],
+                            [{
+                                type: 'Collectible',
+                                name: 'Potion2',
+                                varName: 'GreenPotion'
+                            }],
+                            [],
+                            []
+                        ],
+                        [
+                            [],
+                            [],
+                            [],
+                            [],
+                        ],
+                        [
+                            [],
+                            [{
+                                type: 'Obstacle',
+                                name: 'Tree2',
+                                varName: 'tree'
+                            }],
+                            [],
+                            []
+                        ]
+                    ],
+                    pageNumber: i,
+                    boardBackground: backgrounds[i]
+                });
+            }
         }
     });
      return Page.createAsync(pages);
@@ -138,30 +314,42 @@ var seedUsers = function (stories, pages) {
         {
             email: 'testing@fsa.com',
             password: 'password',
+            username: 'Giraffe',
+            gender: 'other'
         },
         {
             email: 'obama@gmail.com',
             password: 'potus',
+            username: 'Obama',
+            gender: 'male',
             isAdmin: true
         },
         {
             email: 'beckylee@gmail.com',
             password: 'becks',
+            username: 'Beckylee',
+            gender: 'female',
             isAdmin: true
         },
         {
             email: 'austin@gmail.com',
             password: 'austin',
+            username: 'Austin',
+            gender: 'male',
             isAdmin: true
         },
         {
             email: 'chandra@gmail.com',
             password: 'chandra',
+            username: 'Chandra',
+            gender: 'female',
             isAdmin: true
         },
         {
             email: 'emily@gmail.com',
             password: 'emily',
+            username:'Emily',
+            gender:'female',
             isAdmin: true
         }
     ];
@@ -170,17 +358,21 @@ var seedUsers = function (stories, pages) {
         return Math.floor(Math.random()*(max-min)) + min;
     };
 
+    var number = 0;
+
+    var randomNumber = function(){
+        number = Math.floor(Math.random()*10);
+        return number;
+    };
+
     users.forEach(function(user){
-        user.username = user.email;
         user.age = makeAge(5, 13);
-        user.gender = Math.random() > 0.3 ? 'female' : 'male';
-        user.character = {name: 'Omri'};
         user.mastery = [];
         concepts.forEach(function(concept){
             user.mastery.push({
                 topic: concept,
-                pointsEarned: Math.floor(Math.random()* 100),
-                pointsPossible: Math.floor(Math.random()* 100) + 100
+                pointsEarned: randomNumber() * (Math.floor(Math.random()* 10)/10*50),
+                pointsPossible:number*50
             });
         user.completedStories = [stories[Math.floor(Math.random()*stories.length)]._id];
         user.unfinishedPages = [pages[Math.floor(Math.random()*pages.length)]._id];
