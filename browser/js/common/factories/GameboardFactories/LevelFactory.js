@@ -34,10 +34,13 @@ app.factory('LevelFactory', function(PageFactory, UserFactory, AuthService, MapF
 
     isSolved(){
     //loop through requirements and verify they are true
+    console.log(this.requirements)
     for (var req in this.requirements){
-      for (var action in req){
-        for (var val in action){
-          if (val === false) return false;
+      console.log('req', req)
+      for (var action in this.requirements[req]){
+        for (var val in this.requirements[req][action]){
+          console.log('val', this.requirements[req][action][val])
+          if (this.requirements[req][action][val] === false) return false;
         }
       }
     }
@@ -46,7 +49,9 @@ app.factory('LevelFactory', function(PageFactory, UserFactory, AuthService, MapF
 
     //check and update requirements
     updateReq(variable, action, val){
+      console.log('updating', variable, action, val)
         if (_.has(this.requirements, variable, action, val)){
+          console.log('updating from', this.requirements[variable][action][val])
            this.requirements[variable][action][val] = true;
         }
 
@@ -80,8 +85,8 @@ app.factory('LevelFactory', function(PageFactory, UserFactory, AuthService, MapF
 
               //save it.
                UserFactory.save(user.id);
-            })
-        })
+            });
+        });
 
 
         //TODO: make the arrow visible? what is this even?

@@ -26,6 +26,7 @@ app.factory('MapFactory', function(ClassFactory, TilesizeFactory) {
 
         resetMap(){
             Crafty("2D").each(function(i) {
+                console.log('destroying', i, this)
                     this.destroy();
                 
             });
@@ -33,7 +34,7 @@ app.factory('MapFactory', function(ClassFactory, TilesizeFactory) {
         }
 
         getAvatar (){
-            return this.avatar
+            return this.avatar;
         }
 
         // position is an object with x and y coordinates

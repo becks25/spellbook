@@ -22,7 +22,7 @@ app.factory('SpellFactory', function(TilesizeFactory){
 		this.map.resetMap();
 		this.avatar = this.map.getAvatar();
 		this.level.resetRequirements();
-		if(this.currentCommand) this.currentCommand = null;
+		this.currentCommand = null;
 		this.holding = {};
 	}
 
@@ -51,104 +51,6 @@ app.factory('SpellFactory', function(TilesizeFactory){
 		}
 	}
 
-	//grab items in spell box
-	//make (if nec) objects with action prop, and poss others
-	// make array of component objs
-	parse(argArr){
-
-		//todo - how are spells being stored/passed in???
-		//do we need to translate them?
-
-		//hard coded for testing
-
-		// return argArr.filter((command)=>command.type==='tool');
-		return [{
-		// 	action: 'move',
-		// 	direction: 'right',
-		// 	distance: 2
-		// }, {
-			action: 'move',
-			direction: 'down',
-			distance: 1,
-			current: false
-		}, {
-			action: 'move',
-			direction: 'right',
-			distance: 2,
-			current: false
-		}, {
-			action: 'move',
-			direction: 'down',
-			distance: 2,
-			current: 2
-		// }, {
-		// 	action: 'ifStatement',
-		// 	condition: true,
-		// 	expressions: [{
-		// 		action: 'ifStatement',
-		// 		condition: true,
-		// 		expressions: [{
-		// 				action: 'forLoop',
-		// 				number: 2,
-		// 				expressions: [{
-		// 						action: 'move',
-		// 						direction: 'right',
-		// 						distance: 1
-		// 					}, {
-		// 						action: 'move',
-		// 						direction: 'down',
-		// 						distance: 1
-		// 					}]
-		// 		}]
-		// 	}, {
-		// 	action: 'pickUp',
-		// 	variable: 'GreenPotion',
-		// 	}]
-		// 	},{
-		// 	action: 'move',
-		// 	direction: 'left',
-		// 	distance: 1}]
-			},{
-			action: 'pickUp',
-			variable: 'GreenPotion',
-			},{
-			action: 'move',
-			direction: 'up',
-			distance: 2
-
-		}];
-	}
-
-
-
-  	//steps through program one command at a time
-  	// spell box can be changed betwee steps (other than current command)
-  	// resets board if first step
-  	// sets current command to null if last step (will prompt reset on next stepthrough)
-  	// stepThrough(argArr){
-  	// 	var spellArr = this.parse(argArr);
-  	// 	if(!this.currentCommand) {
-  	// 		console.log('starting new round')
-  	// 		this.reset();
-  	// 		this.currentCommand = spellArr[0];
-  	// 		this.currentCommand.current = 3;
-
-  	// 	} else {
-  	// 		console.log(this.currentCommand)
-  	// 		var prevIndex = _.findIndex(spellArr, {'current': 2});
-  	// 		console.log(spellArr)
-  	// 		this.currentCommand.current = false;
-  	// 		this.currentCommand = prevIndex < spellArr.length-1 ? spellArr[prevIndex+1] : null;
-  	// 		if(this.currentCommand) this.currentCommand.current = true;
-  	// 		console.log(prevIndex, this.currentCommand);
-  	// 	}
-  	// 	if (this.currentCommand){
-  	// 		// this.running = true;
-  	// 		return this.executeCommand(this.currentCommand);
-  	// 		// this.running = false;
-  	// 	}
-  	// }
-
   	//this stepThough function runs through spell components by index, 
   	//which solves the problem of repeated commands
   	// spell arr can't be changed during function (the stuff already stepped through can't change)
@@ -161,7 +63,7 @@ app.factory('SpellFactory', function(TilesizeFactory){
   			console.log(this.currentCommand)
   			this.currentCommand < spellArr.length-1 ? this.currentCommand ++ : this.currentCommand = null;
   		}
-  		if (this.currentCommand){
+  		if (this.currentCommand!==null){
   			return this.executeCommand(spellArr[this.currentCommand]);
   		}
   	}
@@ -173,8 +75,7 @@ app.factory('SpellFactory', function(TilesizeFactory){
 	    this.cycle(this.avatar.position);
 	    // var noPromSpellArr = this.parse(argArr);
 	    //makes a promise for the spell arr to use with Promise.each
-	    var spellArr = Promise.map(argArr, (spell)=>{
-	    	return spell})
+	    var spellArr = Promise.map(argArr, spell => spell);
 	    // run async execute command fn on each of the commands in the spell, serially
 	    // return Promise.reduce(argArr, (nothing, component) => {
 	    // 	console.log('component', component)
@@ -182,7 +83,7 @@ app.factory('SpellFactory', function(TilesizeFactory){
 		// });
 	    return spellArr.each((component) => this.executeCommand(component));
 	    this.running = false;
-	    return Promise.resolve(spellArr)
+	    return Promise.resolve(spellArr);
 	}
 
 	//cycles all events on a particular position
@@ -230,9 +131,13 @@ app.factory('SpellFactory', function(TilesizeFactory){
 	    		//search the map objects on that position for the one that matches component.variable,
 	    		var toPick = spell.map.checkPos(this.avatar.position, component.variable); 
 	    		if (toPick) {
-	    			spell.map.removeObject(toPick, this.avatar.position);
+	    			console.log('found it')
+	    			toPick.entity.destroy();
+	    			// console.log('before set', toPick.entity)
+	    			// toPick.setMapPos({x:3, y:3})
+	    			// spell.map.removeObject(toPick, this.avatar.position);
 	    			spell.holding[component.variable] = true;
-	    			spell.level.updateReq(component.variable, 'pickUp', 'true')
+	    			spell.level.updateReq(component.variable, 'pickUp', 'val')
                 }
 	    		break;
 	    	case 'ifStatement':
@@ -300,14 +205,12 @@ app.factory('SpellFactory', function(TilesizeFactory){
 	          console.log(newPos)
 	          return avatar.promTweenQueen({x: newPos.x*TilesizeFactory.TILESIZE, y: newPos.y*TilesizeFactory.TILESIZE}, 200)
 	          .then(()=>{
-	          		console.log('set avatar to ', newPos)
 		          avatar.setMapPos(newPos);
-	            // spell.unlock();
 	          });
 
 	        } else {
 	          // Bump!
-	          console.log('bump', curPos)
+	          console.log('bump')
 	          var curPos = avatar.entity;
 	          // var newPos = curPos.dup().addDir(direction, 8);
 	          var heightBump = 0;
