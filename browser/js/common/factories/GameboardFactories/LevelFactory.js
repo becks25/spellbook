@@ -1,7 +1,9 @@
 app.factory('LevelFactory', function(PageFactory, UserFactory, AuthService, MapFactory){
   class Level {
-    constructor(page){
+    constructor(page, name){
       this.page = page;
+      this.avatar= name;
+      console.log("now here okay", this.avatar);
       // console.log('page requirements?', this.page.requirements)
       this.map = new MapFactory(page.gameboard);
       this.requirements = this.page.requirements;
