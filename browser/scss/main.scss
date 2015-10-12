@@ -21,9 +21,10 @@ body {
 }
 
 #main {
-  padding-top: 60px;
+  padding-top: 5%;
   width: 100%;
   margin: 0 auto;
+  position:relative;
 }
 
 @import 'directives/main';
