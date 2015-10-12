@@ -6,9 +6,9 @@ app.factory('MapFactory', function(ClassFactory, TilesizeFactory, AuthService, U
         // fat arrows allow for this to reference MapFactory and not the inner function
         constructor (mapData) {
             this.originalMap = mapData;
-            this.avatar = null
+            this.avatar = this.getAvatar();
             this.objects = [];
-            //this.user = null;
+            this.user = null;
             this.mapArray = this.makeBoard();
 
             this.load(mapData);
@@ -25,6 +25,13 @@ app.factory('MapFactory', function(ClassFactory, TilesizeFactory, AuthService, U
             return board;
         }
 
+        getUser(){
+            return AuthService.getLoggedInUser()
+                .then(function(user){
+                    console.log("the user", user)
+                    return user;
+                })
+        }
 
         resetMap(){
             // Crafty("2D").detach();
@@ -40,24 +47,8 @@ app.factory('MapFactory', function(ClassFactory, TilesizeFactory, AuthService, U
             this.load(this.originalMap);
         }
 
-        getUser(){
-        var self = this;
-        AuthService.getLoggedInUser()
-        .then(function(user){
-            console.log("getting in here", user)
-            self.avatar = user.character.picture;
-            console.log("self av", self.avatar)
-            return user;
-        })
-    }
-
         getAvatar (){
-            this.getUser()
-            // .then(function(user){
-            //     return user.character
-            // })
-            // console.log("HEREEEE", this.avatar)
-            // return this.avatar;
+            return this.avatar;
         }
 
 
@@ -134,8 +125,7 @@ app.factory('MapFactory', function(ClassFactory, TilesizeFactory, AuthService, U
             var foundObj;
             this.mapArray[pos.x][pos.y].some(obj => {
                 // console.log('mapArray', obj);
-
-                    if(obj.varName.replace(/\&\w+/, '') === itemName){
+                    if(obj.varName === itemName){
                         foundObj = obj;
                         return true;
                     }

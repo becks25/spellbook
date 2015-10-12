@@ -245,13 +245,13 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
     Crafty.sprite(64, '/images/sprites.png', SPRITES);
     Crafty.sprite(64, '/images/SpriteAvatars.png', SPRITE_AVATARS);
 
-    $scope.level = new LevelFactory($scope.page, $scope.user.character.picture);
+    $scope.level = new LevelFactory($scope.page);
     $scope.spell = new SpellFactory($scope.level);
     //$scope.avatar = new AvatarFactory($scope.user.character.name);
     //console.log("the avatar yo", $scope.avatar)
 
 
-    console.log("so this is the pic", $scope.level.map.avatar.name)
+    //console.log("so this is the pic", $scope.level.map.avatar.name)
 
     $scope.resetLevel = function () {
         $scope.spell.reset();
