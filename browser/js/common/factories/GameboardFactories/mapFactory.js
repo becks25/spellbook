@@ -40,8 +40,24 @@ app.factory('MapFactory', function(ClassFactory, TilesizeFactory, AuthService, U
             this.load(this.originalMap);
         }
 
+        getUser(){
+        var self = this;
+        AuthService.getLoggedInUser()
+        .then(function(user){
+            console.log("getting in here", user)
+            self.avatar = user.character.picture;
+            console.log("self av", self.avatar)
+            return user;
+        })
+    }
+
         getAvatar (){
-            return this.avatar;
+            this.getUser()
+            // .then(function(user){
+            //     return user.character
+            // })
+            // console.log("HEREEEE", this.avatar)
+            // return this.avatar;
         }
 
 
