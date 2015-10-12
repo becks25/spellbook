@@ -24,12 +24,13 @@ app.factory('LevelFactory', function(PageFactory, UserFactory, AuthService, MapF
     //}}
     resetRequirements(){
       for(var req in this.requirements){
-        for (var action in req){
-          for (var val in action){
-            val = false;
+        for (var action in this.requirements[req]){
+          for (var val in this.requirements[req][action]){
+            this.requirements[req][action][val] = false;
           }
         }
       }
+
     }
 
     isSolved(){
@@ -51,7 +52,7 @@ app.factory('LevelFactory', function(PageFactory, UserFactory, AuthService, MapF
     updateReq(variable, action, val){
       // console.log('updating', variable, action, val)
         if (_.has(this.requirements, variable, action, val)){
-          // console.log('updating from', this.requirements[variable][action][val])
+          // console.log('updating from', this.requirements[variable][action][val])           
            this.requirements[variable][action][val] = true;
         }
 

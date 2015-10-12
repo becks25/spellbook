@@ -27,6 +27,7 @@ app.factory('SpellFactory', function(TilesizeFactory){
 		this.currentCommand = null;
 		this.holding = {};
 
+
 	}
 
 	lock (){
@@ -201,7 +202,7 @@ app.factory('SpellFactory', function(TilesizeFactory){
 	    	var newPos = avatar.move(direction, 1);
 	        if (newPos) {
 	          // Do the move!
-	          console.log(newPos)
+	          // console.log(newPos)
 	          return avatar.promTweenQueen({x: newPos.x*TilesizeFactory.TILESIZE, y: newPos.y*TilesizeFactory.TILESIZE}, 200)
 	          .then(()=>{
 		          avatar.setMapPos(newPos);

@@ -111,10 +111,10 @@ app.factory('MapFactory', function(ClassFactory, TilesizeFactory) {
 
         //checks a map position for a given item and returns item or false
         checkPos (pos, itemName){
-            console.log('checking', pos, itemName);
+            // console.log('checking', pos, itemName);
             var foundObj;
             this.mapArray[pos.x][pos.y].some(obj => {
-                console.log('mapArray', obj);
+                // console.log('mapArray', obj);
                     if(obj.varName === itemName){
                         foundObj = obj;
                         return true;
