@@ -223,6 +223,17 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
     });
 
     //loads board and sprites based on screen size
+
+    //overwrite gameboard hardcording to dynamically change avatar
+    console.log("the gameboard", $scope.page.gameboard);
+    for(var i = 0; i < $scope.page.gameboard.length; i++){
+      for(var j = 0; j < $scope.page.gameboard[i].length; j++){
+          if ($scope.page.gameboard[i][j].length && $scope.page.gameboard[i][j][0].type === "Avatar"){
+            $scope.page.gameboard[i][j][0].name = $scope.user.character.picture;
+          }
+      }
+    }
+    
     TilesizeFactory.NumTiles = $scope.page.gameboard.length;
     Crafty.load(['/images/sprites.png']);
     Crafty.init(TilesizeFactory.TILESIZE * TilesizeFactory.NumTiles, TilesizeFactory.TILESIZE * TilesizeFactory.NumTiles);
