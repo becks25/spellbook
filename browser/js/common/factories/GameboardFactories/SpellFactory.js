@@ -135,9 +135,9 @@ app.factory('SpellFactory', function(TilesizeFactory){
 	    		//search the map objects on that position for the one that matches component.variable,
 	    		var toPick = spell.map.checkPos(this.avatar.position, component.variable); 
 	    		if (toPick) {
-	    			toPick.entity.destroy();
+//	    			toPick.entity.destroy();
 	    			spell.holding[component.variable] = true;
-	    			spell.level.updateReq(component.variable, 'pickUp', 'val')
+	    			spell.level.updateReq(toPick.varName, 'pickUp', 'val')
                 }
 	    		break;
 	    	case 'ifStatement':
