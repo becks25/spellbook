@@ -1,4 +1,4 @@
-app.factory('MapObjectFactory', function(PosFactory, TilesizeFactory){
+app.factory('MapObjectFactory', function(PosFactory, TilesizeFactory, AuthService, UserFactory){
 
     class MapObject {
       constructor(name, position, action, varName, variables){
@@ -33,6 +33,22 @@ app.factory('MapObjectFactory', function(PosFactory, TilesizeFactory){
         this.entity.y = pos.y * TilesizeFactory.TILESIZE;
 
       }
+
+      // getUser(){
+      //   return AuthService.getLoggedInUser()
+      //   .then(function(user){
+      //    console.log("in get user", user)
+      //     name =  UserFactory.find(user._id).character.name;
+      //   })
+      // }
+
+  //   var placeholder = getUser()
+  // .then(function(user){
+  //   console.log("trying to get name", user)
+  //   name = user.character.name;
+  //   console.log("and here's the name", name)
+  //   })
+
 
       move(dir, amt) {
         var newPos = new PosFactory(this.position.x, this.position.y);
