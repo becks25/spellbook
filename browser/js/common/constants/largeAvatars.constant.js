@@ -7,6 +7,8 @@ app.constant('LARGE_AVATARS', {
     WizardBoy3: '/images/avatars/WizardBoy3.png',
     WizardGirl1: '/images/avatars/WizardGirl1.png',
     WizardGirl2: '/images/avatars/WizardGirl2.png',
-    WizardGirl3: '/images/avatars/WizardGirl3.png'
+    WizardGirl3: '/images/avatars/WizardGirl3.png',
+    Monkey1: '/images/avatars/Monkey1.png',
+    Monkey2: '/images/avatars/Monkey2.png'
 
   });
