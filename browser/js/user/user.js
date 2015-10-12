@@ -49,7 +49,7 @@ app.controller('UserCtrl', function ($scope, AuthService, UserFactory, $state, u
 
   $scope.toggleEditing = function(){
     $scope.editing = !$scope.editing;
-  }
+  };
 
   $scope.selectCharacter = (character) => {
     $scope.user.character.picture = character;
