@@ -3,7 +3,7 @@
 		My spell
 	</div>
 	<div class="panel-body components">
-		<ul ui-sortable="spellConfig" ng-model="spellComponents" class="spellComponents spellBox">
+		<ul ui-sortable='toolConfig' ui-sortable="spellConfig"  ng-model="spellComponents" class="spellComponents spellBox">
 		  <li ng-repeat="tool in spellComponents track by $index" class='{{tool.action}}'>
 		  	<action-tools ng-if="tool.action === 'pickUp' || tool.action==='tell' || tool.action==='give' || tool.action==='ask'" actiontool="tool" model="dirStuff" index="$index" parent="spellComponents" remove="removeFromSpell"></action-tools>
 		  	<move-tool ng-if="tool.action==='move'" movetool="tool" model="dirStuff" index="$index" parent="spellComponents" remove="removeFromSpell"></move-tool>

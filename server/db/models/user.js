@@ -20,7 +20,8 @@ var schema = new mongoose.Schema({
     },
     gender: {
         type: String,
-        enum: ['male', 'female', 'other', 'rather not say']
+        enum: ['male', 'female', 'other', 'rather not say'],
+        default: 'rather not say'
     },
     username: {
         type: String,

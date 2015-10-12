@@ -1,21 +1,20 @@
-app.directive('addVariable', function ($rootScope, $state) {
+app.directive('addVariable', function ($rootScope, $state, SpellFactory) {
 
     return {
         restrict: 'E',
         templateUrl: 'js/common/directives/add-variable/add-variable.html',
         scope: {
         	tool: '=',
-        	// removeFn: '='
+        	// spell: '='
         },
         link: (scope, elem, attr) => {
-        	console.log('in link');
         	scope.removeFromTool = (index, loc)=>{
-        		console.log('removing')
+        		// console.log('removing')
         		loc.splice(index, 1);
-        		// console.log(loc)
+        		// scope.spell.reset();
         	}
         	
         	
         }
-    }
+    };
   });
