@@ -11,7 +11,6 @@ app.factory('SpellFactory', function(TilesizeFactory){
 	   	this.holding = [];
 	    this.reset();
 	    // this.reload();
- 		console.log(this.map.mapArray);
 
   	}
 
@@ -87,8 +86,8 @@ app.factory('SpellFactory', function(TilesizeFactory){
 	    //  return this.executeCommand(component);
 		// });
 	    return spellArr.each((component) => this.executeCommand(component));
-	    this.running = false;
-	    return Promise.resolve(spellArr);
+
+
 	}
 
 	//cycles all events on a particular position
@@ -135,7 +134,8 @@ app.factory('SpellFactory', function(TilesizeFactory){
 	    		//search the map objects on that position for the one that matches component.variable,
 	    		var toPick = spell.map.checkPos(this.avatar.position, component.variable);
 	    		if (toPick) {
-//	    			toPick.entity.destroy();
+	    			toPick.entity.destroy();
+						spell.map.removeObject(toPick, this.avatar.position);
 	    			spell.holding[component.variable] = true;
 	    			spell.level.updateReq(toPick.varName, 'pickUp', 'val')
                 }

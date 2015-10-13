@@ -8,6 +8,7 @@ app.factory('LevelFactory', function(PageFactory, UserFactory, AuthService, MapF
       this.hint = page.hint;
       this.concepts = page.concepts;
       this.points = 50;
+      this.won = false;
 
       //the background for the challenge, not the story
       this.background = page.image;
@@ -50,6 +51,7 @@ app.factory('LevelFactory', function(PageFactory, UserFactory, AuthService, MapF
 
     //check and update requirements
     updateReq(variable, action, val){
+      // console.log('updating', variable);
         if (_.has(this.requirements, variable, action, val)){
           // console.log('updating from', this.requirements[variable][action][val])           
            this.requirements[variable][action][val] = true;
@@ -88,7 +90,9 @@ app.factory('LevelFactory', function(PageFactory, UserFactory, AuthService, MapF
             });
         });
 
-
+        this.won = true;
+        console.log(this.won, 'should be changed');
+        return true;
         //TODO: make the arrow visible? what is this even?
 
     }
@@ -97,6 +101,8 @@ app.factory('LevelFactory', function(PageFactory, UserFactory, AuthService, MapF
       if(this.points > 10){
         this.points = this.points-5;
       }
+
+      return false;
     }
 
 
