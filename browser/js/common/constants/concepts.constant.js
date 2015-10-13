@@ -1,5 +1,6 @@
 app.constant('CONCEPTS', [
-    'Loops',
+    'For Loop',
+    'While Loop',
     'If-statements',
     'Functions',
     'Recursion',

@@ -90,28 +90,12 @@ app.directive('adminStats', function(UserFactory) {
         });
 
         //insert pie chart!
-        var genders = {
-          'male': 0, 
-          'female': 0,
-          'other': 0,
-          'prefer not to say':0
-        };
-
-        var genderData = _.assign(genders, scope.genderDist);
-
-        genderData['prefer not to say'] += genderData.undefined;
-
-        var genderData = _.omit(genderData, ['undefined']);
+        var genderData = scope.genderDist; 
         var genderData =_.pairs(genderData);
 
         var width = document.querySelector('#genderChart').clientWidth -30;
         var r = width/2;
         var color = d3.scale.category20c();
-
-        var data = [{"label":"Category A", "value":20}, 
-                      {"label":"Category B", "value":50}, 
-                      {"label":"Category C", "value":30}];
-
 
         var vis = d3.select('#genderChart')
                     .append("svg")
