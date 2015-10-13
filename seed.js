@@ -87,12 +87,12 @@ var seedPages = function(stories){
                 text:'<p>{{user.character.name}} was sitting at home, enjoying a nice cup of tea, when their super ears perked up- someone was crying for help!  It\'s Moopsy Monkey! </p><p class="promptText"> Can you help {{user.character.name}} find out what\'s wrong?</p>',
                 tools: ['If-Statement', 'ask', 'move', 'give'],
                 variables: [
-                    {text: 'Moopsy Monkey', varType: 'person'},
+                    {text: 'Moopsy_Monkey', varType: 'person'},
                     {text: 'What\'s wrong', varType: 'variable'}
                 ],
                 concepts: ['If-statements'],
                 hint: 'Make sure you ask Moopsy what\'s wrong',
-                requirements: {Moopsy: {ask:{val: true}}},
+                requirements: {Moopsy_Monkey: {ask:{val: true}}},
                 gameboard: [
                     [
                         [],
@@ -132,7 +132,7 @@ var seedPages = function(stories){
                         []
                     ]
                 ],
-                pageNumber: 1,
+                pageNumber: 0,
                 boardBackground: 'image/flower-field.png'
 
             },{
@@ -140,13 +140,13 @@ var seedPages = function(stories){
                 text:'<p>"It\'s my brother," said Moopsy. "He\'s crying and I don\'t know what to do!" </p><p>"Don\'t worry Moopsy, I\'ll go see if I can help"</p><p class="promptText">Can you see if Mopsy needs any help?</p>',
                 tools: ['If-Statement', 'ask', 'move', 'give'],
                 variables: [
-                    {text: 'Mopsy Monkey', varType: 'person'},
+                    {text: 'Mopsy_Monkey', varType: 'person'},
                     {text: 'Mopsy needs help', varType: 'condition'},
                     {text: 'How can I help?', varType:'variable'}
                 ],
                 concepts: ['If-statements'],
                 hint: 'If Mopsy needs help, ask what you can do!',
-                requirements: {Mopsy: {ask:{val: true}}},
+                requirements: {Mopsy_Monkey: {ask:{val: true}}},
                 gameboard: [
                     [
                         [],
@@ -182,11 +182,11 @@ var seedPages = function(stories){
                         [{
                             type: 'Person',
                             name:'Monkey1',
-                            varName:'Mopsy'
+                            varName:'Mopsy_Monkey'
                         }]
                     ]
                 ],
-                pageNumber: 2,
+                pageNumber: 1,
                 boardBackground: 'image/flower-field.png'
 
             },{
@@ -251,7 +251,7 @@ var seedPages = function(stories){
                         }]
                     ]
                 ],
-                pageNumber: 3,
+                pageNumber: 2,
                 boardBackground: 'image/flower-field.png'
 
             }
@@ -309,7 +309,7 @@ var seedPages = function(stories){
                         []
                     ]
                 ],
-                pageNumber: 1,
+                pageNumber: 0,
                 boardBackground: 'image/flower-field.png'
 
             },{
@@ -363,7 +363,7 @@ var seedPages = function(stories){
                         }]
                     ]
                 ],
-                pageNumber: 2,
+                pageNumber: 1,
                 boardBackground: 'image/flower-field.png'
 
             },{
@@ -428,7 +428,7 @@ var seedPages = function(stories){
                         }]
                     ]
                 ],
-                pageNumber: 3,
+                pageNumber: 2,
                 boardBackground: 'image/flower-field.png'
 
             }

@@ -3,17 +3,17 @@ app.directive('adminStats', function(UserFactory) {
     restrict: 'E',
     templateUrl: '/js/common/directives/admin-stats/admin-stats.html',
     link: (scope, elem) => {
-
+        var color = d3.scale.category20c();
+        var color2 = d3.scale.category20b();
+        var greenScale = ['#637939', '#8ca252', '#b5cf6b', '#cedb9c'];
         //Make age distribution chart
         var ages = Array(20).join(0).split('');
-
         var temp = _.assign(ages, scope.ageDist);
-
         var objData = _.omit(temp, [0, 1, 2, 'undefined']);
 
         var w = document.querySelector('#ageChart').clientWidth;
 
-        var h = 150;
+        var h = 200;
 
         var xScale = d3.scale.ordinal()
                         .domain(_.range(3,19))
@@ -69,7 +69,7 @@ app.directive('adminStats', function(UserFactory) {
                 return yScale(objData[d]);
            })
            .attr("fill", function(d) {
-                return "rgb(0, 0, " + (d * 10) + ")";
+                return greenScale[objData[d]%4];
            })
 
         //Create labels
@@ -95,7 +95,6 @@ app.directive('adminStats', function(UserFactory) {
 
         var width = document.querySelector('#genderChart').clientWidth -30;
         var r = width/2;
-        var color = d3.scale.category20c();
 
         var vis = d3.select('#genderChart')
                     .append("svg")
@@ -121,7 +120,9 @@ app.directive('adminStats', function(UserFactory) {
                       .attr("class", "slice");
         arcs.append("svg:path")
             .attr("fill", function(d, i){
-                return color(i);
+                // var c = i=;
+                // console.log('c', color2(c));
+                return greenScale[i];
             })
             .attr("d", function (d) {
                 return arc(d);

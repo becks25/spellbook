@@ -15,7 +15,8 @@ app.config($stateProvider => {
             user: (UserFactory, AuthService) => {
                 return AuthService.getLoggedInUser()
                     .then(user => {
-                        return UserFactory.find(user._id);
+                        if(user) return UserFactory.find(user._id);
+                        else return;
                     })
             }
         },
@@ -41,18 +42,11 @@ app.controller('StoryCtrl', ($scope, $state, stories, $timeout, StoryFactory, $s
                 }
             });
     };
-
-
+    
     $scope.goToStoryPage = (event, story) => {
         findIfStarted(story).then(result => {
             Promise.all(outTran.animate(event.currentTarget))
                 .then(() => $state.go('page', {id: result._id}))
         });
     };
-
-    $rootScope.$on('$stateChangeSuccess', function (ev, to, toParams, from, fromParams) {
-        if (from.name === 'story.indivStory' && to.name === 'story') {
-            console.log('from', from, 'to', to);
-        }
-    });
 });
