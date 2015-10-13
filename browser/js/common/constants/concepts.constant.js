@@ -4,6 +4,9 @@ app.constant('CONCEPTS', [
     'If-statements',
     'Functions',
     'Recursion',
-    'Async'
+    'Async',
+    'Conditionals',
+    'Expressions',
+    'Moement'
 
 ]);

@@ -110,7 +110,7 @@ app.controller('AdminController', function ($scope, stories, users, mastery, pop
         return Math.floor(part/total * 100) + '%'
     }
 
-
+    console.log($scope.stories);
 
 });
 
@@ -138,9 +138,10 @@ app.filter('inArray', function(){
         var filtered = [];
 
         stories.forEach(story => {
-            story.concepts.forEach(concept => {
-                if(clickedConcepts[concept]) filtered.push(story);
-            })
+            var include = story.concepts.some(concept => clickedConcepts[concept] );
+
+            if(include) filtered.push(story);
+
         })
         
 
