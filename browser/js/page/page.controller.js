@@ -22,13 +22,10 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
         $scope.hintRequested = true;
     };
 
-    console.log("the actual page", $scope.page)
-
     $scope.nextPage;
     //var nextPageNumber;
     var directionOptions = 
     $scope.turnPage = () => {
-        console.log("the page number", $scope.page.pageNumber)
         for (var i = 0; i < $scope.allPages.length; i++){
             if($scope.allPages[i].storyId === $scope.page.storyId){
                 var nextPageNumber = $scope.page.pageNumber + 1;

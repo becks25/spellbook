@@ -11,6 +11,16 @@ app.config($stateProvider => {
 
                 })
               },
+            story: (page, StoryFactory) => {
+                return StoryFactory.find(page.storyId);
+            },
+            storyPages: (story, user) => {
+                return story.getAllPages(story._id)
+                    .then(pages => pages)
+                    .then(pages => {
+
+                    })
+            },
             allPages: (PageFactory) => PageFactory.findAll()
         },
         views: {
