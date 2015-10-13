@@ -17,11 +17,23 @@ app.config($stateProvider => {
     })
 });
 
-app.controller('StoryCtrl', ($scope, $state, stories, $timeout, StoryFactory, $stateParams) => {
+app.controller('StoryCtrl', ($scope, $state, stories, $timeout, StoryFactory, $stateParams, $rootScope) => {
     $scope.stories = stories;
     $scope.pop = false;
 
-    $scope.goToStoryPage = story => {
+    $scope.goToStoryPage = (story, index) => {
+        console.log(index);
         story.goToStory(story._id);
-    }
+    };
+
+    $rootScope.$on('$stateChangeSuccess', function (ev, to, toParams, from, fromParams) {
+        if(from.name === 'story.indivStory' && to.name === 'story') {
+            console.log('from',from,'to', to);
+
+
+        }
+
+
+
+    });
 });
