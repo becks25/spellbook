@@ -64,7 +64,7 @@ var seedStories = function(){
         description: "Mopsy and Moopsy are in trouble- can you help them?",
         difficulty: 2,
         concepts: ['For Loop', 'If-statements'],
-        cover: 'http://www.printactivities.com/ColoringPages/Aliens/Alien-Princess.gif'
+        cover: 'http://www.wpclipart.com/cartoon/animals/monkey_chimp/monkey_w_banana.png'
 
     });
     stories.push({
@@ -72,7 +72,7 @@ var seedStories = function(){
         description: "Aria gets lost in space and has to rescue a friend",
         difficulty: 3,
         concepts: ['Conditionals', 'While loop', 'For loop'],
-        cover: 'http://www.wpclipart.com/cartoon/animals/monkey_chimp/monkey_w_banana.png'
+        cover: 'http://www.printactivities.com/ColoringPages/Aliens/Alien-Princess.gif'
 
     });
      return Story.createAsync(stories);
