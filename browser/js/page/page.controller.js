@@ -6,9 +6,9 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
     $scope.allPages = allPages;
     console.log("all of the page", $scope.allPages);
     $scope.spellComponents = []; // update from db if saved version is present
-    $scope.spellVars = [];
-    $scope.spellTools = [];
-    $scope.directions = [];
+    $scope.spellVars = spellVarConstr();
+    $scope.spellTools = spellToolConstr();
+    $scope.directions = spellDirConstr();
     if(user) $scope.user = user;
     else $scope.user = {character: { picture: 'Giraffe1', name: 'Omri'}}
 
@@ -48,21 +48,21 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
     console.log("there is a user on scope", $scope.user.character.picture)
 
     //construct the directions with a function to fix drop and drag bug
-    $scope.directions = () => {
-        return SpellComponentFactory.possDirections.map(dir => SpellComponentFactory.makeSpellDirs(dir));
+    function spellVarConstr() {
+        return SpellComponentFactory.possDirections.map(dir => SpellComponentFactory.makeSpellDir(dir));
     };
     
-
     //scope.page.tools is an array of strings - .action of the objs
     // takes vars and tools from page model and makes command objs
     // pushes each obj to spellTools arr
-    $scope.spellTools =  () => {
+    function spellToolConstr() {
+        console.log('tools', $scope.page.tools)
         return $scope.page.tools.map(tool=> SpellComponentFactory.makeToolObj(tool));
     };
 
-    $scope.spellVars = () => {
+    function spellDirConstr() {
         //variables are stored as objects
-        return $scope.page.variables.map(variable => SpellComponentFactory.makeSpellVar(variable);
+        return $scope.page.variables.map(variable => SpellComponentFactory.makeSpellVar(variable));
     };
 
     //ensures that tool box can't be rearranged by reordering back to orig order
