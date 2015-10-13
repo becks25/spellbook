@@ -142,7 +142,7 @@ var seedPages = function(stories){
                 variables: [
                     {text: 'Mopsy_Monkey', varType: 'person'},
                     {text: 'Mopsy needs help', varType: 'condition'},
-                    {text: 'How_can_I_help?', varType:'variable'}
+                    {text: 'How_can_I_help', varType:'variable'}
                 ],
                 concepts: ['If-statements'],
                 hint: 'If Mopsy needs help, ask what you can do!',
