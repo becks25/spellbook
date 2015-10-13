@@ -5,13 +5,12 @@
 		<h3>Users</h3>
 	</div>
 
-	<div class="panel-body">
 		<!--Search options for users:
 				-search by name
 				-score (range)
 			-->
 		<div class="clearfix">
-			<div class="form-inline">
+			<div class="form-inline panel-body">
 				<div class="form-group col-sm-4 col-xs-12">
 					<label>User: </label>
 					<input type="text" class="form-control" ng-model="searchUsers" placeholder="Search by username"/>
@@ -38,8 +37,16 @@
 			</div>
 		</div>
 
-		<admin-users class="col-sm-4 col-xs-6" ng-repeat="user in users | filter:{username: searchUsers} | rangeFilter: score" user="user" percent="findPercentage"><admin-users>
-	</div>
+		<div class="panel-body">
+			<admin-users class="col-sm-4 col-xs-6" ng-repeat="user in users | filter:{username: searchUsers} | rangeFilter: score" user="user" percent="findPercentage" ng-show="$index<3 || showAllUsers"><admin-users>
+		</div>
+
+		<div ng-hide="showAllUsers" ng-click="showAllUsers = true" class="showmore text-center panel-body">
+			<span class="glyphicon glyphicon-triangle-right"><span> Show more
+		</div>
+		<div ng-show="showAllUsers" ng-click="showAllUsers = false" class="showmore text-center panel-body">
+			<span class="glyphicon glyphicon-triangle-top"><span> Hide
+		</div>
 </div>
 
 <div id="stories" class="panel">
@@ -53,7 +60,7 @@
 			-concepts
 		-->
 	<div class="clearfix">
-		<div class="form-inline">
+		<div class="form-inline panel-body">
 			<div class="form-group col-sm-4 col-xs-12">
 				<label>Title: </label>
 				<input type="text" class="form-control" ng-model="searchTitle" placeholder="Search by title"/>
@@ -84,6 +91,14 @@
 	</div>
 
 
-	<admin-stories ng-repeat="story in stories| filter: {title:searchTitle, author: searchAuthor} | inArray: clickedConcepts track by $index"  class="col-sm-4 col-xs-6"></admin-stories>
+	<div class="panel-body">
+		<admin-stories ng-repeat="story in stories| filter: {title:searchTitle, author: searchAuthor} | inArray: clickedConcepts track by $index"  ng-show="$index<3 || showAll" class="col-sm-4 col-xs-6"></admin-stories>
+	</div>
+	<div ng-hide="showAll" ng-click="showAll = true" class="showmore text-center panel-body">
+		<span class="glyphicon glyphicon-triangle-right"><span> Show more
+	</div>
+	<div ng-show="showAll" ng-click="showAll = false" class="showmore text-center panel-body">
+		<span class="glyphicon glyphicon-triangle-top"><span> Hide
+	</div>
 </div>
 

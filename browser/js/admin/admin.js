@@ -93,6 +93,8 @@ app.controller('AdminController', function ($scope, stories, users, mastery, pop
     $scope.ageDist = usersData[1];
     $scope.searchTitle;
     $scope.searchAuthor;
+    $scope.showAll = false;
+    $scope.showAllUsers = false;
 
     $scope.concepts = CONCEPTS;
 
@@ -110,7 +112,6 @@ app.controller('AdminController', function ($scope, stories, users, mastery, pop
         return Math.floor(part/total * 100) + '%'
     }
 
-    console.log($scope.stories);
 
 });
 
