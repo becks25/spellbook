@@ -1,11 +1,31 @@
-app.factory('SpellComponentFactory', function(){
+app.factory('SpellComponentFactory', function(ConditionFnFactory){
 	return {
 		possTools: ['move', 'ifStatement', 'whileLoop', 'forLoop', 'pickUp', 'give', 'tell', 'ask'],
 		possConcepts:['For Loop', 'While Loop', 'If-statements', 'Conditionals', 'Expressions', 'Movement'],
-		
-
-
-		makeToolObj: function(toolStr) {
+		possDirections: ['up', 'down', 'left', 'right'],
+		makeSpellVar: (variable)=>{
+			var name = variable.text.split(' ').join('_');
+            return {
+            	name: name,
+            	 text: variable.text,
+            	  value: false, 
+            	  type: 'variable', 
+            	  varType: variable.varType,
+            	  //value is a function that returns true or false depending on the state of the game
+            	  value: () => {
+            	  	return ConditionFnFactory[variable.fnType](variable.arg);
+            	  },
+            	};
+		},
+		makeSpellDir: (dir) => {
+	        return  {
+	            name: dir,
+	            text: dir,
+	            type: 'direction',
+	            varType: 'direction'
+        	};
+    	},
+		makeToolObj: (toolStr) => {
 		  var toolObj = {};
 	      switch (toolStr) {
 	        case 'move':
