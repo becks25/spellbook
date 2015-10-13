@@ -82,7 +82,6 @@
 
 		</div>
 	</div>
-
-	<admin-stories ng-repeat="story in stories | filter: {title:searchTitle, author: searchAuthor} | inArray: clickedConcepts" class="col-sm-4 col-xs-6"></admin-stories>
+	<admin-stories ng-repeat="story in stories| filter: {title:searchTitle, author: searchAuthor} | inArray: clickedConcepts track by $index"  class="col-sm-4 col-xs-6"></admin-stories>
 </div>
 
