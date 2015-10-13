@@ -9,7 +9,7 @@ app.factory('SpellFactory', function(TilesizeFactory){
 	    this.avatar = this.map.getAvatar();
 	    this.currentCommand = null;
 	   	this.holding = [];
-	    //this.reset();
+	    this.reset();
 	    // this.reload();
   	}
 
@@ -51,7 +51,7 @@ app.factory('SpellFactory', function(TilesizeFactory){
 		}
 	}
 
-  	//this stepThough function runs through spell components by index, 
+  	//this stepThough function runs through spell components by index,
   	//which solves the problem of repeated commands
   	// spell arr can't be changed during function (the stuff already stepped through can't change)
 	stepThrough(spellArr){
@@ -118,18 +118,18 @@ app.factory('SpellFactory', function(TilesizeFactory){
 	    	case 'give':
             	// collectable obj (ref) has to be passed into the function as .variable
             	//search map pos for person to give to
-            	var toGive = spell.map.checkPos(this.avatar.position, component.person); 
+            	var toGive = spell.map.checkPos(this.avatar.position, component.person);
 	    		if (toGive) {
     				if(spell.holding[component.variable]){
-    					spell.holding[component.variable] = false;	    			
+    					spell.holding[component.variable] = false;
 	    				this.level.updateReq(toGive, 'give', component.variable);
-    				} 
+    				}
     			}
     			break;
 	    	case 'pickUp':
 	    		console.log('picking up', component.variable)
 	    		//search the map objects on that position for the one that matches component.variable,
-	    		var toPick = spell.map.checkPos(this.avatar.position, component.variable); 
+	    		var toPick = spell.map.checkPos(this.avatar.position, component.variable);
 	    		if (toPick) {
 	    			console.log('found it')
 	    			toPick.entity.destroy();
@@ -150,7 +150,7 @@ app.factory('SpellFactory', function(TilesizeFactory){
 	    		else if (component.elseExpr) {
 	    			var expressions = Promise.map(component.elseExpr, (command)=>command);
 	    			return expressions.each(command => spell.executeCommand(command));
-	    			
+
 	    			// return Promise.reduce(component.expressions, (nothing, command)=> spell.executeCommand(command));
 	    		}
 	    		break;
@@ -171,18 +171,18 @@ app.factory('SpellFactory', function(TilesizeFactory){
 	    	case 'ask':
 	    	//not sure what these do
 	    		console.log('asking')
-	    		var toAsk = spell.map.checkPos(this.avatar.position, component.person); 
+	    		var toAsk = spell.map.checkPos(this.avatar.position, component.person);
 	    		if (toAsk) {
 	    			this.level.updateReq(toAsk, 'ask', component.variable);
     			}
 	    		break;
 	    	case 'tell':
 	    		console.log('telling')
-	    		var toAsk = spell.map.checkPos(this.avatar.position, component.person); 
+	    		var toAsk = spell.map.checkPos(this.avatar.position, component.person);
 	    		if (toAsk) {
 	    			this.level.updateReq(toAsk, 'ask', component.variable);
     			}
-	    		break;	    		
+	    		break;
 	    }
 
 	    // ??component is inside the scope of the function that executeExpression is called in???

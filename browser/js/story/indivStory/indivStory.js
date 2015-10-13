@@ -54,6 +54,10 @@ app.controller('indivStoryCtrl', ($scope, $state, $stateParams, StoryFactory, st
         });
 
 
+    $scope.goToStoryPage = story => {
+        story.goToStory(story._id);
+    };
+
 
     $scope.cover = story.cover;
 
