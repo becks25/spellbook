@@ -12,6 +12,10 @@ body {
   font-family: $font-default;
 }
 
+body, html {
+  background: none !important;
+}
+
 @mixin clearfix {
   &:after {
     content: "";
