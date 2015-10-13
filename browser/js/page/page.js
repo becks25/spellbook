@@ -290,7 +290,7 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
 
     var modalInstance;
 
-    $scope.solved.false;
+    $scope.solved=false;
     $scope.runSpell = argArr => {
         $scope.spell.run(argArr)
         .then(res => {
