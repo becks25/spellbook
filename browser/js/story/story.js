@@ -15,7 +15,8 @@ app.config($stateProvider => {
             user: (UserFactory, AuthService) => {
                 return AuthService.getLoggedInUser()
                     .then(user => {
-                        return UserFactory.find(user._id);
+                        if(user) return UserFactory.find(user._id);
+                        else return;
                     })
             }
         },
@@ -40,7 +41,7 @@ app.controller('StoryCtrl', ($scope, $state, stories, $timeout, StoryFactory, $s
 
 
     $scope.goToStoryPage = (event, story) => {
-        findIfStarted(story);
+        if(user) findIfStarted(story);
         //Promise.all(outTran.animate(event.currentTarget)).then(() => {
         //    story.goToStory(story._id);
         //});
