@@ -91,7 +91,6 @@ app.controller('AdminController', function ($scope, stories, users, mastery, pop
 
     $scope.genderDist = usersData[0];
     $scope.ageDist = usersData[1];
-    console.log(Object.keys($scope.ageDist).length);
     $scope.searchTitle;
     $scope.searchAuthor;
 
@@ -111,7 +110,7 @@ app.controller('AdminController', function ($scope, stories, users, mastery, pop
         return Math.floor(part/total * 100) + '%'
     }
 
-    
+
 
 });
 

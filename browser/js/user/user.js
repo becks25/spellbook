@@ -73,7 +73,7 @@ app.controller('UserCtrl', function ($scope, AuthService, UserFactory, $state, u
     this.label= concept;
     this.points= points;
     this.possible= possible-points;
-    if(possible===0) this.possible = 100;
+    if(possible===0) this.possible = 1;
     this.data= [this.points, this.possible];
   };
 
@@ -118,10 +118,21 @@ app.controller('UserCtrl', function ($scope, AuthService, UserFactory, $state, u
 
 
     svg.append("text")
+       .attr('dy', '-.3em')
        .attr("text-anchor", "middle")
        .text(function(d, i){
           return data.label;
-        });
+        })
+
+    svg.append("text")
+       .attr('dy', '1em')
+       .attr("text-anchor", "middle")
+       .text(function(d, i){
+          var total = 0;
+          if(data.points !== 0) total = data.points+data.possible;
+
+          return data.points + '/' + total + ' points';
+        })
 
    });
 

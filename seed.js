@@ -40,7 +40,7 @@ Page.remove({}, function(err, removed) {
 
 
 
-var concepts = ['Loops', 'If-statements', 'Functions', 'Recursion', 'Async']
+var concepts = ['For Loop', 'While Loop', 'If-statements', 'Functions', 'Recursion', 'Async']
 var descr = "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad.</p>";
 var backgrounds= ['images/space.png', 'images/flower-field.png', 'images/underwater.png'];
 
@@ -63,7 +63,7 @@ var seedStories = function(){
         title: 'Mopsy and Moopsy',
         description: "Mopsy and Moopsy are in trouble- can you help them?",
         difficulty: 2,
-        concepts: ['Loops', 'If-statements'],
+        concepts: ['For Loop', 'If-statements'],
         cover: 'http://www.smashingmagazine.com/images/book-covers/book-covers-18.jpg'
 
     });
@@ -77,7 +77,7 @@ var seedPages = function(stories){
             pages.push({
                 story: story._id,
                 text:'<p>{{user.character.name}} was sitting at home, enjoying a nice cup of tea, when their super ears perked up- someone was crying for help!  It\'s Moopsy Monkey! </p><p class="promptText"> Can you help {{user.character.name}} find out what\'s wrong?</p>',
-                tools: ['ifStatement', 'ask', 'move', 'give'],
+                tools: ['If-Statement', 'ask', 'move', 'give'],
                 variables: [
                     {text: 'Moopsy Monkey', varType: 'person'},
                     {text: 'What\'s wrong', varType: 'variable'}
@@ -130,7 +130,7 @@ var seedPages = function(stories){
             },{
                 story: story._id,
                 text:'<p>"It\'s my brother," said Moopsy. "He\'s crying and I don\'t know what to do!" </p><p>"Don\'t worry Moopsy, I\'ll go see if I can help"</p><p class="promptText">Can you see if Mopsy needs any help?</p>',
-                tools: ['ifStatement', 'ask', 'move', 'give'],
+                tools: ['If-Statement', 'ask', 'move', 'give'],
                 variables: [
                     {text: 'Mopsy Monkey', varType: 'person'},
                     {text: 'Mopsy needs help', varType: 'condition'},
@@ -184,12 +184,12 @@ var seedPages = function(stories){
             },{
                 story: story._id,
                 text:'<p>"It\'s terrible," sighed Mopsy. "I\'ve dropped my bananas all over the place.  It\'ll take forever to pick them up again!"</p><p>"Not if I can help it!" exclaimed {{user.character.name}}</p><p class="promptText">Can you get all of Mopsy\'s bananas using only 4 tools?</p>',
-                tools: ['ifStatement', 'pickUp', 'move', 'forLoop'],
+                tools: ['If-Statement', 'pickUp', 'move', 'For Loop'],
                 variables: [
                     {text: 'Banana', varType: 'variable'},
                     {text: 'Apple', varType:'variable'}
                 ],
-                concepts: ['forLoop'],
+                concepts: ['For Loop'],
                 hint: 'You can use a repeat to do an action more than once',
                 requirements: {
                     'Banana&1': {pickUp:{val: true}},
@@ -254,7 +254,7 @@ var seedPages = function(stories){
                 pages.push({
                     story: story._id,
                     text: descr,
-                    tools: ['move', 'pickUp', 'give', 'ask', 'tell', 'ifStatement', 'forLoop', 'whileLoop'],
+                    tools: ['move', 'pickUp', 'give', 'ask', 'tell', 'If-Statement', 'For Loop', 'While Loop'],
                     variables: [{text: 'Omri', varType: 'person'}, {text: 'Zeke', varType: 'person'}, {text: 'Joe', varType: 'person'}, {text: 'Say hi', varType: 'variable'}, {text: 'Green Potion', varType: 'variable'}, {text: 'The potion is green', varType: 'condition'}],
                     concepts: [concepts[Math.floor(Math.random()*concepts.length)]],
                     hint: 'Try harder',
