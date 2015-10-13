@@ -126,7 +126,7 @@ app.factory('SpellFactory', function(TilesizeFactory){
 	    		if (toGive) {
     				if(spell.holding[component.variable]){
     					spell.holding[component.variable] = false;
-	    				this.level.updateReq(toGive, 'give', component.variable);
+	    				this.level.updateReq(toGive.varName, 'give', component.variable);
     				}
     			}
     			break;
@@ -170,17 +170,18 @@ app.factory('SpellFactory', function(TilesizeFactory){
 	    		break;
 	    	case 'ask':
 	    	//not sure what these do
-	    		console.log('asking')
+	    		console.log('asking', component.person)
 	    		var toAsk = spell.map.checkPos(this.avatar.position, component.person);
 	    		if (toAsk) {
-	    			this.level.updateReq(toAsk, 'ask', component.variable);
+	    			console.log('in asking');
+	    			this.level.updateReq(toAsk.varName, 'ask', component.variable);
     			}
 	    		break;
 	    	case 'tell':
 	    		console.log('telling')
 	    		var toAsk = spell.map.checkPos(this.avatar.position, component.person);
 	    		if (toAsk) {
-	    			this.level.updateReq(toAsk, 'ask', component.variable);
+	    			this.level.updateReq(toAsk.varName, 'ask', component.variable);
     			}
 	    		break;
 	    }
