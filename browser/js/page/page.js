@@ -10,7 +10,8 @@ app.config($stateProvider => {
                     else return;
 
                 })
-              }
+              },
+            allPages: (PageFactory) => PageFactory.findAll()
         },
         views: {
             main: {
@@ -23,8 +24,11 @@ app.config($stateProvider => {
 
 });
 
-app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPRITES, LevelFactory, TilesizeFactory, SpellFactory, SpellComponentFactory, SPRITE_AVATARS, orderByFilter, $compile, user, AvatarFactory, PageFactory, $uibModal) => {
+
+app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPRITES, LevelFactory, TilesizeFactory, SpellFactory, SpellComponentFactory, SPRITE_AVATARS, orderByFilter, $compile, user, AvatarFactory, PageFactory, allPages, $uibModal) => {
     $scope.page = page;
+    $scope.allPages = allPages;
+    console.log("all of the page", $scope.allPages);
     $scope.spellComponents = []; // update from db if saved version is present
     $scope.spellVars = [];
     $scope.spellTools = [];
@@ -42,19 +46,32 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
       $scope.hintRequested = true;
     };
 
-    //console.log("the actual page", $scope.page)
+    console.log("the actual page", $scope.page)
 
+    $scope.nextPage;
     //var nextPage = 2;
     $scope.turnPage = () => {
       console.log("the page number", $scope.page.pageNumber)
-      //console.log($scope.page)
-      //var nextPage = $scope.page.pageNumber++;
-      PageFactory.find('561c5d5e0f8aaccdebcf1b98')
-      .then(function(nextUp){
-        console.log("this is next", nextUp);
-        $state.go('page', {_id: nextUp._id})
-      })  
+      for (var i = 0; i < $scope.allPages.length; i++){
+        if($scope.allPages[i].storyId = $scope.page.storyId){
+          console.log("made it this far", $scope.allPages[i])
+          var nextPageNumber = $scope.page.pageNumber++
+          if($scope.allPages[i].pageNumber = nextPageNumber){
+            $scope.nextPage = $scope.allPages[i];
+            console.log("now here is next page", $scope.nextPage)
+
+          }
+        }
+      }
+
+      PageFactory.find($scope.nextPage._id)
+      .then(function(page){
+        console.log("in page find", page)
+        $state.go('page', {id: page._id})
+      }) 
     }
+
+    console.log("here are next pages", $scope.nextpages)
 
     //this is for testing if spell directions is working...
     //$scope.spellDirections = [];
@@ -67,27 +84,23 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
       $scope.directions = [{
         name: 'up',
         text: 'up',
-        value: false,
         type: 'direction',
         varType: 'direction'
       }, {
         name: 'down',
         text: 'down',
-        value: false,
         type: 'direction',
         varType: 'direction'
       },
       {
         name: 'left',
         text: 'left',
-        value: false,
         type: 'direction',
         varType: 'direction'
       },
       {
         name: 'right',
         text: 'right',
-        value: false,
         type: 'direction',
         varType: 'direction'
       }];
@@ -170,8 +183,6 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
 
             if (e.target) {
                 if ($(e.target).hasClass('first')) {
-                    // $scope.spellTools = $scope.tools.slice();
-                    //$scope.spellComponents = $scope.spellComponents.slice();
                     $scope.spellTools = [];
                     spellToolConstr();
                     refresh();
@@ -192,7 +203,6 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
     $scope.dirConfig = angular.extend({}, baseConfig, {
         //this only runs if valid drop
         update: (e, ui) => {
-          // console.log("this is the e item", ui.item.scope());
 
           if (ui.item.sortable.droptarget.hasClass('first')) {
             console.log('hi')
@@ -263,11 +273,7 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
 
     $scope.level = new LevelFactory($scope.page);
     $scope.spell = new SpellFactory($scope.level);
-    //$scope.avatar = new AvatarFactory($scope.user.character.name);
-    //console.log("the avatar yo", $scope.avatar)
 
-
-    //console.log("so this is the pic", $scope.level.map.avatar.name)
 
     $scope.resetLevel = function () {
         $scope.spell.reset();

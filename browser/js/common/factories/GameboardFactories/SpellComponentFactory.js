@@ -1,5 +1,7 @@
 app.factory('SpellComponentFactory', function(){
 	return {
+		possTools: ['move', 'ifStatement', 'whileLoop', 'forLoop', 'pickUp', 'give', 'tell', 'ask'],
+		possConcepts:['For Loop', 'While Loop', 'If-statements', 'Conditionals', 'Expressions', 'Movement'],
 		makeToolObj: function(toolStr) {
 		  var toolObj = {};
 	      switch (toolStr) {
@@ -7,6 +9,7 @@ app.factory('SpellComponentFactory', function(){
 	          toolObj.action = 'move';
 	          toolObj.text = 'move';
 	          toolObj.direction = 'down';
+	          value: null;
 	          toolObj.distance = 1;
 	          toolObj.type = 'tool';
 	          break;
@@ -60,6 +63,12 @@ app.factory('SpellComponentFactory', function(){
 	          toolObj.variable = null;
 	          toolObj.type = 'tool';
 	          break;
+	        default: 
+	          toolObj.action = toolStr;
+	          toolObj.text = toolStr;
+	          toolObj.person = null;
+	          toolObj.variable = null;
+	          toolObj.type = toolStr;
 	      }
 	      return toolObj;
 		}
@@ -67,51 +76,3 @@ app.factory('SpellComponentFactory', function(){
 
 });
 
-
-
-
-
-// move: {
-// 	action: 'move',
-// 	direction: (enum)['up', 'down', 'left', 'right'],
-// 	distance: Number
-// }
-
-// pickUp:{
-// 	action: 'pickUp',
-// 	variable: Object (ref to collectable)
-// }
-
-// give:{
-// 	action: 'give',
-// 	variable: Object (ref to collectable)
-// }
-
-// ifStatement: {
-// 	action: 'ifStatement',
-// 	condition: scope var (true or false),
-// 	expression: another spell component,
-// 	elseExpr: (opt) another spell component
-// }
-
-// whileLoop:{
-// 	action: 'whileLoop',
-// 	condition: scope var (true or false),
-// 	expression: another spell component
-// }
-
-// forLoop: {
-// 	action: 'whileLoop',
-// 	number: Number,
-// 	expression: another spell component
-// }
-
-// ask: {
-// 	person: scope var,
-// 	question: scope var
-// }
-
-// tell: {
-// 	person: scope var,
-// 	answer: scope var
-// }

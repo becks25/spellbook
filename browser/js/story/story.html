@@ -1,4 +1,4 @@
 <div class="test" reload>
-    <story-list-item sibs class="col-md-4" ng-repeat="story in stories track by $index" story="story" ng-click="goToStoryPage($event,story)"></story-list-item>
+    <story-list-item class="col-md-4" ng-repeat="story in stories track by $index" story="story" ng-click="goToStoryPage($event,story)"></story-list-item>
 </div>
 <div ui-view="content" ui-sref-active="active"></div>

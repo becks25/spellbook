@@ -40,7 +40,7 @@ Page.remove({}, function(err, removed) {
 
 
 
-var concepts = ['For Loop', 'While Loop', 'If-statements', 'Functions', 'Recursion', 'Async']
+var concepts = ['For Loop', 'While Loop', 'If-statements', 'Functions', 'Recursion', 'Async', 'Conditionals', 'Expressions', 'Movement']
 var descr = "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad.</p>";
 var backgrounds= ['images/space.png', 'images/flower-field.png', 'images/underwater.png'];
 
@@ -64,7 +64,15 @@ var seedStories = function(){
         description: "Mopsy and Moopsy are in trouble- can you help them?",
         difficulty: 2,
         concepts: ['For Loop', 'If-statements'],
-        cover: 'http://www.smashingmagazine.com/images/book-covers/book-covers-18.jpg'
+        cover: 'http://www.printactivities.com/ColoringPages/Aliens/Alien-Princess.gif'
+
+    });
+    stories.push({
+        title: 'Space Princess',
+        description: "Aria gets lost in space and has to rescue a friend",
+        difficulty: 3,
+        concepts: ['Conditionals', 'While loop', 'For loop'],
+        cover: 'http://www.wpclipart.com/cartoon/animals/monkey_chimp/monkey_w_banana.png'
 
     });
      return Story.createAsync(stories);
@@ -112,6 +120,183 @@ var seedPages = function(stories){
                         [{
                             type:'Obstacle',
                             name: 'Tree1'
+                        }]
+                    ],
+                    [
+                        [{
+                            type: 'Avatar',
+                            name:'Giraffe3'
+                        }],
+                        [],
+                        [],
+                        []
+                    ]
+                ],
+                pageNumber: 1,
+                boardBackground: 'image/flower-field.png'
+
+            },{
+                story: story._id,
+                text:'<p>"It\'s my brother," said Moopsy. "He\'s crying and I don\'t know what to do!" </p><p>"Don\'t worry Moopsy, I\'ll go see if I can help"</p><p class="promptText">Can you see if Mopsy needs any help?</p>',
+                tools: ['If-Statement', 'ask', 'move', 'give'],
+                variables: [
+                    {text: 'Mopsy Monkey', varType: 'person'},
+                    {text: 'Mopsy needs help', varType: 'condition'},
+                    {text: 'How can I help?', varType:'variable'}
+                ],
+                concepts: ['If-statements'],
+                hint: 'If Mopsy needs help, ask what you can do!',
+                requirements: {Mopsy: {ask:{val: true}}},
+                gameboard: [
+                    [
+                        [],
+                        [],
+                        [{
+                            type: 'Avatar',
+                            name: 'Giraffe3'
+                        }],
+                        []
+                    ],
+                    [
+                        [],
+                        [],
+                        [{
+                            type:'Obstacle',
+                            name:'Tree1'
+                        }],
+                        []
+                    ],
+                    [
+                        [],
+                        [],
+                        [],
+                        [{
+                            type:'Obstacle',
+                            name: 'Tree1'
+                        }]
+                    ],
+                    [
+                        [],
+                        [],
+                        [],
+                        [{
+                            type: 'Person',
+                            name:'Monkey1',
+                            varName:'Mopsy'
+                        }]
+                    ]
+                ],
+                pageNumber: 2,
+                boardBackground: 'image/flower-field.png'
+
+            },{
+                story: story._id,
+                text:'<p>"It\'s terrible," sighed Mopsy. "I\'ve dropped my bananas all over the place.  It\'ll take forever to pick them up again!"</p><p>"Not if I can help it!" exclaimed {{user.character.name}}</p><p class="promptText">Can you get all of Mopsy\'s bananas using only 4 tools?</p>',
+                tools: ['If-Statement', 'pickUp', 'move', 'For Loop'],
+                variables: [
+                    {text: 'Banana', varType: 'variable'},
+                    {text: 'Apple', varType:'variable'}
+                ],
+                concepts: ['For Loop'],
+                hint: 'You can use a repeat to do an action more than once',
+                requirements: {
+                    'Banana&1': {pickUp:{val: true}},
+                    'Banana&2': {pickUp:{val: true}},
+                    'Banana&3': {pickUp:{val: true}}
+                },
+                gameboard: [
+                    [
+                        [{
+                            type:'Collectible',
+                            name:'Banana',
+                            varName:'Banana&3'
+                        }],
+                        [],
+                        [],
+                        []
+                    ],
+                    [
+                        [],
+                        [{
+                            type:'Collectible',
+                            name:'Banana',
+                            varName:'Banana&2'
+                        }],
+                        [{
+                            type:'Obstacle',
+                            name:'Tree1'
+                        }],
+                        []
+                    ],
+                    [
+                        [],
+                        [],
+                        [{
+                            type:'Collectible',
+                            name:'Banana',
+                            varName:'Banana&1'
+                        }],
+                        [{
+                            type:'Obstacle',
+                            name: 'Tree1'
+                        }]
+                    ],
+                    [
+                        [],
+                        [],
+                        [],
+                        [{
+                            type: 'Avatar',
+                            name: 'Giraffe3'
+                        }]
+                    ]
+                ],
+                pageNumber: 3,
+                boardBackground: 'image/flower-field.png'
+
+            }
+
+            );
+        } else if(story.title==='Space Princess'){
+            pages.push({
+                story: story._id,
+                text:'<p>Hi, I’m Aria.  I’m ten years old, my favorite color is yellow, and I have a pet kitten named Omri.  Oh, and I’m a princess. Most of the time, it’s pretty sweet.  Unfortunately, it doesn’t exempt me from having an annoying younger brother who always steals my toys. He’s so annoying, ugg. </p> <p> Today is my birthday and my Aunt says she has an exciting surprise for me.  She is a physicist at NASA, so I’m sure it will be something amazing.  She hid it in one of these boxes. </p><p class="promptText"> Can you go to each one, and pick it up if it is my present?</p>',
+                tools: ['If-Statement', 'ask', 'move', 'give'],
+                variables: [
+                    {text: 'present', varType: 'variable'},
+                    {text: 'a present is inside', varType: 'condition', fnType: 'match', arg: 'present'}
+                ],
+                concepts: ['If-statements'],
+                hint: 'Try using the if-statement',
+                requirements: {present: {pickUp: {val: false}}},
+                gameboard: [
+                    [
+                        [],
+                        [],
+                        [{
+                            type: 'Collectable',
+                            name: 'Chest1',
+                            varName: 'box',
+                            match: 'present'
+                        }],
+                        []
+                    ],
+                    [
+                        [],
+                        [{
+                            type: 'Collectable',
+                            name: 'Chest1',
+                        }],
+                        [],
+                        []
+                    ],
+                    [
+                        [],
+                        [],
+                        [],
+                        [{
+                            type: 'Collectable',
+                            name: 'Chest1',
                         }]
                     ],
                     [
