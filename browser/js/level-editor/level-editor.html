@@ -1,33 +1,66 @@
 <div class="container">
 	<!--Left side of the page-->
-	<div class="col-md-6 col-sm-12">
-		<!--Text -->
-		<div class="storyText">
-			{{page.text}}
+	<form ng-submit='savePage()'>
+		<button type='submit'>Save Page</button>
+		<div class="col-md-6 col-sm-12">
+			<!--Text -->
+			<div class="storyText">
+				<textarea type='text' class='form-control' ng-model='page.text' placeholder='Enter page text'>
+				</textarea>
+			</div>
+			<div>
+				<div class="hint">
+					<input type='text' class='form-control' ng-model='page.hint' placeholder='Enter hint'/>
+				</div>
+					<!--<label for='concepts'>Select Concepts</label>-->
+				<!-- dropdown for concepts searchable-->
+				<div class="btn-group inline" uib-dropdown>
+      				  <button id="split-button" type="button" class="btn btn-success">Select Concepts</button>
+				      <button type="button" class="btn btn-success" uib-dropdown-toggle>
+				        <span class="caret"></span>
+				        <span class="sr-only">Split button!</span>
+				      </button>
+				      <ul class="uib-dropdown-menu" role="menu" aria-labelledby="split-button">
+				        <li role="menuitem"ng-repeat='concept in possConcepts track by $index' ng-click='addConcept(concept, $index, concepts, possConcepts)'>{{concept}}</li>
+				      </ul>
+				</div>
+				 <div class='inline' ng-repeat='concept in concepts track by $index' ng-click='addConcept(concept, $index, possConcepts, concepts)'>{{concept}}</div>
+			</div>
+			
 		</div>
 
-		<div class="hint">
-			<button ng-show="!hintRequested" ng-click="getHint()">Get Hint</button>
-			<p ng-show="hintRequested">{{page.hint}}</p>
-		</div>
-	</div>
-
-	<!--Right side of the page-->
-	<div class="col-md-6 col-sm-12" id="right-page">
-		<div id="canvas" class="img-square">
-			<div id="cr-stage" ng-style="{background: url({{page.boardBackground}})}" class="text-center center-block">
-			<div ng-repeat="i in grid track by $index" style="height:{{size}}; width:{{size}}" class="square"></div>
+		<!--Right side of the page-->
+		<div class="col-md-6 col-sm-12" id="right-page">
+			<div id="canvas" class="img-square">
+				<div id="cr-stage" ng-style="{background: url({{page.boardBackground}})}" class="text-center center-block">
+				<div ng-repeat="i in grid track by $index" style="height:{{size}}; width:{{size}}" class="square"></div>
+				</div>
 			</div>
 		</div>
-	</div>
-	<div class="col-md-6 col-sm-12">
-		<!--the page's toolbox-->
-		<tool-box></tool-box>
-	</div>
+		<div class="col-md-6 col-sm-12">
 
-	<div class="col-md-6 col-sm-12">
-		<!--Drop box for spells/instructions-->
-		<spell></spell>
-	</div>
+		<!--dropdown to select tools-->
+		<div class="btn-group inline" uib-dropdown>
+		{{toolsPoss}}
 
+  				  <button id="split-button" type="button" class="btn btn-success">Select tools</button>
+			      <button type="button" class="btn btn-success" uib-dropdown-toggle>
+			        <span class="caret"></span>
+			        <span class="sr-only">Split button!</span>
+			      </button>
+			      <ul class="uib-dropdown-menu" role="menu" aria-labelledby="split-button">
+			        <li role="menuitem"ng-repeat='tool in toolsPoss track by $index' ng-click='addConcept(tool, $index, spellTools, toolsPoss, "tool")'>{{tool}}</li>
+			      </ul>
+			</div>
+			{{spellTools}}
+			<!--the page's toolbox-->
+			<tool-box></tool-box>
+		</div>
+
+		<div class="col-md-6 col-sm-12">
+			<!--Drop box for spells/instructions-->
+			<h5>Drag tools in here to tasks to be completed in order to win the level.  Only actions (ex, ask, pick up) can be requirements</h5>
+			<spell></spell>
+		</div>
+	</form>
 </div>
