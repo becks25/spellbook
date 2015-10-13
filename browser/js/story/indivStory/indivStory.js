@@ -34,7 +34,7 @@ app.config($stateProvider => {
                                     });
                                     return rtnPage;
                                 }
-                                //}
+
                             })
                     }
                 },
