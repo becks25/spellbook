@@ -5,17 +5,9 @@ app.config(function ($stateProvider) {
         url: '/about',
         views: {
             main: {
-                templateUrl: 'js/about/about.html',
-                controller: 'AboutController'
+                templateUrl: 'js/about/about.html'
             }
         }
     });
-
-});
-
-app.controller('AboutController', function ($scope, FullstackPics) {
-
-    // Images of beautiful Fullstack people.
-    $scope.images = _.shuffle(FullstackPics);
 
 });
