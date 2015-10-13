@@ -23,7 +23,7 @@ app.config($stateProvider => {
 
 });
 
-app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPRITES, LevelFactory, TilesizeFactory, SpellFactory, SpellComponentFactory, SPRITE_AVATARS, orderByFilter, $compile, user, AvatarFactory, PageFactory) => {
+app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPRITES, LevelFactory, TilesizeFactory, SpellFactory, SpellComponentFactory, SPRITE_AVATARS, orderByFilter, $compile, user, AvatarFactory, PageFactory, $uibModal) => {
     $scope.page = page;
     $scope.spellComponents = []; // update from db if saved version is present
     $scope.spellVars = [];
@@ -277,7 +277,26 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
 
     $scope.size = TilesizeFactory.TILESIZE + 'px';
 
-    $scope.runSpell = argArr => $scope.spell.run(argArr);
+    var modalInstance;
+
+    $scope.solved.false;
+    $scope.runSpell = argArr => {
+        $scope.spell.run(argArr)
+        .then(res => {
+            if(res){
+                modalInstance = $uibModal.open({
+                      animation:true,
+                      templateUrl: 'js/common/directives/win-modal/win-modal.html',
+                      controller: 'ModalCtrl'
+                 });
+                $scope.solved = true;
+            }
+        });
+
+    };
+
+
+
 
     $scope.stepThrough = (argArr)=> {
         $scope.spell.stepThrough(argArr);
