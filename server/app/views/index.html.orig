@@ -28,12 +28,7 @@
     <script src="/js-data/dist/js-data.js"></script>
     <script src="/js-data-angular/dist/js-data-angular.js"></script>
     <script src="/angular-ui-sortable/src/sortable.js"></script>
-<<<<<<< HEAD
-    <script src="/js/turnjs/lib/turn.js"></script>
-    <script src="/angular-animate/angular-animate.min.js"></script>
-=======
     <script src="angular-animate/angular-animate.min.js"></script>
->>>>>>> starting to write story, cleaned pagejs a bit, added conditional facotry
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" charset="utf-8"></script>
     <script src="/angular-aria/angular-aria.js"></script>
     <script src="/angular-material/angular-material.min.js"></script>

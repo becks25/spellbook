@@ -20,7 +20,7 @@ app.factory('MapFactory', function(ClassFactory, TilesizeFactory, AuthService, U
                 board.push([]);
                 for(var j=0; j<TilesizeFactory.NumTiles; j++){
                     board[i].push([]);
-                } 
+                }
             }
             return board;
         }
@@ -39,7 +39,7 @@ app.factory('MapFactory', function(ClassFactory, TilesizeFactory, AuthService, U
             Crafty("2D").each(function(i) {
                 //console.log('destroying', i, this)
                     this.destroy();
-                
+
             });
 
             //Crafty.init(TilesizeFactory.TILESIZE * TilesizeFactory.NumTiles, TilesizeFactory.TILESIZE * TilesizeFactory.NumTiles);
@@ -125,16 +125,12 @@ app.factory('MapFactory', function(ClassFactory, TilesizeFactory, AuthService, U
             var foundObj;
             this.getObjects(pos).some(obj => {
                 // console.log('mapArray', obj);
-<<<<<<< HEAD
-                    if(obj.varName.replace(/\&\w+/, '') === itemName){
-=======
                     if(match){
                         if(obj[match] === itemName){
                             foundObj = obj;
                             return true;
                         }
-                    } else if (obj.varName === itemName){
->>>>>>> working on conditionals
+                    } else if (obj.varName.replace(/\&\w+/, '') === itemName){
                         foundObj = obj;
                         return true;
                     }
