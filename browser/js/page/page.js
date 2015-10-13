@@ -23,7 +23,7 @@ app.config($stateProvider => {
 
 });
 
-app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPRITES, LevelFactory, TilesizeFactory, SpellFactory, SpellComponentFactory, SPRITE_AVATARS, orderByFilter, $compile, user, AvatarFactory) => {
+app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPRITES, LevelFactory, TilesizeFactory, SpellFactory, SpellComponentFactory, SPRITE_AVATARS, orderByFilter, $compile, user, AvatarFactory, PageFactory) => {
     $scope.page = page;
     $scope.spellComponents = []; // update from db if saved version is present
     $scope.spellVars = [];
@@ -41,6 +41,20 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
     $scope.getHint = () => {
       $scope.hintRequested = true;
     };
+
+    //console.log("the actual page", $scope.page)
+
+    //var nextPage = 2;
+    $scope.turnPage = () => {
+      console.log("the page number", $scope.page.pageNumber)
+      //console.log($scope.page)
+      //var nextPage = $scope.page.pageNumber++;
+      PageFactory.find('561c5d5e0f8aaccdebcf1b98')
+      .then(function(nextUp){
+        console.log("this is next", nextUp);
+        $state.go('page', {_id: nextUp._id})
+      })  
+    }
 
     //this is for testing if spell directions is working...
     //$scope.spellDirections = [];
