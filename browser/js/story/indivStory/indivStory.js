@@ -20,7 +20,6 @@ app.config($stateProvider => {
                                 return pages;
                             })
                             .then(pages => {
-                                //return function() {
                                 var current = helper.intersectingPages(pages, user.unfinishedPages);
                                 if (Object.keys(current).length > 0) {
                                     return current;
