@@ -48,7 +48,7 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
     console.log("there is a user on scope", $scope.user.character.picture)
 
     //construct the directions with a function to fix drop and drag bug
-    function spellVarConstr() {
+    function spellDirConstr() {
         return SpellComponentFactory.possDirections.map(dir => SpellComponentFactory.makeSpellDir(dir));
     };
     
@@ -60,7 +60,7 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
         return $scope.page.tools.map(tool=> SpellComponentFactory.makeToolObj(tool));
     };
 
-    function spellDirConstr() {
+    function spellVarConstr() {
         //variables are stored as objects
         return $scope.page.variables.map(variable => SpellComponentFactory.makeSpellVar(variable));
     };
@@ -144,7 +144,7 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
                 //resets tools arrays to create duplication and ensure spell components are clones
                 $scope.spellVars = spellVarConstr();
                 $scope.directions = spellDirConstr();
-                refresh();
+                //refresh();
                 // $scope.resetLevel();
             }
         },
