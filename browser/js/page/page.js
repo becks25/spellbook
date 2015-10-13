@@ -10,7 +10,8 @@ app.config($stateProvider => {
                     else return;
 
                 })
-              }
+              },
+            allPages: (PageFactory) => PageFactory.findAll()
         },
         views: {
             main: {
@@ -23,8 +24,10 @@ app.config($stateProvider => {
 
 });
 
-app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPRITES, LevelFactory, TilesizeFactory, SpellFactory, SpellComponentFactory, SPRITE_AVATARS, orderByFilter, $compile, user, AvatarFactory, PageFactory) => {
+app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPRITES, LevelFactory, TilesizeFactory, SpellFactory, SpellComponentFactory, SPRITE_AVATARS, orderByFilter, $compile, user, AvatarFactory, PageFactory, allPages) => {
     $scope.page = page;
+    $scope.allPages = allPages;
+    console.log("all of the page", $scope.allPages);
     $scope.spellComponents = []; // update from db if saved version is present
     $scope.spellVars = [];
     $scope.spellTools = [];
@@ -42,19 +45,32 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
       $scope.hintRequested = true;
     };
 
-    //console.log("the actual page", $scope.page)
+    console.log("the actual page", $scope.page)
 
+    $scope.nextPage;
     //var nextPage = 2;
     $scope.turnPage = () => {
       console.log("the page number", $scope.page.pageNumber)
-      //console.log($scope.page)
-      //var nextPage = $scope.page.pageNumber++;
-      PageFactory.find('561c5d5e0f8aaccdebcf1b98')
-      .then(function(nextUp){
-        console.log("this is next", nextUp);
-        $state.go('page', {_id: nextUp._id})
-      })  
+      for (var i = 0; i < $scope.allPages.length; i++){
+        if($scope.allPages[i].storyId = $scope.page.storyId){
+          console.log("made it this far", $scope.allPages[i])
+          var nextPageNumber = $scope.page.pageNumber++
+          if($scope.allPages[i].pageNumber = nextPageNumber){
+            $scope.nextPage = $scope.allPages[i];
+            console.log("now here is next page", $scope.nextPage)
+
+          }
+        }
+      }
+
+      PageFactory.find($scope.nextPage._id)
+      .then(function(page){
+        console.log("in page find", page)
+        $state.go('page', {id: page._id})
+      }) 
     }
+
+    console.log("here are next pages", $scope.nextpages)
 
     //this is for testing if spell directions is working...
     //$scope.spellDirections = [];
