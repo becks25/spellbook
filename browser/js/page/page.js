@@ -6,8 +6,8 @@ app.config($stateProvider => {
             user: (UserFactory, AuthService) => {
                 return AuthService.getLoggedInUser()
                 .then(user => {
-                    console.log(user);
-                    return UserFactory.find(user._id);
+                    if(user) return UserFactory.find(user._id);
+                    else return;
 
                 })
               }
@@ -29,7 +29,9 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
     $scope.spellVars = [];
     $scope.spellTools = [];
     $scope.directions = [];
-    $scope.user = user;
+    if(user) $scope.user = user;
+    else $scope.user = {character: { picture: 'Giraffe1', name: 'Omri'}}
+
     $scope.avatar = $scope.user.character.picture
     $scope.text = $compile($scope.page.text)($scope);
     angular.element(document.getElementById('storyText')).append($scope.text);
