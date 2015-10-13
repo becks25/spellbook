@@ -49,14 +49,16 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
     console.log("the actual page", $scope.page)
 
     $scope.nextPage;
-    //var nextPage = 2;
+    //var nextPageNumber;
+  
     $scope.turnPage = () => {
       console.log("the page number", $scope.page.pageNumber)
       for (var i = 0; i < $scope.allPages.length; i++){
-        if($scope.allPages[i].storyId = $scope.page.storyId){
+        if($scope.allPages[i].storyId === $scope.page.storyId){
           console.log("made it this far", $scope.allPages[i])
-          var nextPageNumber = $scope.page.pageNumber++
-          if($scope.allPages[i].pageNumber = nextPageNumber){
+          console.log("the current number", $scope.page.pageNumber)
+          var nextPageNumber = $scope.page.pageNumber + 1;
+          if($scope.allPages[i].pageNumber === nextPageNumber){
             $scope.nextPage = $scope.allPages[i];
             console.log("now here is next page", $scope.nextPage)
 
@@ -71,8 +73,6 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
       }) 
     }
 
-    console.log("here are next pages", $scope.nextpages)
-
     //this is for testing if spell directions is working...
     //$scope.spellDirections = [];
     $scope.spellComponentDirs = [];
@@ -84,23 +84,27 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
       $scope.directions = [{
         name: 'up',
         text: 'up',
+        value: false,
         type: 'direction',
         varType: 'direction'
       }, {
         name: 'down',
         text: 'down',
+        value: false,
         type: 'direction',
         varType: 'direction'
       },
       {
         name: 'left',
         text: 'left',
+        value: false,
         type: 'direction',
         varType: 'direction'
       },
       {
         name: 'right',
         text: 'right',
+        value: false,
         type: 'direction',
         varType: 'direction'
       }];
@@ -183,6 +187,8 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
 
             if (e.target) {
                 if ($(e.target).hasClass('first')) {
+                    // $scope.spellTools = $scope.tools.slice();
+                    //$scope.spellComponents = $scope.spellComponents.slice();
                     $scope.spellTools = [];
                     spellToolConstr();
                     refresh();
@@ -203,6 +209,7 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
     $scope.dirConfig = angular.extend({}, baseConfig, {
         //this only runs if valid drop
         update: (e, ui) => {
+          // console.log("this is the e item", ui.item.scope());
 
           if (ui.item.sortable.droptarget.hasClass('first')) {
             console.log('hi')
@@ -273,7 +280,11 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
 
     $scope.level = new LevelFactory($scope.page);
     $scope.spell = new SpellFactory($scope.level);
+    //$scope.avatar = new AvatarFactory($scope.user.character.name);
+    //console.log("the avatar yo", $scope.avatar)
 
+
+    //console.log("so this is the pic", $scope.level.map.avatar.name)
 
     $scope.resetLevel = function () {
         $scope.spell.reset();
