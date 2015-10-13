@@ -4,15 +4,16 @@
 app.factory('outTran', ($timeout) => {
     return {
         animate: (element) => {
-            var p1 = new Promise((resolve, reject) => {
-                var siblings = $(element).siblings();
-                siblings.each((index, elem) => {
-                    $timeout(() => {
-                        elem.classList.add('animated', 'fadeOutDown', 'fadeInUp');
-                    }, Math.random() * 450)
-                });
+            var promises = [];
+            var siblings = $(element).siblings();
+            siblings.each((index, elem) => {
+                promises.push($timeout(() => {
+                    elem.classList.add('animated', 'fadeOutDown', 'fadeInUp');
+                }, Math.random() * 450))
             });
-            return p1;
+            promises.push($timeout(()=>{}, 800));
+            return promises;
+
         }
     }
 });

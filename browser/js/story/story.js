@@ -22,7 +22,7 @@ app.controller('StoryCtrl', ($scope, $state, stories, $timeout, StoryFactory, $s
     $scope.pop = false;
 
     $scope.goToStoryPage = (event, story) => {
-        outTran.animate(event.currentTarget).then(() => {
+        Promise.all(outTran.animate(event.currentTarget)).then(() => {
             story.goToStory(story._id);
         });
     };
