@@ -1,7 +1,7 @@
 app.factory('SpellComponentFactory', function(){
 	return {
 		possTools: ['move', 'ifStatement', 'whileLoop', 'forLoop', 'pickUp', 'give', 'tell', 'ask'],
-		possConcepts: ['expressions', 'movement', 'if statements', 'while loops', 'for loops' ],
+		possConcepts:['For Loop', 'While Loop', 'If-statements', 'Conditionals', 'Expressions', 'Movement'],
 		makeToolObj: function(toolStr) {
 		  var toolObj = {};
 	      switch (toolStr) {
