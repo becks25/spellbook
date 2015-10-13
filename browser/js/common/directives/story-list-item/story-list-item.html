@@ -1,4 +1,6 @@
-	<img ng-src={{story.cover}} class='storyItem col-md-6' ng-class="{hover: hover}" ng-mouseenter="hover = true" ng-mouseleave="hover = false">
+	<div class="col-md-6 storyItem">
+		<img ng-src={{story.cover}} class='cover-image' ng-class="{hover: hover}" ng-mouseenter="hover = true" ng-mouseleave="hover = false">
+	</div>
 	<div class="'col-md-6">
 		<h3>{{story.title}}</h3>
 		<p ng-show="story.author">Author: {{story.author}}</p>

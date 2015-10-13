@@ -57,6 +57,12 @@ story-list-item {
 .storyItem {
   box-shadow: 2px 2px 5px rgba(0,0,0,0.6);
   margin-right: 5px;
+  height:30vh;
+  overflow:hidden;
+  .cover-image{
+    width:100%;
+    height:auto;
+  }
 }
 @charset "UTF-8";
 
