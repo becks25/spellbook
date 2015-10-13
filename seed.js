@@ -88,11 +88,11 @@ var seedPages = function(stories){
                 tools: ['If-Statement', 'ask', 'move', 'give'],
                 variables: [
                     {text: 'Moopsy_Monkey', varType: 'person'},
-                    {text: 'What\'s wrong', varType: 'variable'}
+                    {text: 'Whats_wrong', varType: 'variable'}
                 ],
                 concepts: ['If-statements'],
                 hint: 'Make sure you ask Moopsy what\'s wrong',
-                requirements: {Moopsy_Monkey: {ask:{val: true}}},
+                requirements: {Moopsy_Monkey: {ask:{'Whats_wrong': false}}},
                 gameboard: [
                     [
                         [],
@@ -142,11 +142,11 @@ var seedPages = function(stories){
                 variables: [
                     {text: 'Mopsy_Monkey', varType: 'person'},
                     {text: 'Mopsy needs help', varType: 'condition'},
-                    {text: 'How can I help?', varType:'variable'}
+                    {text: 'How_can_I_help?', varType:'variable'}
                 ],
                 concepts: ['If-statements'],
                 hint: 'If Mopsy needs help, ask what you can do!',
-                requirements: {Mopsy_Monkey: {ask:{val: true}}},
+                requirements: {Mopsy_Monkey: {ask:{'How_can_I_help': false}}},
                 gameboard: [
                     [
                         [],

@@ -36,9 +36,8 @@ app.factory('LevelFactory', function(PageFactory, UserFactory, AuthService, MapF
 
     isSolved(){
     //loop through requirements and verify they are true
-    // console.log(this.requirements)
+    console.log(this.requirements)
     for (var req in this.requirements){
-      // console.log('req', req)
       for (var action in this.requirements[req]){
         for (var val in this.requirements[req][action]){
           // console.log('val', this.requirements[req][action][val])
@@ -52,8 +51,10 @@ app.factory('LevelFactory', function(PageFactory, UserFactory, AuthService, MapF
     //check and update requirements
     updateReq(variable, action, val){
       // console.log('updating', variable);
+            console.log('req', variable, action, val)
+
         if (_.has(this.requirements, variable, action, val)){
-          // console.log('updating from', this.requirements[variable][action][val])           
+          console.log('updating from', this.requirements[variable][action][val])           
            this.requirements[variable][action][val] = true;
         }
 
