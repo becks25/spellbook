@@ -17,12 +17,14 @@ app.config($stateProvider => {
     })
 });
 
-app.controller('StoryCtrl', ($scope, $state, stories, $timeout, StoryFactory, $stateParams, $rootScope) => {
+app.controller('StoryCtrl', ($scope, $state, stories, $timeout, StoryFactory, $stateParams, $rootScope, outTran) => {
     $scope.stories = stories;
     $scope.pop = false;
 
     $scope.goToStoryPage = (event, story) => {
-        story.goToStory(story._id);
+        Promise.all(outTran.animate(event.currentTarget)).then(() => {
+            story.goToStory(story._id);
+        });
     };
 
     $rootScope.$on('$stateChangeSuccess', function (ev, to, toParams, from, fromParams) {

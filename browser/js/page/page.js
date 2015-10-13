@@ -83,27 +83,23 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
       $scope.directions = [{
         name: 'up',
         text: 'up',
-        value: false,
         type: 'direction',
         varType: 'direction'
       }, {
         name: 'down',
         text: 'down',
-        value: false,
         type: 'direction',
         varType: 'direction'
       },
       {
         name: 'left',
         text: 'left',
-        value: false,
         type: 'direction',
         varType: 'direction'
       },
       {
         name: 'right',
         text: 'right',
-        value: false,
         type: 'direction',
         varType: 'direction'
       }];
@@ -186,8 +182,6 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
 
             if (e.target) {
                 if ($(e.target).hasClass('first')) {
-                    // $scope.spellTools = $scope.tools.slice();
-                    //$scope.spellComponents = $scope.spellComponents.slice();
                     $scope.spellTools = [];
                     spellToolConstr();
                     refresh();
@@ -208,7 +202,6 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
     $scope.dirConfig = angular.extend({}, baseConfig, {
         //this only runs if valid drop
         update: (e, ui) => {
-          // console.log("this is the e item", ui.item.scope());
 
           if (ui.item.sortable.droptarget.hasClass('first')) {
             console.log('hi')
@@ -279,11 +272,7 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
 
     $scope.level = new LevelFactory($scope.page);
     $scope.spell = new SpellFactory($scope.level);
-    //$scope.avatar = new AvatarFactory($scope.user.character.name);
-    //console.log("the avatar yo", $scope.avatar)
 
-
-    //console.log("so this is the pic", $scope.level.map.avatar.name)
 
     $scope.resetLevel = function () {
         $scope.spell.reset();
