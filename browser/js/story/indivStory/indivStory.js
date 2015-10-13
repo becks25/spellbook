@@ -13,6 +13,29 @@ app.config($stateProvider => {
                             .then(user => {
                                 return UserFactory.find(user._id);
                             })
+                    },
+                    page: ($stateParams, helper, story, user) => {
+                        return story.getAllPages($stateParams.storyId)
+                            .then(pages => {
+                                return pages;
+                            })
+                            .then(pages => {
+                                //return function() {
+                                var current = helper.intersectingPages(pages, user.unfinishedPages);
+                                if (Object.keys(current).length > 0) {
+                                    return current;
+                                } else {
+                                    var rtnPage;
+                                    pages.some(p => {
+                                        if (p.pageNumber = 1) {
+                                            rtnPage = p;
+                                            return p;
+                                        }
+                                    });
+                                    return rtnPage;
+                                }
+                                //}
+                            })
                     }
                 },
                 templateUrl: 'js/story/indivStory/indivStory.html',
@@ -23,47 +46,11 @@ app.config($stateProvider => {
     });
 });
 
-app.controller('indivStoryCtrl', ($scope, $state, $stateParams, StoryFactory, story, $timeout, user) => {
-    var intersectingPages = (array1, array2) => {
-        var output = {};
-        for(var i =0; i < array1.length; i++) {
-            for(var j = 0; j < array2.length; j++) {
-                if(array1[i]._id === array2[j]._id)
-                    output = array1[i];
-            }
-        }
-        return output;
-    };
-    story.getAllPages($stateParams.storyId)
-        .then(pages => {
-            $scope.pages = pages;
-            return pages;
-        })
-        .then(pages => {
-           var current = intersectingPages(pages, user.unfinishedPages);
-            if(Object.keys(current).length > 0) {
-                $scope.currentPage = current;
-            } else {
-                pages.some(p => {
-                    if(p.pageNumber = 1) {
-                        $scope.currentPage = p;
-                        return true;
-                    }
-                })
-            }
-        });
-
-
-    $scope.goToStoryPage = story => {
-        story.goToStory(story._id);
-    };
-
-
-    $scope.cover = story.cover;
-
+app.controller('indivStoryCtrl', ($scope, $state, $stateParams, StoryFactory, story, $timeout, user, page) => {
     $scope.startBook = () => {
-        $state.go('page', {id: $scope.currentPage._id})
-    }
+        $state.go('page', {id: page._id})
+    };
 
+    $scope.startBook();
 
 });

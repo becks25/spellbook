@@ -28,6 +28,7 @@ app.factory('StoryFactory', (DS, $http, $state, PageFactory) => {
                 return this;
             },
             getAllPages: (storyId) => {
+                console.log('made it');
                 return $http.get(`api/pages/story/${storyId}`)
                     .then(response => response.data)
             }
