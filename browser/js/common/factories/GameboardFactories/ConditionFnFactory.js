@@ -1,18 +1,14 @@
 app.factory('ConditionFnFactory', function(){
 	return {
+        //checks if the avitar has picked up a certain item
 		holding: (thingHeld, spell)=>{
 			return spell.holding.indexOf(thingHeld);
-		}
+		},
+        //checks to see if any item on a square has a .match property that matches the arg
+        match: (thingToMatch, spell) => {
+            var pos = spell.avatar.position;
+            return spell.map.checkPos(pos, thingToMatch, 'match');
+        },
 
-        // intersectingPages: (array1, array2) => {
-        //     var output = {};
-        //     for (var i = 0; i < array1.length; i++) {
-        //         for (var j = 0; j < array2.length; j++) {
-        //             if (array1[i]._id === array2[j]._id)
-        //                 output = array1[i];
-        //         }
-        //     }
-        //     return output;
-        // }
     };
 });
