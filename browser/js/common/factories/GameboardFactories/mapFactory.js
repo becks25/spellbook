@@ -120,12 +120,17 @@ app.factory('MapFactory', function(ClassFactory, TilesizeFactory, AuthService, U
         }
 
         //checks a map position for a given item and returns item or false
-        checkPos (pos, itemName){
-            // console.log('checking', pos, itemName);
+        checkPos (pos, itemName, match){
+            becks.log('checkingPos', pos, itemName);
             var foundObj;
-            this.mapArray[pos.x][pos.y].some(obj => {
+            this.getObjects(pos).some(obj => {
                 // console.log('mapArray', obj);
-                    if(obj.varName.replace(/\&\w+/, '') === itemName){
+                    if(match){
+                        if(obj[match] === itemName){
+                            foundObj = obj;
+                            return true;
+                        }
+                    } else if(obj.varName.replace(/\&\w+/, '') === itemName){
                         foundObj = obj;
                         return true;
                     }

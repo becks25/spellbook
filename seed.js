@@ -271,7 +271,10 @@ var seedPages = function(stories){
                 requirements: {present: {pickUp: {val: false}}},
                 gameboard: [
                     [
-                        [],
+                        [{
+                            type: 'Avatar',
+                            name:'WizzardGirl3'
+                        }],
                         [],
                         [{
                             type: 'Collectable',
@@ -300,10 +303,7 @@ var seedPages = function(stories){
                         }]
                     ],
                     [
-                        [{
-                            type: 'Avatar',
-                            name:'Giraffe3'
-                        }],
+                        [],
                         [],
                         [],
                         []
@@ -314,7 +314,7 @@ var seedPages = function(stories){
 
             },{
                 story: story._id,
-                text:'<p>"It\'s my brother," said Moopsy. "He\'s crying and I don\'t know what to do!" </p><p>"Don\'t worry Moopsy, I\'ll go see if I can help"</p><p class="promptText">Can you see if Mopsy needs any help?</p>',
+                text:'<p>"It\'s my brother," sad Moopsy. "He\'s crying and I don\'t know what to do!" </p><p>"Don\'t worry Moopsy, I\'ll go see if I can help"</p><p class="promptText">Can you see if Mopsy needs any help?</p>',
                 tools: ['If-Statement', 'ask', 'move', 'give'],
                 variables: [
                     {text: 'Mopsy Monkey', varType: 'person'},
