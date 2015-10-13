@@ -24,7 +24,7 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
 
     $scope.nextPage;
     //var nextPageNumber;
-    var directionOptions = 
+    var directionOptions =
     $scope.turnPage = () => {
         for (var i = 0; i < $scope.allPages.length; i++){
             if($scope.allPages[i].storyId === $scope.page.storyId){
@@ -51,7 +51,7 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
     function spellVarConstr() {
         return SpellComponentFactory.possDirections.map(dir => SpellComponentFactory.makeSpellDir(dir));
     };
-    
+
     //scope.page.tools is an array of strings - .action of the objs
     // takes vars and tools from page model and makes command objs
     // pushes each obj to spellTools arr
@@ -108,7 +108,7 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
 
             if (e.target) {
                 if ($(e.target).hasClass('first')) {
-                    $scope.spellTools = spellToolConstr();                    
+                    $scope.spellTools = spellToolConstr();
                     refresh();
                     $scope.resetLevel();
                 }

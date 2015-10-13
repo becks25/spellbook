@@ -28,14 +28,14 @@ app.controller('StoryCtrl', ($scope, $state, stories, $timeout, StoryFactory, $s
     $scope.pop = false;
 
     var findIfStarted = (story) => {
-        console.log('here', user.unfinishedPages);
-        //var started = _.filter(user.unfinishedPages, (n) => n.storyId = story._id);
-        //console.log(started);
-        //if(started) {
-        //    console.log('started',story._id ,started.storyId)
-        //} else {
-        //    console.log('not started',story._id, started.storyId)
-        //}
+        console.log('hi');
+        for (var i = 0; i < user.unfinishedPages; i++) {
+            if (user.unfinishedPages[i].storyId === story._id) return user.unfinishedPages[i];
+            else {
+                return story.getAllPages(story._id)
+                    .then(pages => console.log(pages));
+            }
+        }
     };
 
 
@@ -47,8 +47,8 @@ app.controller('StoryCtrl', ($scope, $state, stories, $timeout, StoryFactory, $s
     };
 
     $rootScope.$on('$stateChangeSuccess', function (ev, to, toParams, from, fromParams) {
-        if(from.name === 'story.indivStory' && to.name === 'story') {
-            console.log('from',from,'to', to);
+        if (from.name === 'story.indivStory' && to.name === 'story') {
+            console.log('from', from, 'to', to);
         }
     });
 });
