@@ -24,7 +24,7 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
 
     $scope.nextPage;
     //var nextPageNumber;
-    var directionOptions =
+    var directionOptions = 
     $scope.turnPage = () => {
         for (var i = 0; i < $scope.allPages.length; i++){
             if($scope.allPages[i].storyId === $scope.page.storyId){
@@ -51,7 +51,7 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
     function spellVarConstr() {
         return SpellComponentFactory.possDirections.map(dir => SpellComponentFactory.makeSpellDir(dir));
     };
-
+    
     //scope.page.tools is an array of strings - .action of the objs
     // takes vars and tools from page model and makes command objs
     // pushes each obj to spellTools arr
@@ -101,15 +101,15 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
         update: (e, ui) => {
             if (ui.item.sortable.droptarget.hasClass('first')) {
                 ui.item.sortable.cancel();
-                refresh();
+                // refresh();
             }
         },
         stop: (e, clone) => {
 
             if (e.target) {
                 if ($(e.target).hasClass('first')) {
-                    $scope.spellTools = spellToolConstr();
-                    refresh();
+                    $scope.spellTools = spellToolConstr();                    
+                    // refresh();
                     $scope.resetLevel();
                 }
             }
@@ -133,7 +133,7 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
                 console.log('hi')
                 console.log(ui.item.sortable.droptarget)
                 ui.item.sortable.cancel();
-                refresh();
+                // refresh();
             } else {
                 //set newVar to clone of dragged variable
                 newVar = _.cloneDeep(ui.item.scope().tool);
@@ -162,7 +162,7 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
                 newVar = null;
                 parentArray = null;
                 dropTargetIndex = -1;
-                refresh();
+                // refresh();
                 $scope.resetLevel();
             }
         },
