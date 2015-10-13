@@ -3,6 +3,20 @@ $turqoise: #18b8c2;
 $green: #b8f166;
 
 tool-box, spell, add-variable{
+
+	.panel{
+		background-color:transparent;
+		border:none;
+		box-shadow:none;
+
+		&.tool{
+			background-color: transparent;
+			border:2px solid $turqoise;
+			padding: 0;
+			margin-bottom:0;
+		}	
+	}
+
 	li{
 		list-style-type: none;
 
@@ -21,8 +35,9 @@ tool-box, spell, add-variable{
 		font-family:$font-title;
 	}
 
+
 	.ui-sortable>li {
-		border:2px solid white;
+		margin:1px;
 	}
 
 	.glyphicon-remove{
@@ -77,18 +92,17 @@ tool-box, spell, add-variable{
 		background-color: $green;
 	}
 
-	.panel-heading.tool{
-		margin:0;
-		border:none;
-		border-radius:1px;
+	.panel-heading{
+		font-family:$font-title;
+		&.tool{
+			margin:0;
+			border:none;
+			border-radius:1px;
+		}
 	}
+	
 
-	.panel.tool{
-		background-color: transparent;
-		border:2px solid $turqoise;
-		padding: 0;
-		margin-bottom:0;
-	}
+
 
 
 	.panel-body{

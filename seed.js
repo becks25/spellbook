@@ -91,7 +91,7 @@ var seedPages = function(stories){
                         [],
                         [{
                             type: 'Person',
-                            name: 'Giraffe2',
+                            name: 'Monkey2',
                             varName: 'Moopsy_Monkey'
                         }],
                         []
@@ -173,7 +173,8 @@ var seedPages = function(stories){
                         [],
                         [{
                             type: 'Person',
-                            name:'Giraffe2'
+                            name:'Monkey1',
+                            varName:'Mopsy'
                         }]
                     ]
                 ],
@@ -191,16 +192,16 @@ var seedPages = function(stories){
                 concepts: ['forLoop'],
                 hint: 'You can use a repeat to do an action more than once',
                 requirements: {
-                    Banana1: {pickUp:{val: true}},
-                    Banana2: {pickUp:{val: true}},
-                    Banana3: {pickUp:{val: true}}
+                    'Banana&1': {pickUp:{val: true}},
+                    'Banana&2': {pickUp:{val: true}},
+                    'Banana&3': {pickUp:{val: true}}
                 },
                 gameboard: [
                     [
                         [{
                             type:'Collectible',
-                            name:'Crystal1',
-                            varName:'Banana3'
+                            name:'Banana',
+                            varName:'Banana&3'
                         }],
                         [],
                         [],
@@ -210,8 +211,8 @@ var seedPages = function(stories){
                         [],
                         [{
                             type:'Collectible',
-                            name:'Crystal1',
-                            varName:'Banana2'
+                            name:'Banana',
+                            varName:'Banana&2'
                         }],
                         [{
                             type:'Obstacle',
@@ -224,8 +225,8 @@ var seedPages = function(stories){
                         [],
                         [{
                             type:'Collectible',
-                            name:'Crystal1',
-                            varName:'Banana1'
+                            name:'Banana',
+                            varName:'Banana&1'
                         }],
                         [{
                             type:'Obstacle',
@@ -257,7 +258,7 @@ var seedPages = function(stories){
                     variables: [{text: 'Omri', varType: 'person'}, {text: 'Zeke', varType: 'person'}, {text: 'Joe', varType: 'person'}, {text: 'Say hi', varType: 'variable'}, {text: 'Green Potion', varType: 'variable'}, {text: 'The potion is green', varType: 'condition'}],
                     concepts: [concepts[Math.floor(Math.random()*concepts.length)]],
                     hint: 'Try harder',
-                    requirements: {GreenPotion: {pickUp: {val: false}}},
+                    requirements: {Green_Potion: {pickUp: {val: false}}},
                     gameboard: [
                         [
                             [{
@@ -277,7 +278,7 @@ var seedPages = function(stories){
                             [{
                                 type: 'Collectible',
                                 name: 'Potion2',
-                                varName: 'GreenPotion'
+                                varName: 'Green_Potion'
                             }],
                             [],
                             []

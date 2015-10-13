@@ -6,8 +6,8 @@ app.config($stateProvider => {
             user: (UserFactory, AuthService) => {
                 return AuthService.getLoggedInUser()
                 .then(user => {
-                    console.log(user);
-                    return UserFactory.find(user._id);
+                    if(user) return UserFactory.find(user._id);
+                    else return;
 
                 })
               }
@@ -23,16 +23,19 @@ app.config($stateProvider => {
 
 });
 
-app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPRITES, LevelFactory, TilesizeFactory, SpellFactory, SpellComponentFactory, SPRITE_AVATARS, orderByFilter, $compile, user) => {
+app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPRITES, LevelFactory, TilesizeFactory, SpellFactory, SpellComponentFactory, SPRITE_AVATARS, orderByFilter, $compile, user, AvatarFactory) => {
     $scope.page = page;
     $scope.spellComponents = []; // update from db if saved version is present
     $scope.spellVars = [];
     $scope.spellTools = [];
     $scope.directions = [];
-    $scope.user = user;
-    $scope.avatar = "Character name";
+    if(user) $scope.user = user;
+    else $scope.user = {character: { picture: 'Giraffe1', name: 'Omri'}}
+
+    $scope.avatar = $scope.user.character.picture
     $scope.text = $compile($scope.page.text)($scope);
     angular.element(document.getElementById('storyText')).append($scope.text);
+
     $scope.hintRequested = false;
 
     $scope.getHint = () => {
@@ -42,6 +45,8 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
     //this is for testing if spell directions is working...
     //$scope.spellDirections = [];
     $scope.spellComponentDirs = [];
+
+    console.log("there is a user on scope", $scope.user.character.picture)
 
     //construct the directions with a function to fix drop and drag bug
     var spellDirConstr = () => {
@@ -220,18 +225,35 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
     });
 
     //loads board and sprites based on screen size
+
+    //overwrite gameboard hardcording to dynamically change avatar
+    console.log("the gameboard", $scope.page.gameboard);
+    for(var i = 0; i < $scope.page.gameboard.length; i++){
+      for(var j = 0; j < $scope.page.gameboard[i].length; j++){
+          if ($scope.page.gameboard[i][j].length && $scope.page.gameboard[i][j][0].type === "Avatar"){
+            $scope.page.gameboard[i][j][0].name = $scope.user.character.picture;
+          }
+      }
+    }
+    
     TilesizeFactory.NumTiles = $scope.page.gameboard.length;
     Crafty.load(['/images/sprites.png']);
     Crafty.init(TilesizeFactory.TILESIZE * TilesizeFactory.NumTiles, TilesizeFactory.TILESIZE * TilesizeFactory.NumTiles);
 
     Crafty.canvas.init();
 
+    
+
     Crafty.sprite(64, '/images/sprites.png', SPRITES);
     Crafty.sprite(64, '/images/SpriteAvatars.png', SPRITE_AVATARS);
 
     $scope.level = new LevelFactory($scope.page);
     $scope.spell = new SpellFactory($scope.level);
+    //$scope.avatar = new AvatarFactory($scope.user.character.name);
+    //console.log("the avatar yo", $scope.avatar)
 
+
+    //console.log("so this is the pic", $scope.level.map.avatar.name)
 
     $scope.resetLevel = function () {
         $scope.spell.reset();

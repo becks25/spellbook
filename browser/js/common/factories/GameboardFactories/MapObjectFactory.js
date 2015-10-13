@@ -1,4 +1,4 @@
-app.factory('MapObjectFactory', function(PosFactory, TilesizeFactory){
+app.factory('MapObjectFactory', function(PosFactory, TilesizeFactory, AuthService, UserFactory){
 
     class MapObject {
       constructor(name, position, action, varName, variables){
@@ -25,17 +25,15 @@ app.factory('MapObjectFactory', function(PosFactory, TilesizeFactory){
       }
 
       setMapPos(position) {
-        console.log('setting postion for', this.entity, position)
         var pos = new PosFactory(position.x, position.y);
         //this.map.removeObject(this);
         this.map.addObject(this, pos);
-        console.log(this, pos)
         this.position = pos;
         this.entity.x = pos.x * TilesizeFactory.TILESIZE;
         this.entity.y = pos.y * TilesizeFactory.TILESIZE;
-        console.log('now should be', this.entity)
 
       }
+
 
       move(dir, amt) {
         var newPos = new PosFactory(this.position.x, this.position.y);

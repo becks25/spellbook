@@ -2,7 +2,7 @@ app.factory('LevelFactory', function(PageFactory, UserFactory, AuthService, MapF
   class Level {
     constructor(page){
       this.page = page;
-      console.log('page requirements?', this.page.requirements)
+      // console.log('page requirements?', this.page.requirements)
       this.map = new MapFactory(page.gameboard);
       this.requirements = this.page.requirements;
       this.hint = page.hint;
@@ -24,22 +24,23 @@ app.factory('LevelFactory', function(PageFactory, UserFactory, AuthService, MapF
     //}}
     resetRequirements(){
       for(var req in this.requirements){
-        for (var action in req){
-          for (var val in action){
-            val = false;
+        for (var action in this.requirements[req]){
+          for (var val in this.requirements[req][action]){
+            this.requirements[req][action][val] = false;
           }
         }
       }
+
     }
 
     isSolved(){
     //loop through requirements and verify they are true
-    console.log(this.requirements)
+    // console.log(this.requirements)
     for (var req in this.requirements){
-      console.log('req', req)
+      // console.log('req', req)
       for (var action in this.requirements[req]){
         for (var val in this.requirements[req][action]){
-          console.log('val', this.requirements[req][action][val])
+          // console.log('val', this.requirements[req][action][val])
           if (this.requirements[req][action][val] === false) return false;
         }
       }
@@ -49,9 +50,8 @@ app.factory('LevelFactory', function(PageFactory, UserFactory, AuthService, MapF
 
     //check and update requirements
     updateReq(variable, action, val){
-      console.log('updating', variable, action, val)
         if (_.has(this.requirements, variable, action, val)){
-          console.log('updating from', this.requirements[variable][action][val])
+          // console.log('updating from', this.requirements[variable][action][val])           
            this.requirements[variable][action][val] = true;
         }
 
