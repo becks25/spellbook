@@ -93,6 +93,8 @@ app.controller('AdminController', function ($scope, stories, users, mastery, pop
     $scope.ageDist = usersData[1];
     $scope.searchTitle;
     $scope.searchAuthor;
+    $scope.showAll = false;
+    $scope.showAllUsers = false;
 
     $scope.concepts = CONCEPTS;
 
@@ -109,7 +111,6 @@ app.controller('AdminController', function ($scope, stories, users, mastery, pop
         if(part === 0 || total === 0) return '0%';
         return Math.floor(part/total * 100) + '%'
     }
-
 
 
 });
@@ -138,9 +139,10 @@ app.filter('inArray', function(){
         var filtered = [];
 
         stories.forEach(story => {
-            story.concepts.forEach(concept => {
-                if(clickedConcepts[concept]) filtered.push(story);
-            })
+            var include = story.concepts.some(concept => clickedConcepts[concept] );
+
+            if(include) filtered.push(story);
+
         })
         
 

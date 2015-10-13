@@ -125,12 +125,16 @@ app.factory('MapFactory', function(ClassFactory, TilesizeFactory, AuthService, U
             var foundObj;
             this.getObjects(pos).some(obj => {
                 // console.log('mapArray', obj);
+<<<<<<< HEAD
+                    if(obj.varName.replace(/\&\w+/, '') === itemName){
+=======
                     if(match){
                         if(obj[match] === itemName){
                             foundObj = obj;
                             return true;
                         }
-                    } else if(obj.varName.replace(/\&\w+/, '') === itemName){
+                    } else if (obj.varName === itemName){
+>>>>>>> working on conditionals
                         foundObj = obj;
                         return true;
                     }

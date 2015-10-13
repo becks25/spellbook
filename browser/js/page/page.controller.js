@@ -24,7 +24,7 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
 
     $scope.nextPage;
     //var nextPageNumber;
-
+    var directionOptions = 
     $scope.turnPage = () => {
         for (var i = 0; i < $scope.allPages.length; i++){
             if($scope.allPages[i].storyId === $scope.page.storyId){
@@ -35,11 +35,10 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
                 }
             }
         }
-
         PageFactory.find($scope.nextPage._id)
             .then(function(page){
-                $state.go('page', {id: page._id})
-            })
+                $state.go('page', {id: page._id});
+            });
     };
 
     //this is for testing if spell directions is working...
@@ -49,58 +48,22 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
     console.log("there is a user on scope", $scope.user.character.picture)
 
     //construct the directions with a function to fix drop and drag bug
-    var spellDirConstr = () => {
-        $scope.directions = [{
-            name: 'up',
-            text: 'up',
-            value: false,
-            type: 'direction',
-            varType: 'direction'
-        }, {
-            name: 'down',
-            text: 'down',
-            value: false,
-            type: 'direction',
-            varType: 'direction'
-        },
-            {
-                name: 'left',
-                text: 'left',
-                value: false,
-                type: 'direction',
-                varType: 'direction'
-            },
-            {
-                name: 'right',
-                text: 'right',
-                value: false,
-                type: 'direction',
-                varType: 'direction'
-            }];
+    $scope.directions = () => {
+        return SpellComponentFactory.possDirections.map(dir => SpellComponentFactory.makeSpellDirs(dir));
     };
-    spellDirConstr();
+    
 
     //scope.page.tools is an array of strings - .action of the objs
     // takes vars and tools from page model and makes command objs
     // pushes each obj to spellTools arr
-    var spellToolConstr = () => {
-        $scope.page.tools.forEach((tool)=> {
-            var newTool = SpellComponentFactory.makeToolObj(tool);
-            $scope.spellTools.push(newTool);
-        });
+    $scope.spellTools =  () => {
+        return $scope.page.tools.map(tool=> SpellComponentFactory.makeToolObj(tool));
     };
-    //construct the spellTools arr on load
-    spellToolConstr();
 
-    var spellVarConstr = () => {
-        //variables are stored as strings
-        $scope.page.variables.forEach((variable)=> {
-            var name = variable.text.split(' ').join('_');
-            $scope.spellVars.push({name: name, text: variable.text, value: false, type: 'variable', varType: variable.varType})
-        });
+    $scope.spellVars = () => {
+        //variables are stored as objects
+        return $scope.page.variables.map(variable => SpellComponentFactory.makeSpellVar(variable);
     };
-    //construct the spellVars array on load
-    spellVarConstr();
 
     //ensures that tool box can't be rearranged by reordering back to orig order
     var refresh = () => {
@@ -120,13 +83,10 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
     };
     refresh();
 
-    //save a copy of all tools on the scope
-    $scope.tools = $scope.spellTools.slice();
-
     //remove a tool from the spell
+    //used on the spell components (x button ng-click)
     $scope.removeFromSpell = (index, loc) => {
         loc.splice(index, 1);
-        // console.log('remove')
         $scope.resetLevel();
     };
 
@@ -148,10 +108,7 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
 
             if (e.target) {
                 if ($(e.target).hasClass('first')) {
-                    // $scope.spellTools = $scope.tools.slice();
-                    //$scope.spellComponents = $scope.spellComponents.slice();
-                    $scope.spellTools = [];
-                    spellToolConstr();
+                    $scope.spellTools = spellToolConstr();                    
                     refresh();
                     $scope.resetLevel();
                 }
@@ -185,10 +142,8 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
                 parentArray = ui.item.sortable.droptarget.scope().parent;
 
                 //resets tools arrays to create duplication and ensure spell components are clones
-                $scope.spellVars = [];
-                spellVarConstr();
-                $scope.directions = [];
-                spellDirConstr();
+                $scope.spellVars = spellVarConstr();
+                $scope.directions = spellDirConstr();
                 refresh();
                 // $scope.resetLevel();
             }
@@ -199,10 +154,8 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
             //set prop on droppee
             //checks that drop target can take this variable
             if(dropTargetIndex>-1 && parentArray[dropTargetIndex].hasOwnProperty(newVar.varType)){
-                $scope.spellVars = [];
-                spellVarConstr();
-                $scope.directions = [];
-                spellDirConstr();
+                $scope.spellVars = spellVarConstr();
+                $scope.directions = spellDirConstr();
                 parentArray[dropTargetIndex][newVar.varType] = newVar.name;
 
                 //reset variables
