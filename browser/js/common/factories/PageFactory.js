@@ -12,8 +12,7 @@ app.factory('PageFactory', function(DS, $http) {
         },
         methods: {
             getNext: (page) => {
-
-                var nextPage = page.pageNumber++
+                var nextPage = page.pageNumber++;
                 console.log(nextPage);
                 DS.findAll({
                     where: { pageNumber:

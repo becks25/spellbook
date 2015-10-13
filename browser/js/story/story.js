@@ -28,22 +28,26 @@ app.controller('StoryCtrl', ($scope, $state, stories, $timeout, StoryFactory, $s
     $scope.pop = false;
 
     var findIfStarted = (story) => {
-        console.log('hi');
-        for (var i = 0; i < user.unfinishedPages; i++) {
-            if (user.unfinishedPages[i].storyId === story._id) return user.unfinishedPages[i];
-            else {
-                return story.getAllPages(story._id)
-                    .then(pages => console.log(pages));
-            }
-        }
+        return story.getAllPages(story._id)
+            .then(pages => {
+                for(var i =0; i < user.unfinishedPages.length; i++) {
+                    if(user.unfinishedPages[i].storyId === story._id) {
+                        console.log('here');
+                        return user.unfinishedPages[i];
+                    }
+                }
+                for(var j =0; j < pages.length; j++) {
+                    if(pages[j].pageNumber === 0) return pages[j];
+                }
+            });
     };
 
 
     $scope.goToStoryPage = (event, story) => {
-        findIfStarted(story);
-        //Promise.all(outTran.animate(event.currentTarget)).then(() => {
-        //    story.goToStory(story._id);
-        //});
+        findIfStarted(story).then(result => {
+            Promise.all(outTran.animate(event.currentTarget))
+                .then(() => $state.go('page', {id: result._id}))
+        });
     };
 
     $rootScope.$on('$stateChangeSuccess', function (ev, to, toParams, from, fromParams) {
