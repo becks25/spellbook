@@ -19,7 +19,7 @@
 
 
 
-	<div class="col-md-6 col-sm-12" id="right-page">
+	<div class="col-md-6 col-sm-12 right" id="right-page">
 		<div id="canvas" class="img-square">
 			<div id="cr-stage" ng-style="{background: url({{page.boardBackground}})}" class="text-center center-block">
 			<div ng-repeat="i in grid track by $index" style="height:{{size}}; width:{{size}}" class="square"></div>
@@ -47,7 +47,7 @@
 		<tool-box class="bottom-page"></tool-box>
 	</div>
 
-	<div class="col-md-6 col-sm-12">
+	<div class="col-md-6 col-sm-12 right">
 		<!--Drop box for spells/instructions-->
 		<spell class="bottom-page"></spell>
 	</div>
