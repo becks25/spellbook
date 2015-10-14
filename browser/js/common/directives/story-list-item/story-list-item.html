@@ -3,10 +3,10 @@
 	</div>
 	<div class="'col-md-6">
 		<h3>{{story.title}}</h3>
-		<p ng-show="story.author">Author: {{story.author}}</p>
-		<p>Practice concepts: <span ng-repeat='concept in story.concepts'>{{concept}}, </span></p>
-		<p>{{story.description | limitTo: 100}}...</p>
+		<p ng-show="story.author"><b>Author:</b> {{story.author}}</p>
+		<p><b>Concepts:</b> {{story.concepts.join(", ")}}</p>
+		<p>{{story.description | limitTo: 100}}<span ng-if="story.description.length > 100">...</span></p>
 	</div>
 
 
-
+	
