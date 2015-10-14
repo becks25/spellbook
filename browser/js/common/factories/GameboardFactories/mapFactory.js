@@ -121,11 +121,12 @@ app.factory('MapFactory', function(ClassFactory, TilesizeFactory, AuthService, U
 
         //checks a map position for a given item and returns item or false
         checkPos (pos, itemName, match){
-            becks.log('checkingPos', pos, itemName);
+            console.log('checkingPos', pos, itemName);
             var foundObj;
             this.getObjects(pos).some(obj => {
                 // console.log('mapArray', obj);
                     if(match){
+                        console.log('this is match', match, obj)
                         if(obj[match] === itemName){
                             foundObj = obj;
                             return true;
@@ -151,8 +152,10 @@ app.factory('MapFactory', function(ClassFactory, TilesizeFactory, AuthService, U
         }
 
         createObject (obj, x, y) {
+            console.log('this is the error', obj)
             var position = {x: x, y: y};
-            return new ClassFactory[obj.type](obj.name, position, obj.action || null, obj.varName || null, obj.variables || null);
+            console.log('creating', obj);
+            return new ClassFactory[obj.type](obj.name, position, obj.action || null, obj.varName || null, obj.variables || null, obj.match || null);
         }
 
         isPassable (position) {

@@ -141,7 +141,8 @@ app.factory('SpellFactory', function(TilesizeFactory){
                 }
 	    		break;
 	    	case 'ifStatement':
-	    		if (component.condition){
+	    	console.log('comp', component)
+	    		if (component.condition.value(spell)){
 	    			var expressions = Promise.map(component.expressions, (command)=>command);
 	    			return expressions.each(command => spell.executeCommand(command));
 

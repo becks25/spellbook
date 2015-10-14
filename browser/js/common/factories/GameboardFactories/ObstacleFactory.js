@@ -1,8 +1,8 @@
 app.factory('ObstacleFactory', function(MapObjectFactory){
 
   class Obstacle extends MapObjectFactory {
-  		constructor(name, position, action, variables){
-  		super(name, position, action, variables)
+  		constructor(name, position, action, varName, variables, match){
+  		super(name, position, action, varName, variables, match)
       	this.type = 'Obstacle';
         this.passable = false;
   		}

@@ -7,8 +7,8 @@
   		</h4>
 
   		<div class="inline">
-  			<p ng-if="logictool.action !== 'forLoop'" ui-sortable="dirComponentConfig" ng-model="model" class="inline form-control spellCompVars dirBox {{logictool.action}} variable spellCompExpr" data-index='{{index}}' data-array='{{parent}}'>
-  				{{logictool.condition.replace(re, ' ') || 'Drop item here'}}
+  			<p ng-if="logictool.action !== 'forLoop'" ui-sortable="toolConfig" ui-sortable="dirConfig" ng-model="model" class="inline form-control spellCompVars dirBox {{logictool.action}} variable spellCompExpr" data-index='{{index}}' data-array='{{parent}}'>
+  				{{logictool.condition.text || 'Drop item here'}}
 	  		</p>
   			
   			<input ng-if="logictool.action ==='forLoop'" type="Number" ng-model="logictool.number" class="inline form-control"/>

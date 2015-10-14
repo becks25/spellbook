@@ -164,7 +164,10 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
             if(dropTargetIndex>-1 && parentArray[dropTargetIndex].hasOwnProperty(newVar.varType)){
                 $scope.spellVars = spellVarConstr();
                 $scope.directions = spellDirConstr();
-                parentArray[dropTargetIndex][newVar.varType] = newVar.name;
+                if (newVar.varType ==='condition') {
+                    console.log('newVar');
+                    parentArray[dropTargetIndex][newVar.varType] = newVar;
+                }else parentArray[dropTargetIndex][newVar.varType] = newVar.name;
 
                 //reset variables
                 newVar = null;
