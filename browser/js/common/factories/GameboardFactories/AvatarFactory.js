@@ -4,9 +4,8 @@ app.factory('AvatarFactory', function(MapObjectFactory, AuthService, UserFactory
   class Avatar extends MapObjectFactory {
 
   	
-  	constructor(name, position, action, variables){
-  		super(name, position, action, variables)
-  		console.log("here we are now", name);
+  	constructor(name, position, action, varName, variables, match){
+  		super(name, position, action, varName, variables, match)
       	this.type = 'Avatar';
       	this.name = 'WizardBoy1';
       	this.picture = 'WizardBoy1';
