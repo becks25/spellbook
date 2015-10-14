@@ -94,11 +94,16 @@ tool-box, spell, add-variable{
 
 	.panel-heading{
 		font-family:$font-title;
+		
 		&.tool{
 			margin:0;
 			border:none;
 			border-radius:1px;
 		}
+	}
+
+	.btnpadding{
+		padding:6px;
 	}
 	
 
