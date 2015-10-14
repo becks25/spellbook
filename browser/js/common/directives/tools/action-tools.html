@@ -8,7 +8,7 @@
 
   		<div class="inline">
   			<p ng-if="actiontool.action !== 'pickUp'" ui-sortable="dirComponentConfig" ng-model="model" class="inline form-control spellCompVars dirBox {{actiontool.action}} variable spellCompExpr" data-index='{{index}}' data-array='{{parent}}'>
-  				{{actiontool.person || 'Drop person here'}}
+  				{{actiontool.person.replace(re, ' ') || 'Drop person here'}}
 	  		</p>
 
 	  		<p ui-sortable="dirComponentConfig" ng-model="model" class="inline form-control spellCompVars dirBox {{actiontool.action}} variable spellCompExpr" data-index='{{index}}' data-array='{{parent}}'>
