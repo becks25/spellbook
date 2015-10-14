@@ -5,7 +5,7 @@ app.factory('AvatarFactory', function(MapObjectFactory, AuthService, UserFactory
 
   	
   	constructor(name, position, action, varName, variables, match){
-  		super(name, position, action, varName, variables, match)
+  		super(name, position, action, varName, variables, match);
       	this.type = 'Avatar';
       	this.name = 'WizardBoy1';
       	this.picture = 'WizardBoy1';

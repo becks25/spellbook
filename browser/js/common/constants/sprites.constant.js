@@ -1,4 +1,5 @@
 app.constant('SPRITES', {
+    Empty: [0,0],
     Rock1: [1,0],
     Rock2: [2,0],
     Rock3: [3,0],

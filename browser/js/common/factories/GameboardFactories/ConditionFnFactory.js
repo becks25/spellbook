@@ -7,7 +7,6 @@ app.factory('ConditionFnFactory', function(){
         //checks to see if any item on a square has a .match property that matches the arg
         match: (thingToMatch, spell) => {
             var pos = spell.avatar.position;
-            console.log('cond fact', spell.map.checkPos(pos, thingToMatch, 'match'))
             return spell.map.checkPos(pos, thingToMatch, 'match');
         },
 

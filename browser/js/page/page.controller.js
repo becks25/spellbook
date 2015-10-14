@@ -74,22 +74,22 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
     };
 
     //ensures that tool box can't be rearranged by reordering back to orig order
-    var refresh = () => {
-        $scope.$watchCollection('spellComponents', () => {
-            $scope.spellTools = orderByFilter($scope.spellTools, ['text']);
-        });
-        $scope.$watchCollection('spellVars', () => {
-            $scope.spellVars = orderByFilter($scope.spellVars, ['text']);
-        });
-        $scope.$watchCollection('directions', () => {
-            $scope.directions = orderByFilter($scope.directions, ['text']);
-        });
+    // var refresh = () => {
+    //     $scope.$watchCollection('spellComponents', () => {
+    //         $scope.spellTools = orderByFilter($scope.spellTools, ['text']);
+    //     });
+    //     $scope.$watchCollection('spellVars', () => {
+    //         $scope.spellVars = orderByFilter($scope.spellVars, ['text']);
+    //     });
+    //     $scope.$watchCollection('directions', () => {
+    //         $scope.directions = orderByFilter($scope.directions, ['text']);
+    //     });
 
-        $scope.$watchCollection('spellComponentDirs', () => {
-            $scope.spellComponentDirs = orderByFilter($scope.spellComponentDirs, ['text']);
-        });
-    };
-    refresh();
+    //     $scope.$watchCollection('spellComponentDirs', () => {
+    //         $scope.spellComponentDirs = orderByFilter($scope.spellComponentDirs, ['text']);
+    //     });
+    // };
+    // refresh();
 
     //remove a tool from the spell
     //used on the spell components (x button ng-click)
