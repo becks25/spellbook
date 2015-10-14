@@ -108,11 +108,11 @@ var seedPages = function(stories){
                     ],
                     [
                         [],
-                        [],
                         [{
                             type:'Obstacle',
                             name:'Tree1'
                         }],
+                        [],
                         []
                     ],
                     [
@@ -135,7 +135,7 @@ var seedPages = function(stories){
                     ]
                 ],
                 pageNumber: 0,
-                boardBackground: 'image/flower-field.png'
+                boardBackground: 'images/flower-field.png'
 
             },{
                 story: story._id,
@@ -161,11 +161,11 @@ var seedPages = function(stories){
                     ],
                     [
                         [],
-                        [],
                         [{
                             type:'Obstacle',
                             name:'Tree1'
                         }],
+                        [],
                         []
                     ],
                     [
@@ -189,7 +189,7 @@ var seedPages = function(stories){
                     ]
                 ],
                 pageNumber: 1,
-                boardBackground: 'image/flower-field.png'
+                boardBackground: 'images/flower-field.png'
 
             },{
                 story: story._id,
@@ -213,7 +213,10 @@ var seedPages = function(stories){
                             name:'Banana',
                             varName:'Banana&3'
                         }],
-                        [],
+                        [{
+                            type:'Obstacle',
+                            name:'Tree2'
+                        }],
                         [],
                         []
                     ],
@@ -226,7 +229,7 @@ var seedPages = function(stories){
                         }],
                         [{
                             type:'Obstacle',
-                            name:'Tree1'
+                            name:'Tree2'
                         }],
                         []
                     ],
@@ -240,7 +243,7 @@ var seedPages = function(stories){
                         }],
                         [{
                             type:'Obstacle',
-                            name: 'Tree1'
+                            name: 'Tree2'
                         }]
                     ],
                     [
@@ -254,7 +257,7 @@ var seedPages = function(stories){
                     ]
                 ],
                 pageNumber: 2,
-                boardBackground: 'image/flower-field.png'
+                boardBackground: 'images/jungle.png'
 
             }
 
