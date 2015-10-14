@@ -8,12 +8,12 @@ app.factory('SpellComponentFactory', function(ConditionFnFactory){
             return {
             	name: name,
             	 text: variable.text,
-            	  value: false, 
             	  type: 'variable', 
             	  varType: variable.varType,
             	  //value is a function that returns true or false depending on the state of the game
-            	  value: () => {
-            	  	return ConditionFnFactory[variable.fnType](variable.arg);
+            	  value: (spell) => {
+            	  	console.log(variable.arg)
+            	  	return ConditionFnFactory[variable.fnType](variable.arg, spell);
             	  },
             	};
 		},
@@ -32,7 +32,6 @@ app.factory('SpellComponentFactory', function(ConditionFnFactory){
 	          toolObj.action = 'move';
 	          toolObj.text = 'move';
 	          toolObj.direction = 'down';
-	          value: null;
 	          toolObj.distance = 1;
 	          toolObj.type = 'tool';
 	          break;

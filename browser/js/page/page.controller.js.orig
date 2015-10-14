@@ -1,7 +1,7 @@
 /**
  * Created by Austin on 10/13/15.
  */
-app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPRITES, LevelFactory, TilesizeFactory, SpellFactory, SpellComponentFactory, SPRITE_AVATARS, orderByFilter, $compile, user, AvatarFactory, PageFactory, allPages, $uibModal, UserFactory) => {
+app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPRITES, LevelFactory, TilesizeFactory, SpellFactory, SpellComponentFactory, SPRITE_AVATARS, orderByFilter, $compile, user, AvatarFactory, PageFactory, allPages, $uibModal) => {
     $scope.page = page;
     $scope.allPages = allPages;
     console.log("all of the page", $scope.allPages);
@@ -24,9 +24,8 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
 
     $scope.nextPage;
     //var nextPageNumber;
-    // var directionOptions = 
-
-    $scope.findNextPage = () => {
+    var directionOptions =
+    $scope.turnPage = () => {
         for (var i = 0; i < $scope.allPages.length; i++){
             if($scope.allPages[i].storyId === $scope.page.storyId){
                 var nextPageNumber = $scope.page.pageNumber + 1;
@@ -36,13 +35,6 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
                 }
             }
         }
-    };
-
-    $scope.findNextPage();
-    
-    $scope.turnPage = () => {
-        $scope.findNextPage();
-
         PageFactory.find($scope.nextPage._id)
             .then(function(page){
                 $state.go('page', {id: page._id});
@@ -59,7 +51,7 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
     function spellDirConstr() {
         return SpellComponentFactory.possDirections.map(dir => SpellComponentFactory.makeSpellDir(dir));
     };
-    
+
     //scope.page.tools is an array of strings - .action of the objs
     // takes vars and tools from page model and makes command objs
     // pushes each obj to spellTools arr
@@ -113,11 +105,15 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
             }
         },
         stop: (e, clone) => {
-
             if (e.target) {
                 if ($(e.target).hasClass('first')) {
+<<<<<<< HEAD
+                    $scope.spellTools = spellToolConstr();
+                    refresh();
+=======
                     $scope.spellTools = spellToolConstr();                    
                     // refresh();
+>>>>>>> fixed covers and hopefully dropping commands into each other
                     $scope.resetLevel();
                 }
             }
@@ -152,7 +148,7 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
                 //resets tools arrays to create duplication and ensure spell components are clones
                 $scope.spellVars = spellVarConstr();
                 $scope.directions = spellDirConstr();
-                //refresh();
+                refresh();
                 // $scope.resetLevel();
             }
         },
@@ -164,10 +160,7 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
             if(dropTargetIndex>-1 && parentArray[dropTargetIndex].hasOwnProperty(newVar.varType)){
                 $scope.spellVars = spellVarConstr();
                 $scope.directions = spellDirConstr();
-                if (newVar.varType ==='condition') {
-                    console.log('newVar');
-                    parentArray[dropTargetIndex][newVar.varType] = newVar;
-                }else parentArray[dropTargetIndex][newVar.varType] = newVar.name;
+                parentArray[dropTargetIndex][newVar.varType] = newVar.name;
 
                 //reset variables
                 newVar = null;
@@ -200,7 +193,7 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
     Crafty.sprite(64, '/images/sprites.png', SPRITES);
     Crafty.sprite(64, '/images/SpriteAvatars.png', SPRITE_AVATARS);
 
-    $scope.level = new LevelFactory($scope.page, $scope.nextPage);
+    $scope.level = new LevelFactory($scope.page);
     $scope.spell = new SpellFactory($scope.level);
 
     $scope.resetLevel = function () {
@@ -224,21 +217,6 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
                         controller: 'ModalCtrl'
                     });
                     $scope.solved = true;
-
-                    $scope.findNextPage();
-                    // console.log('next page: ',$scope.nextPage);
-                    // $scope.user._id.unfinishedPages.push($scope.nextPage._id);
-                    // UserFactory.save($scope.user._id)
-                    // .then(saved => {
-                    //     console.log('maybe updated?', saved);
-
-                    // })
-
-                    // // UserFactory.update($scope.user._id, {$push: {unfinishedPages: $scope.nextPage._id}})
-                    // // .then(updated => {
-                    // //     console.log('maybe updated?', updated);
-                    // // });
-                    // console.log('after update', $scope.page);
                 }
             });
 
