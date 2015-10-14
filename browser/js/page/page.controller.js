@@ -1,7 +1,7 @@
 /**
  * Created by Austin on 10/13/15.
  */
-app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPRITES, LevelFactory, TilesizeFactory, SpellFactory, SpellComponentFactory, SPRITE_AVATARS, orderByFilter, $compile, user, AvatarFactory, PageFactory, allPages, $uibModal) => {
+app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPRITES, LevelFactory, TilesizeFactory, SpellFactory, SpellComponentFactory, SPRITE_AVATARS, orderByFilter, $compile, user, AvatarFactory, PageFactory, allPages, $uibModal, UserFactory) => {
     $scope.page = page;
     $scope.allPages = allPages;
     console.log("all of the page", $scope.allPages);
@@ -24,8 +24,9 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
 
     $scope.nextPage;
     //var nextPageNumber;
-    var directionOptions = 
-    $scope.turnPage = () => {
+    // var directionOptions = 
+
+    $scope.findNextPage = () => {
         for (var i = 0; i < $scope.allPages.length; i++){
             if($scope.allPages[i].storyId === $scope.page.storyId){
                 var nextPageNumber = $scope.page.pageNumber + 1;
@@ -35,6 +36,13 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
                 }
             }
         }
+    };
+
+    $scope.findNextPage();
+    
+    $scope.turnPage = () => {
+        $scope.findNextPage();
+
         PageFactory.find($scope.nextPage._id)
             .then(function(page){
                 $state.go('page', {id: page._id});
@@ -189,7 +197,7 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
     Crafty.sprite(64, '/images/sprites.png', SPRITES);
     Crafty.sprite(64, '/images/SpriteAvatars.png', SPRITE_AVATARS);
 
-    $scope.level = new LevelFactory($scope.page);
+    $scope.level = new LevelFactory($scope.page, $scope.nextPage);
     $scope.spell = new SpellFactory($scope.level);
 
     $scope.resetLevel = function () {
@@ -213,6 +221,21 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
                         controller: 'ModalCtrl'
                     });
                     $scope.solved = true;
+
+                    $scope.findNextPage();
+                    // console.log('next page: ',$scope.nextPage);
+                    // $scope.user._id.unfinishedPages.push($scope.nextPage._id);
+                    // UserFactory.save($scope.user._id)
+                    // .then(saved => {
+                    //     console.log('maybe updated?', saved);
+
+                    // })
+
+                    // // UserFactory.update($scope.user._id, {$push: {unfinishedPages: $scope.nextPage._id}})
+                    // // .then(updated => {
+                    // //     console.log('maybe updated?', updated);
+                    // // });
+                    // console.log('after update', $scope.page);
                 }
             });
 
