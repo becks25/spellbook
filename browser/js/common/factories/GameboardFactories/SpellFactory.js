@@ -141,7 +141,6 @@ app.factory('SpellFactory', function(TilesizeFactory){
                 }
 	    		break;
 	    	case 'ifStatement':
-	    	console.log('comp', component)
 	    		if (component.condition.value(spell)){
 	    			var expressions = Promise.map(component.expressions, (command)=>command);
 	    			return expressions.each(command => spell.executeCommand(command));
@@ -156,10 +155,9 @@ app.factory('SpellFactory', function(TilesizeFactory){
 	    		}
 	    		break;
 	    	case 'whileLoop':
-	    		return promiseWhile(component.condition, executeExpressions);
+	    		return promiseWhile(component.condition.value, executeExpressions);
 	    		break;
 	    	case 'forLoop':
-	    		console.log('for loop')
 	    		var numArr = [];
 	    		for(var i = 0; i<component.number; i++){
 	    			numArr.push(i);
@@ -171,7 +169,6 @@ app.factory('SpellFactory', function(TilesizeFactory){
 	    		break;
 	    	case 'ask':
 	    	//not sure what these do
-	    		console.log('asking', component.person)
 	    		var toAsk = spell.map.checkPos(this.avatar.position, component.person);
 	    		if (toAsk) {
 	    			console.log('in asking');
@@ -179,7 +176,6 @@ app.factory('SpellFactory', function(TilesizeFactory){
     			}
 	    		break;
 	    	case 'tell':
-	    		console.log('telling')
 	    		var toAsk = spell.map.checkPos(this.avatar.position, component.person);
 	    		if (toAsk) {
 	    			this.level.updateReq(toAsk.varName, 'ask', component.variable);
@@ -191,12 +187,12 @@ app.factory('SpellFactory', function(TilesizeFactory){
 	    // used as action for promiseWhile()
 	    function executeExpressions(){
 	    	var expressions = Promise.map(component.expressions, (command)=>command);
-	    	return expressions.each((command)=>spell.executeCommand(command))
+	    	return expressions.each((command)=>spell.executeCommand(command));
 	    }
 
 	    // action is a function
 	    function promiseWhile (condition, action){
-		    if (!condition) return;
+		    if (!component.condition.value(spell)) return;
 		    return action().then(promiseWhile.bind(null, condition, action));
 		}
 
@@ -204,7 +200,6 @@ app.factory('SpellFactory', function(TilesizeFactory){
 	    	var newPos = avatar.move(direction, 1);
 	        if (newPos) {
 	          // Do the move!
-	          // console.log(newPos)
 	          return avatar.promTweenQueen({x: newPos.x*TilesizeFactory.TILESIZE, y: newPos.y*TilesizeFactory.TILESIZE}, 200)
 	          .then(()=>{
 		          avatar.setMapPos(newPos);
@@ -212,9 +207,7 @@ app.factory('SpellFactory', function(TilesizeFactory){
 
 	        } else {
 	          // Bump!
-	          console.log('bump')
 	          var curPos = avatar.entity;
-	          // var newPos = curPos.dup().addDir(direction, 8);
 	          var heightBump = 0;
 	          var latBump = 0;
 	          switch (direction){
@@ -239,14 +232,8 @@ app.factory('SpellFactory', function(TilesizeFactory){
 	            return Promise.delay(400);
 	          });
 	      	}
-
 	    }
-
-
 	}
-
-
-
   }
   return Spell;
   });

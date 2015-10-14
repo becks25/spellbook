@@ -40,7 +40,7 @@ Page.remove({}, function(err, removed) {
 
 
 
-var concepts = ['For Loop', 'While Loop', 'If-statements', 'Functions', 'Recursion', 'Async', 'Conditionals', 'Expressions', 'Movement']
+var concepts = ['For Loop', 'While Loop', 'If-statements', 'Conditionals', 'Expressions', 'Movement']
 var descr = "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad.</p>";
 var backgrounds= ['images/space.png', 'images/flower-field.png', 'images/underwater.png'];
 
@@ -200,9 +200,9 @@ var seedPages = function(stories){
                 concepts: ['For Loop'],
                 hint: 'You can use a repeat to do an action more than once',
                 requirements: {
-                    'Banana&1': {pickUp:{val: true}},
-                    'Banana&2': {pickUp:{val: true}},
-                    'Banana&3': {pickUp:{val: true}}
+                    'Banana&1': {pickUp:{val: false}},
+                    'Banana&2': {pickUp:{val: false}},
+                    'Banana&3': {pickUp:{val: false}}
                 },
                 gameboard: [
                     [
@@ -261,7 +261,7 @@ var seedPages = function(stories){
             pages.push({
                 story: story._id,
                 text:'<p>Hi, I’m Aria.  I’m ten years old, my favorite color is yellow, and I have a pet kitten named Omri.  Oh, and I’m a princess. Most of the time, it’s pretty sweet.  Unfortunately, it doesn’t exempt me from having an annoying younger brother who always steals my toys. He’s so annoying, ugg. </p> <p> Today is my birthday and my Aunt says she has an exciting surprise for me.  She is a physicist at NASA, so I’m sure it will be something amazing.  She hid it in one of these boxes. </p><p class="promptText"> Can you go to each one, and pick it up if it is my present?</p>',
-                tools: ['If-Statement', 'pickUp', 'move', 'ask', 'For loop'],
+                tools: ['move', 'pickUp', 'ask', 'If-Statement', 'For Loop'],
                 variables: [
                     {text: 'present', varType: 'variable'},
                     {text: 'a present is inside', varType: 'condition', fnType: 'match', arg: 'present'}
@@ -276,12 +276,8 @@ var seedPages = function(stories){
                             name:'WizzardGirl3'
                         }],
                         [],
-                        [{
-                            type: 'Collectible',
-                            name: 'Chest1',
-                            varName: 'present',
-                            match: 'present'
-                        }],
+                        [],
+                        [], 
                         []
                     ],
                     [
@@ -289,7 +285,9 @@ var seedPages = function(stories){
                         [{
                             type: 'Collectible',
                             name: 'Chest1',
+                            rand: 'loc'
                         }],
+                        [],
                         [],
                         []
                     ],
@@ -300,12 +298,35 @@ var seedPages = function(stories){
                         [{
                             type: 'Collectible',
                             name: 'Chest1',
-                        }]
+                            rand: 'loc'
+                        }],
+                        []
                     ],
                     [
                         [],
                         [],
                         [],
+                        [],
+                        []
+                    ],
+                    [
+                        [{
+                            type: 'Obstacle',
+                            name:'Tree1'
+                        }],
+                        [],
+                        [{
+                            type: 'Collectible',
+                            name: 'Chest1',
+                            varName: 'box',
+                            match: 'present',
+                            rand: 'loc'
+                            }, {
+                            type:'Collectible',
+                            name: 'Empty',
+                            varName: 'present'
+                        }],
+                        [], 
                         []
                     ]
                 ],
@@ -314,122 +335,154 @@ var seedPages = function(stories){
 
             },{
                 story: story._id,
-                text:'<p>"It\'s my brother," sad Moopsy. "He\'s crying and I don\'t know what to do!" </p><p>"Don\'t worry Moopsy, I\'ll go see if I can help"</p><p class="promptText">Can you see if Mopsy needs any help?</p>',
-                tools: ['If-Statement', 'ask', 'move', 'give'],
+                text:'<p>"Wow!  My present is a spaceship!  I was planning to explore our solar system, and was especially excited to see Saturn’s rings, but my brother kept coming inside and messing everything up.  He must have done some serious damage, because when I took off, I couldn’t control my navigation, and now I seem to have landed on a strange planet." </p><p>"When I got out of my spaceship, I was greeted by a strange creature, who introduced itself as Zeke.  Zeke is worried because he can’t find his best friend, Liz."</p><p class="promptText">Can you go to each of the aliens on the page and ask them if they have seen Liz?  You’re running low on power, so you can only use three commands.</p>',
+                tools: ['move', 'pickUp', 'ask', 'tell', 'If-Statement', 'For Loop'],
                 variables: [
-                    {text: 'Mopsy Monkey', varType: 'person'},
-                    {text: 'Mopsy needs help', varType: 'condition'},
-                    {text: 'How can I help?', varType:'variable'}
-                ],
-                concepts: ['If-statements'],
-                hint: 'If Mopsy needs help, ask what you can do!',
-                requirements: {Mopsy: {ask:{val: true}}},
-                gameboard: [
-                    [
-                        [],
-                        [],
-                        [{
-                            type: 'Avatar',
-                            name: 'Giraffe3'
-                        }],
-                        []
-                    ],
-                    [
-                        [],
-                        [],
-                        [{
-                            type:'Obstacle',
-                            name:'Tree1'
-                        }],
-                        []
-                    ],
-                    [
-                        [],
-                        [],
-                        [],
-                        [{
-                            type:'Obstacle',
-                            name: 'Tree1'
-                        }]
-                    ],
-                    [
-                        [],
-                        [],
-                        [],
-                        [{
-                            type: 'Person',
-                            name:'Monkey1',
-                            varName:'Mopsy'
-                        }]
-                    ]
-                ],
-                pageNumber: 1,
-                boardBackground: 'image/flower-field.png'
-
-            },{
-                story: story._id,
-                text:'<p>"It\'s terrible," sighed Mopsy. "I\'ve dropped my bananas all over the place.  It\'ll take forever to pick them up again!"</p><p>"Not if I can help it!" exclaimed {{user.character.name}}</p><p class="promptText">Can you get all of Mopsy\'s bananas using only 4 tools?</p>',
-                tools: ['If-Statement', 'pickUp', 'move', 'For Loop'],
-                variables: [
-                    {text: 'Banana', varType: 'variable'},
-                    {text: 'Apple', varType:'variable'}
+                    {text: 'Have you seen Liz?', varType: 'variable'},
+                    {text: 'Alien', varType: 'person'},
+                    {text: 'Liz', varType:'person'},
+                    {text: 'They have seen Liz', varType: 'condition', fnType: 'returnTrue', arg: 'arg'}
                 ],
                 concepts: ['For Loop'],
-                hint: 'You can use a repeat to do an action more than once',
+                hint: 'Try repeating, and think about using the bump to your advantage',
                 requirements: {
-                    'Banana&1': {pickUp:{val: true}},
-                    'Banana&2': {pickUp:{val: true}},
-                    'Banana&3': {pickUp:{val: true}}
+                    'Alien&1': {ask:{'Have_you_seen_Liz?': false}},
+                    'Alien&2': {ask:{'Have_you_seen_Liz?': false}},
+                    'Alien&3': {ask:{'Have_you_seen_Liz?': false}},
+                    'Alien&4': {ask:{'Have_you_seen_Liz?': false}}
+
                 },
                 gameboard: [
                     [
                         [{
+                            type: 'Avatar',
+                            name:'WizzardGirl3'
+                        }],
+                        [],
+                        [],
+                        [],
+                        []
+                    ],[
+                        [],
+                        [{
                             type:'Collectible',
-                            name:'Banana',
-                            varName:'Banana&3'
+                            name:'Crystal1',
+                            varName:'Alien&1'
                         }],
                         [],
                         [],
                         []
-                    ],
-                    [
+                    ],[
+                        [],
                         [],
                         [{
                             type:'Collectible',
-                            name:'Banana',
-                            varName:'Banana&2'
+                            name:'Crystal2',
+                            varName:'Alien&2'
                         }],
+                        [],
+                        []
+                    ],[
+                        [],
+                        [],
+                        [],
                         [{
-                            type:'Obstacle',
-                            name:'Tree1'
+                            type:'Collectible',
+                            name:'Crystal3',
+                            varName:'Alien&3'
                         }],
                         []
-                    ],
-                    [
+                    ],[
+                        [],
                         [],
                         [],
                         [{
                             type:'Collectible',
-                            name:'Banana',
-                            varName:'Banana&1'
+                            name:'Crystal1',
+                            varName:'Alien&4'
                         }],
-                        [{
-                            type:'Obstacle',
-                            name: 'Tree1'
-                        }]
-                    ],
+                        []
+                    ]
+                ],
+                pageNumber: 1,
+                boardBackground: 'image/mars.png'
+
+            },{
+                story: story._id,
+                text:'<p>"Oh no, you discovered that Liz was captured by an evil warlord.  He’s keeping her locked in a cell somewhere in his fortress.  Fortunately, Zeke is friends with one of the guards, who will free Liz if you can bring him the key."</p><p>"To free Liz, you will need to find the right key, and give it to a guard named Nimit.  Carefull, though, if you give the key to the wrong guard, the evil warlord might find out you are here. And in order to keep quiet, you can only use three moves at level one of your spell.</p>',
+                tools: ['move', 'pickUp', 'give', 'ask', 'While Loop'],
+                variables: [
+                    {text: 'key', varType: 'variable'},
+                    {text: 'Guard', varType:'person'},
+                    {text: 'What is your name?', varType: 'variable'},
+                    {text: 'you are holding the key', varType: 'conditional', fnType: 'holding', arg: 'key'},
+                    {text: 'The guard\s name is not Nimit', varType: 'condition', fnType: 'match', arg: 'notNimit'}
+                ],
+                concepts: ['While Loop', 'Conditionals', 'Expressions'],
+                hint: 'You can use a repeat to do an action more than once',
+                requirements: {
+                    'key': {pickUp:{val: false}},
+                    'Guard': {give:{key: false}},
+                    // 'Guard&1': {pickUp:{val: true}}
+                },
+                        
+                gameboard: [
                     [
-                        [],
-                        [],
-                        [],
                         [{
                             type: 'Avatar',
-                            name: 'Giraffe3'
+                            name:'WizzardGirl3'
+                        }],
+                        [{
+                            type:'Collectible',
+                            name:'Banana',
+                            varName:'key'
+                        }],
+                        [],
+                        [],
+                        []
+                    ],[
+                        [],
+                        [],
+                        [{
+                            type:'Person',
+                            name:'Crystal1',
+                            varName:'Guard&1',
+                            match: 'notNimit'                            
+                        }],
+                        [{
+                            type:'Person',
+                            name:'Crystal1',
+                            varName:'Guard&2',
+                        }],
+                        [{
+                            type:'Person',
+                            name:'Crystal1',
+                            varName:'Guard&3',
+                            match: 'notNimit'
+
                         }]
+                    ],[
+                        [],
+                        [],
+                        [],
+                        [],
+                        []
+                    ],[
+                        [],
+                        [],
+                        [],
+                        [],
+                        []
+                    ],[
+                        [],
+                        [],
+                        [],
+                        [],
+                        []
                     ]
                 ],
                 pageNumber: 2,
-                boardBackground: 'image/flower-field.png'
+                boardBackground: 'image/mars.png'
 
             }
 

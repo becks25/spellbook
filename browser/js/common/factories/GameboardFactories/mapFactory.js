@@ -28,7 +28,6 @@ app.factory('MapFactory', function(ClassFactory, TilesizeFactory, AuthService, U
         getUser(){
             return AuthService.getLoggedInUser()
                 .then(function(user){
-                    console.log("the user", user)
                     return user;
                 })
         }
@@ -121,17 +120,15 @@ app.factory('MapFactory', function(ClassFactory, TilesizeFactory, AuthService, U
 
         //checks a map position for a given item and returns item or false
         checkPos (pos, itemName, match){
-            console.log('checkingPos', pos, itemName);
             var foundObj;
             this.getObjects(pos).some(obj => {
                 // console.log('mapArray', obj);
                     if(match){
-                        console.log('this is match', match, obj)
-                        if(obj[match] === itemName){
+                        if(obj[match] && obj[match] === itemName){
                             foundObj = obj;
                             return true;
                         }
-                    } else if(obj.varName.replace(/\&\w+/, '') === itemName){
+                    } else if(obj.varName && obj.varName.replace(/\&\w+/, '') === itemName){
                         foundObj = obj;
                         return true;
                     }
@@ -152,9 +149,7 @@ app.factory('MapFactory', function(ClassFactory, TilesizeFactory, AuthService, U
         }
 
         createObject (obj, x, y) {
-            console.log('this is the error', obj)
             var position = {x: x, y: y};
-            console.log('creating', obj);
             return new ClassFactory[obj.type](obj.name, position, obj.action || null, obj.varName || null, obj.variables || null, obj.match || null);
         }
 
