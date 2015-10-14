@@ -21,6 +21,7 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
     $scope.getHint = () => {
         $scope.hintRequested = true;
     };
+    document.getElementById('cr-stage').style.background='url('+$scope.page.boardBackground+')';
 
     $scope.nextPage;
     //var nextPageNumber;
