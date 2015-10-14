@@ -223,9 +223,10 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
                         templateUrl: 'js/common/directives/win-modal/win-modal.html',
                         controller: 'ModalCtrl'
                     });
-                    $scope.solved = true;
 
                     $scope.findNextPage();
+
+                    if($scope.nextPage) $scope.solved = true;
                     // console.log('next page: ',$scope.nextPage);
                     // $scope.user._id.unfinishedPages.push($scope.nextPage._id);
                     // UserFactory.save($scope.user._id)
