@@ -10,8 +10,8 @@
 		</div>
 
 		<div class="hint">
-			<button ng-show="!hintRequested" ng-click="getHint()">Get Hint</button>
-			{{page.pageNumber}}
+			<br />
+			<button ng-show="!hintRequested" ng-click="getHint()" class="btn">Get Hint</button>
 			<p ng-show="hintRequested">{{page.hint}}</p>
 		</div>
 
