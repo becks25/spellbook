@@ -3,7 +3,6 @@ app.factory('MapObjectFactory', function(PosFactory, TilesizeFactory, AuthServic
     class MapObject {
       constructor(name, position, action, varName, variables, match){
         //name matches scope variable from spells tools
-        console.log(arguments);
         this.name = name;
         this.position = new PosFactory(position.x, position.y);
         this.action = action || null;
@@ -11,7 +10,6 @@ app.factory('MapObjectFactory', function(PosFactory, TilesizeFactory, AuthServic
         this.passable = true;
         this.varName = varName;
         this.entity = this.basicEntity(name);
-        console.log('constructorrrrr', this.name, match)
         this.match = match || null
       }
 
