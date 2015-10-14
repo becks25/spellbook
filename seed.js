@@ -108,11 +108,11 @@ var seedPages = function(stories){
                     ],
                     [
                         [],
+                        [],
                         [{
                             type:'Obstacle',
                             name:'Tree1'
                         }],
-                        [],
                         []
                     ],
                     [
@@ -161,11 +161,11 @@ var seedPages = function(stories){
                     ],
                     [
                         [],
+                        [],
                         [{
                             type:'Obstacle',
                             name:'Tree1'
                         }],
-                        [],
                         []
                     ],
                     [
@@ -213,10 +213,7 @@ var seedPages = function(stories){
                             name:'Banana',
                             varName:'Banana&3'
                         }],
-                        [{
-                            type:'Obstacle',
-                            name:'Tree2'
-                        }],
+                        [],
                         [],
                         []
                     ],
@@ -229,7 +226,7 @@ var seedPages = function(stories){
                         }],
                         [{
                             type:'Obstacle',
-                            name:'Tree2'
+                            name:'Tree1'
                         }],
                         []
                     ],
@@ -243,7 +240,7 @@ var seedPages = function(stories){
                         }],
                         [{
                             type:'Obstacle',
-                            name: 'Tree2'
+                            name: 'Tree1'
                         }]
                     ],
                     [
@@ -427,7 +424,7 @@ var seedPages = function(stories){
                 hint: 'You can use a repeat to do an action more than once',
                 requirements: {
                     'key': {pickUp:{val: false}},
-                    'Guard': {give:{key: false}},
+                    'Guard&2': {give:{key: false}},
                     // 'Guard&1': {pickUp:{val: true}}
                 },
                         
