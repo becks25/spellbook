@@ -41,20 +41,21 @@ Page.remove({}, function(err, removed) {
 
 
 var concepts = ['For Loop', 'While Loop', 'If-statements', 'Conditionals', 'Expressions', 'Movement']
-var descr = "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad.</p>";
+var descr = "Awesome adventure in progress- check back soon!";
 var backgrounds= ['images/space.png', 'images/flower-field.png', 'images/underwater.png'];
+var covers = ['images/book-covers/background-castle.png','images/book-covers/background-circus.png', 'images/book-covers/background-dinosaur.png', 'images/book-covers/background-safari.png'];
 
 var seedStories = function(){
     var titles = ['Happy Dance', 'Omri', 'Joe\'s Salt', 'Adventures of Mark'];
     //var images = ['http://www.smashingmagazine.com/images/book-covers/book-covers-18.jpg', 'https://s-media-cache-ak0.pinimg.com/236x/31/b0/7f/31b07f4c094b63a20fba3d7a3143b69c.jpg', 'https://geekybooksnob.files.wordpress.com/2012/11/200px-life_of_pi_cover.png', 'http://www.adweek.com/galleycat/files/2012/08/8-bit-book-cover-The-Two-Towers.jpg']
 
-    var stories = titles.map(function(title){
+    var stories = titles.map(function(title, i){
         return {
             title: title,
             description: descr,
             difficulty: Math.floor(Math.random()*10),
             concepts: [concepts[Math.floor(Math.random()*concepts.length)]],
-            cover: 'http://www.smashingmagazine.com/images/book-covers/book-covers-18.jpg'
+            cover: covers[i]
         };
     });
 
@@ -64,7 +65,7 @@ var seedStories = function(){
         description: "Mopsy and Moopsy are in trouble- can you help them?",
         difficulty: 2,
         concepts: ['For Loop', 'If-statements'],
-        cover: 'http://www.wpclipart.com/cartoon/animals/monkey_chimp/monkey_w_banana.png'
+        cover: 'images/book-covers/background-mopsy.png'
 
     });
     stories.push({
@@ -72,7 +73,7 @@ var seedStories = function(){
         description: "Aria gets lost in space and has to rescue a friend",
         difficulty: 3,
         concepts: ['Conditionals', 'While loop', 'For loop'],
-        cover: 'http://www.printactivities.com/ColoringPages/Aliens/Alien-Princess.gif'
+        cover: 'images/book-covers/background-space.png'
 
     });
      return Story.createAsync(stories);
