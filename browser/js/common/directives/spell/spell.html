@@ -1,7 +1,16 @@
 <div class="panel">
 	
 	<div class="panel-heading">
-		<h3>My spell</h3>
+		<div class="clearfix">
+			<h3 class="inline col-sm-5 col-xs-12 btnpadding">My spell</h3>
+
+			<h3 class="text-center center-block col-sm-7 col-xs-12">
+				<button class="btn inline" ng-click="resetLevel()">Clear</button>
+				<button class="btn inline" ng-click="runSpell(spellComponents)">Run</button>
+				<button class="btn inline" ng-click='stepThrough(spellComponents)'>Step</button>
+
+			</h3>
+		</div>
 		<hr />
 		<p>Drop actions below</p>
 	</div>
@@ -16,10 +25,5 @@
 		</ul>
 	</div>
 
-	<div class="text-center center-block">
-		<button class="btn" ng-click="resetLevel()">Clear</button>
-		<button class="btn" ng-click="runSpell(spellComponents)">Run</button>
-		<button class="btn" ng-click='stepThrough(spellComponents)'>Step</button>
 
-	</div>
 </div>

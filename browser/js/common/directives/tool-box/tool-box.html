@@ -1,6 +1,8 @@
 <div class="panel">
     <div class="panel-heading">
-        <h3>My Tools</h3>
+        <div class="clearfix">
+            <h3 class="btnpadding">My Tools</h3>
+        </div>
         <hr />
 
     </div>
@@ -24,7 +26,7 @@
             <b>Variables</b>
             <ul ng-model="spellVars" ui-sortable="dirConfig" class="spellVars first">
                 <li ng-repeat="tool in spellVars track by $index" class="variable" draggable="true"><span
-                        class="">{{ tool.text}}</span></li>
+                        class="">{{ tool.text.replace(re, ' ')}}</span></li>
             </ul>
         </div>
     </div>
