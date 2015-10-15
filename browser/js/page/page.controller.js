@@ -46,8 +46,7 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
         $scope.nextTools = $scope.nextPage.tools.map(tool=> SpellComponentFactory.makeToolObj(tool));
         $scope.nextVars = $scope.nextPage.variables.map(variable => SpellComponentFactory.makeSpellVar(variable));
         document.getElementById('cr-stage-next').style.background='url('+$scope.nextPage.boardBackground+')';
-        $('#cr-stage-next').css('width', TilesizeFactory.TILESIZE * TilesizeFactory.NumTiles+'px').css('height', TilesizeFactory.TILESIZE * TilesizeFactory.NumTiles+'px');
-        console.log('size?', TilesizeFactory.TILESIZE * TilesizeFactory.NumTiles);
+        $('#cr-stage-next').css('width', TilesizeFactory.TILESIZE * $scope.nextPage.gameboard.length+'px').css('height', TilesizeFactory.TILESIZE * $scope.nextPage.gameboard.length+'px');
         $scope.turnPage = () => {
             $scope.findNextPage();
 
