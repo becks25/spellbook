@@ -1,12 +1,12 @@
 app.config($stateProvider => {
-	$stateProvider.state('levelEditor',{
-		url: '/add',
+	$stateProvider.state('add',{
+		url: '/add/:storyId/page',
         resolve: {
-            // story: (StoryFactory, $stateParams) => StoryFactory.find($stateParams.id),
-            user: (UserFactory, AuthService) => {
+            // story: (StoryFactory, $stateParams) => StoryFactory.find($stateParams.storyId),
+            user: (UserFactory, AuthService, $stateParams) => {
                 return AuthService.getLoggedInUser()
                 .then(user => {
-                    console.log(user);
+                    console.log('in resolve', $stateParams, user);
                     return UserFactory.find(user._id);
 
                 });
@@ -22,8 +22,9 @@ app.config($stateProvider => {
 	});
 });
 
-app.controller('levelEditCtrl', ($scope, AuthService, $state, ClassFactory, SPRITES, LevelFactory, TilesizeFactory, SpellFactory, SpellComponentFactory, SPRITE_AVATARS, orderByFilter, $compile, user, AvatarFactory, PageFactory, $uibModal) => {
+app.controller('levelEditCtrl', ($scope, AuthService, $state, $stateParams, ClassFactory, SPRITES, LevelFactory, TilesizeFactory, SpellFactory, SpellComponentFactory, SPRITE_AVATARS, orderByFilter, $compile, user, AvatarFactory, PageFactory, $uibModal) => {
 	// $scope.story = story;
+
 	var boardPlaceholder = [
 		[[],[],[],[],[]],
 		[[],[],[],[],[]],
@@ -33,38 +34,54 @@ app.controller('levelEditCtrl', ($scope, AuthService, $state, ClassFactory, SPRI
 	];
 
 	$scope.user = user;
-	$scope.page = {
-		// story:$scope.story._id,
-		text: '',
-		boardBackground: 'images/flower-field.png',
-		gameboard: boardPlaceholder,
-		hint: '',
-
-  };
-	$scope.possConcepts = SpellComponentFactory.possConcepts;
+  $scope.possConcepts = SpellComponentFactory.possConcepts;
   $scope.toolsPoss = SpellComponentFactory.possTools;
   $scope.dirsPoss = SpellComponentFactory.possDirections; 
-  $scope.spellTools = [];
+  $scope.spellTools = []; // visible in toolbox
   $scope.spellVars = [];
   $scope.directions = [];
-	$scope.concepts = [];
+  $scope.concepts = []; //concepts user has added to pg
   $scope.spellComponents = []; //used for storing dragged requirements
-	//used to keep track of vars that should be refreshed in tool box
-  //array members have the same type as poss arrays (str, str, obj)
-	var saved ={
-		'tools': [],
-		'dirs': [], //this might not need to be in here
-    'vars': [],
-	};
-
-  var toolsForRequirements = ['pickUp', 'give', 'ask', 'tell'];
-  //stores temp new var before saving
-  $scope.newVar;
-  clearNewVar();
   $scope.varTypes = ['person', 'variable', 'condition'];
-  console.log('varTypes', $scope.varTypes)
   $scope.varFnTypes = ['holding', 'match', 'true', 'false'];
-	
+  $scope.newVar;
+  $scope.page = { 
+    story:$stateParams.storyId,
+    text: '',
+    boardBackground: 'images/flower-field.png',
+    gameboard: boardPlaceholder,
+    hint: '',
+    concepts: $scope.concepts,
+    requirements: {},
+    pageNumber: 0,
+  };
+  $scope.level = new LevelFactory($scope.page);
+  $scope.spell = new SpellFactory($scope.level);
+  var toolsForRequirements = ['pickUp', 'give', 'ask', 'tell'];
+  //used to keep track of vars that should be refreshed in tool box and to save pg
+  //array members have the same type as poss arrays (str, str, obj)
+  var saved ={
+    'tools': [],
+    'dirs': [], //this might not need to be in here
+    'vars': [], //objects instead of strings
+  };
+  //sets newVar to empty version on load
+  clearNewVar();
+
+  $scope.savePage = ()=>{
+    //page obj already has story, text, hint, background, gameboard
+    $scope.page.tools = saved.tools;
+    $scope.page.directions = saved.dirs;
+    $scope.page.variables = saved.vars;
+    console.log('spellComponents', $scope.spellComponents)
+    //set req from spell box
+    $scope.page.requirements = $scope.level.constructReqs($scope.spellComponents)
+    //set gameboard with objs
+    //find pg num
+    console.log('saving page', $scope.page);
+  };
+  
+  //stores temp new var before saving
   function clearNewVar(){
     $scope.newVar = {
       text: '', 
@@ -96,9 +113,6 @@ app.controller('levelEditCtrl', ($scope, AuthService, $state, ClassFactory, SPRI
   	//called by the x buttons in the requirements box
   	$scope.removeItem = (index, loc)=>{
   		loc.splice(index, 1);
-  	};
-  	$scope.savePage = ()=>{
-  		console.log('saving page', $scope.page);
   	};
 
     //for adding and removing str/str
@@ -218,9 +232,6 @@ var baseConfig = {
 
     Crafty.sprite(64, '/images/sprites.png', SPRITES);
     Crafty.sprite(64, '/images/SpriteAvatars.png', SPRITE_AVATARS);
-
-    $scope.level = new LevelFactory($scope.page);
-    $scope.spell = new SpellFactory($scope.level);
 
     $scope.grid = new Array(TilesizeFactory.NumTiles * TilesizeFactory.NumTiles);
 
