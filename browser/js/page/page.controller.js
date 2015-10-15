@@ -24,8 +24,6 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
     document.getElementById('cr-stage').style.background='url('+$scope.page.boardBackground+')';
 
     $scope.nextPage;
-    //var nextPageNumber;
-    // var directionOptions = 
 
     $scope.findNextPage = () => {
         for (var i = 0; i < $scope.allPages.length; i++){
@@ -40,6 +38,8 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
     };
 
     $scope.findNextPage();
+
+    //if there's a next page, get it loaded and ready for the page turn animation
     if($scope.nextPage){
         $scope.nextText = $compile($scope.nextPage.text)($scope);
         angular.element(document.getElementById('nextStoryText')).append($scope.nextText);
@@ -91,24 +91,6 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
         return $scope.page.variables.map(variable => SpellComponentFactory.makeSpellVar(variable));
     };
 
-    //ensures that tool box can't be rearranged by reordering back to orig order
-    // var refresh = () => {
-    //     $scope.$watchCollection('spellComponents', () => {
-    //         $scope.spellTools = orderByFilter($scope.spellTools, ['text']);
-    //     });
-    //     $scope.$watchCollection('spellVars', () => {
-    //         $scope.spellVars = orderByFilter($scope.spellVars, ['text']);
-    //     });
-    //     $scope.$watchCollection('directions', () => {
-    //         $scope.directions = orderByFilter($scope.directions, ['text']);
-    //     });
-
-    //     $scope.$watchCollection('spellComponentDirs', () => {
-    //         $scope.spellComponentDirs = orderByFilter($scope.spellComponentDirs, ['text']);
-    //     });
-    // };
-    // refresh();
-
     //remove a tool from the spell
     //used on the spell components (x button ng-click)
     $scope.removeFromSpell = (index, loc) => {
@@ -127,7 +109,6 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
         update: (e, ui) => {
             if (ui.item.sortable.droptarget.hasClass('first')) {
                 ui.item.sortable.cancel();
-                // refresh();
             }
         },
         stop: (e, clone) => {
@@ -135,7 +116,6 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
             if (e.target) {
                 if ($(e.target).hasClass('first')) {
                     $scope.spellTools = spellToolConstr();                    
-                    // refresh();
                     $scope.resetLevel();
                 }
             }
@@ -159,7 +139,6 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
                 console.log('hi')
                 console.log(ui.item.sortable.droptarget)
                 ui.item.sortable.cancel();
-                // refresh();
             } else {
                 //set newVar to clone of dragged variable
                 newVar = _.cloneDeep(ui.item.scope().tool);
@@ -170,8 +149,7 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
                 //resets tools arrays to create duplication and ensure spell components are clones
                 $scope.spellVars = spellVarConstr();
                 $scope.directions = spellDirConstr();
-                //refresh();
-                // $scope.resetLevel();
+
             }
         },
         stop: (e, ui) => {
@@ -255,19 +233,7 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
                             controller: 'ModalCtrl'
                         });
                     }
-                    // console.log('next page: ',$scope.nextPage);
-                    // $scope.user._id.unfinishedPages.push($scope.nextPage._id);
-                    // UserFactory.save($scope.user._id)
-                    // .then(saved => {
-                    //     console.log('maybe updated?', saved);
-
-                    // })
-
-                    // // UserFactory.update($scope.user._id, {$push: {unfinishedPages: $scope.nextPage._id}})
-                    // // .then(updated => {
-                    // //     console.log('maybe updated?', updated);
-                    // // });
-                    // console.log('after update', $scope.page);
+                    
                 }
             });
 
