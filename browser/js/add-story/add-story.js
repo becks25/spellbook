@@ -28,7 +28,7 @@ app.controller('AddStoryController', function ($scope, user, StoryFactory, $stat
 
     $scope.allConcepts = SpellComponentFactory.possConcepts
 
-    fgetConcepts: () => {
+    function getConcepts() {
         var arr = [];
         for (var i = 0; i < $scope.allConcepts.length; i++){
             arr.push({name: $scope.allConcepts[i], checked: false})
@@ -59,7 +59,7 @@ app.controller('AddStoryController', function ($scope, user, StoryFactory, $stat
         storyToCreate.description = $scope.description;
         storyToCreate.difficulty = $scope.difficulty;
         storyToCreate.concepts = $scope.theConcepts;
-        storyToCreate.cover = $scope.cover;
+        storyToCreate.cover = $scope.cover || "https://cdn.vectorstock.com/i/composite/90,62/card-with-cartoon-castle-vector-1099062.jpg";
 
         StoryFactory.create(storyToCreate)
         .then(function(story){
