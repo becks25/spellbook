@@ -2,12 +2,35 @@
 
 	<div class="left-side-page"></div>
 	<div class="left-side-page right-flip flipped"></div>
+	<div class="left-side-page left"></div>
 	<div class="book-cover"></div>
 	<div class="right-side-page"></div>
 	<div class="right-side-page right"></div>
+	<div class="right-side-page left-flip flipped"></div>
+
+
+
+	<span ng-if="previousPage" class="glyphicon glyphicon-menu-left go-back" ng-click="goBack()"></span>
+	<span ng-if="solved || user.isAdmin && nextPage" ng-click="turnPage()" class="glyphicon glyphicon-menu-right go-forward"></span>
+
+
+	<!--STORY TEXTS-->
+	<!--previous story text-->
+	<div class="col-md-6 col-sm-12 left-beneath">
+		<!--Text -->
+		<div class="storyText" id="previousStoryText">
+			<p></p>
+		</div>
+
+		<div class="hint">
+			<br />
+			<button ng-show="!hintRequested" ng-click="getHint()" class="btn">Get Hint</button>
+			<p ng-show="hintRequested">{{page.hint}}</p>
+		</div>
+	</div>
 
 	<!--current story text-->
-	<div class="col-md-6 col-sm-12 left-hide">
+	<div class="col-md-6 col-sm-12 left">
 		<!--Text -->
 		<div class="storyText" id="storyText">
 			<p></p>
@@ -18,7 +41,6 @@
 			<button ng-show="!hintRequested" ng-click="getHint()" class="btn">Get Hint</button>
 			<p ng-show="hintRequested">{{page.hint}}</p>
 		</div>
-
 	</div>
 
 	<!--next story text-->
@@ -33,7 +55,17 @@
 			<button ng-show="!hintRequested" ng-click="getHint()" class="btn">Get Hint</button>
 			<p ng-show="hintRequested">{{page.hint}}</p>
 		</div>
+	</div>
 
+
+	<!--GAMEBOARDS-->
+	<!--previous story board-->
+	<div class="col-md-6 col-sm-12 left-flip flipped">
+		<div id="previous-canvas" class="img-square canvas">
+			<div id="cr-stage-previous" class="text-center center-block cr-stage">
+				<div ng-repeat="i in grid track by $index" style="height:{{size}}; width:{{size}}" class="square"></div>
+			</div>
+		</div>
 	</div>
 
 	<!--current story board-->
@@ -43,7 +75,6 @@
 			<div ng-repeat="i in grid track by $index" style="height:{{size}}; width:{{size}}" class="square"></div>
 			</div>
 		</div>
-
 	</div>
 
 	<!--next story board-->
@@ -53,14 +84,20 @@
 				<div ng-repeat="i in grid track by $index" style="height:{{size}}; width:{{size}}" class="square"></div>
 			</div>
 		</div>
-
 	</div>
 
 
 	<div class="clearfix"></div>
 
+	<!--TOOL BOX-->
+	<!--previous story tools-->
+	<div class="col-md-6 col-sm-12 left-beneath">
+		<!--the page's toolbox-->
+		<next-tool-box tools="prevTools" directions="directions" vars="prevVars" class="bottom-page"></next-tool-box>
+	</div>
+
 	<!--current story tools-->
-	<div class="col-md-6 col-sm-12 left-hide">
+	<div class="col-md-6 col-sm-12 left">
 		<!--the page's toolbox-->
 		<tool-box class="bottom-page"></tool-box>
 	</div>
@@ -69,6 +106,13 @@
 	<div class="col-md-6 col-sm-12 right-flip flipped">
 		<!--the page's toolbox-->
 		<next-tool-box tools="nextTools" directions="directions" vars="nextVars" class="bottom-page"></next-tool-box>
+	</div>
+
+	<!--STORY SPELL-->
+	<!--previous story spell-->
+	<div class="col-md-6 col-sm-12 left-flip flipped">
+		<!--Drop box for spells/instructions-->
+		<new-spell class="bottom-page"></new-spell>
 	</div>
 
 	<!--current story spell-->
