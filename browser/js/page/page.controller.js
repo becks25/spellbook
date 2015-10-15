@@ -21,6 +21,7 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
     $scope.getHint = () => {
         $scope.hintRequested = true;
     };
+    document.getElementById('cr-stage').style.background='url('+$scope.page.boardBackground+')';
 
     $scope.nextPage;
     //var nextPageNumber;
@@ -218,14 +219,26 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
         $scope.spell.run(argArr)
             .then(res => {
                 if(res){
-                    modalInstance = $uibModal.open({
-                        animation:true,
-                        templateUrl: 'js/common/directives/win-modal/win-modal.html',
-                        controller: 'ModalCtrl'
-                    });
-                    $scope.solved = true;
+
 
                     $scope.findNextPage();
+
+                    if($scope.nextPage){
+
+                        modalInstance = $uibModal.open({
+                            animation:true,
+                            templateUrl: 'js/common/directives/win-modal/win-modal.html',
+                            controller: 'ModalCtrl'
+                        });
+                        $scope.solved = true;
+
+                    }else{
+                        modalInstance = $uibModal.open({
+                            animation:true,
+                            templateUrl: 'js/common/directives/win-modal/book-win-modal.html',
+                            controller: 'ModalCtrl'
+                        });
+                    }
                     // console.log('next page: ',$scope.nextPage);
                     // $scope.user._id.unfinishedPages.push($scope.nextPage._id);
                     // UserFactory.save($scope.user._id)

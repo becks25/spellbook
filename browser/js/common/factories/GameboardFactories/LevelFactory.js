@@ -64,13 +64,14 @@ app.factory('LevelFactory', function(PageFactory, UserFactory, AuthService, MapF
             .then(userInfo => {
               //remove the current page from their unfinishedPages
               userInfo.unfinishedPages = _.remove(userInfo._unfinishedPages, page=>{
-                // return page.toString() === this.page._id.toString();
+                if(!page) return;
+                return page.toString() === this.page._id.toString();
               });
                             // var i = userInfo.unfinishedPages.indexOf(this.page._id);
               // userInfo.unfinishedPages.splice(i, 1);
 
               //add the next page to their unfinished Pages
-              //userInfo.unfinishedPages.push(nextPage);
+
 
               //update mastery
               userInfo.mastery.forEach(concept =>{
@@ -80,12 +81,15 @@ app.factory('LevelFactory', function(PageFactory, UserFactory, AuthService, MapF
                 }
               });
 
-              userInfo.unfinishedPages.push(this.nextPage);
-              userInfo._unfinishedPages.push(this.nextPage._id);
+              if(this.nextPage){
+                userInfo.unfinishedPages.push(this.nextPage);
+                userInfo._unfinishedPages.push(this.nextPage._id);
+              }else userInfo._completedStories.push(this.page.storyId);
+
               //save it.
               // return UserFactory.save(userInfo);
               // userInfo.update();
-              return UserFactory.update(userInfo._id, {mastery: userInfo.mastery, unfinishedPages: userInfo._unfinishedPages});
+              return UserFactory.update(userInfo._id, {mastery: userInfo.mastery, unfinishedPages: userInfo._unfinishedPages, completedStories: userInfo._completedStories});
             })
             .then(saved => {
               this.won = true;

@@ -21,7 +21,7 @@
 
 	<div class="col-md-6 col-sm-12 right" id="right-page">
 		<div id="canvas" class="img-square">
-			<div id="cr-stage" ng-style="{background: url({{page.boardBackground}})}" class="text-center center-block">
+			<div id="cr-stage"  class="text-center center-block">
 			<div ng-repeat="i in grid track by $index" style="height:{{size}}; width:{{size}}" class="square"></div>
 			</div>
 		</div>
@@ -34,11 +34,7 @@
 
 		</div>
  -->
-		<div ng-show="solved" class="text-center center-block">
-			<br/>
-			<button class="btn" ng-click="turnPage()">Next Page</button>
-		</div>
-	<!-- 	ui-sref="page({pageNumber: 1})" -->
+
 	</div>
 
 	<div class="clearfix"></div>

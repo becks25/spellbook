@@ -1,12 +1,26 @@
 #home {
   fullstack-logo {
-    padding-top: 30px;
-    width: 150px;
-    margin: 0 auto;
+    padding-top: 10%;
+    width: 30%;
+    opacity:0.7;
   }
   h1 {
     text-align: center;
     font-family:$font-title;
+    color:#e7c69c;
+    -webkit-text-stroke-width: 1px;
+   	-webkit-text-stroke-color: #80643c;
+    opacity:0.8;
+  }
+
+  #book{
+  	background: url('images/book.png');
+  	background-size:contain;
+  	background-repeat: no-repeat;
+  	background-position:center;
+  	width:60%;
+  	height:80vh;
+  	text-align:center;
   }
 }
 

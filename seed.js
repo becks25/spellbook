@@ -42,6 +42,7 @@ Page.remove({}, function(err, removed) {
 
 var concepts = ['For Loop', 'While Loop', 'If-statements', 'Conditionals', 'Expressions', 'Movement']
 var descr = "Awesome adventure in progress- check back soon!";
+var lorem = "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>"
 var backgrounds= ['images/space.png', 'images/flower-field.png', 'images/underwater.png'];
 var covers = ['images/book-covers/background-castle.png','images/book-covers/background-circus.png', 'images/book-covers/background-dinosaur.png', 'images/book-covers/background-safari.png'];
 
@@ -107,11 +108,11 @@ var seedPages = function(stories){
                     ],
                     [
                         [],
-                        [],
                         [{
                             type:'Obstacle',
                             name:'Tree1'
                         }],
+                        [],
                         []
                     ],
                     [
@@ -134,7 +135,7 @@ var seedPages = function(stories){
                     ]
                 ],
                 pageNumber: 0,
-                boardBackground: 'image/flower-field.png'
+                boardBackground: 'images/flower-field.png'
 
             },{
                 story: story._id,
@@ -160,11 +161,11 @@ var seedPages = function(stories){
                     ],
                     [
                         [],
-                        [],
                         [{
                             type:'Obstacle',
                             name:'Tree1'
                         }],
+                        [],
                         []
                     ],
                     [
@@ -188,7 +189,7 @@ var seedPages = function(stories){
                     ]
                 ],
                 pageNumber: 1,
-                boardBackground: 'image/flower-field.png'
+                boardBackground: 'images/flower-field.png'
 
             },{
                 story: story._id,
@@ -212,7 +213,10 @@ var seedPages = function(stories){
                             name:'Banana',
                             varName:'Banana&3'
                         }],
-                        [],
+                        [{
+                            type:'Obstacle',
+                            name:'Tree2'
+                        }],
                         [],
                         []
                     ],
@@ -225,7 +229,7 @@ var seedPages = function(stories){
                         }],
                         [{
                             type:'Obstacle',
-                            name:'Tree1'
+                            name:'Tree2'
                         }],
                         []
                     ],
@@ -239,7 +243,7 @@ var seedPages = function(stories){
                         }],
                         [{
                             type:'Obstacle',
-                            name: 'Tree1'
+                            name: 'Tree2'
                         }]
                     ],
                     [
@@ -253,7 +257,7 @@ var seedPages = function(stories){
                     ]
                 ],
                 pageNumber: 2,
-                boardBackground: 'image/flower-field.png'
+                boardBackground: 'images/jungle.png'
 
             }
 
@@ -492,7 +496,7 @@ var seedPages = function(stories){
             for (i=0; i<3; i++){
                 pages.push({
                     story: story._id,
-                    text: descr,
+                    text: lorem,
                     tools: ['move', 'pickUp', 'give', 'ask', 'tell', 'If-Statement', 'For Loop', 'While Loop'],
                     variables: [{text: 'Omri', varType: 'person'}, {text: 'Zeke', varType: 'person'}, {text: 'Joe', varType: 'person'}, {text: 'Say hi', varType: 'variable'}, {text: 'Green Potion', varType: 'variable'}, {text: 'The potion is green', varType: 'condition'}],
                     concepts: [concepts[Math.floor(Math.random()*concepts.length)]],
