@@ -117,7 +117,7 @@
 
 	position:absolute;
 	right:0;
-	z-index:11 !important;
+	z-index:10 !important;
 	&.flipped{
 		transform: rotateY(90deg) rotate(5deg);
 		-webkit-transform: rotateY(90deg) rotate(5deg);
@@ -137,8 +137,11 @@
 	z-index:-1;
 }
 
-.right, .right-flip{
+.right-flip{
 	z-index:10 !important;
+}
+.right{
+	z-index:0 !important;
 }
 
 
