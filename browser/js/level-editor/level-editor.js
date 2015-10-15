@@ -1,12 +1,12 @@
 app.config($stateProvider => {
-	$stateProvider.state('levelEditor',{
-		url: '/add',
+	$stateProvider.state('add',{
+		url: '/add/:storyId/page',
         resolve: {
             // story: (StoryFactory, $stateParams) => StoryFactory.find($stateParams.storyId),
-            user: (UserFactory, AuthService) => {
+            user: (UserFactory, AuthService, $stateParams) => {
                 return AuthService.getLoggedInUser()
                 .then(user => {
-                    console.log(user);
+                    console.log('in resolve', $stateParams, user);
                     return UserFactory.find(user._id);
 
                 });
