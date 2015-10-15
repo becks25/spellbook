@@ -126,7 +126,7 @@ app.factory('SpellFactory', function(TilesizeFactory){
 	    		if (toGive) {
     				if(spell.holding[component.variable]){
     					spell.holding[component.variable] = false;
-	    				this.level.updateReq(toGive.varName, 'give', component.variable);
+	    				this.level.updateReq('give', component.variable, toGive.varName);
     				}
     			}
     			break;
@@ -137,7 +137,7 @@ app.factory('SpellFactory', function(TilesizeFactory){
 	    			toPick.entity.destroy();
 						spell.map.removeObject(toPick, this.avatar.position);
 	    			spell.holding[component.variable] = true;
-	    			spell.level.updateReq(toPick.varName, 'pickUp', 'val')
+	    			spell.level.updateReq('pickUp', toPick.varName, 'noOne')
                 }
 	    		break;
 	    	case 'ifStatement':
@@ -172,13 +172,13 @@ app.factory('SpellFactory', function(TilesizeFactory){
 	    		var toAsk = spell.map.checkPos(this.avatar.position, component.person);
 	    		if (toAsk) {
 	    			console.log('in asking');
-	    			this.level.updateReq(toAsk.varName, 'ask', component.variable);
+	    			this.level.updateReq('ask', component.variable, toAsk.varName);
     			}
 	    		break;
 	    	case 'tell':
 	    		var toAsk = spell.map.checkPos(this.avatar.position, component.person);
 	    		if (toAsk) {
-	    			this.level.updateReq(toAsk.varName, 'ask', component.variable);
+	    			this.level.updateReq('ask', component.variable, toAsk.varName);
     			}
 	    		break;
 	    }
