@@ -13,7 +13,7 @@ app.config($stateProvider => {
         },
         views: {
             main: {
-                templateUrl: 'js/make-story/make-story.html',
+                templateUrl: 'js/add-story/add-story.html',
                 controller: 'AddStoryController'
 
             }
