@@ -7,7 +7,7 @@ app.factory('StoryFactory', (DS, $http, $state, PageFactory) => {
         name: 'stories',
         idAttribute: '_id',
         relations: {
-            hasOne: {
+            belongsTo: {
                 users: {
                     localKey: 'userId',
                     localField: 'author'

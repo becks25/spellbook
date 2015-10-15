@@ -4,7 +4,7 @@
 		<h3><a ui-sref="story.indivStory({storyId: story._id})">{{story.title}}</a></h3>
 	</div>
 	<div class="panel-body">
-		<p><b>Author: </b> {{story.author || 'SpellBook'}} </p>
+		<p><b>Author: </b> {{story.author.username || 'SpellBook'}} </p>
 		<p><b>Difficulty: </b> {{story.difficulty}}</p>
 		<p><b>Concepts: </b> {{story.concepts.join(', ')}}</p>
 	</div>
