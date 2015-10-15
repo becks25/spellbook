@@ -4,7 +4,6 @@
 app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPRITES, LevelFactory, TilesizeFactory, SpellFactory, SpellComponentFactory, SPRITE_AVATARS, orderByFilter, $compile, user, AvatarFactory, PageFactory, allPages, $uibModal, UserFactory) => {
     $scope.page = page;
     $scope.allPages = allPages;
-    console.log("all of the page", $scope.allPages);
     $scope.spellComponents = []; // update from db if saved version is present
     $scope.spellVars = spellVarConstr();
     $scope.spellTools = spellToolConstr();
@@ -260,6 +259,7 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
     $scope.stepThrough = (argArr)=> {
         $scope.spell.stepThrough(argArr);
     };
+
 
 
 });
