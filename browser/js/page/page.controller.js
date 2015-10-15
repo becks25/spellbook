@@ -1,7 +1,7 @@
 /**
  * Created by Austin on 10/13/15.
  */
-app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPRITES, LevelFactory, TilesizeFactory, SpellFactory, SpellComponentFactory, SPRITE_AVATARS, orderByFilter, $compile, user, AvatarFactory, PageFactory, allPages, $uibModal, UserFactory) => {
+app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPRITES, LevelFactory, TilesizeFactory, SpellFactory, SpellComponentFactory, SPRITE_AVATARS, orderByFilter, $compile, user, AvatarFactory, PageFactory, allPages, $uibModal, UserFactory, $timeout) => {
     $scope.page = page;
     $scope.allPages = allPages;
     $scope.spellComponents = []; // update from db if saved version is present
@@ -10,6 +10,7 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
     $scope.directions = spellDirConstr();
     if(user) $scope.user = user;
     else $scope.user = {character: { picture: 'Giraffe1', name: 'Omri'}}
+    TilesizeFactory.NumTiles = $scope.page.gameboard.length;
 
     $scope.avatar = $scope.user.character.picture
     $scope.text = $compile($scope.page.text)($scope);
@@ -20,11 +21,10 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
     $scope.getHint = () => {
         $scope.hintRequested = true;
     };
-    document.getElementById('cr-stage').style.background='url('+$scope.page.boardBackground+')';
+    document.getElementById('cr-stage').style.backgroundImage='url('+$scope.page.boardBackground+')';
 
     $scope.nextPage;
-    //var nextPageNumber;
-    // var directionOptions = 
+    $scope.previousPage;
 
     $scope.findNextPage = () => {
         for (var i = 0; i < $scope.allPages.length; i++){
@@ -38,16 +38,76 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
         }
     };
 
-    $scope.findNextPage();
-    
-    $scope.turnPage = () => {
-        $scope.findNextPage();
 
-        PageFactory.find($scope.nextPage._id)
-            .then(function(page){
-                $state.go('page', {id: page._id});
-            });
-    };
+    $scope.findPreviousPage = () => {
+        if($scope.page.pageNumber === 0) return;
+        for (var i = 0; i < $scope.allPages.length; i++){
+            if($scope.allPages[i].storyId === $scope.page.storyId){
+                var lastPageNumber = $scope.page.pageNumber - 1;
+                if($scope.allPages[i].pageNumber === lastPageNumber){
+                    $scope.previousPage = $scope.allPages[i];
+
+                }
+            }
+        }
+    }
+
+    $scope.findNextPage();
+    $scope.findPreviousPage();
+
+    //if there's a next page, get it loaded and ready for the page turn animation
+    if($scope.nextPage){
+        $scope.nextText = $compile($scope.nextPage.text)($scope);
+        angular.element(document.getElementById('nextStoryText')).append($scope.nextText);
+        $scope.nextTools = $scope.nextPage.tools.map(tool=> SpellComponentFactory.makeToolObj(tool));
+        $scope.nextVars = $scope.nextPage.variables.map(variable => SpellComponentFactory.makeSpellVar(variable));
+        document.getElementById('cr-stage-next').style.backgroundImage='url('+$scope.nextPage.boardBackground+')';
+        $('#cr-stage-next').css('width', TilesizeFactory.TILESIZE * $scope.nextPage.gameboard.length+'px').css('height', TilesizeFactory.TILESIZE * $scope.nextPage.gameboard.length+'px');
+        $scope.turnPage = () => {
+            $scope.findNextPage();
+
+            $('.right').addClass('flipped');
+
+            $timeout( () => {
+                $('.right-flip').removeClass('flipped');
+
+            }, 1498);
+
+            $timeout( () => {
+                PageFactory.find($scope.nextPage._id)
+                    .then(function(page){
+                     $state.go('page', {id: page._id});
+                    });
+            }, 2650);
+
+        };
+    }
+
+    //if there's a previous page, have it loaded in case someone wants to go back
+    if($scope.previousPage){
+        $scope.previousText = $compile($scope.previousPage.text)($scope);
+        angular.element(document.getElementById('previousStoryText')).append($scope.previousText);
+        $scope.prevTools = $scope.previousPage.tools.map(tool=> SpellComponentFactory.makeToolObj(tool));
+        $scope.prevVars = $scope.previousPage.variables.map(variable => SpellComponentFactory.makeSpellVar(variable));
+        document.getElementById('cr-stage-previous').style.backgroundImage='url('+$scope.previousPage.boardBackground+')';
+        $('#cr-stage-previous').css('width', TilesizeFactory.TILESIZE * $scope.previousPage.gameboard.length+'px').css('height', TilesizeFactory.TILESIZE * $scope.previousPage.gameboard.length+'px');
+        $scope.goBack = () => {
+            $('.left').addClass('flipped');
+
+            $timeout( () => {
+                $('.left-flip').removeClass('flipped');
+
+            }, 1498);
+
+            $timeout( () => {
+                PageFactory.find($scope.previousPage._id)
+                    .then(function(page){
+                     $state.go('page', {id: page._id});
+                    });
+            }, 2650);
+
+        };
+    }
 
     //this is for testing if spell directions is working...
     //$scope.spellDirections = [];
@@ -73,24 +133,6 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
         return $scope.page.variables.map(variable => SpellComponentFactory.makeSpellVar(variable));
     };
 
-    //ensures that tool box can't be rearranged by reordering back to orig order
-    // var refresh = () => {
-    //     $scope.$watchCollection('spellComponents', () => {
-    //         $scope.spellTools = orderByFilter($scope.spellTools, ['text']);
-    //     });
-    //     $scope.$watchCollection('spellVars', () => {
-    //         $scope.spellVars = orderByFilter($scope.spellVars, ['text']);
-    //     });
-    //     $scope.$watchCollection('directions', () => {
-    //         $scope.directions = orderByFilter($scope.directions, ['text']);
-    //     });
-
-    //     $scope.$watchCollection('spellComponentDirs', () => {
-    //         $scope.spellComponentDirs = orderByFilter($scope.spellComponentDirs, ['text']);
-    //     });
-    // };
-    // refresh();
-
     //remove a tool from the spell
     //used on the spell components (x button ng-click)
     $scope.removeFromSpell = (index, loc) => {
@@ -109,7 +151,6 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
         update: (e, ui) => {
             if (ui.item.sortable.droptarget.hasClass('first')) {
                 ui.item.sortable.cancel();
-                // refresh();
             }
         },
         stop: (e, clone) => {
@@ -117,7 +158,6 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
             if (e.target) {
                 if ($(e.target).hasClass('first')) {
                     $scope.spellTools = spellToolConstr();                    
-                    // refresh();
                     $scope.resetLevel();
                 }
             }
@@ -141,7 +181,6 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
                 console.log('hi')
                 console.log(ui.item.sortable.droptarget)
                 ui.item.sortable.cancel();
-                // refresh();
             } else {
                 //set newVar to clone of dragged variable
                 newVar = _.cloneDeep(ui.item.scope().tool);
@@ -152,8 +191,7 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
                 //resets tools arrays to create duplication and ensure spell components are clones
                 $scope.spellVars = spellVarConstr();
                 $scope.directions = spellDirConstr();
-                //refresh();
-                // $scope.resetLevel();
+
             }
         },
         stop: (e, ui) => {
@@ -191,7 +229,6 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
         }
     }
 
-    TilesizeFactory.NumTiles = $scope.page.gameboard.length;
     Crafty.load(['/images/sprites.png']);
     Crafty.init(TilesizeFactory.TILESIZE * TilesizeFactory.NumTiles, TilesizeFactory.TILESIZE * TilesizeFactory.NumTiles);
 
@@ -238,19 +275,7 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
                             controller: 'ModalCtrl'
                         });
                     }
-                    // console.log('next page: ',$scope.nextPage);
-                    // $scope.user._id.unfinishedPages.push($scope.nextPage._id);
-                    // UserFactory.save($scope.user._id)
-                    // .then(saved => {
-                    //     console.log('maybe updated?', saved);
-
-                    // })
-
-                    // // UserFactory.update($scope.user._id, {$push: {unfinishedPages: $scope.nextPage._id}})
-                    // // .then(updated => {
-                    // //     console.log('maybe updated?', updated);
-                    // // });
-                    // console.log('after update', $scope.page);
+                    
                 }
             });
 
