@@ -22,18 +22,43 @@ app.config($stateProvider => {
 });
 
 
-app.controller('AddStoryController', function ($scope, user, StoryFactory, $state) {
+app.controller('AddStoryController', function ($scope, user, StoryFactory, $state, SpellComponentFactory) {
    
     $scope.user = user;
 
-    console.log("we are here")
+    $scope.allConcepts = SpellComponentFactory.possConcepts
+
+    function getConcepts (){
+        var arr = [];
+        for (var i = 0; i < $scope.allConcepts.length; i++){
+            arr.push({name: $scope.allConcepts[i], checked: false})
+        }
+        return arr;
+    }
+
+    $scope.possibleConcepts = getConcepts();
+    
+
+
+    $scope.theConcepts = [];
+
+    $scope.selectedConcepts = function(con){
+        $scope.theConcepts.push(con.name);
+    }
+
+
+    $scope.logConcepts = function (){
+        console.log("logging", $scope.theConcepts);
+    }
+
 
     $scope.createStory = () => {
+        console.log("the selected", $scope.selectedConcepts);
         var storyToCreate = {};
         storyToCreate.title = $scope.title;
         storyToCreate.description = $scope.description;
         storyToCreate.difficulty = $scope.difficulty;
-        storyToCreate.concepts = $scope.concepts;
+        storyToCreate.concepts = $scope.theConcepts;
         storyToCreate.cover = $scope.cover;
 
         StoryFactory.create(storyToCreate)
@@ -44,15 +69,10 @@ app.controller('AddStoryController', function ($scope, user, StoryFactory, $stat
 
     };
 
+});
 
 
 
 
-    //$scope.user = _.uniq($scope.stories, 'author');
-
-    //$scope.mostPopular = _.max($scope.storyPopularity, (story) => story[1]);
 
    
-
-
-});
