@@ -1,7 +1,7 @@
 /**
  * Created by Austin on 10/13/15.
  */
-app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPRITES, LevelFactory, TilesizeFactory, SpellFactory, SpellComponentFactory, SPRITE_AVATARS, orderByFilter, $compile, user, AvatarFactory, PageFactory, allPages, $uibModal, UserFactory) => {
+app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPRITES, LevelFactory, TilesizeFactory, SpellFactory, SpellComponentFactory, SPRITE_AVATARS, orderByFilter, $compile, user, AvatarFactory, PageFactory, allPages, $uibModal, UserFactory, $timeout) => {
     $scope.page = page;
     $scope.allPages = allPages;
     console.log("all of the page", $scope.allPages);
@@ -11,6 +11,7 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
     $scope.directions = spellDirConstr();
     if(user) $scope.user = user;
     else $scope.user = {character: { picture: 'Giraffe1', name: 'Omri'}}
+    TilesizeFactory.NumTiles = $scope.page.gameboard.length;
 
     $scope.avatar = $scope.user.character.picture
     $scope.text = $compile($scope.page.text)($scope);
@@ -40,15 +41,33 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
     };
 
     $scope.findNextPage();
-    
-    $scope.turnPage = () => {
-        $scope.findNextPage();
+    if($scope.nextPage){
+        $scope.nextText = $compile($scope.nextPage.text)($scope);
+        angular.element(document.getElementById('nextStoryText')).append($scope.nextText);
+        $scope.nextTools = $scope.nextPage.tools.map(tool=> SpellComponentFactory.makeToolObj(tool));
+        $scope.nextVars = $scope.nextPage.variables.map(variable => SpellComponentFactory.makeSpellVar(variable));
+        document.getElementById('cr-stage-next').style.background='url('+$scope.nextPage.boardBackground+')';
+        $('#cr-stage-next').css('width', TilesizeFactory.TILESIZE * TilesizeFactory.NumTiles+'px').css('height', TilesizeFactory.TILESIZE * TilesizeFactory.NumTiles+'px');
+        console.log('size?', TilesizeFactory.TILESIZE * TilesizeFactory.NumTiles);
+        $scope.turnPage = () => {
+            $scope.findNextPage();
 
-        PageFactory.find($scope.nextPage._id)
-            .then(function(page){
-                $state.go('page', {id: page._id});
-            });
-    };
+            $('.right').addClass('flipped');
+
+            $timeout( () => {
+                $('.right-flip').removeClass('flipped');
+
+            }, 1998);
+
+            $timeout( () => {
+                PageFactory.find($scope.nextPage._id)
+                    .then(function(page){
+                     $state.go('page', {id: page._id});
+                    });
+            }, 3300);
+
+        };
+    }
 
     //this is for testing if spell directions is working...
     //$scope.spellDirections = [];
@@ -192,7 +211,6 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
         }
     }
 
-    TilesizeFactory.NumTiles = $scope.page.gameboard.length;
     Crafty.load(['/images/sprites.png']);
     Crafty.init(TilesizeFactory.TILESIZE * TilesizeFactory.NumTiles, TilesizeFactory.TILESIZE * TilesizeFactory.NumTiles);
 

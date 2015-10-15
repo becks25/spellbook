@@ -2,7 +2,7 @@ $purple: #8843b9;
 $turqoise: #18b8c2;
 $green: #b8f166;
 
-tool-box, spell, add-variable{
+tool-box, spell, add-variable, next-tool-box{
 
 	.panel{
 		background-color:transparent;
@@ -122,6 +122,8 @@ tool-box, spell, add-variable{
 		min-height: 30vh;
 		border: 1px dashed $turqoise;
 		border-radius:5px;
+		padding:1%;
+		margin:0% 2% 4% 0%;
 	}
 
 }

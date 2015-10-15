@@ -1,12 +1,12 @@
 
 
 
-#canvas{
+#canvas, #next-canvas{
   width: auto;
   background-color:transparent; 
 }
 
-#cr-stage{
+#cr-stage, #cr-stage-next{
     background-size: cover;
 
 }
@@ -16,9 +16,6 @@
 
 }
 
-.right{
-	padding-right:0;
-}
 
 .left{
 	padding-left:0;
@@ -31,6 +28,44 @@
 .promptText{
 	font-size: medium;
 }
+
+.right{
+	padding-right:0;
+	transform-origin: left;
+	transform-style: preserve-3d;
+	transition:2s;
+	transition-timing-function: cubic-bezier(0.2, 0.3, 0.3, 0.2);
+	&.flipped{
+		transform: rotateY(-90deg) rotate(-5deg);
+	}
+}
+
+.right-flip{
+	transform-origin: right;
+	transform-style: preserve-3d;
+	transition:2s;
+	transition-timing-function:ease;
+	position:absolute;
+	z-index:11;
+	&.flipped{
+		transform: rotateY(-90deg) rotate(5deg);
+		height:0;
+	}
+
+}
+
+.right-beneath{
+	position:absolute;
+	z-index:0;
+	right:0;
+}
+
+.right, .right-flip{
+	z-index:10 !important;
+}
+
+
+
 
 
 .left-side-page, .right-side-page{
@@ -74,7 +109,7 @@
 	position:absolute;
 	width:86%;
 	left:7%;
-	padding:2%;
+	padding:2% 0% 2% 0%;
 }
 
 .left-side-page{

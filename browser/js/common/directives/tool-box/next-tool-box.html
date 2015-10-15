@@ -1,0 +1,33 @@
+<div class="panel">
+    <div class="panel-heading">
+        <div class="clearfix">
+            <h3 class="btnpadding">My Tools</h3>
+        </div>
+        <hr />
+
+    </div>
+    <div class="panel-body">
+        <div class="col-md-4 col-sm-12">
+            <b>Tools</b>
+            <ul class="spellTools first">
+                <li ng-repeat="tool in tools" class="tool" ><span class="">{{ tool.text }}</span></li>
+            </ul>
+
+		</div>
+		<div class="col-md-4 col-sm-12">
+			<b>Directions</b>
+				<ul class="spellDirs first">
+		  			<li ng-repeat="tool in directions" class="direction"><span class="" >{{ tool.text }}</span></li>
+		  		</ul>
+
+
+        </div>
+        <div class="col-md-4 col-sm-12">
+            <b>Variables</b>
+            <ul  class="spellVars first">
+                <li ng-repeat="tool in vars track by $index" class="variable"><span
+                        class="">{{ tool.text.replace(re, ' ')}}</span></li>
+            </ul>
+        </div>
+    </div>
+</div>
