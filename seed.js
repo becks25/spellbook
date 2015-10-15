@@ -357,7 +357,7 @@ var seedPages = function(stories){
                     [
                         [{
                             type: 'Avatar',
-                            name:'WizzardGirl3'
+                            name:'WizardGirl3'
                         }],
                         [],
                         [],
@@ -367,7 +367,7 @@ var seedPages = function(stories){
                         [],
                         [{
                             type:'Collectible',
-                            name:'Crystal1',
+                            name:'Alien1',
                             varName:'Alien&1'
                         }],
                         [],
@@ -378,7 +378,7 @@ var seedPages = function(stories){
                         [],
                         [{
                             type:'Collectible',
-                            name:'Crystal2',
+                            name:'Alien2',
                             varName:'Alien&2'
                         }],
                         [],
@@ -389,7 +389,7 @@ var seedPages = function(stories){
                         [],
                         [{
                             type:'Collectible',
-                            name:'Crystal3',
+                            name:'Alien3',
                             varName:'Alien&3'
                         }],
                         []
@@ -399,7 +399,7 @@ var seedPages = function(stories){
                         [],
                         [{
                             type:'Collectible',
-                            name:'Crystal1',
+                            name:'Alien2',
                             varName:'Alien&4'
                         }],
                         []
@@ -446,18 +446,18 @@ var seedPages = function(stories){
                         [],
                         [{
                             type:'Person',
-                            name:'Crystal1',
+                            name:'Alien1',
                             varName:'Guard&1',
                             match: 'notNimit'                            
                         }],
                         [{
                             type:'Person',
-                            name:'Crystal1',
+                            name:'Alien2',
                             varName:'Guard&2',
                         }],
                         [{
                             type:'Person',
-                            name:'Crystal1',
+                            name:'Alien1',
                             varName:'Guard&3',
                             match: 'notNimit'
 

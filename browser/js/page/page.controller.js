@@ -21,9 +21,10 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
     $scope.getHint = () => {
         $scope.hintRequested = true;
     };
-    document.getElementById('cr-stage').style.background='url('+$scope.page.boardBackground+')';
+    document.getElementById('cr-stage').style.backgroundImage='url('+$scope.page.boardBackground+')';
 
     $scope.nextPage;
+    $scope.previousPage;
 
     $scope.findNextPage = () => {
         for (var i = 0; i < $scope.allPages.length; i++){
@@ -37,7 +38,22 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
         }
     };
 
+
+    $scope.findPreviousPage = () => {
+        if($scope.page.pageNumber === 0) return;
+        for (var i = 0; i < $scope.allPages.length; i++){
+            if($scope.allPages[i].storyId === $scope.page.storyId){
+                var lastPageNumber = $scope.page.pageNumber - 1;
+                if($scope.allPages[i].pageNumber === lastPageNumber){
+                    $scope.previousPage = $scope.allPages[i];
+
+                }
+            }
+        }
+    }
+
     $scope.findNextPage();
+    $scope.findPreviousPage();
 
     //if there's a next page, get it loaded and ready for the page turn animation
     if($scope.nextPage){
@@ -45,7 +61,7 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
         angular.element(document.getElementById('nextStoryText')).append($scope.nextText);
         $scope.nextTools = $scope.nextPage.tools.map(tool=> SpellComponentFactory.makeToolObj(tool));
         $scope.nextVars = $scope.nextPage.variables.map(variable => SpellComponentFactory.makeSpellVar(variable));
-        document.getElementById('cr-stage-next').style.background='url('+$scope.nextPage.boardBackground+')';
+        document.getElementById('cr-stage-next').style.backgroundImage='url('+$scope.nextPage.boardBackground+')';
         $('#cr-stage-next').css('width', TilesizeFactory.TILESIZE * $scope.nextPage.gameboard.length+'px').css('height', TilesizeFactory.TILESIZE * $scope.nextPage.gameboard.length+'px');
         $scope.turnPage = () => {
             $scope.findNextPage();
@@ -55,14 +71,40 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
             $timeout( () => {
                 $('.right-flip').removeClass('flipped');
 
-            }, 1998);
+            }, 1498);
 
             $timeout( () => {
                 PageFactory.find($scope.nextPage._id)
                     .then(function(page){
                      $state.go('page', {id: page._id});
                     });
-            }, 3300);
+            }, 2650);
+
+        };
+    }
+
+    //if there's a previous page, have it loaded in case someone wants to go back
+    if($scope.previousPage){
+        $scope.previousText = $compile($scope.previousPage.text)($scope);
+        angular.element(document.getElementById('previousStoryText')).append($scope.previousText);
+        $scope.prevTools = $scope.previousPage.tools.map(tool=> SpellComponentFactory.makeToolObj(tool));
+        $scope.prevVars = $scope.previousPage.variables.map(variable => SpellComponentFactory.makeSpellVar(variable));
+        document.getElementById('cr-stage-previous').style.backgroundImage='url('+$scope.previousPage.boardBackground+')';
+        $('#cr-stage-previous').css('width', TilesizeFactory.TILESIZE * $scope.previousPage.gameboard.length+'px').css('height', TilesizeFactory.TILESIZE * $scope.previousPage.gameboard.length+'px');
+        $scope.goBack = () => {
+            $('.left').addClass('flipped');
+
+            $timeout( () => {
+                $('.left-flip').removeClass('flipped');
+
+            }, 1498);
+
+            $timeout( () => {
+                PageFactory.find($scope.previousPage._id)
+                    .then(function(page){
+                     $state.go('page', {id: page._id});
+                    });
+            }, 2650);
 
         };
     }

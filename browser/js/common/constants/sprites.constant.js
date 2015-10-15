@@ -24,6 +24,9 @@ app.constant('SPRITES', {
     Gem1: [6,2],
     Gem2: [7,2],
     Gem3: [0,3],
-    Banana: [1, 3]
+    Banana: [1, 3],
+    Alien1: [2, 3],
+    Alien2: [3, 3],
+    Alien3: [4, 3]
 
   });

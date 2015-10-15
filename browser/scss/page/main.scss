@@ -1,13 +1,30 @@
 
+.go-back, .go-forward{
+	position:absolute;
+	top:50%;
+	z-index:20;
+	font-size:2.5em;
 
+	&:hover{
+		font-size:3em;
+	}
+}
+.go-back{
+	left: -6%;
+}
 
-#canvas, #next-canvas{
+.go-forward{
+	right:-6%;
+}
+
+#canvas, #next-canvas, #previous-canvas{
   width: auto;
   background-color:transparent; 
 }
 
-#cr-stage, #cr-stage-next{
-    background-size: cover;
+#cr-stage, #cr-stage-next, #cr-stage-previous{
+    background-size: contain;
+    background-repeat: no-repeat;
 
 }
 
@@ -18,7 +35,24 @@
 
 
 .left{
-	padding-left:0;
+	padding-left:1%;
+	z-index:0 !important;
+	transform-origin: right;
+	-webkit-transform-origin: right;
+
+	transform-style: preserve-3d;
+	transition:1.5s;
+	transition-timing-function: cubic-bezier(0.2, 0.3, 0.3, 0.2);
+
+
+	-webki-transform-style: preserve-3d;
+	-webki-transition:1.5s;
+	-webki-transition-timing-function: cubic-bezier(0.2, 0.3, 0.3, 0.2);
+	&.flipped{
+		transform: rotateY(90deg) rotate(-5deg);
+		-webkit-transform: rotateY(90deg) rotate(-5deg);
+
+	}
 }
 
 .storyText{
@@ -35,12 +69,12 @@
 	-webkit-transform-origin: left;
 
 	transform-style: preserve-3d;
-	transition:2s;
+	transition:1.5s;
 	transition-timing-function: cubic-bezier(0.2, 0.3, 0.3, 0.2);
 
 
 	-webki-transform-style: preserve-3d;
-	-webki-transition:2s;
+	-webki-transition:1.5s;
 	-webki-transition-timing-function: cubic-bezier(0.2, 0.3, 0.3, 0.2);
 	&.flipped{
 		transform: rotateY(-90deg) rotate(-5deg);
@@ -70,10 +104,37 @@
 
 }
 
-.right-beneath{
+.left-flip{
+	transform-origin: left;
+	transform-style: preserve-3d;
+	transition:2s;
+	transition-timing-function:ease;
+
+	-webkit-transform-origin: left;
+	-webkit-transform-style: preserve-3d;
+	-webkit-transition:2s;
+	vtransition-timing-function:ease;
+
 	position:absolute;
-	z-index:0;
 	right:0;
+	z-index:11 !important;
+	&.flipped{
+		transform: rotateY(90deg) rotate(5deg);
+		-webkit-transform: rotateY(90deg) rotate(5deg);
+		height:0;
+	}
+
+}
+
+.left-beneath{
+	left:0;
+}
+.right-beneath{
+	right:0;
+}
+.right-beneath, .left-beneath{
+	position:absolute;
+	z-index:-1;
 }
 
 .right, .right-flip{
