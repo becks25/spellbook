@@ -1,0 +1,72 @@
+$purple: #8843b9;
+$turqoise: #18b8c2;
+$green: #b8f166;
+
+
+
+#addTheStory {
+
+  .required {
+    color: $purple;
+    font-weight: 600;
+    padding: 10px 0px 0px 5px;
+  }
+
+  label{
+    padding-top: 15px;
+  }
+
+  input{
+    padding-left: 2px;
+    padding-right: 35%;
+  }
+
+
+.checkboxesDivOuter{
+
+   padding-top: 0px;
+      padding-bottom: 0px;
+      margin-top: 0px;
+      margin-bottom: 0px;
+
+
+
+  .checkboxesDiv{
+      padding-top: 0px;
+      padding-bottom: 0px;
+      margin-top: -5px;
+      margin-bottom: -2px;
+
+
+  .checkboxes{
+      margin-top: 0px;
+      margin-bottom: 0px;
+      padding-top: 0px;
+      padding-bottom: 0px;
+      font-size: 12px;
+
+  }
+
+  input{
+    padding-top: 0px;
+    padding-bottom: 0px;
+  }
+}
+
+}
+
+.create-btn{
+  background-color: $purple;
+  color:white;
+  border: solid white;
+  border-radius: 10px;
+  margin-top: 25px;
+  margin-bottom: 150px;
+  font-size: 18px;
+  padding: 5px 20px 5px 20px;
+  font-family: $font-title;
+}
+
+
+
+}

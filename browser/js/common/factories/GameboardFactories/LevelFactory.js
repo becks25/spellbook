@@ -54,23 +54,32 @@ app.factory('LevelFactory', function(PageFactory, UserFactory, AuthService, MapF
     // checks win reqs for false, lose reqs for true, length and numMoves
     isSolved(spellMoves, spellLength){
       var level = this;
-      var solved = checkWinLoseReqs('win');
-      solved = checkWinLoseReqs('lose');
-      if (this.requirements.spellLength) solved = this.requirements.spellLength <= spellLength;
-      if (this.requirements.numMoves) solved = this.requirements.numMoves <= spellMoves;
+      var solved = checkWinLoseReqs('win')
+      console.log(solved)
+      if(solved) solved = checkWinLoseReqs('lose');
+      if (solved && this.requirements.spellLength) solved = this.requirements.spellLength <= spellLength;
+      if (solved && this.requirements.numMoves) solved = this.requirements.numMoves <= spellMoves;
+      console.log('solved', solved)
       return solved;
-            console.log('this inside fn', level)
 
   
     function checkWinLoseReqs(condType){
+      console.log(condType)
       //loop through requirements and verify they are true
-      if (!level.requirements[condType]) {
+      console.log('req', level.requirements)
+      if (level.requirements[condType]) {
+      console.log(level.requirements[condType])
         for (var action in level.requirements[condType]){
+          console.log('1st level', action, level.requirements[condType])
           for (var variable in level.requirements[condType][action]){
+            console.log('2nd')
             for (var person in level.requirements[condType][action][variable]){
-              // console.log('person', level.requirements[action][variable][person])
-              if (condType === 'win') if (level.requirements[condType][action][variable][person] === false) return false;
-              else if (condType === 'lose') if (level.requirements[condType][action][variable][person] === true) return false;
+              console.log('3rd', action, variable, person)
+              console.log('person', level.requirements[condType][action][variable][person])
+              if (condType === 'win') {
+                console.log('hit?', level.requirements[condType][action][variable][person] === false)
+                if (level.requirements[condType][action][variable][person] === false) return false;
+              }else if (condType === 'lose') if (level.requirements[condType][action][variable][person] === true) return false;
             }
           }
         }
@@ -80,12 +89,12 @@ app.factory('LevelFactory', function(PageFactory, UserFactory, AuthService, MapF
   }
 
     //check and update requirements
-    updateReq( action, variable, person){
-        if (_.has(this.requirements, action, variable, person)){
-          console.log('!!!found it')
-
-           // this.requirements[reqType][action][variable][person] = true;
-
+    updateReq(action, variable, person){
+        if (_.has(this.requirements, 'win', action, variable, person)){
+            console.log('!!!found it win')
+            this.requirements['win'][action][variable][person] = true;
+        } else if (_.has(this.requirements, 'lose', action, variable, person)){
+             this.requirements['lose'][action][variable][person] = true;
         }
     }
 

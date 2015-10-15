@@ -2,7 +2,7 @@
 
 
 
-<div class="container" id="createTheStore">
+<div class="container" id="addTheStory">
 
  <!--  <h1>Create My Store</h1> -->
 
@@ -12,7 +12,7 @@
 
 <div>
   <div class="row addStory">
-        <h2>Create Your Own Story Book</h2>
+        <h2>Create Your Own SpellBook</h2>
         <!-- begin form div -->
     <div>
     <form role="form" ng-submit='createStory()'>
@@ -46,33 +46,30 @@
 
       <div class="control-group">
         <label for="cover" class="control-label">
-          Store Cover Image
+          Story Cover Image
         </label>
         <div class="controls">
           <input ng-model="cover" name="cover" type="text" value="" id="cover">
         </div>
       </div>
 
-      <div class="control-group">
-        <label for="concepts" class="control-label">
+      <div class="control-group checkboxesDivOuter">
+         <label for="concepts" class="control-label">
           Story Concepts
         </label>
-        <div class="controls">
-          <select multiple placeholder="Concepts" ng-model="concepts" name="concepts">
-            <option value="For Loop">For Loop</option>
-            <option value="While Loop">While Loop</option>
-            <option value="If-statements">If-statements</option>
-            <option value="Conditionals">Conditionals</option>
-            <option value="Expressions">Expressions</option>
-            <option value="Movement">Movement</option>
-          </select>
+        <div ng-repeat="concept in possibleConcepts" ng-model="concepts" name="concepts" class="checkboxesDiv">
+        <label >
+          <input type="checkbox" name="{{concept}}" id="{{concept}}" ng-model="concept.checked" ng-change="selectedConcepts(concept); logConcepts()">
+          <label class="checkboxes" for="{{concept.name}}">{{concept.name}}</label>
+        </label>
+        <br>
         </div>
-      </div>
+    </div>
 
     
 
       <div class="form-actions">
-        <button type="submit" class="btn btn-large btn-primary">Create Story</button>
+        <button type="submit" class="btn btn-large btn-default create-btn">Create Story</button>
       </div>
 
   
