@@ -28,7 +28,7 @@ app.controller('AddStoryController', function ($scope, user, StoryFactory, $stat
 
     $scope.allConcepts = SpellComponentFactory.possConcepts
 
-    function getConcepts (){
+    fgetConcepts: () => {
         var arr = [];
         for (var i = 0; i < $scope.allConcepts.length; i++){
             arr.push({name: $scope.allConcepts[i], checked: false})
@@ -42,12 +42,12 @@ app.controller('AddStoryController', function ($scope, user, StoryFactory, $stat
 
     $scope.theConcepts = [];
 
-    $scope.selectedConcepts = function(con){
+    $scope.selectedConcepts = (con) => {
         $scope.theConcepts.push(con.name);
     }
 
 
-    $scope.logConcepts = function (){
+    $scope.logConcepts = () => {
         console.log("logging", $scope.theConcepts);
     }
 
