@@ -32,11 +32,20 @@
 .right{
 	padding-right:0;
 	transform-origin: left;
+	-webkit-transform-origin: left;
+
 	transform-style: preserve-3d;
 	transition:2s;
 	transition-timing-function: cubic-bezier(0.2, 0.3, 0.3, 0.2);
+
+
+	-webki-transform-style: preserve-3d;
+	-webki-transition:2s;
+	-webki-transition-timing-function: cubic-bezier(0.2, 0.3, 0.3, 0.2);
 	&.flipped{
 		transform: rotateY(-90deg) rotate(-5deg);
+		-webkit-transform: rotateY(-90deg) rotate(-5deg);
+
 	}
 }
 
@@ -45,10 +54,17 @@
 	transform-style: preserve-3d;
 	transition:2s;
 	transition-timing-function:ease;
+
+	-webkit-transform-origin: right;
+	-webkit-transform-style: preserve-3d;
+	-webkit-transition:2s;
+	vtransition-timing-function:ease;
+
 	position:absolute;
 	z-index:11;
 	&.flipped{
 		transform: rotateY(-90deg) rotate(5deg);
+		-webkit-transform: rotateY(-90deg) rotate(5deg);
 		height:0;
 	}
 
