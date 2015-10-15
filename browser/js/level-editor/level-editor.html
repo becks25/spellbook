@@ -10,7 +10,10 @@
 			</div>
 			<div>
 				<div class="hint">
-					<input type='text' class='form-control' ng-model='page.hint' placeholder='Enter hint'/>
+					<md-input-container>
+				      	<label>Enter a hint</label>
+				      	<input ng-model="page.hint">
+				    </md-input-container>
 				</div>
 					<!--<label for='concepts'>Select Concepts</label>-->
 				<!-- dropdown for concepts searchable-->
@@ -25,6 +28,26 @@
 				      </ul>
 				</div>
 				 <div class='inline' ng-repeat='concept in concepts track by $index' ng-click='addConcept(concept, $index, possConcepts, concepts)'>{{concept}}</div>
+			</div>
+			<hr>
+			<div class='inline add-variable' ng-model='newVar'>
+				<h4 class='inline'>Add a variable</h4>
+				<div class='button btn variable'ng-click='addTool(newVar, null, "variable")'>Save Variable</div>
+				
+				<md-input-container class='inline select-var-type'>
+			      	<label>Enter the variable text</label>
+			      	<input ng-model="newVar.text">
+			    </md-input-container>
+				<md-select class='select-var-type' placeholder="Select type" ng-model="newVar.varType">
+	     			<md-option ng-repeat='type in varTypes' value='{{type}}'>{{type}}</md-option>
+	 			</md-select>
+				<md-select ng-show='newVar.varType === "condition"'placeholder="Select condition type" ng-model="newVar.fnType" class='inline select-var-type'>
+	     			<md-option ng-repeat='type in varFnTypes' value='{{type}}'>{{type}}</md-option>
+	 			</md-select>
+	 			<md-input-container class='inline select-var-type' ng-show='newVar.fnType === "match" || newVar.fnType === "holding"'>
+			      	<label>Enter variable to match</label>
+			      	<input ng-model="newVar.arg">
+			    </md-input-container>
 			</div>
 			
 		</div>
@@ -41,18 +64,39 @@
 
 		<!--dropdown to select tools-->
 		<div class="btn-group inline" uib-dropdown>
-		{{toolsPoss}}
+	        <button type="button" class="btn tool" uib-dropdown-toggle>
+	        	<span>Select tools</span>
+		        <span class="caret"></span>
+		        <span class="sr-only">Split button!</span>
+	        </button>
+	        <ul class="uib-dropdown-menu" role="menu" aria-labelledby="split-button">
+	        	<li role="menuitem"ng-repeat='tool in toolsPoss track by $index' ng-click='addTool(tool, $index, "tool")'>{{tool}}</li>
+	        </ul>
+		</div>
+				<!--dropdown to select directions-->
+		<div class="btn-group inline" uib-dropdown>
+			<button type="button" class="btn direction" uib-dropdown-toggle>
+	        	<span>Select Directions</span>
+		        <span class="caret"></span>
+		        <span class="sr-only">Split button!</span>
+	        </button>
+	        <ul class="uib-dropdown-menu" role="menu" aria-labelledby="split-button">
+	        	<li role="menuitem"ng-repeat='tool in dirsPoss track by $index' ng-click='addTool(tool, $index, "direction")'>{{tool}}</li>
+	        </ul>
+		</div>
+		<!-- form to create new variables -->
 
-  				  <button id="split-button" type="button" class="btn btn-success">Select tools</button>
-			      <button type="button" class="btn btn-success" uib-dropdown-toggle>
-			        <span class="caret"></span>
-			        <span class="sr-only">Split button!</span>
-			      </button>
-			      <ul class="uib-dropdown-menu" role="menu" aria-labelledby="split-button">
-			        <li role="menuitem"ng-repeat='tool in toolsPoss track by $index' ng-click='addConcept(tool, $index, spellTools, toolsPoss, "tools")'>{{tool}}</li>
-			      </ul>
-			</div>
-			{{spellTools}}
+<!-- 		<div class="btn-group inline" uib-dropdown>
+			<button type="button" class="btn btn-success" uib-dropdown-toggle>
+	        	<span>Select Variables</span>
+		        <span class="caret"></span>
+		        <span class="sr-only">Split button!</span>
+	        </button>
+	        <ul class="uib-dropdown-menu" role="menu" aria-labelledby="split-button">
+	        	<li role="menuitem"ng-repeat='tool in toolsPoss track by $index' ng-click='addTool(tool, $index, "variable")'>{{tool}}</li>
+	        </ul>
+		</div> -->
+			
 			<!--the page's toolbox-->
 			<tool-box></tool-box>
 		</div>

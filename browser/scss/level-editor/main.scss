@@ -1,0 +1,28 @@
+.add-variable{
+	border-style: groove;
+    border-width: medium;
+    border-color: $green;
+	h4{
+		font-family: $font-title !important;
+		margin-bottom: 0px;
+	}
+	.select-var-type {
+		padding: 0px;
+		margin: 0px;
+		width: 50%;
+	}
+	
+}
+
+.btn.tool{
+	background: $turqoise;
+}
+
+.btn.variable{
+	background: $green;
+	float: right;
+}
+
+.btn.direction{
+	background: $purple;
+}

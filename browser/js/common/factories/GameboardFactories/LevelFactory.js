@@ -19,40 +19,73 @@ app.factory('LevelFactory', function(PageFactory, UserFactory, AuthService, MapF
     }
 
     // requirements is structured as:
-    // { requirementA: {
-    //    actionA: {val:false},
-    //    actionB: {val:false}
+    // { win: {
+      //  requirementA: {
+      //    actionA: {val:false},
+      //    actionB: {val:false}
+      //  },
+      //  lose: {},
+      //  length: {},
     //}}
-    resetRequirements(){
-      for(var req in this.requirements){
-        for (var action in this.requirements[req]){
-          for (var val in this.requirements[req][action]){
-            this.requirements[req][action][val] = false;
+
+    //resets req objs
+    resetRequirements(){ 
+      var level = this;
+      console.log('this outside', level)
+      resetWinLoseReq('win');
+      resetWinLoseReq('lose');
+    
+      //resets the keys in win or lose conditions
+      function resetWinLoseReq(condType){ //condType is 'win' or 'lose'
+            console.log('this inside fn', level)
+        if(level.requirements[condType]) {
+          for(var req in level.requirements[condType]){
+            for (var action in level.requirements[condType][req]){
+              for (var val in level.requirements[condType][req][action]){
+                level.requirements[condType][req][action][val] = false;
+              }
+            }
           }
         }
       }
-
     }
 
-    isSolved(){
-    //loop through requirements and verify they are true
-    for (var req in this.requirements){
-      for (var action in this.requirements[req]){
-        for (var val in this.requirements[req][action]){
-          // console.log('val', this.requirements[req][action][val])
-          if (this.requirements[req][action][val] === false) return false;
+    //checks req obj to seeif all condtions are met
+    // checks win reqs for false, lose reqs for true, length and numMoves
+    isSolved(spellMoves, spellLength){
+      var level = this;
+      var solved = checkWinLoseReqs('win');
+      solved = checkWinLoseReqs('lose');
+      if (this.requirements.spellLength) solved = this.requirements.spellLength <= spellLength;
+      if (this.requirements.numMoves) solved = this.requirements.numMoves <= spellMoves;
+      return solved;
+            console.log('this inside fn', level)
+
+  
+    function checkWinLoseReqs(condType){
+      //loop through requirements and verify they are true
+      if (!level.requirements[condType]) {
+        for (var req in level.requirements[condType]){
+          for (var action in level.requirements[condType][req]){
+            for (var val in level.requirements[condType][req][action]){
+              // console.log('val', level.requirements[req][action][val])
+              if (condType === 'win') if (level.requirements[condType][req][action][val] === false) return false;
+              else if (condType === 'lose') if (level.requirements[condType][req][action][val] === true) return false;
+            }
+          }
         }
       }
+      return true;
     }
-    return true;
   }
 
     //check and update requirements
     updateReq(variable, action, val){
         if (_.has(this.requirements, variable, action, val)){
-           this.requirements[variable][action][val] = true;
-        }
+          console.log('!!!found it')
+           // this.requirements[reqType][variable][action][val] = true;
 
+        }
     }
 
     win(){
@@ -86,9 +119,6 @@ app.factory('LevelFactory', function(PageFactory, UserFactory, AuthService, MapF
                 userInfo._unfinishedPages.push(this.nextPage._id);
               }else userInfo._completedStories.push(this.page.storyId);
 
-              //save it.
-              // return UserFactory.save(userInfo);
-              // userInfo.update();
               return UserFactory.update(userInfo._id, {mastery: userInfo.mastery, unfinishedPages: userInfo._unfinishedPages, completedStories: userInfo._completedStories});
             })
             .then(saved => {
@@ -106,7 +136,6 @@ app.factory('LevelFactory', function(PageFactory, UserFactory, AuthService, MapF
 
       return false;
     }
-
 
   }
 
