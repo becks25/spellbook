@@ -1,9 +1,13 @@
 <div class="container" id="page">
 
 	<div class="left-side-page"></div>
+	<div class="left-side-page right-flip flipped"></div>
 	<div class="book-cover"></div>
 	<div class="right-side-page"></div>
-	<div class="col-md-6 col-sm-12">
+	<div class="right-side-page right"></div>
+
+	<!--current story text-->
+	<div class="col-md-6 col-sm-12 left-hide">
 		<!--Text -->
 		<div class="storyText" id="storyText">
 			<p></p>
@@ -17,7 +21,22 @@
 
 	</div>
 
+	<!--next story text-->
+	<div class="col-md-6 col-sm-12 right-flip flipped">
+		<!--Text -->
+		<div class="storyText" id="nextStoryText">
+			<p></p>
+		</div>
 
+		<div class="hint">
+			<br />
+			<button ng-show="!hintRequested" ng-click="getHint()" class="btn">Get Hint</button>
+			<p ng-show="hintRequested">{{page.hint}}</p>
+		</div>
+
+	</div>
+
+	<!--current story board-->
 	<div class="col-md-6 col-sm-12 right" id="right-page">
 		<div id="canvas" class="img-square">
 			<div id="cr-stage"  class="text-center center-block">
@@ -25,42 +44,43 @@
 			</div>
 		</div>
 
-		<!--clear/run/step buttons-->
-		<!-- <div class="text-center center-block">
-			<button class="btn" ng-click="resetLevel()">Clear</button>
-			<button class="btn" ng-click="runSpell(spellComponents)">Run</button>
-			<button class="btn" ng-click='stepThrough(spellComponents)'>Step</button>
+	</div>
 
+	<!--next story board-->
+	<div class="col-md-6 col-sm-12 right-beneath">
+		<div id="next-canvas" class="img-square canvas">
+			<div id="cr-stage-next" class="text-center center-block cr-stage">
+				<div ng-repeat="i in grid track by $index" style="height:{{size}}; width:{{size}}" class="square"></div>
+			</div>
 		</div>
- -->
 
 	</div>
 
+
 	<div class="clearfix"></div>
-	<div class="col-md-6 col-sm-12">
+
+	<!--current story tools-->
+	<div class="col-md-6 col-sm-12 left-hide">
 		<!--the page's toolbox-->
 		<tool-box class="bottom-page"></tool-box>
 	</div>
 
+	<!--next story tools-->
+	<div class="col-md-6 col-sm-12 right-flip flipped">
+		<!--the page's toolbox-->
+		<next-tool-box tools="nextTools" directions="directions" vars="nextVars" class="bottom-page"></next-tool-box>
+	</div>
+
+	<!--current story spell-->
 	<div class="col-md-6 col-sm-12 right">
 		<!--Drop box for spells/instructions-->
 		<spell class="bottom-page"></spell>
 	</div>
 
-	<!-- <div class="left-side-page col-md-6">
-		
-
+	<!--next story spell-->
+	<div class="col-md-6 col-sm-12 right-beneath">
+		<!--Drop box for spells/instructions-->
+		<new-spell class="bottom-page"></new-spell>
 	</div>
-	<div class="right-side-page col-md-6" id="right-page">
-	
-	<!-- </div>
-
-
-	<!-- <div class="col-md-6 col-sm-12"> -->
-
-	<!-- </div> -->
-	<!-- </div> -->
-
-
 
 </div>
