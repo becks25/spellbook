@@ -13,7 +13,12 @@ var schema = new mongoose.Schema({
     concepts: [String],
     hint: String,
     gameboard: [],
-    requirements: {}, //win scenario {var:{action:{val:false}}}
+    requirements: {
+        win: {}, 
+        lose: {}, 
+        spellLength:Number, 
+        numMoves: Number 
+    },
     pageNumber: Number,
     boardBackground: {type: String, default: 'images/flower-field.png'}
 });

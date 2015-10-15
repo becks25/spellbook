@@ -9,7 +9,7 @@ app.config($stateProvider => {
                     console.log(user);
                     return UserFactory.find(user._id);
 
-                })
+                });
               }
         },
         views: {
@@ -22,7 +22,7 @@ app.config($stateProvider => {
 	});
 });
 
-app.controller('levelEditCtrl', ($scope, AuthService, $state, ClassFactory, SPRITES, LevelFactory, TilesizeFactory, SpellFactory, SpellComponentFactory, SPRITE_AVATARS, orderByFilter, $compile, user) => {
+app.controller('levelEditCtrl', ($scope, AuthService, $state, ClassFactory, SPRITES, LevelFactory, TilesizeFactory, SpellFactory, SpellComponentFactory, SPRITE_AVATARS, orderByFilter, $compile, user, AvatarFactory, PageFactory, $uibModal) => {
 	// $scope.story = story;
 	var boardPlaceholder = [
 		[[],[],[],[],[]],
@@ -32,7 +32,6 @@ app.controller('levelEditCtrl', ($scope, AuthService, $state, ClassFactory, SPRI
 		[[],[],[],[],[]],
 	];
 
-	$scope.current = 'select concepts'
 	$scope.user = user;
 	$scope.page = {
 		// story:$scope.story._id,
@@ -41,43 +40,60 @@ app.controller('levelEditCtrl', ($scope, AuthService, $state, ClassFactory, SPRI
 		gameboard: boardPlaceholder,
 		hint: '',
 
-	};
-	$scope.toolsPoss = SpellComponentFactory.possTools;
-    $scope.dirsPoss = ['up', 'down', 'right', 'left']; 
-	$scope.spellTools = [];
-	$scope.spellVars = [];
-	$scope.directions = [];
+  };
 	$scope.possConcepts = SpellComponentFactory.possConcepts;
+  $scope.toolsPoss = SpellComponentFactory.possTools;
+  $scope.dirsPoss = SpellComponentFactory.possDirections; 
+  $scope.spellTools = [];
+  $scope.spellVars = [];
+  $scope.directions = [];
 	$scope.concepts = [];
+  $scope.spellComponents = []; //used for storing dragged requirements
 	//used to keep track of vars that should be refreshed in tool box
+  //array members have the same type as poss arrays (str, str, obj)
 	var saved ={
 		'tools': [],
-		'vars': [],
-		'dirs': []
+		'dirs': [], //this might not need to be in here
+    'vars': [],
 	};
 
+  var toolsForRequirements = ['pickUp', 'give', 'ask', 'tell'];
+  //stores temp new var before saving
+  $scope.newVar;
+  clearNewVar();
+  $scope.varTypes = ['person', 'variable', 'condition'];
+  console.log('varTypes', $scope.varTypes)
+  $scope.varFnTypes = ['holding', 'match', 'true', 'false'];
 	
-console.log('tools pos', $scope.toolsPoss)
+  function clearNewVar(){
+    $scope.newVar = {
+      text: '', 
+      varType: '',
+      fnType: '',
+      arg: ''
+    };
+  };
+
     //these functions construct the lists of variables that will be shown on the page
     //can be called to reset the lists in the tool box after item is dragged out
     var makeSpellTool = (selected) => {
         var newTool = SpellComponentFactory.makeToolObj(selected);
         $scope.spellTools.push(newTool);
+        saved.tools.push(selected);
     };
     var makeSpellDir = (selected) => {
-      	$scope.directions.push({
-	        name: selected,
-	        text: selected,
-	        type: 'direction',
-	        varType: 'direction'
-	    });
+      	var newDir = SpellComponentFactory.makeSpellDir(selected);
+        $scope.directions.push(newDir);
+        saved.dirs.push(selected);
   	};
   	var makeSpellVar = (newVarObj)=> {
+      newVarObj = SpellComponentFactory.makeSpellVar(newVarObj);
   		$scope.spellVars.push(newVarObj);
+      saved.vars.push(newVarObj);
   	};
 
-  	//removes an item from a scope array 
-  	//called by the x buttons
+  	//removes an item from spellComponents 
+  	//called by the x buttons in the requirements box
   	$scope.removeItem = (index, loc)=>{
   		loc.splice(index, 1);
   	};
@@ -85,31 +101,113 @@ console.log('tools pos', $scope.toolsPoss)
   		console.log('saving page', $scope.page);
   	};
 
-  	$scope.addConcept = (concept, index, addLoc, removeLoc, tool, alsoRemove)=>{
-  		if (alsoRemove){
-  			//remove from scope var and saved
-  		}
-  		else if(tool) {
-  			console.log('yes', tool)
-  			saved[tool].push(concept);
-  			if (removeLoc) removeLoc.splice(index, 1);
-  			switch (tool){
-  				case 'tools':
-  					makeSpellTool(concept);
-  					break;
-  				case 'vars':
-  					makeSpellVar(concept);
-  					break;
-  				case 'dirs':
-  					makeSpellDir(concept);
-  					break;
-  			}
+    //for adding and removing str/str
+    $scope.addConcept = (concept, index, addLoc, removeLoc) => {
+      addLoc.push(concept);
+      removeLoc.splice(index, 1);
+    };
 
-  		} else {
-	  		concept.name ? addLoc.push(concept) : addLoc.push(concept);
-	  		removeLoc.splice(index, 1);
-	  	}
-  	};
+  	$scope.addTool = (tool, index, type)=>{
+      switch (type){
+        case 'tool':
+          return makeSpellTool(tool);
+        case 'direction':
+          return makeSpellDir(tool);
+        case 'variable':
+        if(!tool.text) return;
+          makeSpellVar(tool);
+          clearNewVar();
+      }
+    };
+  		
+    $scope.removeToolOrDir = (tool, index, loc)=>{
+      //remove from scope.spell_____
+      loc.splice(index, 1);
+      //remove from saved[tool.type]
+      var foundIndex = saved[tool.type].indexOf(tool.name)
+      saved[tool.type].splice(foundIndex, 1);
+      //add tool.name to poss list
+      tool.type === 'tool' ? $scope.toolsPoss.push(tool.name) : $scope.dirsPoss.push(tool.name);
+    };
+
+var baseConfig = {
+        placeholder: "beingDragged",
+        tolerance: 'pointer',
+        revert: 100
+    };
+
+    //add tools to the spell components array
+    $scope.toolConfig = angular.extend({}, baseConfig, {
+        update: (e, ui) => {
+          console.log('running update', ui.item, ui.item.scope())
+            // only moves a tool to the spell box if it is an action for the page requirements
+            if (ui.item.sortable.droptarget.hasClass('first') || (ui.item.scope() && !toolsForRequirements.some(tool=> tool === ui.item.scope().tool.action))) {
+                ui.item.sortable.cancel();
+            }
+        },
+        stop: (e, clone) => {
+
+            if (e.target) {
+                if ($(e.target).hasClass('first')) {
+                    $scope.spellTools = saved.tools.map(tool=>SpellComponentFactory.makeToolObj(tool));                    
+                }
+            }
+        },
+        connectWith: ".spellComponents"
+    });
+
+    //Handles directions and variables
+    //determines if dropped in a valid position and updates target object's property
+    var dirStuff = [];
+    var model = [];
+    var dropTargetIndex;
+    var newVar={};
+    var parentArray;
+    $scope.dirConfig = angular.extend({}, baseConfig, {
+        //this only runs if valid drop
+        update: (e, ui) => {
+            // console.log("this is the e item", ui.item.scope());
+
+            if (ui.item.sortable.droptarget.hasClass('first')) {
+                console.log(ui.item.sortable.droptarget)
+                ui.item.sortable.cancel();
+                // refresh();
+            } else {
+                //set newVar to clone of dragged variable
+                newVar = _.cloneDeep(ui.item.scope().tool);
+                //sets parent array and drop index to keep track of what to modify
+                dropTargetIndex = ui.item.sortable.droptarget.data('index');
+                parentArray = ui.item.sortable.droptarget.scope().parent;
+
+                //resets tools arrays to create duplication and ensure spell components are clones
+                $scope.spellVars = saved.vars.map(variable=>SpellComponentFactory.makeSpellVar(variable));                    
+                //refresh();
+                // $scope.resetLevel();
+            }
+        },
+        stop: (e, ui) => {
+            //runs on drop
+            //this will only run if a tool is being dropped in a valid area
+            //set prop on droppee
+            //checks that drop target can take this variable
+            if(dropTargetIndex>-1 && parentArray[dropTargetIndex].hasOwnProperty(newVar.varType)){
+                $scope.spellVars = saved.vars.map(variable=>SpellComponentFactory.makeSpellVar(variable));                    
+                    console.log('newVar');
+
+                parentArray[dropTargetIndex][newVar.varType] = newVar.name;
+
+                //reset variables
+                newVar = null;
+                parentArray = null;
+                dropTargetIndex = -1;
+                // refresh();
+            }
+        },
+        connectWith: ".spellCompVars"
+    });
+      
+
+
 
 //loads board and sprites based on screen size
     TilesizeFactory.NumTiles = $scope.page.gameboard.length;

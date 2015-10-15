@@ -94,7 +94,7 @@ var seedPages = function(stories){
                 ],
                 concepts: ['If-statements'],
                 hint: 'Make sure you ask Moopsy what\'s wrong',
-                requirements: {Moopsy_Monkey: {ask:{'Whats_wrong': false}}},
+                requirements: {win: {Moopsy_Monkey: {ask:{'Whats_wrong': false}}}},
                 gameboard: [
                     [
                         [],
@@ -148,7 +148,7 @@ var seedPages = function(stories){
                 ],
                 concepts: ['If-statements'],
                 hint: 'If Mopsy needs help, ask what you can do!',
-                requirements: {Mopsy_Monkey: {ask:{'How_can_I_help': false}}},
+                requirements: {win: {Mopsy_Monkey: {ask:{'How_can_I_help': false}}}},
                 gameboard: [
                     [
                         [],
@@ -201,11 +201,11 @@ var seedPages = function(stories){
                 ],
                 concepts: ['For Loop'],
                 hint: 'You can use a repeat to do an action more than once',
-                requirements: {
+                requirements: {win:{
                     'Banana&1': {pickUp:{val: false}},
                     'Banana&2': {pickUp:{val: false}},
                     'Banana&3': {pickUp:{val: false}}
-                },
+                }},
                 gameboard: [
                     [
                         [{
@@ -270,7 +270,7 @@ var seedPages = function(stories){
                 ],
                 concepts: ['If-statements'],
                 hint: 'Try using the if-statement',
-                requirements: {present: {pickUp: {val: false}}},
+                requirements: {win: {present: {pickUp: {val: false}}}},
                 gameboard: [
                     [
                         [{
@@ -347,13 +347,12 @@ var seedPages = function(stories){
                 ],
                 concepts: ['For Loop'],
                 hint: 'Try repeating, and think about using the bump to your advantage',
-                requirements: {
+                requirements: { win: {
                     'Alien&1': {ask:{'Have_you_seen_Liz?': false}},
                     'Alien&2': {ask:{'Have_you_seen_Liz?': false}},
                     'Alien&3': {ask:{'Have_you_seen_Liz?': false}},
                     'Alien&4': {ask:{'Have_you_seen_Liz?': false}}
-
-                },
+                }},
                 gameboard: [
                     [
                         [{
@@ -422,11 +421,11 @@ var seedPages = function(stories){
                 ],
                 concepts: ['While Loop', 'Conditionals', 'Expressions'],
                 hint: 'You can use a repeat to do an action more than once',
-                requirements: {
+                requirements: { win:{
                     'key': {pickUp:{val: false}},
                     'Guard&2': {give:{key: false}},
                     // 'Guard&1': {pickUp:{val: true}}
-                },
+                }},
                         
                 gameboard: [
                     [
@@ -498,7 +497,7 @@ var seedPages = function(stories){
                     variables: [{text: 'Omri', varType: 'person'}, {text: 'Zeke', varType: 'person'}, {text: 'Joe', varType: 'person'}, {text: 'Say hi', varType: 'variable'}, {text: 'Green Potion', varType: 'variable'}, {text: 'The potion is green', varType: 'condition'}],
                     concepts: [concepts[Math.floor(Math.random()*concepts.length)]],
                     hint: 'Try harder',
-                    requirements: {Green_Potion: {pickUp: {val: false}}},
+                    requirements: {win:{Green_Potion: {pickUp: {val: false}}}},
                     gameboard: [
                         [
                             [{
