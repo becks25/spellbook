@@ -25,7 +25,7 @@ router.get('/:storyId', (req, res, next) => {
 router.post('/', (req, res, next) => {
     if(req.user) {
         console.log("here is the user", req.user)
-        req.body.author = req.user;
+        req.body.author = req.user._id;
         Story.create(req.body)
             .then(story => res.status(201).send(story))
             .then(null, next);
