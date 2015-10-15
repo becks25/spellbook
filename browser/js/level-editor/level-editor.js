@@ -22,7 +22,7 @@ app.config($stateProvider => {
 	});
 });
 
-app.controller('levelEditCtrl', ($scope, AuthService, $state, $stateParams, ClassFactory, SPRITES, LevelFactory, TilesizeFactory, SpellFactory, SpellComponentFactory, SPRITE_AVATARS, orderByFilter, $compile, user, AvatarFactory, PageFactory, $uibModal) => {
+app.controller('levelEditCtrl', ($scope, AuthService, $state, $stateParams, ClassFactory, SPRITES, LevelFactory, TilesizeFactory, SpellFactory, SpellComponentFactory, SPRITE_AVATARS, orderByFilter, $compile, user, AvatarFactory, PageFactory, $uibModal, StoryFactory) => {
 	// $scope.story = story;
 
 	var boardPlaceholder = [
@@ -68,17 +68,25 @@ app.controller('levelEditCtrl', ($scope, AuthService, $state, $stateParams, Clas
   //sets newVar to empty version on load
   clearNewVar();
 
-  $scope.savePage = ()=>{
+  $scope.savePage = () =>{
     //page obj already has story, text, hint, background, gameboard
     $scope.page.tools = saved.tools;
     $scope.page.directions = saved.dirs;
     $scope.page.variables = saved.vars;
-    console.log('spellComponents', $scope.spellComponents)
+    console.log('spellComponents', $scope.spellComponents);
     //set req from spell box
     $scope.page.requirements = $scope.level.constructReqs($scope.spellComponents)
     //set gameboard with objs
     //find pg num
-    console.log('saving page', $scope.page);
+    StoryFactory.find($stateParams.storyId)
+    .then(story => story.getAllPages($stateParams.storyId))
+    .then(pages => {
+      $scope.page.pageNumber = pages.length;
+      return PageFactory.create($scope.page);
+    }).then(page => {
+      console.log('made', page)
+      $state.go('add', {storyId: $stateParams.storyId})
+    });
   };
   
   //stores temp new var before saving
