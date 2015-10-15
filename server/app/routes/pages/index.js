@@ -31,9 +31,9 @@ router.get('/:pageId', (req, res, next) => {
 
 //create one
 // passes in the body
-router.post('/:storyId', (req, res, next) => {
+router.post('/', (req, res, next) => {
     if(req.user) {
-        Page.create(req.body)
+        return Page.create(req.body)
             .then(page => res.status(201).send(page))
             .then(null, next);
     } next();
