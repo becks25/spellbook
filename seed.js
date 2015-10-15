@@ -336,7 +336,7 @@ var seedPages = function(stories){
                     ]
                 ],
                 pageNumber: 0,
-                boardBackground: 'image/flower-field.png'
+                boardBackground: 'images/flower-field.png'
 
             },{
                 story: story._id,
@@ -410,7 +410,7 @@ var seedPages = function(stories){
                     ]
                 ],
                 pageNumber: 1,
-                boardBackground: 'image/mars.png'
+                boardBackground: 'images/mars.png'
 
             },{
                 story: story._id,
@@ -487,7 +487,7 @@ var seedPages = function(stories){
                     ]
                 ],
                 pageNumber: 2,
-                boardBackground: 'image/mars.png'
+                boardBackground: 'images/mars.png'
 
             }
 
