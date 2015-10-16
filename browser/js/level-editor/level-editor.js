@@ -41,7 +41,7 @@ app.controller('levelEditCtrl', ($scope, AuthService, $state, $stateParams, Clas
   $scope.directions = [];
   $scope.concepts = []; //concepts user has added to pg
   $scope.spellComponents = []; //used for storing dragged requirements
-  $scope.varTypes = ['Person', 'Variable', 'Condition'];
+  $scope.varTypes = ['person', 'variable', 'condition'];
   $scope.varFnTypes = ['holding', 'match', 'true', 'false'];
   $scope.newVar = {};
   $scope.page = {
@@ -80,6 +80,7 @@ app.controller('levelEditCtrl', ($scope, AuthService, $state, $stateParams, Clas
     //page obj already has story, text, hint, background, gameboard
     $scope.page.tools = saved.tools;
     $scope.page.directions = saved.dirs;
+    console.log('saving', saved.vars)
     $scope.page.variables = saved.vars;
     console.log('spellComponents', $scope.spellComponents);
     //set req from spell box
@@ -107,13 +108,19 @@ app.controller('levelEditCtrl', ($scope, AuthService, $state, $stateParams, Clas
 
   //add sprite to board and saved arr
   $scope.saveSprite = ()=>{
+    var sprite = {
+      type: $scope.newSprite.type,
+      name: $scope.newSprite.name,      
+    };
+    if ($scope.newSprite.varName) sprite.varName = $scope.newSprite.varName;
+    if ($scope.newSprite.match) sprite.match = $scope.newSprite.match;
     $scope.page.gameboard[$scope.newSpritePos.x][$scope.newSpritePos.y].push($scope.newSprite);
-    var sprite = _.cloneDeep($scope.newSprite);
-    sprite.pos = $scope.newSpritePos;
+    $scope.newSprite.pos = $scope.newSpritePos;
     console.log('saved Sprites before', sprite, $scope.savedSprites)
 
-    $scope.savedSprites.push(sprite);
+    $scope.savedSprites.push($scope.newSprite);
     console.log('saved Sprites', $scope.savedSprites)
+    console.log('gameboard', $scope.page.gameboard)
     $scope.newSprite = {
       type: null,
       name: null,
@@ -145,6 +152,7 @@ app.controller('levelEditCtrl', ($scope, AuthService, $state, $stateParams, Clas
         var newTool = SpellComponentFactory.makeToolObj(selected);
         $scope.spellTools.push(newTool);
         saved.tools.push(selected);
+        console.log('making spell tool')
     };
     var makeSpellDir = (selected) => {
       	var newDir = SpellComponentFactory.makeSpellDir(selected);
@@ -152,9 +160,11 @@ app.controller('levelEditCtrl', ($scope, AuthService, $state, $stateParams, Clas
         saved.dirs.push(selected);
   	};
   	var makeSpellVar = (newVarObj)=> {
-      newVarObj = SpellComponentFactory.makeSpellVar(newVarObj);
-  		$scope.spellVars.push(newVarObj);
       saved.vars.push(newVarObj);
+      console.log('making', newVarObj)
+      newVarObj = SpellComponentFactory.makeSpellVar(newVarObj);
+      $scope.spellVars.push(newVarObj);
+      console.log('saved vars', saved.vars)
   	};
 
   	//removes an item from spellComponents
@@ -172,8 +182,10 @@ app.controller('levelEditCtrl', ($scope, AuthService, $state, $stateParams, Clas
   	$scope.addTool = (tool, index, type)=>{
       switch (type){
         case 'tool':
+          $scope.toolsPoss.splice(index, 1)
           return makeSpellTool(tool);
         case 'direction':
+          $scope.dirsPoss.splice(index, 1)       
           return makeSpellDir(tool);
         case 'variable':
         if(!tool.text) return;

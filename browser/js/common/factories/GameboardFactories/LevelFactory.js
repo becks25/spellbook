@@ -30,11 +30,11 @@ app.factory('LevelFactory', function(PageFactory, UserFactory, AuthService, MapF
     //}}
 
     //resets req objs
-    resetRequirements(){
+    resetRequirements(){ 
       var level = this;
       resetWinLoseReq('win');
       resetWinLoseReq('lose');
-
+    
       //resets the keys in win or lose conditions
       function resetWinLoseReq(condType){ //condType is 'win' or 'lose'
         if(level.requirements[condType]) {
@@ -59,7 +59,7 @@ app.factory('LevelFactory', function(PageFactory, UserFactory, AuthService, MapF
       if (solved && this.requirements.numMoves) solved = this.requirements.numMoves <= spellMoves;
       return solved;
 
-
+  
     function checkWinLoseReqs(condType){
       //loop through requirements and verify they are true
       if (level.requirements[condType]) {
@@ -78,7 +78,7 @@ app.factory('LevelFactory', function(PageFactory, UserFactory, AuthService, MapF
   }
 
     //check and update requirements
-    updateReq(action, variable, person){
+    updateReq(action, variable, person){     
       if (_.has(this.requirements, 'win', action, variable, person)){
           if(this.requirements['win'] && this.requirements['win'][action] && this.requirements['win'][action][variable] && this.requirements['win'][action][variable].hasOwnProperty(person)){
             this.requirements['win'][action][variable][person] = true;
@@ -121,7 +121,7 @@ app.factory('LevelFactory', function(PageFactory, UserFactory, AuthService, MapF
             })
             .then(saved => {
               this.won = true;
-              return true;
+              return true; 
             });
         });
 

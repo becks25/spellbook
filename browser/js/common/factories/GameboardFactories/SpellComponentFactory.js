@@ -8,7 +8,7 @@ app.factory('SpellComponentFactory', function(ConditionFnFactory, LARGE_AVATARS,
             return {
             	name: name,
             	 text: variable.text,
-            	  type: 'variable',
+            	  type: 'variable', 
             	  varType: variable.varType,
             	  //value is a function that returns true or false depending on the state of the game
             	  value: (spell) => {
@@ -46,6 +46,7 @@ app.factory('SpellComponentFactory', function(ConditionFnFactory, LARGE_AVATARS,
 	          toolObj.text = 'pick up';
 	          toolObj.variable = null;
 	          toolObj.type = 'tool';
+
 	          break;
 	        case 'give':
 	          toolObj.action = 'give';
@@ -54,7 +55,7 @@ app.factory('SpellComponentFactory', function(ConditionFnFactory, LARGE_AVATARS,
 	          toolObj.variable = null;
 	          toolObj.type = 'tool';
 	          break;
-	        case 'If-Statement':
+	        case 'ifStatement':
 	          toolObj.action = 'ifStatement';
 	          toolObj.text = 'if';
 	          toolObj.condition = null;
@@ -62,14 +63,14 @@ app.factory('SpellComponentFactory', function(ConditionFnFactory, LARGE_AVATARS,
 	          toolObj.elseExpr = null;
 	          toolObj.type = 'tool';
 	          break;
-	        case 'For Loop':
+	        case 'forLoop':
 	          toolObj.action = 'forLoop';
 	          toolObj.text = 'repeat';
 	          toolObj.number = 1;
 	          toolObj.expressions = [];
 	          toolObj.type = 'tool';
 	          break;
-	        case 'While Loop':
+	        case 'whileLoop':
 	          toolObj.action = 'whileLoop';
 	          toolObj.text = 'repeat while';
 	          toolObj.condition = null;
@@ -90,7 +91,7 @@ app.factory('SpellComponentFactory', function(ConditionFnFactory, LARGE_AVATARS,
 	          toolObj.variable = null;
 	          toolObj.type = 'tool';
 	          break;
-	        default:
+	        default: 
 	          toolObj.action = toolStr;
 	          toolObj.text = toolStr;
 	          toolObj.person = null;
