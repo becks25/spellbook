@@ -1,4 +1,4 @@
-
+$brown: #45320b;
 .go-back, .go-forward{
 	position:absolute;
 	top:50%;
@@ -163,7 +163,7 @@
 	position:absolute;
     bottom:3%;
     top:-1%;
-    background-color:#45320b;
+    background-color:$brown;
     left:-2%;
     right:-2%;
     -webkit-box-shadow: 3px 7px 13px 5px rgba(0,0,0,0.62);
