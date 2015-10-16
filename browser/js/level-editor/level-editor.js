@@ -23,7 +23,6 @@ app.config($stateProvider => {
 });
 
 app.controller('levelEditCtrl', ($scope, AuthService, $state, $stateParams, ClassFactory, SPRITES, LevelFactory, TilesizeFactory, SpellFactory, SpellComponentFactory, SPRITE_AVATARS, orderByFilter, $compile, user, AvatarFactory, PageFactory, $uibModal, StoryFactory) => {
-	// $scope.story = story;
 
 	var boardPlaceholder = [
 		[[],[],[],[],[]],

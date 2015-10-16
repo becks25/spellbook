@@ -26,6 +26,7 @@ app.config(function ($stateProvider) {
 app.controller('UserCtrl', function ($scope, AuthService, UserFactory, $state, user, StoryFactory, LARGE_AVATARS, $window) {
   $scope.user = user;
   $scope.allAvatars = LARGE_AVATARS;
+    console.log(user.unfinishedPages);
 
   $scope.totalPoints = (function(){
     var total = 0;
