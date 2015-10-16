@@ -2,7 +2,7 @@ app.config(function ($stateProvider) {
     $stateProvider.state('user', {
         url: '/me',
         data: {
-          authenticate: true
+            authenticate: true
         },
         views: {
             'main': {
@@ -11,31 +11,31 @@ app.config(function ($stateProvider) {
             }
         },
         resolve: {
-          user: (UserFactory, AuthService) => {
-            return AuthService.getLoggedInUser()
-            .then(user => {
-                return UserFactory.find(user._id);
+            user: (UserFactory, AuthService) => {
+                return AuthService.getLoggedInUser()
+                    .then(user => {
+                        return UserFactory.find(user._id);
 
-            })
-          }
-          // completedStories: (user, StoryFactory)
+                    })
+            }
+            // completedStories: (user, StoryFactory)
         }
     });
 });
 
 app.controller('UserCtrl', function ($scope, AuthService, UserFactory, $state, user, StoryFactory, LARGE_AVATARS, $window) {
-  $scope.user = user;
-  $scope.allAvatars = LARGE_AVATARS;
+    $scope.user = user;
+    $scope.allAvatars = LARGE_AVATARS;
 
-  $scope.totalPoints = (function(){
-    var total = 0;
+    $scope.totalPoints = (function(){
+        var total = 0;
 
-    $scope.user.mastery.forEach(concept => total+= concept.pointsEarned);
+        $scope.user.mastery.forEach(concept => total+= concept.pointsEarned);
 
-    return total;
-  })();
+        return total;
+    })();
 
-  var findIfStarted = (story) => {
+    var findIfStarted = (story) => {
         return story.getAllPages(story._id)
             .then(pages => {
                 for(var i =0; i < user.unfinishedPages.length; i++) {
@@ -50,66 +50,70 @@ app.controller('UserCtrl', function ($scope, AuthService, UserFactory, $state, u
             });
     };
 
-  $scope.goToStoryPage = (event, story) => {
+    $scope.goToStoryPage = (event, story) => {
         findIfStarted(story).then(result => {
-          $state.go('page', {id: result._id})
+            $state.go('page', {id: result._id})
         });
     };
 
-  $scope._ = _;
+    $scope._ = _;
 
-  $scope.ranger = _.range(3,19);
-  $scope.userCopy = _.create($scope.user);
+    $scope.ranger = _.range(3,19);
+    $scope.userCopy = _.create($scope.user);
 
-  $scope.editing=false;
+    $scope.editing=false;
 
-  $scope.toggleEditing = function(){
-    $scope.editing = !$scope.editing;
-  };
+    $scope.toggleEditing = function(){
+        $scope.editing = !$scope.editing;
+    };
 
-  $scope.selectCharacter = (character) => {
-    $scope.user.character.picture = character;
-  };
+    $scope.selectCharacter = (character) => {
+        $scope.user.character.picture = character;
+    };
 
-  $scope.restoreValuesToSaved = () => {
-    $scope.user = _.create($scope.userCopy);
-  };
-
-
-  $scope.saveProfile = () =>{
-    UserFactory.update($scope.user._id, $scope.user);
-  };
+    $scope.restoreValuesToSaved = () => {
+        $scope.user = _.create($scope.userCopy);
+    };
 
 
-  var dataArr = [];
-
-  function Dataset(concept, points, possible) {
-    this.label= concept;
-    this.points= points;
-    this.possible= possible-points;
-    if(possible===0) this.possible = 1;
-    this.data= [this.points, this.possible];
-  };
-
-  $scope.user.mastery.forEach(concept =>{
-    var data = new Dataset(concept.topic, concept.pointsEarned, concept.pointsPossible);
-
-    dataArr.push(data);
-  });
+    $scope.saveProfile = () =>{
+        console.log('saving');
+        UserFactory.update($scope.user._id, $scope.user);
+    };
 
 
-  var width = document.querySelector('#mastery').clientWidth/3 *2;
+    var dataArr = [];
 
-  var radius = Math.min(width, width) / 2;
+    function Dataset(concept, points, possible) {
+        this.label= concept;
+        this.points= points;
+        this.possible= possible-points;
+        if(possible===0) this.possible = 1;
+        this.data= [this.points, this.possible];
+    };
 
-  var color = d3.scale.category20c();
+    $scope.user.mastery.forEach(concept =>{
+        var data = new Dataset(concept.topic, concept.pointsEarned, concept.pointsPossible);
 
-  var pie = d3.layout.pie()
-      .sort(null);
+        dataArr.push(data);
+    });
 
-  var arc = d3.svg.arc()
-      .innerRadius(radius - radius/2)
-      .outerRadius(radius - radius/4);
+    console.log(dataArr);
+
+
+
+    var width = document.querySelector('#mastery').clientWidth/3 *2;
+
+    var radius = Math.min(width, width) / 2;
+
+    var color = d3.scale.category20c();
+
+    var pie = d3.layout.pie()
+        .sort(null);
+
+    var arc = d3.svg.arc()
+        .innerRadius(radius - radius/2)
+        .outerRadius(radius - radius/4);
 
     dataArr.forEach((data, index) => {
         var svg = d3.select("#mastery").append("svg")
@@ -120,7 +124,7 @@ app.controller('UserCtrl', function ($scope, AuthService, UserFactory, $state, u
 
         var path = svg.selectAll("path")
             .data(pie(data.data))
-          .enter().append("path")
+            .enter().append("path")
             .attr("fill", function(d, i) { return color((index*4) + i); })
             .attr("d", arc)
             .transition() //animate the pies!
@@ -130,77 +134,29 @@ app.controller('UserCtrl', function ($scope, AuthService, UserFactory, $state, u
 
 
         svg.append("text")
-           .attr('dy', '-.3em')
-           .attr("text-anchor", "middle")
-           .text(function(d, i){
-              return data.label;
+            .attr('dy', '-.3em')
+            .attr("text-anchor", "middle")
+            .text(function(d, i){
+                return data.label;
             })
 
         svg.append("text")
-           .attr('dy', '1em')
-           .attr("text-anchor", "middle")
-           .text(function(d, i){
-              var total = 0;
-              if(data.points !== 0) total = data.points+data.possible;
+            .attr('dy', '1em')
+            .attr("text-anchor", "middle")
+            .text(function(d, i){
+                var total = 0;
+                if(data.points !== 0) total = data.points+data.possible;
 
-              return data.points + '/' + total + ' points';
+                return data.points + '/' + total + ' points';
             })
-      });
-
-
-
-<<<<<<< HEAD
-    $scope.piesLoaded = false;
-    angular.element($window).bind('scroll', e =>{
-      var position = angular.element($window)[0].pageYOffset;
-      var bottom = $(window).height();
-      if(position >= bottom-100 && !$scope.piesLoaded){
-        $scope.piesLoaded = true;
-
-        dataArr.forEach((data, index) => {
-            var svg = d3.select("#mastery").append("svg")
-                .attr("width", width)
-                .attr("height", width)
-                .append("g")
-                .attr("transform", "translate(" + width / 2 + "," + width / 2 + ")");
-
-            var path = svg.selectAll("path")
-                .data(pie(data.data))
-              .enter().append("path")
-                .attr("fill", function(d, i) { return color((index*4) + i); })
-                .attr("d", arc)
-                .transition() //animate the pies!
-                .ease("circle")
-                .duration(1200)
-                .attrTween("d", tweenPie);
-
-
-            svg.append("text")
-               .attr('dy', '-.3em')
-               .attr("text-anchor", "middle")
-               .text(function(d, i){
-                  return data.label;
-                })
-
-            svg.append("text")
-               .attr('dy', '1em')
-               .attr("text-anchor", "middle")
-               .text(function(d, i){
-                  var total = 0;
-                  if(data.points !== 0) total = data.points+data.possible;
-
-                  return data.points + '/' + total + ' points';
-                })
-          });
-
-      }
     });
-=======
->>>>>>> master
 
 
-  function tweenPie(b) {
-    var i = d3.interpolate({startAngle: 1.1*Math.PI, endAngle: 1.1*Math.PI}, b);
-    return function(t) { return arc(i(t)); };
-  }
+
+
+
+    function tweenPie(b) {
+        var i = d3.interpolate({startAngle: 1.1*Math.PI, endAngle: 1.1*Math.PI}, b);
+        return function(t) { return arc(i(t)); };
+    }
 });
