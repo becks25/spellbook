@@ -70,12 +70,8 @@ app.factory('LevelFactory', function(PageFactory, UserFactory, AuthService, MapF
       if (level.requirements[condType]) {
       console.log(level.requirements[condType])
         for (var action in level.requirements[condType]){
-          console.log('1st level', action, level.requirements[condType])
           for (var variable in level.requirements[condType][action]){
-            console.log('2nd')
             for (var person in level.requirements[condType][action][variable]){
-              console.log('3rd', action, variable, person)
-              console.log('person', level.requirements[condType][action][variable][person])
               if (condType === 'win') {
                 console.log('hit?', level.requirements[condType][action][variable][person] === false)
                 if (level.requirements[condType][action][variable][person] === false) return false;
@@ -90,12 +86,27 @@ app.factory('LevelFactory', function(PageFactory, UserFactory, AuthService, MapF
 
     //check and update requirements
     updateReq(action, variable, person){
+      // var obj = this.requirements.win
+      // var objLose = this.requirements.lose
+      //   if (_.has(obj, action, variable, person)){
+      //       console.log('!!!found it win', action, variable, person)
+      //       this.requirements['win'][action][variable][person] = true;
+      //   } else if (_.has(objLose, action, variable, person)){
+      //     console.log('lose', action, variable, person)
+      //     this.requirements['lose'][action][variable][person] = true;
+      //   }
+
+
+
+                
         if (_.has(this.requirements, 'win', action, variable, person)){
-            console.log('!!!found it win')
+          console.log('updating', action, variable, person)
+          if(this.requirements['win'] && this.requirements['win'][action] && this.requirements['win'][action][variable] && this.requirements['win'][action][variable].hasOwnProperty(person)){
             this.requirements['win'][action][variable][person] = true;
-        } else if (_.has(this.requirements, 'lose', action, variable, person)){
-             this.requirements['lose'][action][variable][person] = true;
-        }
+          } else this.requirements['lose'][action][variable][person] = true;
+        console.log('lose', this.requirements)
+      }
+console.log('after', this.requirements)
     }
 
     win(){
