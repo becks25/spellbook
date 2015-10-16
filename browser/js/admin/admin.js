@@ -73,25 +73,14 @@ app.config(function ($stateProvider) {
 
 });
 
-app.controller('AdminController', function ($scope, stories, users, mastery, popularStory, CONCEPTS, usersData) {
+app.controller('AdminController', function ($scope, stories, users, mastery, popularStory, CONCEPTS, usersData, PageFactory, $state) {
     $scope.stories = stories;
     $scope.users = users;
     $scope.averageMastery = mastery[0];
     $scope.averageRating = mastery[1];
     $scope.storyPopularity = popularStory;
     $scope.authors = _.uniq($scope.stories, 'author');
-    //console.log("these are authors", $scope.authors)
-    $scope.theAuthors = [];
-    function findAuthors (){
-        for (var i = 0; i < $scope.stories.length; i++){
-
-            if($scope.stories[i].author!== undefined){
-            $scope.theAuthors.push($scope.stories[i].author.username)
-        }
-        }
-        console.log($scope.theAuthors)
-    }
-    findAuthors();
+   
 
     $scope.mostPopular = _.max($scope.storyPopularity, (story) => story[1]);
 
@@ -122,6 +111,23 @@ app.controller('AdminController', function ($scope, stories, users, mastery, pop
     $scope.findPercentage = (part, total) => {
         if(part === 0 || total === 0) return '0%';
         return Math.floor(part/total * 100) + '%'
+    }
+
+    $scope.goToStory = (story) => {
+        console.log("hitting this")
+        PageFactory.findAll()
+        .then(function(pages){
+            console.log(pages)
+            for (var i =0; i < pages.length; i++){
+                if (pages[i].storyId === story._id){
+                    if (page[i].pageNumber === 0){
+                        console.log("made it all the way")
+                        $state.go('page', {id: page[i]._id})
+                    }
+                }
+            }
+        })
+
     }
 
 
