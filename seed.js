@@ -422,7 +422,7 @@ var seedPages = function(stories){
                 concepts: ['While Loop', 'Conditionals', 'Expressions'],
                 hint: 'You can use a repeat to do an action more than once',
                 requirements: { win:{
-                        pickUp: {'key':{val: false}},
+                        pickUp: {'key':{noOne: false}},
                         give: {key:{'Guard&2': false}},
                     }, lose: {
                         give: {
