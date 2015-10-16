@@ -23,15 +23,9 @@ app.config(function ($stateProvider) {
     });
 });
 
-app.controller('UserCtrl', function ($scope, AuthService, UserFactory, $state, user, StoryFactory, LARGE_AVATARS) {
+app.controller('UserCtrl', function ($scope, AuthService, UserFactory, $state, user, StoryFactory, LARGE_AVATARS, $window) {
   $scope.user = user;
-  // $scope.getScore = UserFactory.methods.getScore();
-  // console.log('score', $scope.getScore);
-  // $scope.goToPage = (pageNum)=>{
-  //   StoryFactory.goToPage(pageNum);
-  // };
   $scope.allAvatars = LARGE_AVATARS;
-  //$scope.user.character.picture;
 
   $scope.totalPoints = (function(){
     var total = 0;
@@ -85,6 +79,8 @@ app.controller('UserCtrl', function ($scope, AuthService, UserFactory, $state, u
 
   console.log(dataArr);
 
+  
+
   var width = document.querySelector('#mastery').clientWidth/4;
 
   var radius = Math.min(width, width) / 2;
@@ -99,42 +95,55 @@ app.controller('UserCtrl', function ($scope, AuthService, UserFactory, $state, u
       .outerRadius(radius - radius/4);
 
 
-  dataArr.forEach((data, index) => {
-    var svg = d3.select("#mastery").append("svg")
-        .attr("width", width)
-        .attr("height", width)
-        .append("g")
-        .attr("transform", "translate(" + width / 2 + "," + width / 2 + ")");
-
-    var path = svg.selectAll("path")
-        .data(pie(data.data))
-      .enter().append("path")
-        .attr("fill", function(d, i) { return color((index*4) + i); })
-        .attr("d", arc)
-        .transition() //animate the pies!
-        .ease("exp")
-        .duration(2000)
-        .attrTween("d", tweenPie);
 
 
-    svg.append("text")
-       .attr('dy', '-.3em')
-       .attr("text-anchor", "middle")
-       .text(function(d, i){
-          return data.label;
-        })
+    $scope.piesLoaded = false;
+    angular.element($window).bind('scroll', e =>{
+      var position = angular.element($window)[0].pageYOffset;
+      var bottom = $(window).height();
+        console.log('location', $scope.piesLoaded);
+      if(position >= bottom-100 && !$scope.piesLoaded){
+        $scope.piesLoaded = true;
 
-    svg.append("text")
-       .attr('dy', '1em')
-       .attr("text-anchor", "middle")
-       .text(function(d, i){
-          var total = 0;
-          if(data.points !== 0) total = data.points+data.possible;
+        dataArr.forEach((data, index) => {
+            var svg = d3.select("#mastery").append("svg")
+                .attr("width", width)
+                .attr("height", width)
+                .append("g")
+                .attr("transform", "translate(" + width / 2 + "," + width / 2 + ")");
 
-          return data.points + '/' + total + ' points';
-        })
+            var path = svg.selectAll("path")
+                .data(pie(data.data))
+              .enter().append("path")
+                .attr("fill", function(d, i) { return color((index*4) + i); })
+                .attr("d", arc)
+                .transition() //animate the pies!
+                .ease("circle")
+                .duration(1200)
+                .attrTween("d", tweenPie);
 
-   });
+
+            svg.append("text")
+               .attr('dy', '-.3em')
+               .attr("text-anchor", "middle")
+               .text(function(d, i){
+                  return data.label;
+                })
+
+            svg.append("text")
+               .attr('dy', '1em')
+               .attr("text-anchor", "middle")
+               .text(function(d, i){
+                  var total = 0;
+                  if(data.points !== 0) total = data.points+data.possible;
+
+                  return data.points + '/' + total + ' points';
+                })
+          });
+
+      }
+    });
+
 
   function tweenPie(b) {
     var i = d3.interpolate({startAngle: 1.1*Math.PI, endAngle: 1.1*Math.PI}, b);
