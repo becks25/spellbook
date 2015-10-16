@@ -26,7 +26,6 @@ app.config(function ($stateProvider) {
 app.controller('UserCtrl', function ($scope, AuthService, UserFactory, $state, user, StoryFactory, LARGE_AVATARS, $window) {
   $scope.user = user;
   $scope.allAvatars = LARGE_AVATARS;
-    console.log(user.unfinishedPages);
 
   $scope.totalPoints = (function(){
     var total = 0;
@@ -50,7 +49,7 @@ app.controller('UserCtrl', function ($scope, AuthService, UserFactory, $state, u
                 }
             });
     };
-    
+
   $scope.goToStoryPage = (event, story) => {
         findIfStarted(story).then(result => {
           $state.go('page', {id: result._id})
@@ -98,15 +97,8 @@ app.controller('UserCtrl', function ($scope, AuthService, UserFactory, $state, u
     dataArr.push(data);
   });
 
-<<<<<<< HEAD
-  var width = document.querySelector('#mastery').clientWidth/4;
-=======
-  console.log(dataArr);
-
-  
 
   var width = document.querySelector('#mastery').clientWidth/3 *2;
->>>>>>> master
 
   var radius = Math.min(width, width) / 2;
 

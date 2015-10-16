@@ -58,7 +58,6 @@ app.controller('AddStoryController', function ($scope, user, StoryFactory, $stat
 
         StoryFactory.create(storyToCreate)
         .then(function(story){
-            console.log('going', story, story._id)
             $state.go('add', {storyId: story._id})
         });
 
