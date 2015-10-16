@@ -56,7 +56,6 @@ app.controller('UserCtrl', function ($scope, AuthService, UserFactory, $state, u
 
 
   $scope.saveProfile = () =>{
-    console.log('saving');
     UserFactory.update($scope.user._id, $scope.user);
   };
 
@@ -76,10 +75,6 @@ app.controller('UserCtrl', function ($scope, AuthService, UserFactory, $state, u
 
     dataArr.push(data);
   });
-
-  console.log(dataArr);
-
-  
 
   var width = document.querySelector('#mastery').clientWidth/4;
 
@@ -101,7 +96,6 @@ app.controller('UserCtrl', function ($scope, AuthService, UserFactory, $state, u
     angular.element($window).bind('scroll', e =>{
       var position = angular.element($window)[0].pageYOffset;
       var bottom = $(window).height();
-        console.log('location', $scope.piesLoaded);
       if(position >= bottom-100 && !$scope.piesLoaded){
         $scope.piesLoaded = true;
 

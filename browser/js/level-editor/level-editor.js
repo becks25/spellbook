@@ -36,7 +36,7 @@ app.controller('levelEditCtrl', ($scope, AuthService, $state, $stateParams, Clas
 	$scope.user = user;
   $scope.possConcepts = SpellComponentFactory.possConcepts;
   $scope.toolsPoss = SpellComponentFactory.possTools;
-  $scope.dirsPoss = SpellComponentFactory.possDirections; 
+  $scope.dirsPoss = SpellComponentFactory.possDirections;
   $scope.spellTools = []; // visible in toolbox
   $scope.spellVars = [];
   $scope.directions = [];
@@ -45,7 +45,7 @@ app.controller('levelEditCtrl', ($scope, AuthService, $state, $stateParams, Clas
   $scope.varTypes = ['person', 'variable', 'condition'];
   $scope.varFnTypes = ['holding', 'match', 'true', 'false'];
   $scope.newVar;
-  $scope.page = { 
+  $scope.page = {
     story:$stateParams.storyId,
     text: '',
     boardBackground: 'images/flower-field.png',
@@ -95,11 +95,11 @@ app.controller('levelEditCtrl', ($scope, AuthService, $state, $stateParams, Clas
       $state.go('add', {storyId: $stateParams.storyId})
     });
   };
-  
+
   //stores temp new var before saving
   function clearNewVar(){
     $scope.newVar = {
-      text: '', 
+      text: '',
       varType: '',
       fnType: '',
       arg: ''
@@ -124,7 +124,7 @@ app.controller('levelEditCtrl', ($scope, AuthService, $state, $stateParams, Clas
       saved.vars.push(newVarObj);
   	};
 
-  	//removes an item from spellComponents 
+  	//removes an item from spellComponents
   	//called by the x buttons in the requirements box
   	$scope.removeItem = (index, loc)=>{
   		loc.splice(index, 1);
@@ -148,7 +148,7 @@ app.controller('levelEditCtrl', ($scope, AuthService, $state, $stateParams, Clas
           clearNewVar();
       }
     };
-  		
+
     $scope.removeToolOrDir = (tool, index, loc)=>{
       //remove from scope.spell_____
       loc.splice(index, 1);
@@ -178,7 +178,7 @@ var baseConfig = {
 
             if (e.target) {
                 if ($(e.target).hasClass('first')) {
-                    $scope.spellTools = saved.tools.map(tool=>SpellComponentFactory.makeToolObj(tool));                    
+                    $scope.spellTools = saved.tools.map(tool=>SpellComponentFactory.makeToolObj(tool));
                 }
             }
         },
@@ -209,7 +209,7 @@ var baseConfig = {
                 parentArray = ui.item.sortable.droptarget.scope().parent;
 
                 //resets tools arrays to create duplication and ensure spell components are clones
-                $scope.spellVars = saved.vars.map(variable=>SpellComponentFactory.makeSpellVar(variable));                    
+                $scope.spellVars = saved.vars.map(variable=>SpellComponentFactory.makeSpellVar(variable));
                 //refresh();
                 // $scope.resetLevel();
             }
@@ -220,7 +220,7 @@ var baseConfig = {
             //set prop on droppee
             //checks that drop target can take this variable
             if(dropTargetIndex>-1 && parentArray[dropTargetIndex].hasOwnProperty(newVar.varType)){
-                $scope.spellVars = saved.vars.map(variable=>SpellComponentFactory.makeSpellVar(variable));                    
+                $scope.spellVars = saved.vars.map(variable=>SpellComponentFactory.makeSpellVar(variable));
                     console.log('newVar');
 
                 parentArray[dropTargetIndex][newVar.varType] = newVar.name;
@@ -234,7 +234,7 @@ var baseConfig = {
         },
         connectWith: ".spellCompVars"
     });
-      
+
 
 
 

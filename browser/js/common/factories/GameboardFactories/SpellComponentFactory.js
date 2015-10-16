@@ -8,11 +8,10 @@ app.factory('SpellComponentFactory', function(ConditionFnFactory, LARGE_AVATARS,
             return {
             	name: name,
             	 text: variable.text,
-            	  type: 'variable', 
+            	  type: 'variable',
             	  varType: variable.varType,
             	  //value is a function that returns true or false depending on the state of the game
             	  value: (spell) => {
-            	  	console.log(variable.arg)
             	  	return ConditionFnFactory[variable.fnType](variable.arg, spell);
             	  },
             	};
@@ -85,7 +84,7 @@ app.factory('SpellComponentFactory', function(ConditionFnFactory, LARGE_AVATARS,
 	          toolObj.variable = null;
 	          toolObj.type = 'tool';
 	          break;
-	        default: 
+	        default:
 	          toolObj.action = toolStr;
 	          toolObj.text = toolStr;
 	          toolObj.person = null;

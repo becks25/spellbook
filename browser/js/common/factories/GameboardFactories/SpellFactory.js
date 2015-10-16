@@ -64,7 +64,6 @@ app.factory('SpellFactory', function(TilesizeFactory){
   			this.currentCommand = 0;
 
   		} else {
-  			console.log(this.currentCommand)
   			this.currentCommand < spellArr.length-1 ? this.currentCommand ++ : this.currentCommand = null;
   		}
   		if (this.currentCommand!==null){
@@ -171,7 +170,6 @@ app.factory('SpellFactory', function(TilesizeFactory){
 	    	//not sure what these do
 	    		var toAsk = spell.map.checkPos(this.avatar.position, component.person);
 	    		if (toAsk) {
-	    			console.log('in asking');
 	    			this.level.updateReq('ask', component.variable, toAsk.varName);
     			}
 	    		break;
