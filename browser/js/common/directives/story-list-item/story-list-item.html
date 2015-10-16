@@ -1,12 +1,18 @@
-	<div class="col-md-6 storyItem">
-		<img ng-src={{story.cover}} class='cover-image' ng-class="{hover: hover}" ng-mouseenter="hover = true" ng-mouseleave="hover = false">
-	</div>
-	<div class="'col-md-6">
-		<h3>{{story.title}}</h3>
-		<p ng-show="story.author"><b>Author:</b> {{story.author.username}}</p>
-		<p><b>Concepts:</b> {{story.concepts.join(", ")}}</p>
-		<p>{{story.description | limitTo: 100}}<span ng-if="story.description.length > 100">...</span></p>
-	</div>
+<div class="col-md-6 storyItem" ng-mouseenter="hover()" ng-mouseleave="hover()">
+	<p ng-show="show" class="description">{{story.description | limitTo: 100}}<span ng-if="story.description.length > 100">...</span></p>
+	<img ng-src={{story.cover}} class='cover-image' />
 
+</div>
+<div class="col-md-6">
+	<h3>{{story.title}}</h3>
+	<p ng-show="story.author"><b>Author:</b> {{story.author.username}}</p>
+	<p><b>Concepts:</b> {{story.concepts.join(", ")}}</p>
+	
+</div>
 
+<div class="shelf-whole col-sm-12 text-center center-block">
+	<div class=" shelf-top"></div>
+	<div class="shelf clearfix"></div>
+
+</div>
 	
