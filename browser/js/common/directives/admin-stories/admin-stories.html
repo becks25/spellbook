@@ -1,7 +1,7 @@
 <div class="panel">
 	<!--TODO: links go to right url, but not right view-->
 	<div class="panel-heading">
-		<h3><a ui-sref="story.indivStory({storyId: story._id})">{{story.title}}</a></h3>
+		<h3><a ng-click="goToStory(story)">{{story.title}}</a></h3>
 	</div>
 	<div class="panel-body">
 		<p><b>Author: </b> {{story.author.username || 'SpellBook'}} </p>
@@ -9,3 +9,5 @@
 		<p><b>Concepts: </b> {{story.concepts.join(', ')}}</p>
 	</div>
 </div>
+<!-- 
+ui-sref="story.indivStory({storyId: story._id})" -->
