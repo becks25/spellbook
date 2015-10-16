@@ -66,6 +66,10 @@ var schema = new mongoose.Schema({
     },
     google: {
         id: String
+    },
+    isTeacher: {
+        type: Boolean,
+        default: false
     }
 });
 // schema.plugin(deepPopulate);
