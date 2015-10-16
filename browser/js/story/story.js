@@ -33,7 +33,6 @@ app.controller('StoryCtrl', ($scope, $state, stories, $timeout, StoryFactory, $s
             .then(pages => {
                 for(var i =0; i < user.unfinishedPages.length; i++) {
                     if(user.unfinishedPages[i].storyId === story._id) {
-                        console.log('here');
                         return user.unfinishedPages[i];
                     }
                 }
@@ -42,7 +41,7 @@ app.controller('StoryCtrl', ($scope, $state, stories, $timeout, StoryFactory, $s
                 }
             });
     };
-    
+
     $scope.goToStoryPage = (event, story) => {
         findIfStarted(story).then(result => {
             Promise.all(outTran.animate(event.currentTarget))

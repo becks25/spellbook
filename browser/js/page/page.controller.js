@@ -113,18 +113,15 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
     //$scope.spellDirections = [];
     $scope.spellComponentDirs = [];
 
-    console.log("there is a user on scope", $scope.user.character.picture)
-
     //construct the directions with a function to fix drop and drag bug
     function spellDirConstr() {
         return SpellComponentFactory.possDirections.map(dir => SpellComponentFactory.makeSpellDir(dir));
     };
-    
+
     //scope.page.tools is an array of strings - .action of the objs
-    // takes vars and tools from page model and makes command objs
+    // takes vars and tools frogit m page model and makes command objs
     // pushes each obj to spellTools arr
     function spellToolConstr() {
-        console.log('tools', $scope.page.tools)
         return $scope.page.tools.map(tool=> SpellComponentFactory.makeToolObj(tool));
     };
 
@@ -157,7 +154,7 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
 
             if (e.target) {
                 if ($(e.target).hasClass('first')) {
-                    $scope.spellTools = spellToolConstr();                    
+                    $scope.spellTools = spellToolConstr();
                     $scope.resetLevel();
                 }
             }
@@ -178,8 +175,6 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
             // console.log("this is the e item", ui.item.scope());
 
             if (ui.item.sortable.droptarget.hasClass('first')) {
-                console.log('hi')
-                console.log(ui.item.sortable.droptarget)
                 ui.item.sortable.cancel();
             } else {
                 //set newVar to clone of dragged variable
@@ -203,7 +198,6 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
                 $scope.spellVars = spellVarConstr();
                 $scope.directions = spellDirConstr();
                 if (newVar.varType ==='condition') {
-                    console.log('newVar');
                     parentArray[dropTargetIndex][newVar.varType] = newVar;
                 }else parentArray[dropTargetIndex][newVar.varType] = newVar.name;
 
@@ -275,7 +269,7 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
                             controller: 'ModalCtrl'
                         });
                     }
-                    
+
                 }
             });
 

@@ -6,9 +6,9 @@
 		  	<action-tools ng-if="variable.action === 'pickUp' || variable.action==='tell' || variable.action==='give' || variable.action==='ask'" actiontool="variable" model="variable.expressions" index="$index" parent="tool.expressions" remove="removeFromTool"></action-tools>
 
 		  	<move-tool ng-if="variable.action==='move'" movetool="variable" model="variable.expressions" index="$index" parent="tool.expressions" remove="removeFromTool"></move-tool>
-
+            <move-tool-random ng-if="variable.action==='moveRandom'" movetool="variable" model="variable.expressions" index="$index" parent="tool.expressions" remove="removeFromTool"></move-tool-random>
 		  	<logic-tools ng-if="variable.action === 'ifStatement' || variable.action === 'whileLoop' || variable.action==='forLoop'" logictool="variable" model="variable" index="$index" parent="tool.expressions" remove="removeFromTool"></logic-tools>
-			
+
 		  </li>
 		  Drop action here
 		</ul>

@@ -30,14 +30,13 @@ app.factory('LevelFactory', function(PageFactory, UserFactory, AuthService, MapF
     //}}
 
     //resets req objs
-    resetRequirements(){ 
+    resetRequirements(){
       var level = this;
       resetWinLoseReq('win');
       resetWinLoseReq('lose');
-    
+
       //resets the keys in win or lose conditions
       function resetWinLoseReq(condType){ //condType is 'win' or 'lose'
-            console.log('this inside fn', level)
         if(level.requirements[condType]) {
           for(var action in level.requirements[condType]){
             for (var variable in level.requirements[condType][action]){
@@ -60,17 +59,14 @@ app.factory('LevelFactory', function(PageFactory, UserFactory, AuthService, MapF
       if (solved && this.requirements.numMoves) solved = this.requirements.numMoves <= spellMoves;
       return solved;
 
-  
+
     function checkWinLoseReqs(condType){
-      console.log(condType)
       //loop through requirements and verify they are true
       if (level.requirements[condType]) {
-      console.log(level.requirements[condType])
         for (var action in level.requirements[condType]){
           for (var variable in level.requirements[condType][action]){
             for (var person in level.requirements[condType][action][variable]){
               if (condType === 'win') {
-                console.log('hit?', level.requirements[condType][action][variable][person] === false)
                 if (level.requirements[condType][action][variable][person] === false) return false;
               }else if (condType === 'lose') if (level.requirements[condType][action][variable][person] === true) return false;
             }
@@ -82,7 +78,7 @@ app.factory('LevelFactory', function(PageFactory, UserFactory, AuthService, MapF
   }
 
     //check and update requirements
-    updateReq(action, variable, person){     
+    updateReq(action, variable, person){
       if (_.has(this.requirements, 'win', action, variable, person)){
           if(this.requirements['win'] && this.requirements['win'][action] && this.requirements['win'][action][variable] && this.requirements['win'][action][variable].hasOwnProperty(person)){
             this.requirements['win'][action][variable][person] = true;
@@ -125,7 +121,7 @@ app.factory('LevelFactory', function(PageFactory, UserFactory, AuthService, MapF
             })
             .then(saved => {
               this.won = true;
-              return true; 
+              return true;
             });
         });
 
