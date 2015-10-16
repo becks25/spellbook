@@ -105,8 +105,9 @@ app.factory('SpellFactory', function(TilesizeFactory){
 
 	    // Lock for initial command, more locks may be applied by animations, etc.
 	    // this.lock();
-
+console.log('executing', component)
 	    switch(component.action){
+
 	    	case 'move':
 	    		var distArr = [];
 	    		for(var i = 0; i<component.distance; i++){
@@ -184,7 +185,7 @@ app.factory('SpellFactory', function(TilesizeFactory){
 	    	case 'tell':
 	    		var toAsk = spell.map.checkPos(this.avatar.position, component.person);
 	    		if (toAsk) {
-	    			this.level.updateReq('ask', component.variable, toAsk.varName);
+	    			this.level.updateReq('tell', component.variable, toAsk.varName);
     			}
 	    		break;
 	    }

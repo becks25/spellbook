@@ -4,13 +4,13 @@
 		<uib-carousel no-wrap="false" class='col-xs-5'>
 	      <uib-slide ng-repeat="sprite in possSprites">
 	        <img ng-src="{{sprite.img}}" style="margin:auto;" class="sprite-thumbnail">
-	        <button ng-click='selectImg(sprite)' class="btn btn-default">Select this character</button>
+	        <div ng-click='selectImg(sprite)' class=" button btn btn-default">Select this character</div>
 	      </uib-slide>
 	    </uib-carousel>
 	    </div>
 	    <div ng-show='newSprite.name' class='inline'>
 	    	<md-select class='sprite-props select-var-type inline' placeholder="Select type" ng-model="newSprite.type">
-	     		<md-option ng-repeat='type in ["Collectable", "Obstacle", "Person"]' value='{{type}}'>{{type}}</md-option>
+	     		<md-option ng-repeat='type in ["Collectible", "Obstacle", "Person"]' value='{{type}}'>{{type}}</md-option>
 	 		</md-select>
 	    	<md-select class='sprite-props select-var-type inline' placeholder="Select name" ng-model="newSprite.varName">
 	     		<md-option ng-repeat='name in spellVars' value='{{name.name}}'>{{name.name}}</md-option>
