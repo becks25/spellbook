@@ -101,7 +101,35 @@
 			<tool-box></tool-box>
 		</div>
 
-		<div class="col-md-6 col-sm-12">
+		<div class="col-md-6 col-sm-12 inline">
+		<!--Add Sprites-->
+		<div class="sprite-carousel clearfix">
+		<uib-carousel no-wrap="false">
+	      <uib-slide ng-repeat="sprite in possSprites">
+	        <img ng-src="{{sprite.img}}" style="margin:auto;" class="sprite-thumbnail">
+	      </uib-slide>
+	    </uib-carousel>
+	    </div>
+	    <div class='inline'>
+	    	<md-select class='sprite-props' placeholder="Select type" ng-model="newSprite.type">
+	     		<md-option ng-repeat='type in ["Collectable", "Obstacle", "Person"]' value='{{type}}'>{{type}}</md-option>
+	 		</md-select>
+	    	<md-select class='sprite-props' placeholder="Select name" ng-model="newSprite.varName">
+	     		<md-option ng-repeat='name in spellVars' value='{{name.name}}'>{{name.name}}</md-option>
+	 		</md-select>
+	 		<md-select class='sprite-props' placeholder="Select match" ng-model="newSprite.match">
+	     		<md-option ng-repeat='variable in spellVars' value='{{variable.name}}'>{{variable.name}}</md-option>
+	 		</md-select>	    	
+	    </div>
+	    <button ng-click="selectsprite()">Add to gameboard</button>
+		<!-- 	<md-select class='select-sprite' placeholder="Select sprite" ng-model="newVar.varType">
+	     		<md-option ng-repeat='sprite in possSprites' value='{{sprite}}'><img ng-src={{story.cover}} class='cover-image' ng-class="{hover: hover}" ng-mouseenter="hover = true" ng-mouseleave="hover = false"></md-option>
+	 		</md-select> -->
+		
+
+
+
+
 			<!--Drop box for spells/instructions-->
 			<h5>Drag tools in here to tasks to be completed in order to win the level.  Only actions (ex, ask, pick up) can be requirements</h5>
 			<spell></spell>
