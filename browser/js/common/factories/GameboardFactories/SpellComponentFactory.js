@@ -1,4 +1,4 @@
-app.factory('SpellComponentFactory', function(ConditionFnFactory){
+app.factory('SpellComponentFactory', function(ConditionFnFactory, LARGE_AVATARS, SPRITES){
 	return {
 		possTools: ['move', 'ifStatement', 'whileLoop', 'forLoop', 'pickUp', 'give', 'tell', 'ask'],
 		possConcepts:['For Loop', 'While Loop', 'If-statements', 'Conditionals', 'Expressions', 'Movement'],
@@ -93,7 +93,18 @@ app.factory('SpellComponentFactory', function(ConditionFnFactory){
 	          toolObj.type = toolStr;
 	      }
 	      return toolObj;
-		}
+		},
+		//creates an array of all the sprites with name and imgUrl props
+	    buildSpritesObjList(){
+	        var allSprites = [];
+	        _.forIn(LARGE_AVATARS, (img, sprite)=>{
+	            allSprites.push({name:sprite, img:img});
+	        });
+	        // for (let key of SPRITES){
+
+	        // }
+	        return allSprites;
+	    }
 	};
 
 });
