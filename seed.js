@@ -108,11 +108,11 @@ var seedPages = function(stories){
                     ],
                     [
                         [],
-                        [],
                         [{
                             type:'Obstacle',
                             name:'Tree1'
                         }],
+                        [],
                         []
                     ],
                     [
@@ -161,11 +161,11 @@ var seedPages = function(stories){
                     ],
                     [
                         [],
-                        [],
                         [{
                             type:'Obstacle',
                             name:'Tree1'
                         }],
+                        [],
                         []
                     ],
                     [
@@ -204,7 +204,7 @@ var seedPages = function(stories){
                 requirements: {win:{ pickUp: {
                     'Banana&1': {noOne: false},
                     'Banana&2':{noOne: false},
-                    'Banana&3': {nodOne: false}
+                    'Banana&3': {noOne: false}
                 }}},
                 gameboard: [
                     [

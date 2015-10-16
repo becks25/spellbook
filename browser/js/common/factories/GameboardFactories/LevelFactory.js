@@ -4,6 +4,7 @@ app.factory('LevelFactory', function(PageFactory, UserFactory, AuthService, MapF
       this.page = page;
       this.nextPage = nextPage;
       this.map = new MapFactory(page.gameboard);
+      console.log('page in level fact', this.page)
       this.requirements = this.page.requirements;
       this.hint = page.hint;
       this.concepts = page.concepts;
