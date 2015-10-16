@@ -92,7 +92,7 @@
 
 
 	<div class="panel-body">
-		<admin-stories ng-repeat="story in stories| filter: {title:searchTitle, author: searchAuthor} | inArray: clickedConcepts track by $index"  ng-show="$index<3 || showAll" class="col-sm-4 col-xs-6"></admin-stories>
+		<admin-stories ng-repeat="story in stories| filter: {title:searchTitle, author: {username: searchAuthor}} | inArray: clickedConcepts track by $index"  ng-show="$index<3 || showAll" class="col-sm-4 col-xs-6"></admin-stories>
 	</div>
 	<div ng-hide="showAll" ng-click="showAll = true" class="showmore text-center panel-body">
 		<span class="glyphicon glyphicon-triangle-right"><span> Show more

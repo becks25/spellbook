@@ -80,6 +80,18 @@ app.controller('AdminController', function ($scope, stories, users, mastery, pop
     $scope.averageRating = mastery[1];
     $scope.storyPopularity = popularStory;
     $scope.authors = _.uniq($scope.stories, 'author');
+    //console.log("these are authors", $scope.authors)
+    $scope.theAuthors = [];
+    function findAuthors (){
+        for (var i = 0; i < $scope.stories.length; i++){
+
+            if($scope.stories[i].author!== undefined){
+            $scope.theAuthors.push($scope.stories[i].author.username)
+        }
+        }
+        console.log($scope.theAuthors)
+    }
+    findAuthors();
 
     $scope.mostPopular = _.max($scope.storyPopularity, (story) => story[1]);
 
