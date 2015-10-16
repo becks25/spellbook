@@ -57,6 +57,13 @@ app.controller('levelEditCtrl', ($scope, AuthService, $state, $stateParams, Clas
   };
   $scope.level = new LevelFactory($scope.page);
   $scope.spell = new SpellFactory($scope.level);
+  $scope.possSprites = SpellComponentFactory.buildSpritesObjList();
+  $scope.newSprite = {
+    type: null,
+    name: null,
+    varName: null,
+    match: null
+  };
   var toolsForRequirements = ['pickUp', 'give', 'ask', 'tell'];
   //used to keep track of vars that should be refreshed in tool box and to save pg
   //array members have the same type as poss arrays (str, str, obj)

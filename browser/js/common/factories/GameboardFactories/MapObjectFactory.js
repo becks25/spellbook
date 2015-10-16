@@ -1,4 +1,4 @@
-app.factory('MapObjectFactory', function(PosFactory, TilesizeFactory, AuthService, UserFactory, LARGE_AVATARS, SPRITES){
+app.factory('MapObjectFactory', function(PosFactory, TilesizeFactory, AuthService, UserFactory){
 
     class MapObject {
       constructor(name, position, action, varName, variables, match){
@@ -84,18 +84,6 @@ app.factory('MapObjectFactory', function(PosFactory, TilesizeFactory, AuthServic
           });
         }
       }
-
-      //creates an array of all the sprites with name and imgUrl props
-      buildSpitesListObj(){
-        let allSprites = [];
-        for (let key of LARGE_AVATARS){
-          allSprites.push({name:key, img:LARGE_AVATARS[key]})
-        }
-        for (let key of SPRITES){
-
-        }
-      }
-
     }
 
     return MapObject;
