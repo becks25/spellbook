@@ -69,6 +69,7 @@ story-list-item {
   height: 30px;
   background-color:$brown;
   transform: skewX(-40deg);
+  -webkit-transform: skewX(-40deg);
   opacity:0.9;
   position:absolute;
   bottom:9px;
@@ -76,6 +77,7 @@ story-list-item {
 
 .shelf-whole{
   transform:translateX(-5%) translateY(-5%);
+  -webkit-transform:translateX(-5%) translateY(-5%);
   position:relative;
   height:10px;
 }
