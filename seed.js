@@ -263,7 +263,7 @@ var seedPages = function(stories){
             pages.push({
                 story: story._id,
                 text:'<p>Hi, I’m Aria.  I’m ten years old, my favorite color is yellow, and I have a pet kitten named Omri.  Oh, and I’m a princess. Most of the time, it’s pretty sweet.  Unfortunately, it doesn’t exempt me from having an annoying younger brother who always steals my toys. He’s so annoying, ugg. </p> <p> Today is my birthday and my Aunt says she has an exciting surprise for me.  She is a physicist at NASA, so I’m sure it will be something amazing.  She hid it in one of these boxes. </p><p class="promptText"> Can you go to each one, and pick it up if it is my present?</p>',
-                tools: ['move', 'pickUp', 'ask', 'If-Statement', 'For Loop'],
+                tools: ['move', 'pickUp', 'ask', 'If-Statement', 'For Loop', 'While Loop', 'moveRandom'],
                 variables: [
                     {text: 'present', varType: 'variable'},
                     {text: 'a present is inside', varType: 'condition', fnType: 'match', arg: 'present'}
@@ -279,7 +279,7 @@ var seedPages = function(stories){
                         }],
                         [],
                         [],
-                        [], 
+                        [],
                         []
                     ],
                     [
@@ -328,7 +328,7 @@ var seedPages = function(stories){
                             name: 'Empty',
                             varName: 'present'
                         }],
-                        [], 
+                        [],
                         []
                     ]
                 ],
@@ -427,7 +427,7 @@ var seedPages = function(stories){
                     }, lose: {
                         give: {
                             'key': {'Guard&1': false, 'Guard&3': false}
-                }}},        
+                }}},
                 gameboard: [
                     [
                         [{
@@ -449,7 +449,7 @@ var seedPages = function(stories){
                             type:'Person',
                             name:'Alien1',
                             varName:'Guard&1',
-                            match: 'notNimit'                            
+                            match: 'notNimit'
                         }],
                         [{
                             type:'Person',

@@ -1,6 +1,6 @@
 app.factory('SpellComponentFactory', function(ConditionFnFactory, LARGE_AVATARS, SPRITES){
 	return {
-		possTools: ['move', 'ifStatement', 'whileLoop', 'forLoop', 'pickUp', 'give', 'tell', 'ask'],
+		possTools: ['move', 'ifStatement', 'whileLoop', 'forLoop', 'pickUp', 'give', 'tell', 'ask', 'moveRandom'],
 		possConcepts:['For Loop', 'While Loop', 'If-statements', 'Conditionals', 'Expressions', 'Movement'],
 		possDirections: ['up', 'down', 'left', 'right'],
 		makeSpellVar: (variable)=>{
@@ -34,12 +34,18 @@ app.factory('SpellComponentFactory', function(ConditionFnFactory, LARGE_AVATARS,
 	          toolObj.distance = 1;
 	          toolObj.type = 'tool';
 	          break;
+            case 'moveRandom':
+              toolObj.action ='moveRandom';
+              toolObj.text = 'move random';
+              toolObj.direciton = 'down';
+              toolObj.distance = 1;
+              toolObj.type = 'tool';
+              break;
 	        case 'pickUp':
 	          toolObj.action = 'pickUp';
 	          toolObj.text = 'pick up';
 	          toolObj.variable = null;
 	          toolObj.type = 'tool';
-
 	          break;
 	        case 'give':
 	          toolObj.action = 'give';

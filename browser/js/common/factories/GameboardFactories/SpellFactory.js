@@ -118,6 +118,14 @@ app.factory('SpellFactory', function(TilesizeFactory){
 
 	    		// return Promise.reduce(distArr, (nothing, num)=>moveOne(component.direction))
 	    		// .then(()=>spell.cycle(avatar.position));
+            case 'moveRandom':
+                var directions = ['down', 'up', 'left', 'right'];
+                var randomDirection = directions[Math.floor(Math.random()*4)];
+                return moveOne(randomDirection)
+                    .then(()=>spell.cycle(avatar.position));
+
+            // return Promise.reduce(distArr, (nothing, num)=>moveOne(component.direction))
+            // .then(()=>spell.cycle(avatar.position));
 	    	case 'give':
             	// collectable obj (ref) has to be passed into the function as .variable
             	//search map pos for person to give to
