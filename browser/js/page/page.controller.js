@@ -78,7 +78,7 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
                     .then(function(page){
                      $state.go('page', {id: page._id});
                     });
-            }, 2650);
+            }, 2600);
 
         };
     }
@@ -104,7 +104,7 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
                     .then(function(page){
                      $state.go('page', {id: page._id});
                     });
-            }, 2650);
+            }, 2600);
 
         };
     }

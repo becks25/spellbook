@@ -36,6 +36,27 @@ app.controller('UserCtrl', function ($scope, AuthService, UserFactory, $state, u
     return total;
   })();
 
+  var findIfStarted = (story) => {
+        return story.getAllPages(story._id)
+            .then(pages => {
+                for(var i =0; i < user.unfinishedPages.length; i++) {
+                    if(user.unfinishedPages[i].storyId === story._id) {
+                        console.log('here');
+                        return user.unfinishedPages[i];
+                    }
+                }
+                for(var j =0; j < pages.length; j++) {
+                    if(pages[j].pageNumber === 0) return pages[j];
+                }
+            });
+    };
+    
+  $scope.goToStoryPage = (event, story) => {
+        findIfStarted(story).then(result => {
+          $state.go('page', {id: result._id})
+        });
+    };
+
   $scope._ = _;
 
   $scope.ranger = _.range(3,19);
@@ -77,7 +98,15 @@ app.controller('UserCtrl', function ($scope, AuthService, UserFactory, $state, u
     dataArr.push(data);
   });
 
+<<<<<<< HEAD
   var width = document.querySelector('#mastery').clientWidth/4;
+=======
+  console.log(dataArr);
+
+  
+
+  var width = document.querySelector('#mastery').clientWidth/3 *2;
+>>>>>>> master
 
   var radius = Math.min(width, width) / 2;
 
@@ -90,9 +119,45 @@ app.controller('UserCtrl', function ($scope, AuthService, UserFactory, $state, u
       .innerRadius(radius - radius/2)
       .outerRadius(radius - radius/4);
 
+    dataArr.forEach((data, index) => {
+        var svg = d3.select("#mastery").append("svg")
+            .attr("width", width)
+            .attr("height", width)
+            .append("g")
+            .attr("transform", "translate(" + width / 2 + "," + width / 2 + ")");
+
+        var path = svg.selectAll("path")
+            .data(pie(data.data))
+          .enter().append("path")
+            .attr("fill", function(d, i) { return color((index*4) + i); })
+            .attr("d", arc)
+            .transition() //animate the pies!
+            .ease("circle")
+            .duration(1200)
+            .attrTween("d", tweenPie);
+
+
+        svg.append("text")
+           .attr('dy', '-.3em')
+           .attr("text-anchor", "middle")
+           .text(function(d, i){
+              return data.label;
+            })
+
+        svg.append("text")
+           .attr('dy', '1em')
+           .attr("text-anchor", "middle")
+           .text(function(d, i){
+              var total = 0;
+              if(data.points !== 0) total = data.points+data.possible;
+
+              return data.points + '/' + total + ' points';
+            })
+      });
 
 
 
+<<<<<<< HEAD
     $scope.piesLoaded = false;
     angular.element($window).bind('scroll', e =>{
       var position = angular.element($window)[0].pageYOffset;
@@ -138,6 +203,8 @@ app.controller('UserCtrl', function ($scope, AuthService, UserFactory, $state, u
 
       }
     });
+=======
+>>>>>>> master
 
 
   function tweenPie(b) {
