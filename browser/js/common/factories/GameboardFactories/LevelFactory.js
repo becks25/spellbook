@@ -31,7 +31,6 @@ app.factory('LevelFactory', function(PageFactory, UserFactory, AuthService, MapF
     //resets req objs
     resetRequirements(){ 
       var level = this;
-      console.log('this outside', level)
       resetWinLoseReq('win');
       resetWinLoseReq('lose');
     
@@ -55,18 +54,15 @@ app.factory('LevelFactory', function(PageFactory, UserFactory, AuthService, MapF
     isSolved(spellMoves, spellLength){
       var level = this;
       var solved = checkWinLoseReqs('win')
-      console.log(solved)
       if(solved) solved = checkWinLoseReqs('lose');
       if (solved && this.requirements.spellLength) solved = this.requirements.spellLength <= spellLength;
       if (solved && this.requirements.numMoves) solved = this.requirements.numMoves <= spellMoves;
-      console.log('solved', solved)
       return solved;
 
   
     function checkWinLoseReqs(condType){
       console.log(condType)
       //loop through requirements and verify they are true
-      console.log('req', level.requirements)
       if (level.requirements[condType]) {
       console.log(level.requirements[condType])
         for (var action in level.requirements[condType]){
@@ -85,28 +81,12 @@ app.factory('LevelFactory', function(PageFactory, UserFactory, AuthService, MapF
   }
 
     //check and update requirements
-    updateReq(action, variable, person){
-      // var obj = this.requirements.win
-      // var objLose = this.requirements.lose
-      //   if (_.has(obj, action, variable, person)){
-      //       console.log('!!!found it win', action, variable, person)
-      //       this.requirements['win'][action][variable][person] = true;
-      //   } else if (_.has(objLose, action, variable, person)){
-      //     console.log('lose', action, variable, person)
-      //     this.requirements['lose'][action][variable][person] = true;
-      //   }
-
-
-
-                
-        if (_.has(this.requirements, 'win', action, variable, person)){
-          console.log('updating', action, variable, person)
+    updateReq(action, variable, person){     
+      if (_.has(this.requirements, 'win', action, variable, person)){
           if(this.requirements['win'] && this.requirements['win'][action] && this.requirements['win'][action][variable] && this.requirements['win'][action][variable].hasOwnProperty(person)){
             this.requirements['win'][action][variable][person] = true;
           } else this.requirements['lose'][action][variable][person] = true;
-        console.log('lose', this.requirements)
       }
-console.log('after', this.requirements)
     }
 
     win(){
