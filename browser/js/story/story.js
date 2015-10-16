@@ -44,6 +44,8 @@ app.controller('StoryCtrl', ($scope, $state, stories, $timeout, StoryFactory, $s
 
     $scope.goToStoryPage = (event, story) => {
         findIfStarted(story).then(result => {
+                        $('.shelf-whole').fadeOut();
+            $('.story-info').fadeOut().css('display','none');
             Promise.all(outTran.animate(event.currentTarget))
                 .then(() => $state.go('page', {id: result._id}))
         });

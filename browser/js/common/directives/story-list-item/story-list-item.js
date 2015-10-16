@@ -6,11 +6,12 @@ app.directive('storyListItem', () => {
       story: '=',
       index: '='
     },
-    link: (scope) => {
+    link: (scope, elem) => {
       scope.show = false;
       scope.hover = () => {
         scope.show = !scope.show;
       }
+
     }
   };
 });
