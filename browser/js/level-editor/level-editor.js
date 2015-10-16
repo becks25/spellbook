@@ -62,8 +62,10 @@ app.controller('levelEditCtrl', ($scope, AuthService, $state, $stateParams, Clas
     type: null,
     name: null,
     varName: null,
-    match: null
+    match: null,
   };
+  $scope.newSpritePos = {x: null, y: null};
+  $scope.savedSprites = [];
   var toolsForRequirements = ['pickUp', 'give', 'ask', 'tell'];
   //used to keep track of vars that should be refreshed in tool box and to save pg
   //array members have the same type as poss arrays (str, str, obj)
@@ -92,10 +94,26 @@ app.controller('levelEditCtrl', ($scope, AuthService, $state, $stateParams, Clas
       return PageFactory.create($scope.page);
     }).then(page => {
       console.log('made', page)
-      $state.go('add', {storyId: $stateParams.storyId})
+      $state.go('add', {storyId: $stateParams.storyId});
     });
   };
+  $scope.boardLength = ()=>_.range(1, $scope.page.gameboard.length+1);
   
+  //add sprite to board and saved arr
+  $scope.saveSprite = ()=>{
+    $scope.page.gameboard[$scope.newSpritePos.x][$scope.newSpritePos.y].push($scope.newSprite);
+    $scope.newSprite.pos = $scope.newSpritePos;
+    $scope.savedSprites.push($scope.newSprite);
+    $scope.newSprite = {
+      type: null,
+      name: null,
+      varName: null,
+      match: null,
+    };
+    $scope.newSpritePos = {x: null, y: null};
+
+  };
+
   //stores temp new var before saving
   function clearNewVar(){
     $scope.newVar = {
@@ -104,7 +122,7 @@ app.controller('levelEditCtrl', ($scope, AuthService, $state, $stateParams, Clas
       fnType: '',
       arg: ''
     };
-  };
+  }
 
     //these functions construct the lists of variables that will be shown on the page
     //can be called to reset the lists in the tool box after item is dragged out
@@ -239,9 +257,11 @@ var baseConfig = {
 
 
 //loads board and sprites based on screen size
+    document.getElementById('cr-stage').style.backgroundImage='url('+$scope.page.boardBackground+')';
+
     TilesizeFactory.NumTiles = $scope.page.gameboard.length;
     Crafty.load(['/images/sprites.png']);
-    Crafty.init(TilesizeFactory.TILESIZE * TilesizeFactory.NumTiles, TilesizeFactory.TILESIZE * TilesizeFactory.NumTiles);
+    Crafty.init(TilesizeFactory.TILESIZE/2 * TilesizeFactory.NumTiles, TilesizeFactory.TILESIZE/2 * TilesizeFactory.NumTiles);
 
     Crafty.canvas.init();
 
@@ -250,7 +270,7 @@ var baseConfig = {
 
     $scope.grid = new Array(TilesizeFactory.NumTiles * TilesizeFactory.NumTiles);
 
-    $scope.size = TilesizeFactory.TILESIZE + 'px';
+    $scope.size = TilesizeFactory.TILESIZE/2 + 'px';
 
     // $scope.runSpell = argArr => $scope.spell.run(argArr);
 
