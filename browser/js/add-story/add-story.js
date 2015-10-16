@@ -4,12 +4,8 @@ app.config($stateProvider => {
         resolve: {
             user: (UserFactory, AuthService) => {
                 return AuthService.getLoggedInUser()
-                .then(user => {
-                    console.log(user);
-                    return UserFactory.find(user._id);
-
-                })
-              }
+                    .then(user => UserFactory.find(user._id))
+                }
         },
         views: {
             main: {
@@ -23,7 +19,7 @@ app.config($stateProvider => {
 
 
 app.controller('AddStoryController', function ($scope, user, StoryFactory, $state, SpellComponentFactory) {
-   
+
     $scope.user = user;
 
     $scope.allConcepts = SpellComponentFactory.possConcepts
@@ -37,23 +33,22 @@ app.controller('AddStoryController', function ($scope, user, StoryFactory, $stat
     }
 
     $scope.possibleConcepts = getConcepts();
-    
+
 
 
     $scope.theConcepts = [];
 
     $scope.selectedConcepts = (con) => {
         $scope.theConcepts.push(con.name);
-    }
+    };
 
 
     $scope.logConcepts = () => {
         console.log("logging", $scope.theConcepts);
-    }
+    };
 
 
     $scope.createStory = () => {
-        console.log("the selected", $scope.selectedConcepts);
         var storyToCreate = {};
         storyToCreate.title = $scope.title;
         storyToCreate.description = $scope.description;
@@ -63,7 +58,6 @@ app.controller('AddStoryController', function ($scope, user, StoryFactory, $stat
 
         StoryFactory.create(storyToCreate)
         .then(function(story){
-            console.log('going', story, story._id)
             $state.go('add', {storyId: story._id})
         });
 
@@ -75,4 +69,3 @@ app.controller('AddStoryController', function ($scope, user, StoryFactory, $stat
 
 
 
-   

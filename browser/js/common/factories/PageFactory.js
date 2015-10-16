@@ -13,14 +13,11 @@ app.factory('PageFactory', function(DS, $http) {
         methods: {
             getNext: (page) => {
                 var nextPage = page.pageNumber++;
-                console.log(nextPage);
                 DS.findAll({
                     where: { pageNumber:
                         {"==" : nextPage }
                 }
-            }).then(function(pages){
-                console.log(pages)
-            });
+            })
             },
             logOut: () => {
                 console.log("hello world")

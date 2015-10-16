@@ -34,7 +34,6 @@ app.controller('LoginSignupCtrl', function ($rootScope, AUTH_EVENTS, $scope, Aut
             $scope.user = user;
             $state.go('user', {id: $scope.user._id});
         }).catch(function () {
-            console.log('erroring out here');
             $scope.loginError = 'Invalid login credentials.';
         });
 

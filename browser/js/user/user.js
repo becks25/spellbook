@@ -2,7 +2,7 @@ app.config(function ($stateProvider) {
     $stateProvider.state('user', {
         url: '/me',
         data: {
-          authenticate: true
+            authenticate: true
         },
         views: {
             'main': {
@@ -11,31 +11,31 @@ app.config(function ($stateProvider) {
             }
         },
         resolve: {
-          user: (UserFactory, AuthService) => {
-            return AuthService.getLoggedInUser()
-            .then(user => {
-                return UserFactory.find(user._id);
+            user: (UserFactory, AuthService) => {
+                return AuthService.getLoggedInUser()
+                    .then(user => {
+                        return UserFactory.find(user._id);
 
-            })
-          }
-          // completedStories: (user, StoryFactory)
+                    })
+            }
+            // completedStories: (user, StoryFactory)
         }
     });
 });
 
 app.controller('UserCtrl', function ($scope, AuthService, UserFactory, $state, user, StoryFactory, LARGE_AVATARS, $window) {
-  $scope.user = user;
-  $scope.allAvatars = LARGE_AVATARS;
+    $scope.user = user;
+    $scope.allAvatars = LARGE_AVATARS;
 
-  $scope.totalPoints = (function(){
-    var total = 0;
+    $scope.totalPoints = (function(){
+        var total = 0;
 
-    $scope.user.mastery.forEach(concept => total+= concept.pointsEarned);
+        $scope.user.mastery.forEach(concept => total+= concept.pointsEarned);
 
-    return total;
-  })();
+        return total;
+    })();
 
-  var findIfStarted = (story) => {
+    var findIfStarted = (story) => {
         return story.getAllPages(story._id)
             .then(pages => {
                 for(var i =0; i < user.unfinishedPages.length; i++) {
@@ -49,71 +49,71 @@ app.controller('UserCtrl', function ($scope, AuthService, UserFactory, $state, u
                 }
             });
     };
-    
-  $scope.goToStoryPage = (event, story) => {
+
+    $scope.goToStoryPage = (event, story) => {
         findIfStarted(story).then(result => {
-          $state.go('page', {id: result._id})
+            $state.go('page', {id: result._id})
         });
     };
 
-  $scope._ = _;
+    $scope._ = _;
 
-  $scope.ranger = _.range(3,19);
-  $scope.userCopy = _.create($scope.user);
+    $scope.ranger = _.range(3,19);
+    $scope.userCopy = _.create($scope.user);
 
-  $scope.editing=false;
+    $scope.editing=false;
 
-  $scope.toggleEditing = function(){
-    $scope.editing = !$scope.editing;
-  };
+    $scope.toggleEditing = function(){
+        $scope.editing = !$scope.editing;
+    };
 
-  $scope.selectCharacter = (character) => {
-    $scope.user.character.picture = character;
-  };
+    $scope.selectCharacter = (character) => {
+        $scope.user.character.picture = character;
+    };
 
-  $scope.restoreValuesToSaved = () => {
-    $scope.user = _.create($scope.userCopy);
-  };
-
-
-  $scope.saveProfile = () =>{
-    console.log('saving');
-    UserFactory.update($scope.user._id, $scope.user);
-  };
+    $scope.restoreValuesToSaved = () => {
+        $scope.user = _.create($scope.userCopy);
+    };
 
 
-  var dataArr = [];
+    $scope.saveProfile = () =>{
+        console.log('saving');
+        UserFactory.update($scope.user._id, $scope.user);
+    };
 
-  function Dataset(concept, points, possible) {
-    this.label= concept;
-    this.points= points;
-    this.possible= possible-points;
-    if(possible===0) this.possible = 1;
-    this.data= [this.points, this.possible];
-  };
 
-  $scope.user.mastery.forEach(concept =>{
-    var data = new Dataset(concept.topic, concept.pointsEarned, concept.pointsPossible);
+    var dataArr = [];
 
-    dataArr.push(data);
-  });
+    function Dataset(concept, points, possible) {
+        this.label= concept;
+        this.points= points;
+        this.possible= possible-points;
+        if(possible===0) this.possible = 1;
+        this.data= [this.points, this.possible];
+    };
 
-  console.log(dataArr);
+    $scope.user.mastery.forEach(concept =>{
+        var data = new Dataset(concept.topic, concept.pointsEarned, concept.pointsPossible);
 
-  
+        dataArr.push(data);
+    });
 
-  var width = document.querySelector('#mastery').clientWidth/3 *2;
+    console.log(dataArr);
 
-  var radius = Math.min(width, width) / 2;
 
-  var color = d3.scale.category20c();
 
-  var pie = d3.layout.pie()
-      .sort(null);
+    var width = document.querySelector('#mastery').clientWidth/3 *2;
 
-  var arc = d3.svg.arc()
-      .innerRadius(radius - radius/2)
-      .outerRadius(radius - radius/4);
+    var radius = Math.min(width, width) / 2;
+
+    var color = d3.scale.category20c();
+
+    var pie = d3.layout.pie()
+        .sort(null);
+
+    var arc = d3.svg.arc()
+        .innerRadius(radius - radius/2)
+        .outerRadius(radius - radius/4);
 
     dataArr.forEach((data, index) => {
         var svg = d3.select("#mastery").append("svg")
@@ -124,7 +124,7 @@ app.controller('UserCtrl', function ($scope, AuthService, UserFactory, $state, u
 
         var path = svg.selectAll("path")
             .data(pie(data.data))
-          .enter().append("path")
+            .enter().append("path")
             .attr("fill", function(d, i) { return color((index*4) + i); })
             .attr("d", arc)
             .transition() //animate the pies!
@@ -134,29 +134,29 @@ app.controller('UserCtrl', function ($scope, AuthService, UserFactory, $state, u
 
 
         svg.append("text")
-           .attr('dy', '-.3em')
-           .attr("text-anchor", "middle")
-           .text(function(d, i){
-              return data.label;
+            .attr('dy', '-.3em')
+            .attr("text-anchor", "middle")
+            .text(function(d, i){
+                return data.label;
             })
 
         svg.append("text")
-           .attr('dy', '1em')
-           .attr("text-anchor", "middle")
-           .text(function(d, i){
-              var total = 0;
-              if(data.points !== 0) total = data.points+data.possible;
+            .attr('dy', '1em')
+            .attr("text-anchor", "middle")
+            .text(function(d, i){
+                var total = 0;
+                if(data.points !== 0) total = data.points+data.possible;
 
-              return data.points + '/' + total + ' points';
+                return data.points + '/' + total + ' points';
             })
-      });
+    });
 
 
 
 
 
-  function tweenPie(b) {
-    var i = d3.interpolate({startAngle: 1.1*Math.PI, endAngle: 1.1*Math.PI}, b);
-    return function(t) { return arc(i(t)); };
-  }
+    function tweenPie(b) {
+        var i = d3.interpolate({startAngle: 1.1*Math.PI, endAngle: 1.1*Math.PI}, b);
+        return function(t) { return arc(i(t)); };
+    }
 });

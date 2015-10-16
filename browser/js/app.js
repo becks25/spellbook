@@ -118,7 +118,7 @@ app.run(function ($rootScope, AuthService, $state) {
     // whenever the process of changing a state begins.
     $rootScope.$on('$stateChangeStart', function (event, toState, toParams) {
 
-      
+
         if (!destinationStateRequiresAuth(toState)) {
             // The destination state does not require authentication
             // Short circuit with return.
@@ -186,8 +186,8 @@ app.run(function ($rootScope, AuthService, $state) {
 
 });
 app.run(function(StoryFactory, PageFactory, UserFactory) {
-      StoryFactory.findAll().then(stories=>console.log(stories));
-      PageFactory.findAll().then(pages=>console.log(pages));
-      UserFactory.findAll().then(users=> console.log('users', users));
+      StoryFactory.findAll();
+      PageFactory.findAll();
+      UserFactory.findAll();
 
   });
