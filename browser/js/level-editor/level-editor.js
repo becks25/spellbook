@@ -42,9 +42,9 @@ app.controller('levelEditCtrl', ($scope, AuthService, $state, $stateParams, Clas
   $scope.directions = [];
   $scope.concepts = []; //concepts user has added to pg
   $scope.spellComponents = []; //used for storing dragged requirements
-  $scope.varTypes = ['person', 'variable', 'condition'];
+  $scope.varTypes = ['Person', 'Variable', 'Condition'];
   $scope.varFnTypes = ['holding', 'match', 'true', 'false'];
-  $scope.newVar;
+  $scope.newVar = {};
   $scope.page = { 
     story:$stateParams.storyId,
     text: '',
@@ -87,6 +87,12 @@ app.controller('levelEditCtrl', ($scope, AuthService, $state, $stateParams, Clas
     $scope.page.requirements = $scope.level.constructReqs($scope.spellComponents)
     //set gameboard with objs
     //find pg num
+
+    $scope.page.gameboard[0][0].push({
+      type: 'Avatar',
+      name:'WizzardGirl3'
+    });
+
     StoryFactory.find($stateParams.storyId)
     .then(story => story.getAllPages($stateParams.storyId))
     .then(pages => {
@@ -102,8 +108,12 @@ app.controller('levelEditCtrl', ($scope, AuthService, $state, $stateParams, Clas
   //add sprite to board and saved arr
   $scope.saveSprite = ()=>{
     $scope.page.gameboard[$scope.newSpritePos.x][$scope.newSpritePos.y].push($scope.newSprite);
-    $scope.newSprite.pos = $scope.newSpritePos;
-    $scope.savedSprites.push($scope.newSprite);
+    var sprite = _.cloneDeep($scope.newSprite);
+    sprite.pos = $scope.newSpritePos;
+    console.log('saved Sprites before', sprite, $scope.savedSprites)
+
+    $scope.savedSprites.push(sprite);
+    console.log('saved Sprites', $scope.savedSprites)
     $scope.newSprite = {
       type: null,
       name: null,
@@ -112,6 +122,10 @@ app.controller('levelEditCtrl', ($scope, AuthService, $state, $stateParams, Clas
     };
     $scope.newSpritePos = {x: null, y: null};
 
+  };
+  $scope.selectImg = (possSpr)=>{
+    $scope.newSprite.name = possSpr.name;
+    $scope.newSprite.img = possSpr.img;    
   };
 
   //stores temp new var before saving
