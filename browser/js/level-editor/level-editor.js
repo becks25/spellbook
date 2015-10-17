@@ -1,6 +1,10 @@
 app.config($stateProvider => {
 	$stateProvider.state('add',{
 		url: '/add/:storyId/page',
+        data: {
+          adminOnly: true,
+          authenticate: true
+        },
         resolve: {
             // story: (StoryFactory, $stateParams) => StoryFactory.find($stateParams.storyId),
             user: (UserFactory, AuthService, $stateParams) => {

@@ -1,0 +1,120 @@
+
+<div class="glossary panel">
+	<div class="panel-heading">
+		<h2 class="text-center">Glossary</h2>
+	</div>
+
+	<div class="panel-body col-md-6 col-sm-12">
+		<h3 class="text-center">Action tools</h3>
+		<ul class="spellComponents spellBox">
+			<li class="ask">
+				<action-tools actiontool="{action: 'ask', type:'tool', text: 'ask'}" model="" index="" parent="" remove=""></action-tools>
+			</li>
+
+			<li class="tell">
+				<action-tools actiontool="{action: 'tell', type:'tool', text: 'tell'}" model="" index="" parent="" remove=""></action-tools>
+			</li>
+
+			<li class="give">
+				<action-tools actiontool="{action: 'give', type:'tool', text: 'give'}" model="" index="" parent="" remove=""></action-tools>
+			</li>
+
+			<li class="definition">
+					<p>
+						<b>Ask</b>, <b>Tell</b>, and <b>Give</b> allow you to talk to a character on the board.  Drop a name onto <b>drop person here</b>, and a question, comment, or item onto <b>drop item here</b>.
+
+					</p><p>
+						Remember, this will only work when you're standing on the same square as the person you want to talk to!
+					</p>
+			</li>
+
+			<li class="pickUp">
+				<action-tools actiontool="{action: 'pickUp', type:'tool', text: 'pick up'}" model="" index="" parent="" remove=""></action-tools>
+			</li>
+
+			<li class="definition">
+				<p>
+					<b>Pick up</b> is a special tool that allows you to pick an item up from the board. Drop the name of the item you'd like to pick up onto <b>Drop item here</b>.
+				</p>
+			</li>
+		</ul>
+
+		<h3 class="text-center">Movement tools</h3>
+		<ul class="spellComponents spellBox">
+			<li class="move">
+				<move-tool movetool="{action: 'move', type:'tool', text: 'move', distance: 1}" model="" index="" parent="" remove=""></move-tool>
+			</li>
+
+			<li class="definition">
+					<p>
+						<b>Move</b> lets you travel around the board. Drop a purple direction block onto <b>drop direction here</b> and enter a number of squares.
+
+					</p><p>
+						You can't go off the board or through certain objects, like trees and rocks.
+					</p>
+			</li>
+
+<!-- 			<li class="move">
+				<move-tool-random movetool="{action: 'moveRandom', type:'tool', text: 'move random', distance: 1}" model="" index="" parent="" remove=""></move-tool-random>
+			</li> -->
+
+		</ul>
+
+	</div>
+
+	<div class="panel-body col-md-6 col-sm-12">
+		<h3 class="text-center">Logic tools</h3>
+		<ul class="spellComponents spellBox">
+			<li class="ifStatement tool-drop">
+				<logic-tools logictool="{action: 'ifStatement', type:'tool', text: 'if'}" model="" index="" parent="" remove=""></logic-tools>
+				<div class="panel-body components">
+					Drop action here
+				</div>
+			</li>
+
+			<li class="definition">
+				<p>
+					Drop a condition variable onto <b>drop item here</b>, and any tools into <b>drop action here</b>.  These <b>nested actions</b> will only run if the condition variable is true.
+				</p>
+				<p>
+					For example, a variable that says "the potion is blue" means that the nested actions will only happen if the potion is blue.
+				</p>
+			</li>
+
+			<li class="whileLoop tool-drop">
+				<logic-tools logictool="{action: 'whileLoop', type:'tool', text: 'repeat while'}" model="" index="" parent="" remove=""></logic-tools>
+				<div class="panel-body components">
+					Drop action here
+				</div>
+			</li>
+
+			<li class="definition">
+				<p>
+					Drop a condition variable onto <b>drop item here</b>, and any tools into <b>drop action here</b>.  These <b>nested actions</b> will be repeated until the condition is not true.
+				</p>
+				<p>
+					For example, a variable that says "Joe is sad" means that the nested actions will happen while Joe is sad.
+				</p>
+			</li>
+
+			<li class="forLoop tool-drop">
+				<logic-tools logictool="{action: 'forLoop', type:'tool', text: 'repeat', number: 1}" model="" index="" parent="" remove=""></logic-tools>
+				<div class="panel-body components">
+					Drop action here
+				</div>
+			</li>
+			<li class="definition">
+				<p>
+					Choose a number and drop any tools into <b>drop action here</b>.  These <b>nested actions</b> will repeat for the number of times you chose.
+				</p>
+				<p>
+					For example, if you type 3, the nested actions will all happen 3 times.
+				</p>
+			</li>
+
+		</ul>
+
+	</div>
+
+
+</div>

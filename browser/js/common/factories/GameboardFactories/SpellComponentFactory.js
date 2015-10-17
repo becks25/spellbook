@@ -37,7 +37,7 @@ app.factory('SpellComponentFactory', function(ConditionFnFactory, LARGE_AVATARS,
             case 'moveRandom':
               toolObj.action ='moveRandom';
               toolObj.text = 'move random';
-              toolObj.direciton = 'down';
+              toolObj.direction = 'down';
               toolObj.distance = 1;
               toolObj.type = 'tool';
               break;

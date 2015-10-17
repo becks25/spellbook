@@ -1,6 +1,10 @@
 app.config($stateProvider => {
 	$stateProvider.state('addStory',{
 		url: '/addStory',
+        data: {
+          adminOnly: true,
+          authenticate: true
+        },
         resolve: {
             user: (UserFactory, AuthService) => {
                 return AuthService.getLoggedInUser()
