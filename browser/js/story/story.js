@@ -24,9 +24,10 @@ app.config($stateProvider => {
     })
 });
 
-app.controller('StoryCtrl', ($scope, $state, stories, $timeout, StoryFactory, $stateParams, $rootScope, outTran, user) => {
+app.controller('StoryCtrl', ($scope, $state, stories, $timeout, StoryFactory, $stateParams, $rootScope, outTran, user, $uibModal) => {
     $scope.stories = stories;
     $scope.pop = false;
+    console.log("the user", user);
 
     var findIfStarted = (story) => {
         return story.getAllPages(story._id)
@@ -43,11 +44,20 @@ app.controller('StoryCtrl', ($scope, $state, stories, $timeout, StoryFactory, $s
     };
 
     $scope.goToStoryPage = (event, story) => {
+        if (user) {
         findIfStarted(story).then(result => {
                         $('.shelf-whole').fadeOut();
             $('.story-info').fadeOut().css('display','none');
             Promise.all(outTran.animate(event.currentTarget))
                 .then(() => $state.go('page', {id: result._id}))
         });
+        }
+        else{
+            modalInstance = $uibModal.open({
+                            animation:true,
+                            templateUrl: 'js/common/directives/not-loggedin/not-loggedin.html',
+                            controller: 'ModalCtrl'
+                        });
+        }
     };
 });
