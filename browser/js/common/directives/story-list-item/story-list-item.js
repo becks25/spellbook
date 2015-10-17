@@ -4,7 +4,8 @@ app.directive('storyListItem', () => {
     templateUrl: '/js/common/directives/story-list-item/story-list-item.html',
     scope: {
       story: '=',
-      index: '='
+      index: '=',
+      shelf: '='
     },
     link: (scope, elem) => {
       scope.show = false;
