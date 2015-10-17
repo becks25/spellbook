@@ -5,6 +5,9 @@ $green: #b8f166;
 
 
 #addTheStory {
+  h3{
+    font-family:$font-title;
+  }
 
   .required {
     color: $purple;
@@ -12,8 +15,8 @@ $green: #b8f166;
     padding: 10px 0px 0px 5px;
   }
 
-  label{
-    padding-top: 15px;
+  label {
+    padding-top: 2%;
   }
 
   input{
@@ -22,49 +25,34 @@ $green: #b8f166;
   }
 
 
-.checkboxesDivOuter{
-
-   padding-top: 0px;
-      padding-bottom: 0px;
-      margin-top: 0px;
-      margin-bottom: 0px;
-
-
+  .concepts{
+    padding-left:15%;
+    padding-top:2%;
+  }
 
   .checkboxesDiv{
-      padding-top: 0px;
-      padding-bottom: 0px;
-      margin-top: -5px;
-      margin-bottom: -2px;
-
+      margin-left:3%;
+      display:block;
+  }
 
   .checkboxes{
-      margin-top: 0px;
-      margin-bottom: 0px;
-      padding-top: 0px;
-      padding-bottom: 0px;
-      font-size: 12px;
+      margin:0;
+      padding:0;
+
 
   }
 
-  input{
-    padding-top: 0px;
-    padding-bottom: 0px;
-  }
-}
 
-}
+
+
+
 
 .create-btn{
   background-color: $purple;
   color:white;
-  border: solid white;
-  border-radius: 10px;
-  margin-top: 25px;
-  margin-bottom: 150px;
-  font-size: 18px;
-  padding: 5px 20px 5px 20px;
+
   font-family: $font-title;
+  margin-top:3%;
 }
 
 
