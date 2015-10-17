@@ -86,13 +86,13 @@ $brown: #45320b;
 .right-flip{
 	transform-origin: right;
 	transform-style: preserve-3d;
-	transition:2s;
+	transition:1.5s;
 	transition-timing-function:ease;
 
 	-webkit-transform-origin: right;
 	-webkit-transform-style: preserve-3d;
-	-webkit-transition:2s;
-	vtransition-timing-function:ease;
+	-webkit-transition:1.5s;
+	-transition-timing-function:ease;
 
 	position:absolute;
 	z-index:11;
@@ -107,12 +107,12 @@ $brown: #45320b;
 .left-flip{
 	transform-origin: left;
 	transform-style: preserve-3d;
-	transition:2s;
+	transition:1.5s;
 	transition-timing-function:ease;
 
 	-webkit-transform-origin: left;
 	-webkit-transform-style: preserve-3d;
-	-webkit-transition:2s;
+	-webkit-transition:1.5s;
 	vtransition-timing-function:ease;
 
 	position:absolute;
@@ -142,6 +142,7 @@ $brown: #45320b;
 }
 .right{
 	z-index:0 !important;
+	
 }
 
 

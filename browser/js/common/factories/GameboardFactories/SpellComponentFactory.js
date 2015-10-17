@@ -1,6 +1,6 @@
-app.factory('SpellComponentFactory', function(ConditionFnFactory){
+app.factory('SpellComponentFactory', function(ConditionFnFactory, LARGE_AVATARS, SPRITES){
 	return {
-		possTools: ['move', 'ifStatement', 'whileLoop', 'forLoop', 'pickUp', 'give', 'tell', 'ask'],
+		possTools: ['move', 'ifStatement', 'whileLoop', 'forLoop', 'pickUp', 'give', 'tell', 'ask', 'moveRandom'],
 		possConcepts:['For Loop', 'While Loop', 'If-statements', 'Conditionals', 'Expressions', 'Movement'],
 		possDirections: ['up', 'down', 'left', 'right'],
 		makeSpellVar: (variable)=>{
@@ -12,7 +12,6 @@ app.factory('SpellComponentFactory', function(ConditionFnFactory){
             	  varType: variable.varType,
             	  //value is a function that returns true or false depending on the state of the game
             	  value: (spell) => {
-            	  	console.log(variable.arg)
             	  	return ConditionFnFactory[variable.fnType](variable.arg, spell);
             	  },
             	};
@@ -35,6 +34,13 @@ app.factory('SpellComponentFactory', function(ConditionFnFactory){
 	          toolObj.distance = 1;
 	          toolObj.type = 'tool';
 	          break;
+            case 'moveRandom':
+              toolObj.action ='moveRandom';
+              toolObj.text = 'move random';
+              toolObj.direction = 'down';
+              toolObj.distance = 1;
+              toolObj.type = 'tool';
+              break;
 	        case 'pickUp':
 	          toolObj.action = 'pickUp';
 	          toolObj.text = 'pick up';
@@ -49,7 +55,7 @@ app.factory('SpellComponentFactory', function(ConditionFnFactory){
 	          toolObj.variable = null;
 	          toolObj.type = 'tool';
 	          break;
-	        case 'If-Statement':
+	        case 'ifStatement':
 	          toolObj.action = 'ifStatement';
 	          toolObj.text = 'if';
 	          toolObj.condition = null;
@@ -57,14 +63,14 @@ app.factory('SpellComponentFactory', function(ConditionFnFactory){
 	          toolObj.elseExpr = null;
 	          toolObj.type = 'tool';
 	          break;
-	        case 'For Loop':
+	        case 'forLoop':
 	          toolObj.action = 'forLoop';
 	          toolObj.text = 'repeat';
 	          toolObj.number = 1;
 	          toolObj.expressions = [];
 	          toolObj.type = 'tool';
 	          break;
-	        case 'While Loop':
+	        case 'whileLoop':
 	          toolObj.action = 'whileLoop';
 	          toolObj.text = 'repeat while';
 	          toolObj.condition = null;
@@ -93,7 +99,18 @@ app.factory('SpellComponentFactory', function(ConditionFnFactory){
 	          toolObj.type = toolStr;
 	      }
 	      return toolObj;
-		}
+		},
+		//creates an array of all the sprites with name and imgUrl props
+	    buildSpritesObjList(){
+	        var allSprites = [];
+	        _.forIn(LARGE_AVATARS, (img, sprite)=>{
+	            allSprites.push({name:sprite, img:img});
+	        });
+	        // for (let key of SPRITES){
+
+	        // }
+	        return allSprites;
+	    }
 	};
 
 });

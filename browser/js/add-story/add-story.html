@@ -1,81 +1,52 @@
+<div class="panel">
+  <div class="panel-heading">
+    <h3 class="text-center">Create Your Own SpellBook</h3>
+  </div>
 
-
-
-
-<div class="container" id="addTheStory">
-
- <!--  <h1>Create My Store</h1> -->
-
- <!--  <pre>{{user}}</pre> -->
-
-
-
-<div>
-  <div class="row addStory">
-        <h2>Create Your Own SpellBook</h2>
-        <!-- begin form div -->
-    <div>
-    <form role="form" ng-submit='createStory()'>
-
-      <div class="control-group">
-        <label for="title" class="control-label">
-          Story Title<span class="required">*</span>
-        </label>
+  <form id="addTheStory" class="panel-body center-block" name="newStory" role="form" ng-submit='newStory.$valid && createStory()' novalidate>
+    <div class="col-sm-offset-2 col-sm-8">
+      <div class="control-group" ng-class="{'has-error':newStory.title.$dirty && newStory.title.$invalid || newStory.title.$invalid && newStory.$submitted}">
         <div class="controls">
-          <input ng-model="title" name="title" type="text" value="" id="title">
+          <input ng-model="title" name="title" type="text" value="" class="form-control" id="title" name="title" placeholder="Story Title" required>
+        </div>
+      </div>
+
+      <div class="control-group" ng-class="{'has-error':newStory.description.$dirty && newStory.description.$invalid || newStory.description.$invalid && newStory.$submitted}">
+
+        <div class="controls">
+          <textarea ng-model="description" name="description" class="form-control" value="" id="description" name="description" ng-maxlength="100" placeholder="Story Description" required></textarea>
+        </div>
+      </div>
+
+      <div class="control-group" ng-class="{'has-error':newStory.difficulty.$invalid && newStory.difficulty.$dirty}">
+        <div class="controls">
+          <input ng-model="difficulty" name="difficulty" type="number" min="0" max="10" value="" class="form-control" id="difficulty" placeholder="Story Difficulty (1-10)">
         </div>
       </div>
 
       <div class="control-group">
-        <label for="description" class="control-label">
-          Story Description<span class="required">*</span>
-        </label>
         <div class="controls">
-          <input ng-model="description" name="description" type="text" value="" id="description">
+          <input ng-model="cover" name="cover" type="text" value="" id="cover" class="form-control"placeholder="Story Cover Image">
         </div>
       </div>
-
-      <div class="control-group">
-        <label for="difficulty" class="control-label">
-          Story Difficulty
-        </label>
-        <div class="controls">
-          <input ng-model="difficulty" name="difficulty" type="text" value="" id="difficulty">
-        </div>
-      </div>
-
-      <div class="control-group">
-        <label for="cover" class="control-label">
-          Story Cover Image
-        </label>
-        <div class="controls">
-          <input ng-model="cover" name="cover" type="text" value="" id="cover">
-        </div>
-      </div>
-
-      <div class="control-group checkboxesDivOuter">
-         <label for="concepts" class="control-label">
+    </div>
+   <!--  <div class="col-md-4 col-sm-12">
+      <div class="control-group concepts">
+        <label for="concepts" class="control-label">
           Story Concepts
         </label>
-        <div ng-repeat="concept in possibleConcepts" ng-model="concepts" name="concepts" class="checkboxesDiv">
-        <label >
-          <input type="checkbox" name="{{concept}}" id="{{concept}}" ng-model="concept.checked" ng-change="selectedConcepts(concept); logConcepts()">
-          <label class="checkboxes" for="{{concept.name}}">{{concept.name}}</label>
-        </label>
-        <br>
-        </div>
-    </div>
-
-    
-
-      <div class="form-actions">
-        <button type="submit" class="btn btn-large btn-default create-btn">Create Story</button>
+          <label ng-repeat="concept in possibleConcepts" ng-model="concepts" name="concepts" class="checkboxesDiv">
+            <input type="checkbox" name="{{concept}}" id="{{concept}}" ng-model="concept.checked" ng-change="selectedConcepts(concept); logConcepts()">
+            <label class="checkboxes" for="{{concept.name}}">{{concept.name}}</label>
+          </label>
       </div>
 
+    </div> -->
+
   
-    </form>
-    </div>
-    <!-- end form div -->
-  </div>
-</div>
+    <div class="clearfix"></div>
+    <button type="submit" class="btn btn-large create-btn text-center center-block"><h4>Create Story</h4></button>
+
+
+  </form>
 </div>

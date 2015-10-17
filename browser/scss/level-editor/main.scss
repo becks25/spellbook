@@ -5,14 +5,21 @@
 	h4{
 		font-family: $font-title !important;
 		margin-bottom: 0px;
-	}
-	.select-var-type {
-		padding: 0px;
-		margin: 0px;
-		width: 50%;
+		margin-top: 2px;
+		display: inline !important;
 	}
 	
 }
+.select-var-type {
+	padding: 0px;
+	margin: 0px;
+	width: 50%;
+}
+// .sprite-props
+// {
+// 	padding: 0px;
+// 	margin: 0px;
+// }
 
 .btn.tool{
 	background: $turqoise;
@@ -25,4 +32,16 @@
 
 .btn.direction{
 	background: $purple;
+}
+
+.sprite-carousel{
+
+	h4{
+		font-family: $font-title !important;
+		margin-bottom: 0px;
+		margin-top: 2px;
+		display: inline !important;
+	}
+	height: 100%;
+	width: 100%;
 }

@@ -87,7 +87,7 @@ var seedPages = function(stories){
             pages.push({
                 story: story._id,
                 text:'<p>{{user.character.name}} was sitting at home, enjoying a nice cup of tea, when their super ears perked up- someone was crying for help!  It\'s Moopsy Monkey! </p><p class="promptText"> Can you help {{user.character.name}} find out what\'s wrong?</p>',
-                tools: ['If-Statement', 'ask', 'move', 'give'],
+                tools: ['ifStatement', 'ask', 'move', 'give'],
                 variables: [
                     {text: 'Moopsy_Monkey', varType: 'person'},
                     {text: 'Whats_wrong', varType: 'variable'}
@@ -108,11 +108,11 @@ var seedPages = function(stories){
                     ],
                     [
                         [],
-                        [],
                         [{
                             type:'Obstacle',
                             name:'Tree1'
                         }],
+                        [],
                         []
                     ],
                     [
@@ -140,7 +140,7 @@ var seedPages = function(stories){
             },{
                 story: story._id,
                 text:'<p>"It\'s my brother," said Moopsy. "He\'s crying and I don\'t know what to do!" </p><p>"Don\'t worry Moopsy, I\'ll go see if I can help"</p><p class="promptText">Can you see if Mopsy needs any help?</p>',
-                tools: ['If-Statement', 'ask', 'move', 'give'],
+                tools: ['ifStatement', 'ask', 'move', 'give'],
                 variables: [
                     {text: 'Mopsy_Monkey', varType: 'person'},
                     {text: 'Mopsy needs help', varType: 'condition'},
@@ -161,11 +161,11 @@ var seedPages = function(stories){
                     ],
                     [
                         [],
-                        [],
                         [{
                             type:'Obstacle',
                             name:'Tree1'
                         }],
+                        [],
                         []
                     ],
                     [
@@ -194,7 +194,7 @@ var seedPages = function(stories){
             },{
                 story: story._id,
                 text:'<p>"It\'s terrible," sighed Mopsy. "I\'ve dropped my bananas all over the place.  It\'ll take forever to pick them up again!"</p><p>"Not if I can help it!" exclaimed {{user.character.name}}</p><p class="promptText">Can you get all of Mopsy\'s bananas using only 4 tools?</p>',
-                tools: ['If-Statement', 'pickUp', 'move', 'For Loop'],
+                tools: ['ifStatement', 'pickUp', 'move', 'forLoop'],
                 variables: [
                     {text: 'Banana', varType: 'variable'},
                     {text: 'Apple', varType:'variable'}
@@ -204,7 +204,7 @@ var seedPages = function(stories){
                 requirements: {win:{ pickUp: {
                     'Banana&1': {noOne: false},
                     'Banana&2':{noOne: false},
-                    'Banana&3': {nodOne: false}
+                    'Banana&3': {noOne: false}
                 }}},
                 gameboard: [
                     [
@@ -263,7 +263,7 @@ var seedPages = function(stories){
             pages.push({
                 story: story._id,
                 text:'<p>Hi, I’m Aria.  I’m ten years old, my favorite color is yellow, and I have a pet kitten named Omri.  Oh, and I’m a princess. Most of the time, it’s pretty sweet.  Unfortunately, it doesn’t exempt me from having an annoying younger brother who always steals my toys. He’s so annoying, ugg. </p> <p> Today is my birthday and my Aunt says she has an exciting surprise for me.  She is a physicist at NASA, so I’m sure it will be something amazing.  She hid it in one of these boxes. </p><p class="promptText"> Can you go to each one, and pick it up if it is my present?</p>',
-                tools: ['move', 'pickUp', 'ask', 'If-Statement', 'For Loop'],
+                tools: ['move', 'pickUp', 'ask', 'ifStatement', 'forLoop'],
                 variables: [
                     {text: 'present', varType: 'variable'},
                     {text: 'a present is inside', varType: 'condition', fnType: 'match', arg: 'present'}
@@ -338,7 +338,7 @@ var seedPages = function(stories){
             },{
                 story: story._id,
                 text:'<p>"Wow!  My present is a spaceship!  I was planning to explore our solar system, and was especially excited to see Saturn’s rings, but my brother kept coming inside and messing everything up.  He must have done some serious damage, because when I took off, I couldn’t control my navigation, and now I seem to have landed on a strange planet." </p><p>"When I got out of my spaceship, I was greeted by a strange creature, who introduced itself as Zeke.  Zeke is worried because he can’t find his best friend, Liz."</p><p class="promptText">Can you go to each of the aliens on the page and ask them if they have seen Liz?  You’re running low on power, so you can only use three commands.</p>',
-                tools: ['move', 'pickUp', 'ask', 'tell', 'If-Statement', 'For Loop'],
+                tools: ['move', 'pickUp', 'ask', 'tell', 'ifStatement', 'forLoop'],
                 variables: [
                     {text: 'Have you seen Liz?', varType: 'variable'},
                     {text: 'Alien', varType: 'person'},
@@ -411,7 +411,7 @@ var seedPages = function(stories){
             },{
                 story: story._id,
                 text:'<p>"Oh no, you discovered that Liz was captured by an evil warlord.  He’s keeping her locked in a cell somewhere in his fortress.  Fortunately, Zeke is friends with one of the guards, who will free Liz if you can bring him the key."</p><p>"To free Liz, you will need to find the right key, and give it to a guard named Nimit.  Carefull, though, if you give the key to the wrong guard, the evil warlord might find out you are here. And in order to keep quiet, you can only use three moves at level one of your spell.</p>',
-                tools: ['move', 'pickUp', 'give', 'ask', 'While Loop'],
+                tools: ['move', 'pickUp', 'give', 'ask', 'whileLoop'],
                 variables: [
                     {text: 'key', varType: 'variable'},
                     {text: 'Guard', varType:'person'},
@@ -494,7 +494,7 @@ var seedPages = function(stories){
                 pages.push({
                     story: story._id,
                     text: lorem,
-                    tools: ['move', 'pickUp', 'give', 'ask', 'tell', 'If-Statement', 'For Loop', 'While Loop'],
+                    tools: ['move', 'pickUp', 'give', 'ask', 'tell', 'ifStatement', 'forLoop', 'whileLoop'],
                     variables: [{text: 'Omri', varType: 'person'}, {text: 'Zeke', varType: 'person'}, {text: 'Joe', varType: 'person'}, {text: 'Say hi', varType: 'variable'}, {text: 'Green Potion', varType: 'variable'}, {text: 'The potion is green', varType: 'condition'}],
                     concepts: [concepts[Math.floor(Math.random()*concepts.length)]],
                     hint: 'Try harder',

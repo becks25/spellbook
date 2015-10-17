@@ -4,15 +4,15 @@ app.directive('storyListItem', () => {
     templateUrl: '/js/common/directives/story-list-item/story-list-item.html',
     scope: {
       story: '=',
-      index: '='
+      index: '=',
+      shelf: '='
     },
-    link: (scope) => {
+    link: (scope, elem) => {
       scope.show = false;
-      console.log('here');
       scope.hover = () => {
-        console.log('here?');
         scope.show = !scope.show;
       }
+
     }
   };
 });

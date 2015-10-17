@@ -4,6 +4,7 @@ app.factory('LevelFactory', function(PageFactory, UserFactory, AuthService, MapF
       this.page = page;
       this.nextPage = nextPage;
       this.map = new MapFactory(page.gameboard);
+      console.log('page in level fact', this.page)
       this.requirements = this.page.requirements;
       this.hint = page.hint;
       this.concepts = page.concepts;
@@ -36,7 +37,6 @@ app.factory('LevelFactory', function(PageFactory, UserFactory, AuthService, MapF
     
       //resets the keys in win or lose conditions
       function resetWinLoseReq(condType){ //condType is 'win' or 'lose'
-            console.log('this inside fn', level)
         if(level.requirements[condType]) {
           for(var action in level.requirements[condType]){
             for (var variable in level.requirements[condType][action]){
@@ -61,15 +61,12 @@ app.factory('LevelFactory', function(PageFactory, UserFactory, AuthService, MapF
 
   
     function checkWinLoseReqs(condType){
-      console.log(condType)
       //loop through requirements and verify they are true
       if (level.requirements[condType]) {
-      console.log(level.requirements[condType])
         for (var action in level.requirements[condType]){
           for (var variable in level.requirements[condType][action]){
             for (var person in level.requirements[condType][action][variable]){
               if (condType === 'win') {
-                console.log('hit?', level.requirements[condType][action][variable][person] === false)
                 if (level.requirements[condType][action][variable][person] === false) return false;
               }else if (condType === 'lose') if (level.requirements[condType][action][variable][person] === true) return false;
             }

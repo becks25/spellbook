@@ -4,3 +4,4 @@
 require('./user');
 require('./pages');
 require('./stories');
+require('./class');

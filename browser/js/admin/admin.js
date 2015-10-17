@@ -31,7 +31,7 @@ app.config(function ($stateProvider) {
 
                         });
 
-                        return users; 
+                        return users;
                     })
             },
             mastery: (users) => {
@@ -80,7 +80,7 @@ app.controller('AdminController', function ($scope, stories, users, mastery, pop
     $scope.averageRating = mastery[1];
     $scope.storyPopularity = popularStory;
     $scope.authors = _.uniq($scope.stories, 'author');
-   
+
 
     $scope.mostPopular = _.max($scope.storyPopularity, (story) => story[1]);
 
@@ -114,14 +114,11 @@ app.controller('AdminController', function ($scope, stories, users, mastery, pop
     }
 
     $scope.goToStory = (story) => {
-        console.log("hitting this")
         PageFactory.findAll()
-        .then(function(pages){
-            console.log(pages)
+        .then(pages =>{
             for (var i =0; i < pages.length; i++){
                 if (pages[i].storyId === story._id){
                     if (page[i].pageNumber === 0){
-                        console.log("made it all the way")
                         $state.go('page', {id: page[i]._id})
                     }
                 }
@@ -173,7 +170,7 @@ app.filter('inArray', function(){
             if(include) filtered.push(story);
 
         })
-        
+
 
         return filtered;
     };

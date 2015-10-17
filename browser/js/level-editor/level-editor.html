@@ -16,7 +16,7 @@
 				    </md-input-container>
 				</div>
 					<!--<label for='concepts'>Select Concepts</label>-->
-				<!-- dropdown for concepts searchable-->
+				<!-- dropdown for concepts -->
 				<div class="btn-group inline" uib-dropdown>
       				  <button id="split-button" type="button" class="btn btn-success">Select Concepts</button>
 				      <button type="button" class="btn btn-success" uib-dropdown-toggle>
@@ -30,35 +30,23 @@
 				 <div class='inline' ng-repeat='concept in concepts track by $index' ng-click='addConcept(concept, $index, possConcepts, concepts)'>{{concept}}</div>
 			</div>
 			<hr>
-			<div class='inline add-variable' ng-model='newVar'>
-				<h4 class='inline'>Add a variable</h4>
-				<div class='button btn variable'ng-click='addTool(newVar, null, "variable")'>Save Variable</div>
-				
-				<md-input-container class='inline select-var-type'>
-			      	<label>Enter the variable text</label>
-			      	<input ng-model="newVar.text">
-			    </md-input-container>
-				<md-select class='select-var-type' placeholder="Select type" ng-model="newVar.varType">
-	     			<md-option ng-repeat='type in varTypes' value='{{type}}'>{{type}}</md-option>
-	 			</md-select>
-				<md-select ng-show='newVar.varType === "condition"'placeholder="Select condition type" ng-model="newVar.fnType" class='inline select-var-type'>
-	     			<md-option ng-repeat='type in varFnTypes' value='{{type}}'>{{type}}</md-option>
-	 			</md-select>
-	 			<md-input-container class='inline select-var-type' ng-show='newVar.fnType === "match" || newVar.fnType === "holding"'>
-			      	<label>Enter variable to match</label>
-			      	<input ng-model="newVar.arg">
-			    </md-input-container>
-			</div>
+			<new-var-form></new-var-form>
 			
 		</div>
-
 		<!--Right side of the page-->
-		<div class="col-md-6 col-sm-12" id="right-page">
+		<div class="col-md-6 col-sm-12 " id="right-page">
+			<new-sprite-form></new-sprite-form>
+		<div class="inline col-md-6 col-sm-12" >
+		<div class='inline sprites-list inline col-md-6 col-xs-12'>
+			<sprite-thumbnail ng-repeat='sprite in savedSprites'></sprite-thumbnail>
+		</div>
+		<!--game board-->
 			<div id="canvas" class="img-square">
 				<div id="cr-stage" ng-style="{background: url({{page.boardBackground}})}" class="text-center center-block">
 				<div ng-repeat="i in grid track by $index" style="height:{{size}}; width:{{size}}" class="square"></div>
 				</div>
 			</div>
+		</div>
 		</div>
 		<div class="col-md-6 col-sm-12">
 
@@ -84,24 +72,18 @@
 	        	<li role="menuitem"ng-repeat='tool in dirsPoss track by $index' ng-click='addTool(tool, $index, "direction")'>{{tool}}</li>
 	        </ul>
 		</div>
-		<!-- form to create new variables -->
-
-<!-- 		<div class="btn-group inline" uib-dropdown>
-			<button type="button" class="btn btn-success" uib-dropdown-toggle>
-	        	<span>Select Variables</span>
-		        <span class="caret"></span>
-		        <span class="sr-only">Split button!</span>
-	        </button>
-	        <ul class="uib-dropdown-menu" role="menu" aria-labelledby="split-button">
-	        	<li role="menuitem"ng-repeat='tool in toolsPoss track by $index' ng-click='addTool(tool, $index, "variable")'>{{tool}}</li>
-	        </ul>
-		</div> -->
-			
 			<!--the page's toolbox-->
 			<tool-box></tool-box>
 		</div>
 
-		<div class="col-md-6 col-sm-12">
+		<div class="col-md-6 col-sm-12 inline">
+		<!--Add Sprites-->
+
+		
+
+
+
+
 			<!--Drop box for spells/instructions-->
 			<h5>Drag tools in here to tasks to be completed in order to win the level.  Only actions (ex, ask, pick up) can be requirements</h5>
 			<spell></spell>

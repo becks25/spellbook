@@ -1,0 +1,29 @@
+<div class="sprite-carousel">
+		<h4 class='inline'>Add a Sprite</h4>
+		<div class='button btn btn-success' ng-click="saveSprite()">Add to gameboard</div>
+		<uib-carousel no-wrap="false" class='col-xs-5'>
+	      <uib-slide ng-repeat="sprite in possSprites">
+	        <img ng-src="{{sprite.img}}" style="margin:auto;" class="sprite-thumbnail">
+	        <div ng-click='selectImg(sprite)' class=" button btn btn-default">Select this character</div>
+	      </uib-slide>
+	    </uib-carousel>
+	    </div>
+	    <div ng-show='newSprite.name' class='inline'>
+	    	<md-select class='sprite-props select-var-type inline' placeholder="Select type" ng-model="newSprite.type">
+	     		<md-option ng-repeat='type in ["Collectible", "Obstacle", "Person"]' value='{{type}}'>{{type}}</md-option>
+	 		</md-select>
+	    	<md-select class='sprite-props select-var-type inline' placeholder="Select name" ng-model="newSprite.varName">
+	     		<md-option ng-repeat='name in spellVars' value='{{name.name}}'>{{name.name}}</md-option>
+	 		</md-select>
+	 		<md-select class='sprite-props select-var-type' placeholder="Select match" ng-model="newSprite.match">
+	     		<md-option ng-repeat='variable in spellVars' value='{{variable.name}}'>{{variable.name}}</md-option>
+	 		</md-select>
+	 		<md-select class='sprite-props select-var-type' placeholder="Select x coordinate" ng-model="newSpritePos.x">
+	     		<md-option ng-repeat='num in boardLength()' value='{{num}}'>{{num}}</md-option>
+	 		</md-select>
+	 		<md-select class='sprite-props select-var-type' placeholder="Select y coordinate" ng-model="newSpritePos.y">
+	     		<md-option ng-repeat='num in boardLength()' value='{{num}}'>{{num}}</md-option>
+	 		</md-select>	    	
+	    </div>
+	    
+		

@@ -1,4 +1,4 @@
-app.factory('MapObjectFactory', function(PosFactory, TilesizeFactory, AuthService, UserFactory, LARGE_AVATARS, SPRITES){
+app.factory('MapObjectFactory', function(PosFactory, TilesizeFactory, AuthService, UserFactory){
 
     class MapObject {
       constructor(name, position, action, varName, variables, match){
@@ -53,9 +53,11 @@ app.factory('MapObjectFactory', function(PosFactory, TilesizeFactory, AuthServic
       }
 
       tween(attrs, duration, callback){
+        console.log('tween', this.entity)
         this.entity.requires('Tween');
         this.entity.tween(attrs,duration);
         // Set up callback to run once at end of tweening...
+        console.log('tween callback', callback)
         if (callback) {
           var self = this;
           var onceFn = function() {
@@ -67,11 +69,15 @@ app.factory('MapObjectFactory', function(PosFactory, TilesizeFactory, AuthServic
       }
 
       promTweenQueen(attrs, duration){
+        console.log('should be tweening')
         var self = this;
         return new Promise(function(resolve, reject){
           self.tween(attrs, duration, function(err, res){
             if(err) reject(err);
-            else resolve(res);
+            else {
+              console.log('reseolving')
+              resolve(res);
+            }
           });
         });
       }
@@ -84,18 +90,6 @@ app.factory('MapObjectFactory', function(PosFactory, TilesizeFactory, AuthServic
           });
         }
       }
-
-      //creates an array of all the sprites with name and imgUrl props
-      buildSpitesListObj(){
-        let allSprites = [];
-        for (let key of LARGE_AVATARS){
-          allSprites.push({name:key, img:LARGE_AVATARS[key]})
-        }
-        for (let key of SPRITES){
-
-        }
-      }
-
     }
 
     return MapObject;

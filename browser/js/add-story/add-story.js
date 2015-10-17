@@ -1,15 +1,15 @@
 app.config($stateProvider => {
 	$stateProvider.state('addStory',{
 		url: '/addStory',
+        data: {
+          adminOnly: true,
+          authenticate: true
+        },
         resolve: {
             user: (UserFactory, AuthService) => {
                 return AuthService.getLoggedInUser()
-                .then(user => {
-                    console.log(user);
-                    return UserFactory.find(user._id);
-
-                })
-              }
+                    .then(user => UserFactory.find(user._id))
+                }
         },
         views: {
             main: {
@@ -23,47 +23,45 @@ app.config($stateProvider => {
 
 
 app.controller('AddStoryController', function ($scope, user, StoryFactory, $state, SpellComponentFactory) {
-   
+
     $scope.user = user;
 
-    $scope.allConcepts = SpellComponentFactory.possConcepts
+    // $scope.allConcepts = SpellComponentFactory.possConcepts
 
-    function getConcepts() {
-        var arr = [];
-        for (var i = 0; i < $scope.allConcepts.length; i++){
-            arr.push({name: $scope.allConcepts[i], checked: false})
-        }
-        return arr;
-    }
+    // function getConcepts() {
+    //     var arr = [];
+    //     for (var i = 0; i < $scope.allConcepts.length; i++){
+    //         arr.push({name: $scope.allConcepts[i], checked: false})
+    //     }
+    //     return arr;
+    // }
 
-    $scope.possibleConcepts = getConcepts();
-    
-
-
-    $scope.theConcepts = [];
-
-    $scope.selectedConcepts = (con) => {
-        $scope.theConcepts.push(con.name);
-    }
+    // $scope.possibleConcepts = getConcepts();
 
 
-    $scope.logConcepts = () => {
-        console.log("logging", $scope.theConcepts);
-    }
+
+    // $scope.theConcepts = [];
+
+    // $scope.selectedConcepts = (con) => {
+    //     $scope.theConcepts.push(con.name);
+    // };
+
+
+    // $scope.logConcepts = () => {
+    //     console.log("logging", $scope.theConcepts);
+    // };
 
 
     $scope.createStory = () => {
-        console.log("the selected", $scope.selectedConcepts);
         var storyToCreate = {};
         storyToCreate.title = $scope.title;
         storyToCreate.description = $scope.description;
         storyToCreate.difficulty = $scope.difficulty;
-        storyToCreate.concepts = $scope.theConcepts;
+        // storyToCreate.concepts = $scope.theConcepts;
         storyToCreate.cover = $scope.cover || "https://cdn.vectorstock.com/i/composite/90,62/card-with-cartoon-castle-vector-1099062.jpg";
 
         StoryFactory.create(storyToCreate)
         .then(function(story){
-            console.log('going', story, story._id)
             $state.go('add', {storyId: story._id})
         });
 
@@ -75,4 +73,3 @@ app.controller('AddStoryController', function ($scope, user, StoryFactory, $stat
 
 
 
-   
