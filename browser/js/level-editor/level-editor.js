@@ -66,7 +66,6 @@ app.controller('levelEditCtrl', ($scope, AuthService, $state, $stateParams, Clas
   };
   $scope.newSpritePos = {x: null, y: null};
   $scope.savedSprites = [];
-  console.log('backgrounds', GAMEBOARD_BACKGROUNDS);
   $scope.backgrounds = GAMEBOARD_BACKGROUNDS;
   $scope.makingNewLevel = true;
   var toolsForRequirements = ['pickUp', 'give', 'ask', 'tell'];
@@ -176,13 +175,13 @@ app.controller('levelEditCtrl', ($scope, AuthService, $state, $stateParams, Clas
   		loc.splice(index, 1);
   	};
 
-    $scope.concepts = CONCEPTS;
-    $scope.clickedConcepts = {};
+    $scope.possConcepts = CONCEPTS;
+    $scope.concepts = {};
     $scope.toggleConcept = (concept, e) => {
         e.stopPropagation();
-        $scope.clickedConcepts[concept] = !$scope.clickedConcepts[concept];
+        $scope.concepts[concept] = !$scope.concepts[concept];
     };
-    $scope.concepts.forEach(concept => $scope.clickedConcepts[concept] = true);
+    $scope.possConcepts.forEach(concept => $scope.concepts[concept] = true);
 
     //for adding and removing str/str
     $scope.addConcept = (concept, index, addLoc, removeLoc) => {

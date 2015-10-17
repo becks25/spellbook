@@ -1,19 +1,21 @@
-<div class='inline add-variable' ng-model='newVar'>
-				<h4 class='inline'>Add a variable</h4>
-				<div class='button btn variable'ng-click='addTool(newVar, null, "variable")'>Save Variable</div>
-				
-				<md-input-container class='inline select-var-type'>
-			      	<label>Enter the variable text</label>
-			      	<input ng-model="newVar.text">
-			    </md-input-container>
-				<md-select class='select-var-type' placeholder="Select type" ng-model="newVar.varType">
-	     			<md-option ng-repeat='type in varTypes' value='{{type}}'>{{type}}</md-option>
-	 			</md-select>
-				<md-select ng-show='newVar.varType === "condition"'placeholder="Select condition type" ng-model="newVar.fnType" class='inline select-var-type'>
-	     			<md-option ng-repeat='type in varFnTypes' value='{{type}}'>{{type}}</md-option>
-	 			</md-select>
-	 			<md-input-container class='inline select-var-type' ng-show='newVar.fnType === "match" || newVar.fnType === "holding"'>
-			      	<label>Enter variable to match</label>
-			      	<input ng-model="newVar.arg">
-			    </md-input-container>
-			</div>
+<div ng-model='newVar'>
+	<h4 class='text-center'>Add a variable</h4>
+	<md-select class='select-var-type' placeholder="Select type" ng-model="newVar.varType">
+		<md-option ng-repeat='type in varTypes' value='{{type}}'>{{type}}</md-option>
+	</md-select>
+	<md-input-container class='inline select-var-type'>
+      	<label>Enter the variable text</label>
+      	<input ng-model="newVar.text">
+    </md-input-container>
+	<div ng-if='newVar.varType === "condition"'>
+		<md-select  placeholder="Select condition type" ng-model="newVar.fnType" class='inline select-var-type'>
+			<md-option ng-repeat='type in varFnTypes' value='{{type}}'>{{type}}</md-option>
+		</md-select>
+	</div>
+	<div ng-if='newVar.fnType === "match" || newVar.fnType === "holding"'>
+		<md-input-container class='inline select-var-type'>
+	      	<label>Enter variable to match</label>
+	      	<input ng-model="newVar.arg">
+	    </md-input-container>
+	</div>
+    <button class='btn variable'ng-click='addTool(newVar, null, "variable")'>Save Variable></button>
