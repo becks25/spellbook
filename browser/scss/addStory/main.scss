@@ -1,13 +1,20 @@
 $purple: #8843b9;
 $turqoise: #18b8c2;
 $green: #b8f166;
-
-
-
-#addTheStory {
   h3{
     font-family:$font-title;
   }
+
+
+#addTheStory {
+    padding:10%;
+    background: url('images/book.png');
+    background-size:contain;
+    background-repeat: no-repeat;
+    background-position:center;
+    width:60%;
+    height:80vh;
+    text-align:center;
 
   .required {
     color: $purple;
@@ -17,32 +24,36 @@ $green: #b8f166;
 
   label {
     padding-top: 2%;
+    color:#e7c69c;
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: #80643c;
   }
 
-  input{
-    padding-left: 2px;
-    padding-right: 35%;
-  }
-
-
-  .concepts{
-    padding-left:15%;
-    padding-top:2%;
-  }
-
-  .checkboxesDiv{
-      margin-left:3%;
-      display:block;
-  }
-
-  .checkboxes{
-      margin:0;
-      padding:0;
-
+  input, textarea{
+    text-align:center;
+    margin:3%;
+    padding:1%;
+    opacity:0.4;
+    color:black !important;
+    font-family:$font-default;
 
   }
 
+  ::-webkit-input-placeholder {
+   color: black;
+  }
 
+  :-moz-placeholder { /* Firefox 18- */
+     color: black;  
+  }
+
+  ::-moz-placeholder {  /* Firefox 19+ */
+     color: black;  
+  }
+
+  :-ms-input-placeholder {  
+     color: black;  
+  }
 
 
 
