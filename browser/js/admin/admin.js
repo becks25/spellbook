@@ -75,6 +75,8 @@ app.config(function ($stateProvider) {
 
 app.controller('AdminController', function ($scope, stories, users, mastery, popularStory, CONCEPTS, usersData, PageFactory, $state) {
     $scope.stories = stories;
+
+    console.log($scope.stories);
     $scope.users = users;
     $scope.averageMastery = mastery[0];
     $scope.averageRating = mastery[1];

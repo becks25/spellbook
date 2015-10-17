@@ -46,7 +46,18 @@ var lorem = "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do 
 var backgrounds= ['images/space.png', 'images/flower-field.png', 'images/underwater.png'];
 var covers = ['images/book-covers/background-castle.png','images/book-covers/background-circus.png', 'images/book-covers/background-dinosaur.png', 'images/book-covers/background-safari.png'];
 
-var seedStories = function(){
+var spellbookUser = function(){
+    return User.createAsync(
+        {
+        email: 'spellbook@gmail.com',
+        password: 'spellbook',
+        username: 'SpellBook',
+        isAdmin: true
+    })
+}
+
+
+var seedStories = function(theuser){
     var titles = ['Happy Dance', 'Omri', 'Joe\'s Salt', 'Adventures of Mark'];
     //var images = ['http://www.smashingmagazine.com/images/book-covers/book-covers-18.jpg', 'https://s-media-cache-ak0.pinimg.com/236x/31/b0/7f/31b07f4c094b63a20fba3d7a3143b69c.jpg', 'https://geekybooksnob.files.wordpress.com/2012/11/200px-life_of_pi_cover.png', 'http://www.adweek.com/galleycat/files/2012/08/8-bit-book-cover-The-Two-Towers.jpg']
 
@@ -56,7 +67,8 @@ var seedStories = function(){
             description: descr,
             difficulty: Math.floor(Math.random()*10),
             concepts: [concepts[Math.floor(Math.random()*concepts.length)]],
-            cover: covers[i]
+            cover: covers[i],
+            author: theuser
         };
     });
 
@@ -66,7 +78,8 @@ var seedStories = function(){
         description: "Mopsy and Moopsy are in trouble- can you help them?",
         difficulty: 2,
         concepts: ['For Loop', 'If-statements'],
-        cover: 'images/book-covers/background-mopsy.png'
+        cover: 'images/book-covers/background-mopsy.png',
+        author: theuser
 
     });
     stories.push({
@@ -74,11 +87,13 @@ var seedStories = function(){
         description: "Aria gets lost in space and has to rescue a friend",
         difficulty: 3,
         concepts: ['Conditionals', 'While loop', 'For loop'],
-        cover: 'images/book-covers/background-space.png'
+        cover: 'images/book-covers/background-space.png',
+        author: theuser
 
     });
      return Story.createAsync(stories);
 };
+
 
 var seedPages = function(stories){
     var pages = [];
@@ -625,6 +640,8 @@ var seedUsers = function (stories, pages) {
 
 };
 
+
+
 connectToDb.then(function () {
     // User.findAsync({}).then(function (users) {
         // if (users.length === 0) {
@@ -634,14 +651,22 @@ connectToDb.then(function () {
         //     process.kill(0);
         // }
     var tempUsers, tempStories, tempPages;
-    seedStories()
-    .then(function(stories){
-        tempStories = stories;
-        return seedPages(tempStories);
-    }).then(function(pages){
+    spellbookUser()
+    .then(function(spellbook){
+        console.log("this is in the then", spellbook)
+        return seedStories(spellbook)
+        .then(function(stories){
+            console.log("here are the stories", stories)
+            tempStories = stories;
+            console.log("thesse are stories",tempStories)
+            return seedPages(tempStories) 
+        }) 
+    })
+    .then(function(pages){
         tempPages = pages;
         return seedUsers(tempStories, tempPages);
     }).then(function () {
+        console.log("finishing the process", tempStories)
         console.log(chalk.green('Seed successful!'));
         process.kill(0);
     }).catch(function (err) {
