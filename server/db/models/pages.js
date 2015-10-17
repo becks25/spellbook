@@ -22,6 +22,7 @@ var schema = new mongoose.Schema({
     },
     pageNumber: Number,
     boardBackground: {type: String, default: 'images/flower-field.png'}
+    
 });
 
 

@@ -26,7 +26,7 @@ app.config($stateProvider => {
 	});
 });
 
-app.controller('levelEditCtrl', ($scope, AuthService, $state, $stateParams, ClassFactory, SPRITES, LevelFactory, TilesizeFactory, SpellFactory, SpellComponentFactory, SPRITE_AVATARS, orderByFilter, $compile, user, AvatarFactory, PageFactory, $uibModal, StoryFactory) => {
+app.controller('levelEditCtrl', ($scope, AuthService, $state, $stateParams, ClassFactory, SPRITES, LevelFactory, TilesizeFactory, SpellFactory, SpellComponentFactory, SPRITE_AVATARS, orderByFilter, $compile, user, AvatarFactory, PageFactory, $uibModal, StoryFactory, CONCEPTS, GAMEBOARD_BACKGROUNDS) => {
 
 	var boardPlaceholder = [
 		[[],[],[],[],[]],
@@ -37,13 +37,11 @@ app.controller('levelEditCtrl', ($scope, AuthService, $state, $stateParams, Clas
 	];
 
 	$scope.user = user;
-  $scope.possConcepts = SpellComponentFactory.possConcepts;
   $scope.toolsPoss = SpellComponentFactory.possTools;
   $scope.dirsPoss = SpellComponentFactory.possDirections;
   $scope.spellTools = []; // visible in toolbox
   $scope.spellVars = [];
   $scope.directions = [];
-  $scope.concepts = []; //concepts user has added to pg
   $scope.spellComponents = []; //used for storing dragged requirements
   $scope.varTypes = ['person', 'variable', 'condition'];
   $scope.varFnTypes = ['holding', 'match', 'true', 'false'];
@@ -54,7 +52,6 @@ app.controller('levelEditCtrl', ($scope, AuthService, $state, $stateParams, Clas
     boardBackground: 'images/flower-field.png',
     gameboard: boardPlaceholder,
     hint: '',
-    concepts: $scope.concepts,
     requirements: {},
     pageNumber: 0,
   };
@@ -69,6 +66,9 @@ app.controller('levelEditCtrl', ($scope, AuthService, $state, $stateParams, Clas
   };
   $scope.newSpritePos = {x: null, y: null};
   $scope.savedSprites = [];
+  console.log('backgrounds', GAMEBOARD_BACKGROUNDS);
+  $scope.backgrounds = GAMEBOARD_BACKGROUNDS;
+  $scope.makingNewLevel = true;
   var toolsForRequirements = ['pickUp', 'give', 'ask', 'tell'];
   //used to keep track of vars that should be refreshed in tool box and to save pg
   //array members have the same type as poss arrays (str, str, obj)
@@ -79,23 +79,21 @@ app.controller('levelEditCtrl', ($scope, AuthService, $state, $stateParams, Clas
   };
   //sets newVar to empty version on load
   clearNewVar();
+  $scope.page.gameboard[0][0].push({
+      type: 'Avatar',
+      name:'WizzardGirl3'
+  });
 
   $scope.savePage = () =>{
     //page obj already has story, text, hint, background, gameboard
+    $scope.page.concepts = _.keys($scope.concepts).filter(concept=>$scope.concepts[concept]);
     $scope.page.tools = saved.tools;
     $scope.page.directions = saved.dirs;
-    console.log('saving', saved.vars)
     $scope.page.variables = saved.vars;
-    console.log('spellComponents', $scope.spellComponents);
     //set req from spell box
     $scope.page.requirements = $scope.level.constructReqs($scope.spellComponents)
     //set gameboard with objs
     //find pg num
-
-    $scope.page.gameboard[0][0].push({
-      type: 'Avatar',
-      name:'WizzardGirl3'
-    });
 
     StoryFactory.find($stateParams.storyId)
     .then(story => story.getAllPages($stateParams.storyId))
@@ -132,6 +130,7 @@ app.controller('levelEditCtrl', ($scope, AuthService, $state, $stateParams, Clas
       match: null,
     };
     $scope.newSpritePos = {x: null, y: null};
+//need to reload map with sprites
 
   };
   $scope.selectImg = (possSpr)=>{
@@ -176,6 +175,14 @@ app.controller('levelEditCtrl', ($scope, AuthService, $state, $stateParams, Clas
   	$scope.removeItem = (index, loc)=>{
   		loc.splice(index, 1);
   	};
+
+    $scope.concepts = CONCEPTS;
+    $scope.clickedConcepts = {};
+    $scope.toggleConcept = (concept, e) => {
+        e.stopPropagation();
+        $scope.clickedConcepts[concept] = !$scope.clickedConcepts[concept];
+    };
+    $scope.concepts.forEach(concept => $scope.clickedConcepts[concept] = true);
 
     //for adding and removing str/str
     $scope.addConcept = (concept, index, addLoc, removeLoc) => {
@@ -295,6 +302,7 @@ var baseConfig = {
     Crafty.init(TilesizeFactory.TILESIZE/2 * TilesizeFactory.NumTiles, TilesizeFactory.TILESIZE/2 * TilesizeFactory.NumTiles);
 
     Crafty.canvas.init();
+    //need to load sprites on to map
 
     Crafty.sprite(64, '/images/sprites.png', SPRITES);
     Crafty.sprite(64, '/images/SpriteAvatars.png', SPRITE_AVATARS);
