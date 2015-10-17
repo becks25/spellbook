@@ -72,7 +72,7 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
             $timeout( () => {
                 $('.right-flip').removeClass('flipped');
 
-            }, 1498);
+            }, 1494);
 
             $timeout( () => {
                 PageFactory.find($scope.nextPage._id)
@@ -98,7 +98,7 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
             $timeout( () => {
                 $('.left-flip').removeClass('flipped');
 
-            }, 1498);
+            }, 1400);
 
             $timeout( () => {
                 PageFactory.find($scope.previousPage._id)
@@ -253,6 +253,8 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
 
 
                     $scope.findNextPage();
+
+
 
                     if($scope.nextPage){
 
