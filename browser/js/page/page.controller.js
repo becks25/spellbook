@@ -38,6 +38,7 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
         }
     };
 
+    console.log('spell tools', $scope.spellTools)
 
     $scope.findPreviousPage = () => {
         if($scope.page.pageNumber === 0) return;
