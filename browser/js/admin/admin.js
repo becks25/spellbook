@@ -120,8 +120,8 @@ app.controller('AdminController', function ($scope, stories, users, mastery, pop
         .then(pages =>{
             for (var i =0; i < pages.length; i++){
                 if (pages[i].storyId === story._id){
-                    if (page[i].pageNumber === 0){
-                        $state.go('page', {id: page[i]._id})
+                    if (pages[i].pageNumber === 0){
+                        $state.go('page', {id: pages[i]._id})
                     }
                 }
             }
@@ -130,15 +130,15 @@ app.controller('AdminController', function ($scope, stories, users, mastery, pop
     }
 
 
-    function giveMeAnAuthor(){
-        for (var i = 0; i < $scope.stories.length; i++){
-            if (!$scope.stories[i].author){
-                console.log("made it to this point")
-                $scope.stories[i].author = {username: "SpellBook"}
-            }
-        } console.log("with author", $scope.stories)
-    }
-    giveMeAnAuthor();
+    // function giveMeAnAuthor(){
+    //     for (var i = 0; i < $scope.stories.length; i++){
+    //         if (!$scope.stories[i].author){
+    //             console.log("made it to this point")
+    //             $scope.stories[i].author = {username: "SpellBook"}
+    //         }
+    //     } console.log("with author", $scope.stories)
+    // }
+    // giveMeAnAuthor();
 
 
 });
