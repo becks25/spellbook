@@ -131,6 +131,17 @@ app.controller('AdminController', function ($scope, stories, users, mastery, pop
     }
 
 
+    function giveMeAnAuthor(){
+        for (var i = 0; i < $scope.stories.length; i++){
+            if (!$scope.stories[i].author){
+                console.log("made it to this point")
+                $scope.stories[i].author = {username: "SpellBook"}
+            }
+        } console.log("with author", $scope.stories)
+    }
+    giveMeAnAuthor();
+
+
 });
 
 app.filter('rangeFilter', function() {
