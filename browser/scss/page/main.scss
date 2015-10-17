@@ -64,6 +64,7 @@ $brown: #45320b;
 }
 
 .right{
+	padding-left:1%;
 	padding-right:0;
 	transform-origin: left;
 	-webkit-transform-origin: left;
@@ -95,6 +96,9 @@ $brown: #45320b;
 	-transition-timing-function:ease;
 
 	position:absolute;
+		padding-left:1%;
+	padding-right:15px;
+	width:50%;
 	z-index:11;
 	&.flipped{
 		transform: rotateY(-90deg) rotate(5deg);
@@ -116,6 +120,8 @@ $brown: #45320b;
 	vtransition-timing-function:ease;
 
 	position:absolute;
+	padding-left:1%;
+	padding-right:0;
 	right:0;
 	z-index:10 !important;
 	&.flipped{
@@ -127,9 +133,17 @@ $brown: #45320b;
 }
 
 .left-beneath{
+	padding-left:1%;
+	padding-right:15px;
+	width:50%;
+
 	left:0;
 }
 .right-beneath{
+	padding-left:1%;
+	padding-right:0;
+	width:50%;
+
 	right:0;
 }
 .right-beneath, .left-beneath{
