@@ -26,30 +26,30 @@ app.controller('AddStoryController', function ($scope, user, StoryFactory, $stat
 
     $scope.user = user;
 
-    $scope.allConcepts = SpellComponentFactory.possConcepts
+    // $scope.allConcepts = SpellComponentFactory.possConcepts
 
-    function getConcepts() {
-        var arr = [];
-        for (var i = 0; i < $scope.allConcepts.length; i++){
-            arr.push({name: $scope.allConcepts[i], checked: false})
-        }
-        return arr;
-    }
+    // function getConcepts() {
+    //     var arr = [];
+    //     for (var i = 0; i < $scope.allConcepts.length; i++){
+    //         arr.push({name: $scope.allConcepts[i], checked: false})
+    //     }
+    //     return arr;
+    // }
 
-    $scope.possibleConcepts = getConcepts();
-
-
-
-    $scope.theConcepts = [];
-
-    $scope.selectedConcepts = (con) => {
-        $scope.theConcepts.push(con.name);
-    };
+    // $scope.possibleConcepts = getConcepts();
 
 
-    $scope.logConcepts = () => {
-        console.log("logging", $scope.theConcepts);
-    };
+
+    // $scope.theConcepts = [];
+
+    // $scope.selectedConcepts = (con) => {
+    //     $scope.theConcepts.push(con.name);
+    // };
+
+
+    // $scope.logConcepts = () => {
+    //     console.log("logging", $scope.theConcepts);
+    // };
 
 
     $scope.createStory = () => {
@@ -57,7 +57,7 @@ app.controller('AddStoryController', function ($scope, user, StoryFactory, $stat
         storyToCreate.title = $scope.title;
         storyToCreate.description = $scope.description;
         storyToCreate.difficulty = $scope.difficulty;
-        storyToCreate.concepts = $scope.theConcepts;
+        // storyToCreate.concepts = $scope.theConcepts;
         storyToCreate.cover = $scope.cover || "https://cdn.vectorstock.com/i/composite/90,62/card-with-cartoon-castle-vector-1099062.jpg";
 
         StoryFactory.create(storyToCreate)

@@ -1,47 +1,36 @@
-<div id="addTheStory" class="panel">
+<div class="panel">
   <div class="panel-heading">
     <h3 class="text-center">Create Your Own SpellBook</h3>
   </div>
 
-  <form class="panel-body" name="newStory" role="form" ng-submit='newStory.$valid && createStory()' novalidate>
-    <div class="col-md-8 col-sm-12">
+  <form id="addTheStory" class="panel-body center-block" name="newStory" role="form" ng-submit='newStory.$valid && createStory()' novalidate>
+    <div class="col-sm-offset-2 col-sm-8">
       <div class="control-group" ng-class="{'has-error':newStory.title.$dirty && newStory.title.$invalid || newStory.title.$invalid && newStory.$submitted}">
-        <label for="title" class="control-label">
-          Story Title<span class="required">*</span>
-        </label>
         <div class="controls">
-          <input ng-model="title" name="title" type="text" value="" class="form-control" id="title" name="title" required>
+          <input ng-model="title" name="title" type="text" value="" class="form-control" id="title" name="title" placeholder="Story Title" required>
         </div>
       </div>
 
       <div class="control-group" ng-class="{'has-error':newStory.description.$dirty && newStory.description.$invalid || newStory.description.$invalid && newStory.$submitted}">
-        <label for="description" class="control-label">
-          Story Description<span class="required">*</span>
-        </label>
+
         <div class="controls">
-          <input ng-model="description" name="description" class="form-control" type="text" value="" id="description" name="description" ng-maxlength="100" required>
+          <textarea ng-model="description" name="description" class="form-control" value="" id="description" name="description" ng-maxlength="100" placeholder="Story Description" required></textarea>
         </div>
       </div>
 
       <div class="control-group" ng-class="{'has-error':newStory.difficulty.$invalid && newStory.difficulty.$dirty}">
-        <label for="difficulty" class="control-label">
-          Story Difficulty (1-10)
-        </label>
         <div class="controls">
-          <input ng-model="difficulty" name="difficulty" type="number" min="0" max="10" value="" class="form-control" id="difficulty">
+          <input ng-model="difficulty" name="difficulty" type="number" min="0" max="10" value="" class="form-control" id="difficulty" placeholder="Story Difficulty (1-10)">
         </div>
       </div>
 
       <div class="control-group">
-        <label for="cover" class="control-label">
-          Story Cover Image
-        </label>
         <div class="controls">
-          <input ng-model="cover" name="cover" type="text" value="" id="cover" class="form-control">
+          <input ng-model="cover" name="cover" type="text" value="" id="cover" class="form-control"placeholder="Story Cover Image">
         </div>
       </div>
     </div>
-    <div class="col-md-4 col-sm-12">
+   <!--  <div class="col-md-4 col-sm-12">
       <div class="control-group concepts">
         <label for="concepts" class="control-label">
           Story Concepts
@@ -52,7 +41,7 @@
           </label>
       </div>
 
-    </div>
+    </div> -->
 
   
     <div class="clearfix"></div>
