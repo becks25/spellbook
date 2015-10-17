@@ -75,6 +75,8 @@ app.config(function ($stateProvider) {
 
 app.controller('AdminController', function ($scope, stories, users, mastery, popularStory, CONCEPTS, usersData, PageFactory, $state) {
     $scope.stories = stories;
+
+    console.log($scope.stories);
     $scope.users = users;
     $scope.averageMastery = mastery[0];
     $scope.averageRating = mastery[1];
@@ -126,6 +128,17 @@ app.controller('AdminController', function ($scope, stories, users, mastery, pop
         })
 
     }
+
+
+    function giveMeAnAuthor(){
+        for (var i = 0; i < $scope.stories.length; i++){
+            if (!$scope.stories[i].author){
+                console.log("made it to this point")
+                $scope.stories[i].author = {username: "SpellBook"}
+            }
+        } console.log("with author", $scope.stories)
+    }
+    giveMeAnAuthor();
 
 
 });
