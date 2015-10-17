@@ -2,9 +2,15 @@
 	
 	<div class="panel-heading">
 		<div class="clearfix">
-			<h3 class="inline col-sm-3 col-xs-12 btnpadding">My spell</h3>
+			<h3 ng-if="!makingNewLevel" class="inline col-sm-3 col-xs-12 btnpadding">My spell</h3>
 
-			<h3>
+			<h3 ng-if="makingNewLevel" class="inline col-sm-3 col-xs-12 btnpadding">Level Requirements</h3>
+
+			<p ng-if="makingNewLevel">
+				Drag actions and variables into the space below to create a the requirements for this level. Logical concepts cannot be included in the requirements, to encourage creative solutions from players.
+			</p>
+
+			<h3 ng-if="!makingNewLevel">
 				<button class="btn inline col-sm-3  btn-space" ng-click="resetLevel()">Clear</button>
 				<button class="btn inline col-sm-3 btn-space" ng-click="runSpell(spellComponents)">Run</button>
 				<button class="btn inline col-sm-3 btn-space" ng-click='stepThrough(spellComponents)'>Step</button>
