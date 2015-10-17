@@ -1,0 +1,22 @@
+.glossary{
+	.definition{
+		padding:1%;
+	}
+
+	li{
+		margin-top:1%;
+	}
+	h3{
+		font-family:$font-title;
+	}
+
+	.tool-drop{
+		border: 2px solid $turqoise;
+		border-radius:6px;
+
+		.spellTool{
+			border-bottom-left-radius: 0px;
+			border-bottom-right-radius:0px;
+		}
+	}
+}
