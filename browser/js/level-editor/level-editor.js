@@ -115,8 +115,8 @@ app.controller('levelEditCtrl', ($scope, AuthService, $state, $stateParams, Clas
 
   //add sprite to board and saved arr
   $scope.saveSprite = ()=>{
-    if ($scope.newSprite.varName) sprite.varName = $scope.newSprite.varName;
-    if ($scope.newSprite.match) sprite.match = $scope.newSprite.match;
+    // if ($scope.newSprite.varName) sprite.varName = $scope.newSprite.varName;
+    // if ($scope.newSprite.match) sprite.match = $scope.newSprite.match;
     $scope.page.gameboard[$scope.newSpritePos.x-1][$scope.newSpritePos.y-1].push($scope.newSprite);
     $scope.newSprite.pos = $scope.newSpritePos;
     $scope.newSprite.imgPos = $scope.newSprite.imgPos;
@@ -248,7 +248,14 @@ var baseConfig = {
         });
       $scope.level.map.load($scope.page.gameboard);
 
-    }
+    };
+
+    $scope.setBoard = ()=>{
+
+        document.getElementById('cr-stage').style.backgroundImage='url('+$scope.page.boardBackground+')';
+        $scope.resetMap();
+        console.log('board', $scope.page.gameboard)
+    };
 
     //Handles directions and variables
     //determines if dropped in a valid position and updates target object's property
@@ -321,7 +328,7 @@ var baseConfig = {
 
     $scope.size = tileSize + 'px';
 
-    $scope.level.map.resetMap();
+    $scope.resetMap();
 
 
 });
