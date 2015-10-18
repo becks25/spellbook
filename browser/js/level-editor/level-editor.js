@@ -61,7 +61,6 @@ app.controller('levelEditCtrl', ($scope, AuthService, $state, $stateParams, Clas
       return {name:sprite, imgPos:SPRITES[sprite], imgUrl: 'images/sprites.png'};
     });
   _.keys(SPRITE_AVATARS).forEach(sprite=>$scope.possSprites.push({name:sprite, imgPos:SPRITE_AVATARS[sprite], imgUrl: 'images/SpriteAvatars.png'}));
-  console.log('sprites', $scope.possSprites);
   //move the empty sprite to the end
   $scope.possSprites.push($scope.possSprites.shift());
   $scope.newSprite = {
@@ -69,8 +68,9 @@ app.controller('levelEditCtrl', ($scope, AuthService, $state, $stateParams, Clas
     name: null,
     varName: null,
     match: null,
+    pos: [null, null]
   };
-  $scope.newSpritePos = {x: null, y: null};
+  // $scope.newSpritePos = [null, null];
   $scope.savedSprites = [];
   $scope.backgrounds = GAMEBOARD_BACKGROUNDS;
   $scope.makingNewLevel = true;
@@ -84,10 +84,8 @@ app.controller('levelEditCtrl', ($scope, AuthService, $state, $stateParams, Clas
   };
   //sets newVar to empty version on load
   clearNewVar();
-  $scope.page.gameboard[0][0].push({
-      type: 'Avatar',
-      name:'WizzardGirl3'
-  });
+
+  $scope.avatarPos = [1,1];
 
   $scope.savePage = () =>{
     //page obj already has story, text, hint, background, gameboard
@@ -117,19 +115,20 @@ app.controller('levelEditCtrl', ($scope, AuthService, $state, $stateParams, Clas
   $scope.saveSprite = ()=>{
     // if ($scope.newSprite.varName) sprite.varName = $scope.newSprite.varName;
     // if ($scope.newSprite.match) sprite.match = $scope.newSprite.match;
-    $scope.page.gameboard[$scope.newSpritePos.x-1][$scope.newSpritePos.y-1].push($scope.newSprite);
-    $scope.newSprite.pos = $scope.newSpritePos;
+    // $scope.page.gameboard[$scope.newSpritePos.x-1][$scope.newSpritePos.y-1].push($scope.newSprite);
+    // $scope.newSprite.pos = $scope.newSpritePos;
     $scope.newSprite.imgPos = $scope.newSprite.imgPos;
 
     $scope.savedSprites.push($scope.newSprite);
-    console.log('gameboard', $scope.page.gameboard)
+    // console.log('gameboard', $scope.page.gameboard)
     $scope.newSprite = {
       type: null,
       name: null,
       varName: null,
       match: null,
+      pos: [null, null]
     };
-    $scope.newSpritePos = {x: null, y: null};
+    // $scope.newSpritePos = {x: null, y: null};
     $scope.resetMap();
   };
   $scope.selectImg = (possSpr)=>{
@@ -139,8 +138,10 @@ app.controller('levelEditCtrl', ($scope, AuthService, $state, $stateParams, Clas
   };
   $scope.removeSprite = (sprite, index)=>{
     $scope.savedSprites.splice(index, 1);
-    _.get(sprite, $scope.page.gameboard);
-    console.log('removing', $scope.page.gameboard)
+    $scope.resetMap();
+
+    // console.log(_.get(sprite, $scope.page.gameboard));
+    // console.log('removing', $scope.page.gameboard)
   };
 
 
@@ -243,15 +244,25 @@ var baseConfig = {
     });
 
     $scope.resetMap = ()=>{
+      var gameboard = _.cloneDeep(boardPlaceholder);
+      //construct 3-d array
+      gameboard[$scope.avatarPos[0]-1][$scope.avatarPos[1]-1].push({type: 'Avatar', name: 'WizardGirl1'});
+      $scope.savedSprites.forEach(sprite=>{
+        var mapObj = {type: sprite.type, name: sprite.name};
+        if(sprite.varName) mapObj.varName = sprite.varName;
+        if(sprite.match) mapObj.match = sprite.match;
+        gameboard[sprite.pos[0]-1][sprite.pos[1]-1].push(mapObj);
+      });
       Crafty("2D").each(function(i) {
           this.destroy();
         });
-      $scope.level.map.load($scope.page.gameboard);
+      $scope.page.gameboard = gameboard;
+      $scope.level.map.load(gameboard);
 
     };
 
     $scope.setBoard = ()=>{
-
+    
         document.getElementById('cr-stage').style.backgroundImage='url('+$scope.page.boardBackground+')';
         $scope.resetMap();
         console.log('board', $scope.page.gameboard)

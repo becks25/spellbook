@@ -27,12 +27,12 @@
  		<md-option ng-repeat='variable in spellVars' value='{{variable.name}}'>{{variable.name}}</md-option>
 		</md-select>
 	<div class='col-xs-12 col-md-6'>
-		<md-select class='select-var-type' placeholder="x coodinate" ng-model="newSpritePos.x">
+		<md-select class='select-var-type' placeholder="x coodinate" ng-model="newSprite.pos[0]">
  			<md-option ng-repeat='num in boardLength()' value='{{num}}'>{{num}}</md-option>
 		</md-select>
 	</div>
 	<div class='col-xs-12 col-sm-6'>
-		<md-select class='select-var-type' placeholder="y coordinate" ng-model="newSpritePos.y">
+		<md-select class='select-var-type' placeholder="y coordinate" ng-model="newSprite.pos[1]">
  			<md-option ng-repeat='num in boardLength()' value='{{num}}'>{{num}}</md-option>
 		</md-select>
 	</div>
@@ -43,7 +43,7 @@
 <div class='sprites-list col-xs-3 col-sm-2 col md-1' ng-repeat='sprite in savedSprites'>
 	<span class="glyphicon glyphicon-remove pull-right" ng-click="removeSprite(sprite, $index)"></span>
 	<div style='background:url({{sprite.imgUrl}}) {{0-sprite.imgPos[0]*64}}px {{0-sprite.imgPos[1]*64}}px; width: 64px; height:64px'></div>
-	<span class='no-padding-margin'>({{sprite.pos.x}},{{sprite.pos.y}})</span>
+	<span class='no-padding-margin'>({{sprite.pos[0]}},{{sprite.pos[1]}})</span>
 	<span class='no-padding-margin'>{{sprite.varName}}</span>
 </div>
 </div>

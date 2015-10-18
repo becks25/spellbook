@@ -35,16 +35,15 @@
      			<md-option ng-repeat='image in backgrounds' value='{{image}}'><img ng-src="{{image}}" style="margin:auto;" class='background-img clearfix'/></md-option>
  			</md-select>
  		</div>
- 		{{page.boardBackground}}
 		<div class='col-xs-12 col-sm-6 col-md-3'>
  			<p class='inline no-padding-margin'>Character start position:</p>
 			<div class='col-xs-12 col-sm-6'>
-				<md-select class='no-padding-margin select-var-type' placeholder="X" ng-model="avitarPos.x">
+				<md-select class='no-padding-margin select-var-type' placeholder="X" ng-model="avatarPos[0]">
 	     			<md-option ng-repeat='num in boardLength()' value='{{num}}'>{{num}}</md-option>
 	 			</md-select>
 	 		</div>
  			<div class='col-xs-12 col-sm-6'>
-				<md-select class='no-padding-margin select-var-type' placeholder="Y" ng-model="avitarPos.y">
+				<md-select class='no-padding-margin select-var-type' placeholder="Y" ng-model="avatarPos[1]">
 	     			<md-option ng-repeat='num in boardLength()' value='{{num}}'>{{num}}</md-option>
 	 			</md-select>
 	 		</div>
