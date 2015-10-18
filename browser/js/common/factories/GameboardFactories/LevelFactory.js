@@ -31,6 +31,7 @@ app.factory('LevelFactory', function(PageFactory, UserFactory, AuthService, MapF
 
     //resets req objs
     resetRequirements(){ 
+      console.log('resetting', this.requirements)
       var level = this;
       resetWinLoseReq('win');
       resetWinLoseReq('lose');

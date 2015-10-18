@@ -518,13 +518,42 @@ var seedPages = function(stories){
 
             pages.push({
                 story: story._id,
-                text:'<p>Welcome!  If you’re wondering how the game works, you’ve come to the right place.  Read the explanation and instructions on each page, and try out the moves until you feel comfortable trying challenges on your own.  When you get really good, you can even make your own!</p><p>Each page of a story presents a challenge for you to figure out.  You will need to move your character around the board, and perform actions by making a spell.</p><p>On each page, you will find a list of actions, directions and variables.</p><p>If you want to use them in your spell, you have to drag them over to the spell box.  If you see a dotted rectangle, you have activated a drop zone.</p><hr/><p>Try dragging the move tool, and then the pick up tool.  To choose an object to pick up, you must drag a variable into the green box on the pick-up tool once it’s in the spell.  Make sure to look for the dotted rectangle.</p><h4>Try it now.  You can win this page by moving down one and picking up the potion.</h4>',
+                text:'<p>Welcome!  If you’re wondering how the game works, you’ve come to the right place.</p><p>Read the explanation and instructions on each page, and try out the moves until you feel comfortable trying challenges on your own.  When you get really good, you can even make your own!</p><p>Each page of a story presents a challenge for you to figure out.  You will need to move your character around the board, and perform actions by making a spell.</p><p>Try moving by dragging the move tool into the spell</p>',
                 tools: ['move', 'pickUp'],
                 variables: [
                     {text: 'potion', varType: 'variable'},
                 ],
                 concepts: ['Movement'],
-                hint: 'If you\'re having trouble getting the objects to stay, move around the spell box until you see a dotted rectabgle',
+                hint: 'If you\'re having trouble getting the objects to stay, move around the spell box until you see a dotted rectangle',
+                requirements: {win: {a:true}},
+                gameboard: [
+                    [
+                        [{
+                            type: 'Avatar',
+                            name:'Giraffe3'
+                        }],[],[],[]
+                    ],
+                    [
+                        [],[],[],[]
+                    ],
+                    [
+                        [],[],[],[]
+                    ],
+                    [
+                        [],[],[],[]
+                    ]
+                ],
+                pageNumber: 0,
+                boardBackground: 'images/flower-field.png'
+            },{
+                story: story._id,
+                text:'<p>On each page, you will find a list of actions, directions and variables.</p><p>If you want to use them in your spell, you have to drag them over to the spell box.  If you see a dotted rectangle, you have activated a drop zone.</p><hr/><p>Try dragging the move tool, and then the pick up tool.  To choose an object to pick up, you must drag a variable into the green box on the pick-up tool once it’s in the spell.  Make sure to look for the dotted rectangle.</p><p>Try it now.  You can win this page by moving down one and picking up the potion.<p>',
+                tools: ['move', 'pickUp'],
+                variables: [
+                    {text: 'potion', varType: 'variable'},
+                ],
+                concepts: ['Movement', 'Expressions'],
+                hint: 'Try dragging the "pick up" tool into the spell and then drag the potion variable into the "pick up" tool.  Make sure you are move to the square with the potion before picking it up',
                 requirements: {win: {pickUp: {'potion': {noOne: false}}}},
                 gameboard: [
                     [
@@ -548,8 +577,8 @@ var seedPages = function(stories){
                         [],[],[],[]
                     ]
                 ],
-                pageNumber: 0,
-                boardBackground: 'images/flower-field.png'
+                pageNumber: 1,
+                boardBackground: 'images/world.png'
             },{
                 story: story._id,
                 text:'<p>Different variables can change different characteristics of your tools.  If you want to move a different direction, you can drag a direction into the move tool.  You can change the distance by typing in the white box on the move tool.</p><p>Variables also come in different types, and only certain variables can be dropped in each green green box.  Variables can be people, conditions or items.  You won’t always know which is which unless you try to drop them in a box.</p><p>On this page, you have to change direction and distance, and then use two variables to ask the Giraffe its name.</p>',
@@ -588,18 +617,20 @@ var seedPages = function(stories){
                         [],[],[],[]
                     ]
                 ],
-                pageNumber: 1,
+                pageNumber: 2,
                 boardBackground: 'images/jungle.png'
             },{
                 story: story._id,
-                text:'<p>Some levels use more complex tools, in which you can drop other tools.  For example, if you want to repeat an action, you can drag the repeat tool into your spell, and enter a number of times to repeat, then drop whatever actions you want to repeat into the repeat box.</p><p>Conditional tools require you to drag a condition variable into the green box, and will only do the action if a certain thing is true.</p><p>On this page, play with the conditions and repeat tools to see what you can do with them.  You have to pick up only the bananas to win this page.  Try dragging the repeat into the spell, then dragging a move tool into the repeat.  Then drag an if-tool below the move tool inside the repeat, and a pick-up tool inside the if-tool.  Now fill out the variables so that you pick up only crystals as you move down the board.</p>',
+                text:'<p>Some levels use more complex tools, in which you can drop other tools.  For example, if you want to repeat an action, you can drag the repeat tool into your spell, and enter a number of times to repeat, then drop whatever actions you want to repeat into the repeat box.</p><p>Conditional tools require you to drag a condition variable into the green box, and will only do the action if a certain thing is true.</p><p>On this page, play with the conditions and repeat tools to see what you can do with them.  You have to pick up only the bananas to win this page.  If you get stuck, look at the hint.</p>',
                 tools: ['move', 'pickUp', 'ifStatement', 'forLoop'],
                 variables: [
                     {text: 'banana', varType: 'variable'},
-                    {text: 'crystal', varType: 'variable'}
+                    {text: 'crystal', varType: 'variable'},
+                    {text: 'There_is_a_crystal', varType: 'condition', fnType:'match', arg:'crystal'},
+
                 ],
                 concepts: ['If-statements'],
-                hint: 'Watch out. You can\'t move through the rocks',
+                hint: 'Try dragging the repeat into the spell, then dragging a move tool into the repeat.  Then drag an if-tool below the move tool inside the repeat, and a pick-up tool inside the if-tool.  Now fill out the variables so that you pick up only crystals as you move down the board',
                 requirements: {win:{ pickUp: {
                     'crystal&1': {noOne: false},
                     'crystal&2': {noOne: false}
@@ -608,8 +639,9 @@ var seedPages = function(stories){
                     [
                         [{
                             type:'Collectible',
-                            name:'crystal',
-                            varName:'crystal&2'
+                            name:'Crystal1',
+                            varName:'crystal&2',
+                            match: 'crystal'
                         }],
                         [],
                         [],
@@ -633,8 +665,9 @@ var seedPages = function(stories){
                         [],
                         [{
                             type:'Collectible',
-                            name:'crystal',
-                            varName:'crystal&1'
+                            name:'Crystal1',
+                            varName:'crystal&1',
+                            match: 'crystal'
                         }],
                         [{
                             type:'Obstacle',
@@ -651,7 +684,7 @@ var seedPages = function(stories){
                         }]
                     ]
                 ],
-                pageNumber: 2,
+                pageNumber: 3,
                 boardBackground: 'images/underwater.png'
             });
             
