@@ -57,7 +57,13 @@ app.controller('levelEditCtrl', ($scope, AuthService, $state, $stateParams, Clas
   };
   $scope.level = new LevelFactory($scope.page);
   $scope.spell = new SpellFactory($scope.level);
-  $scope.possSprites = SpellComponentFactory.buildSpritesObjList();
+  $scope.possSprites = _.keys(SPRITES).map(sprite=>{
+      return {name:sprite, pos:SPRITES[sprite], loc: 'images/sprites.png'};
+    });
+  _.keys(SPRITE_AVATARS).forEach(sprite=>$scope.possSprites.push({name:sprite, pos:SPRITE_AVATARS[sprite], loc: 'images/SpriteAvatars.png'}));
+  console.log('sprites', $scope.possSprites);
+  //move the empty sprite to the end
+  $scope.possSprites.push($scope.possSprites.shift());
   $scope.newSprite = {
     type: null,
     name: null,
@@ -72,9 +78,9 @@ app.controller('levelEditCtrl', ($scope, AuthService, $state, $stateParams, Clas
   //used to keep track of vars that should be refreshed in tool box and to save pg
   //array members have the same type as poss arrays (str, str, obj)
   var saved ={
-    'tools': [],
-    'dirs': [], //this might not need to be in here
-    'vars': [], //objects instead of strings
+    'tool': [],
+    'direction': [], //this might not need to be in here
+    'variable': [], //objects instead of strings
   };
   //sets newVar to empty version on load
   clearNewVar();
@@ -86,9 +92,9 @@ app.controller('levelEditCtrl', ($scope, AuthService, $state, $stateParams, Clas
   $scope.savePage = () =>{
     //page obj already has story, text, hint, background, gameboard
     $scope.page.concepts = _.keys($scope.concepts).filter(concept=>$scope.concepts[concept]);
-    $scope.page.tools = saved.tools;
-    $scope.page.directions = saved.dirs;
-    $scope.page.variables = saved.vars;
+    $scope.page.tools = saved.tool;
+    $scope.page.directions = saved.direction;
+    $scope.page.variables = saved.variable;
     //set req from spell box
     $scope.page.requirements = $scope.level.constructReqs($scope.spellComponents)
     //set gameboard with objs
@@ -115,12 +121,10 @@ app.controller('levelEditCtrl', ($scope, AuthService, $state, $stateParams, Clas
     };
     if ($scope.newSprite.varName) sprite.varName = $scope.newSprite.varName;
     if ($scope.newSprite.match) sprite.match = $scope.newSprite.match;
-    $scope.page.gameboard[$scope.newSpritePos.x][$scope.newSpritePos.y].push($scope.newSprite);
+    $scope.page.gameboard[$scope.newSpritePos.x-1][$scope.newSpritePos.y-1].push($scope.newSprite);
     $scope.newSprite.pos = $scope.newSpritePos;
-    console.log('saved Sprites before', sprite, $scope.savedSprites)
 
     $scope.savedSprites.push($scope.newSprite);
-    console.log('saved Sprites', $scope.savedSprites)
     console.log('gameboard', $scope.page.gameboard)
     $scope.newSprite = {
       type: null,
@@ -129,12 +133,19 @@ app.controller('levelEditCtrl', ($scope, AuthService, $state, $stateParams, Clas
       match: null,
     };
     $scope.newSpritePos = {x: null, y: null};
+    $scope.resetMap();
+
 //need to reload map with sprites
 
   };
   $scope.selectImg = (possSpr)=>{
     $scope.newSprite.name = possSpr.name;
     $scope.newSprite.img = possSpr.img;
+  };
+  $scope.removeSprite = (sprite, index)=>{
+    $scope.savedSprites.splice(index, 1);
+    _.get(sprite, $scope.page.gameboard);
+    console.log('removing', $scope.page.gameboard)
   };
 
 
@@ -153,20 +164,17 @@ app.controller('levelEditCtrl', ($scope, AuthService, $state, $stateParams, Clas
     var makeSpellTool = (selected) => {
         var newTool = SpellComponentFactory.makeToolObj(selected);
         $scope.spellTools.push(newTool);
-        saved.tools.push(selected);
-        console.log('making spell tool')
+        saved.tool.push(selected);
     };
     var makeSpellDir = (selected) => {
       	var newDir = SpellComponentFactory.makeSpellDir(selected);
         $scope.directions.push(newDir);
-        saved.dirs.push(selected);
+        saved.direction.push(selected);
   	};
   	var makeSpellVar = (newVarObj)=> {
-      saved.vars.push(newVarObj);
-      console.log('making', newVarObj)
+      saved.variable.push(newVarObj);
       newVarObj = SpellComponentFactory.makeSpellVar(newVarObj);
       $scope.spellVars.push(newVarObj);
-      console.log('saved vars', saved.vars)
   	};
 
   	//removes an item from spellComponents
@@ -208,7 +216,7 @@ app.controller('levelEditCtrl', ($scope, AuthService, $state, $stateParams, Clas
       //remove from scope.spell_____
       loc.splice(index, 1);
       //remove from saved[tool.type]
-      var foundIndex = saved[tool.type].indexOf(tool.name)
+      var foundIndex = saved[tool.type].indexOf(tool.name);
       saved[tool.type].splice(foundIndex, 1);
       //add tool.name to poss list
       tool.type === 'tool' ? $scope.toolsPoss.push(tool.name) : $scope.dirsPoss.push(tool.name);
@@ -223,7 +231,6 @@ var baseConfig = {
     //add tools to the spell components array
     $scope.toolConfig = angular.extend({}, baseConfig, {
         update: (e, ui) => {
-          console.log('running update', ui.item, ui.item.scope())
             // only moves a tool to the spell box if it is an action for the page requirements
             if (ui.item.sortable.droptarget.hasClass('first') || (ui.item.scope() && !toolsForRequirements.some(tool=> tool === ui.item.scope().tool.action))) {
                 ui.item.sortable.cancel();
@@ -233,12 +240,20 @@ var baseConfig = {
 
             if (e.target) {
                 if ($(e.target).hasClass('first')) {
-                    $scope.spellTools = saved.tools.map(tool=>SpellComponentFactory.makeToolObj(tool));
+                    $scope.spellTools = saved.tool.map(tool=>SpellComponentFactory.makeToolObj(tool));
                 }
             }
         },
         connectWith: ".spellComponents"
     });
+
+    $scope.resetMap = ()=>{
+      Crafty("2D").each(function(i) {
+          this.destroy();
+        });
+      $scope.level.map.load($scope.page.gameboard);
+
+    }
 
     //Handles directions and variables
     //determines if dropped in a valid position and updates target object's property
@@ -264,7 +279,7 @@ var baseConfig = {
                 parentArray = ui.item.sortable.droptarget.scope().parent;
 
                 //resets tools arrays to create duplication and ensure spell components are clones
-                $scope.spellVars = saved.vars.map(variable=>SpellComponentFactory.makeSpellVar(variable));
+                $scope.spellVars = saved.variable.map(variable=>SpellComponentFactory.makeSpellVar(variable));
                 //refresh();
                 // $scope.resetLevel();
             }
@@ -275,7 +290,7 @@ var baseConfig = {
             //set prop on droppee
             //checks that drop target can take this variable
             if(dropTargetIndex>-1 && parentArray[dropTargetIndex].hasOwnProperty(newVar.varType)){
-                $scope.spellVars = saved.vars.map(variable=>SpellComponentFactory.makeSpellVar(variable));
+                $scope.spellVars = saved.variable.map(variable=>SpellComponentFactory.makeSpellVar(variable));
                     console.log('newVar');
 
                 parentArray[dropTargetIndex][newVar.varType] = newVar.name;
@@ -310,12 +325,7 @@ var baseConfig = {
 
     $scope.size = TilesizeFactory.TILESIZE/2 + 'px';
 
-    // $scope.runSpell = argArr => $scope.spell.run(argArr);
-
-    // $scope.stepThrough = (argArr)=> {
-    //     $scope.spell.stepThrough(argArr);
-    // };
-
+    $scope.level.map.resetMap();
 
 
 });
