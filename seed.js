@@ -41,10 +41,10 @@ Page.remove({}, function(err, removed) {
 
 
 var concepts = ['For Loop', 'While Loop', 'If-statements', 'Conditionals', 'Expressions', 'Movement']
-var descr = "Awesome adventure in progress- check back soon!";
-var lorem = "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>"
-var backgrounds= ['images/space.png', 'images/flower-field.png', 'images/underwater.png'];
-var covers = ['images/book-covers/background-castle.png','images/book-covers/background-circus.png', 'images/book-covers/background-dinosaur.png', 'images/book-covers/background-safari.png'];
+// var descr = "Awesome adventure in progress- check back soon!";
+// var lorem = "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>"
+// var backgrounds= ['images/space.png', 'images/flower-field.png', 'images/underwater.png'];
+// var covers = ['images/book-covers/background-castle.png','images/book-covers/background-circus.png', 'images/book-covers/background-dinosaur.png', 'images/book-covers/background-safari.png'];
 
 var spellbookUser = function(){
     return User.createAsync(
@@ -61,17 +61,27 @@ var seedStories = function(theuser){
     var titles = ['Happy Dance', 'Omri', 'Joe\'s Salt', 'Adventures of Mark'];
     //var images = ['http://www.smashingmagazine.com/images/book-covers/book-covers-18.jpg', 'https://s-media-cache-ak0.pinimg.com/236x/31/b0/7f/31b07f4c094b63a20fba3d7a3143b69c.jpg', 'https://geekybooksnob.files.wordpress.com/2012/11/200px-life_of_pi_cover.png', 'http://www.adweek.com/galleycat/files/2012/08/8-bit-book-cover-The-Two-Towers.jpg']
 
-    var stories = titles.map(function(title, i){
-        return {
-            title: title,
-            description: descr,
-            difficulty: Math.floor(Math.random()*10),
-            concepts: [concepts[Math.floor(Math.random()*concepts.length)]],
-            cover: covers[i],
-            author: theuser
-        };
-    });
+    // var stories = titles.map(function(title, i){
+    //     return {
+    //         title: title,
+    //         description: descr,
+    //         difficulty: Math.floor(Math.random()*10),
+    //         concepts: [concepts[Math.floor(Math.random()*concepts.length)]],
+    //         cover: covers[i],
+    //         author: theuser
+    //     };
+    // });
+    var stories = [];
 
+    stories.push({
+        title: 'Getting Started',
+        description: "Click here to learn how the game works",
+        difficulty: 1,
+        concepts: ['Movement', 'Expressions'],
+        cover: 'images/book-covers/background-castle.png',
+        author: theuser
+
+    });
 
     stories.push({
         title: 'Mopsy and Moopsy',
@@ -504,62 +514,204 @@ var seedPages = function(stories){
             }
 
             );
-        }else{
-            for (i=0; i<3; i++){
-                pages.push({
-                    story: story._id,
-                    text: lorem,
-                    tools: ['move', 'pickUp', 'give', 'ask', 'tell', 'ifStatement', 'forLoop', 'whileLoop'],
-                    variables: [{text: 'Omri', varType: 'person'}, {text: 'Zeke', varType: 'person'}, {text: 'Joe', varType: 'person'}, {text: 'Say hi', varType: 'variable'}, {text: 'Green Potion', varType: 'variable'}, {text: 'The potion is green', varType: 'condition'}],
-                    concepts: [concepts[Math.floor(Math.random()*concepts.length)]],
-                    hint: 'Try harder',
-                    requirements: {win:{pickUp: {Green_Potion: {noOne: false}}}},
-                    gameboard: [
-                        [
-                            [{
-                                type: 'Avatar',
-                                name: 'WizardBoy2'
-                            }],
-                            [],
-                            [{
-                                type: 'Obstacle',
-                                name: 'Rock1'
-                            }],
-                            []
+        } else {
 
-                        ],
-                        [
-                            [],
-                            [{
-                                type: 'Collectible',
-                                name: 'Potion2',
-                                varName: 'Green_Potion'
-                            }],
-                            [],
-                            []
-                        ],
-                        [
-                            [],
-                            [],
-                            [],
-                            [],
-                        ],
-                        [
-                            [],
-                            [{
-                                type: 'Obstacle',
-                                name: 'Tree2',
-                                varName: 'tree'
-                            }],
-                            [],
-                            []
-                        ]
+            pages.push({
+                story: story._id,
+                text:'<p>Welcome!  If you’re wondering how the game works, you’ve come to the right place.  Read the explanation and instructions on each page, and try out the moves until you feel comfortable trying challenges on your own.  When you get really good, you can even make your own!</p><p>Each page of a story presents a challenge for you to figure out.  You will need to move your character around the board, and perform actions by making a spell.</p><p>On each page, you will find a list of actions, directions and variables.</p><p>If you want to use them in your spell, you have to drag them over to the spell box.  If you see a dotted rectangle, you have activated a drop zone.</p><hr/><p>Try dragging the move tool, and then the pick up tool.  To choose an object to pick up, you must drag a variable into the green box on the pick-up tool once it’s in the spell.  Make sure to look for the dotted rectangle.</p><h4>Try it now.  You can win this page by moving down one and picking up the potion.</h4>',
+                tools: ['move', 'pickUp'],
+                variables: [
+                    {text: 'potion', varType: 'variable'},
+                ],
+                concepts: ['Movement'],
+                hint: 'If you\'re having trouble getting the objects to stay, move around the spell box until you see a dotted rectabgle',
+                requirements: {win: {pickUp: {'potion': {noOne: false}}}},
+                gameboard: [
+                    [
+                        [{
+                            type: 'Avatar',
+                            name:'Giraffe3'
+                        }],[],
+                        [{
+                            type: 'Collectible',
+                            name: 'Potion1',
+                            varName: 'potion'
+                        }],[]
                     ],
-                    pageNumber: i,
-                    boardBackground: backgrounds[i]
-                });
-            }
+                    [
+                        [],[],[],[]
+                    ],
+                    [
+                        [],[],[],[]
+                    ],
+                    [
+                        [],[],[],[]
+                    ]
+                ],
+                pageNumber: 0,
+                boardBackground: 'images/flower-field.png'
+            },{
+                story: story._id,
+                text:'<p>Different variables can change different characteristics of your tools.  If you want to move a different direction, you can drag a direction into the move tool.  You can change the distance by typing in the white box on the move tool.</p><p>Variables also come in different types, and only certain variables can be dropped in each green green box.  Variables can be people, conditions or items.  You won’t always know which is which unless you try to drop them in a box.</p><p>On this page, you have to change direction and distance, and then use two variables to ask the Giraffe its name.</p>',
+                tools: [ 'ask', 'move', 'pickUp'],
+                variables: [
+                    {text: 'Giraffe', varType: 'person'},
+                    {text: 'What\'s_your_name?', varType: 'variable'},
+                    {text: 'banana', varType: 'variable'},
+
+                ],
+                concepts: ['Expressions'],
+                hint: 'Make sure to drag the directions into the move boxes, and change the distance. Did you remember to move the square where the giraffe is before asking?  Also, drag the Giraffe and "What\s your name?" variables into the ask tool.',
+                requirements: {win: {ask: {'What\'s_your_name?': {Giraffe: false}}}},
+                gameboard: [
+                    [
+                        [{
+                            type: 'Avatar',
+                            name:'Giraffe3'
+                        }],[],[],[]
+                    ],
+                    [
+                        [],[],[{
+                            type: 'Person',
+                            name: 'Giraffe2',
+                            varName: 'Giraffe'
+                        }],[]
+                    ],
+                    [
+                        [],[],[],[{
+                            type: 'Collectible',
+                            name: 'Banana',
+                            varName: 'banana'
+                        }]
+                    ],
+                    [
+                        [],[],[],[]
+                    ]
+                ],
+                pageNumber: 1,
+                boardBackground: 'images/jungle.png'
+            },{
+                story: story._id,
+                text:'<p>Some levels use more complex tools, in which you can drop other tools.  For example, if you want to repeat an action, you can drag the repeat tool into your spell, and enter a number of times to repeat, then drop whatever actions you want to repeat into the repeat box.</p><p>Conditional tools require you to drag a condition variable into the green box, and will only do the action if a certain thing is true.</p><p>On this page, play with the conditions and repeat tools to see what you can do with them.  You have to pick up only the bananas to win this page.  Try dragging the repeat into the spell, then dragging a move tool into the repeat.  Then drag an if-tool below the move tool inside the repeat, and a pick-up tool inside the if-tool.  Now fill out the variables so that you pick up only crystals as you move down the board.</p>',
+                tools: ['move', 'pickUp', 'ifStatement', 'forLoop'],
+                variables: [
+                    {text: 'banana', varType: 'variable'},
+                    {text: 'crystal', varType: 'variable'}
+                ],
+                concepts: ['If-statements'],
+                hint: 'Watch out. You can\'t move through the rocks',
+                requirements: {win:{ pickUp: {
+                    'crystal&1': {noOne: false},
+                    'crystal&2': {noOne: false}
+                }}},
+                gameboard: [
+                    [
+                        [{
+                            type:'Collectible',
+                            name:'crystal',
+                            varName:'crystal&2'
+                        }],
+                        [],
+                        [],
+                        []
+                    ],
+                    [
+                        [],
+                        [{
+                            type:'Collectible',
+                            name:'Banana',
+                            varName: 'banana'
+                        }],
+                        [{
+                            type:'Obstacle',
+                            name:'Rock1'
+                        }],
+                        []
+                    ],
+                    [
+                        [],
+                        [],
+                        [{
+                            type:'Collectible',
+                            name:'crystal',
+                            varName:'crystal&1'
+                        }],
+                        [{
+                            type:'Obstacle',
+                            name: 'Rock1'
+                        }]
+                    ],
+                    [
+                        [],
+                        [],
+                        [],
+                        [{
+                            type: 'Avatar',
+                            name: 'Giraffe3'
+                        }]
+                    ]
+                ],
+                pageNumber: 2,
+                boardBackground: 'images/underwater.png'
+            });
+            
         }
+        // else{
+        //     for (i=0; i<3; i++){
+        //         pages.push({
+        //             story: story._id,
+        //             text: lorem,
+        //             tools: ['move', 'pickUp', 'give', 'ask', 'tell', 'ifStatement', 'forLoop', 'whileLoop'],
+        //             variables: [{text: 'Omri', varType: 'person'}, {text: 'Zeke', varType: 'person'}, {text: 'Joe', varType: 'person'}, {text: 'Say hi', varType: 'variable'}, {text: 'Green Potion', varType: 'variable'}, {text: 'The potion is green', varType: 'condition'}],
+        //             concepts: [concepts[Math.floor(Math.random()*concepts.length)]],
+        //             hint: 'Try harder',
+        //             requirements: {win:{pickUp: {Green_Potion: {noOne: false}}}},
+        //             gameboard: [
+        //                 [
+        //                     [{
+        //                         type: 'Avatar',
+        //                         name: 'WizardBoy2'
+        //                     }],
+        //                     [],
+        //                     [{
+        //                         type: 'Obstacle',
+        //                         name: 'Rock1'
+        //                     }],
+        //                     []
+
+        //                 ],
+        //                 [
+        //                     [],
+        //                     [{
+        //                         type: 'Collectible',
+        //                         name: 'Potion2',
+        //                         varName: 'Green_Potion'
+        //                     }],
+        //                     [],
+        //                     []
+        //                 ],
+        //                 [
+        //                     [],
+        //                     [],
+        //                     [],
+        //                     [],
+        //                 ],
+        //                 [
+        //                     [],
+        //                     [{
+        //                         type: 'Obstacle',
+        //                         name: 'Tree2',
+        //                         varName: 'tree'
+        //                     }],
+        //                     [],
+        //                     []
+        //                 ]
+        //             ],
+        //             pageNumber: i,
+        //             boardBackground: backgrounds[i]
+        //         });
+        //     }
+        // }
     });
      return Page.createAsync(pages);
 };
@@ -653,12 +805,9 @@ connectToDb.then(function () {
     var tempUsers, tempStories, tempPages;
     spellbookUser()
     .then(function(spellbook){
-        console.log("this is in the then", spellbook)
         return seedStories(spellbook)
         .then(function(stories){
-            console.log("here are the stories", stories)
             tempStories = stories;
-            console.log("thesse are stories",tempStories)
             return seedPages(tempStories) 
         }) 
     })
@@ -666,7 +815,6 @@ connectToDb.then(function () {
         tempPages = pages;
         return seedUsers(tempStories, tempPages);
     }).then(function () {
-        console.log("finishing the process", tempStories)
         console.log(chalk.green('Seed successful!'));
         process.kill(0);
     }).catch(function (err) {
