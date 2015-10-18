@@ -3,7 +3,6 @@
 		font-family: $font-title;
 	}
 
-	
 	md-input-container:not(.md-input-invalid).md-input-focused {
 		label{
 			color: $purple;
@@ -11,10 +10,6 @@
 		.md-input{
 			border-color:$purple;
 		}
-	}
-
-	.build-board {
-		padding-top: 1% !important;
 	}
 
 	.sprite-carousel{
@@ -30,6 +25,7 @@
 	.carousel{
 		height:150px;
 	}
+
 	.carousel-indicators{
 		display:none;
 	}
@@ -37,7 +33,8 @@
 	md-select, md-input{
 		margin-top:0;
 	}
-	.btn.tool{
+
+	.turqoise{
 		background: $turqoise;
 	}
 
@@ -45,38 +42,13 @@
 		background: $green;
 	}
 
-	.btn.md-primary {
-		color: grey !important;
-		border-color: grey;
-		margin: 0 !important;
-		padding: 0;
-		font-family: $font-default !important;
-	}
-
-	.background-img{
-		height:40px;
-	}
-
-	.page-section {
-		margin-top: 5%;
-		margin-bottom: 5%;
-	}
-
-	.btn.direction{
+	.purple{
 		background: $purple;
+		color:white;
 	}
 
-
-	.create-btn{
-	  background-color: $purple;
-	  color:white;
-
-	  font-family: $font-title;
-	  margin-top:3%;
-	}
-
-	.sprite-thumbnail{
-		width: 100%
+	p{
+		font-family:$font-default;
 	}
 
 }

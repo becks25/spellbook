@@ -1,22 +1,33 @@
 <div class="panel level-editor">
 	<div class="panel-heading">
-		<h3 class='text-center'>Create a New Story Page</h3>
+		<h2 class='text-center'>Build a New Page</h2>
 	</div>
 
 	<div class="panel-body">
-		<div class='col-xs-12 col-sm-6'>
-			<textarea type='text' rows='6' class='form-control' ng-model='page.text' placeholder='Enter page text'>
-			</textarea>
+		<hr />
+		<div class="panel-heading">
+			<h3>Page details</h3>
 		</div>
-	<!-- this right-page id is imporant because it is used by craft to determine screen size.  it must be on a col-sm-6-->
-		<div class='col-xs-12 col-sm-6 hint'>
-			<md-input-container>
-		      	<label>Enter a hint</label>
-		      	<input ng-model="page.hint"/>
-		    </md-input-container>
-		    <!-- dropdown for concepts -->
 
-		    <!--TODO: Does this need to be a dropdown? can it just be an inline list of checkboxes?-->
+		<div class="panel-body">
+			<div class='col-xs-12 col-sm-8'>
+				<md-input-container >
+					<label>Enter story text</label>
+					<textarea id="page-text" type='text' class='form-control' ng-model='page.text' style="max-height:100px; overflow:auto;" rows="4">
+					</textarea>
+
+				</md-input-container>
+
+				<md-input-container>
+			      	<label>Enter a hint</label>
+			      	<input ng-model="page.hint"/>
+			    </md-input-container>
+
+			</div>
+	<!-- this right-page id is imporant because it is used by craft to determine screen size.  it must be on a col-sm-6-->
+		<!-- <div class='col-xs-12 col-sm-6 hint'>
+			
+
 			<div class="col-sm-12 col-md-4 nav_button" dropdown >
 				<button id="single-button" type="button" class="btn btn-default btn-block" dropdown-toggle ng-disabled="disabled">
 				Select concepts<span class="caret"></span>
@@ -27,12 +38,25 @@
 					</li>
 				</ul>
 	        </div>
-		</div>
+
+
+		</div> -->
+
+			<div class="col-xs-12 col-sm-4">
+				<div class="panel-body" style="margin-top:7%;">
+	        	<p><b>Concepts used in this level:</b></p>
+	        	<div class="inline col-xs-12" ng-repeat="concept in possConcepts" ng-click="toggleConcept(concept, $event)">
+					<input type="checkbox" ng-model="clickedConcepts[concept]"/> {{concept}}
+	        	</div>
+		        </div>
+	        </div>
+        </div>
+
 
 	</div>
 	<!-- add a variable -->
 
-	<div class='col-xs-12 panel-body'>
+	<div class='panel-body'>
 		<hr/>
 
 		<div class="panel-heading">
@@ -40,32 +64,32 @@
 		</div>
 
 		<div class="panel-body">
-				<div class="form-group col-xs-12 col-sm-6 col-md-3">
-					<p>Board background:</p>
-					<md-select class='select-background no-padding-margin inline' placeholder="Select image" ng-model="page.boardBackground">
-		     			<md-option ng-repeat='image in backgrounds' value='{{image}}'>
-		     				<img ng-src="{{image}}" style="margin:auto;" class='background-img'/>
-		     			</md-option>
+			<div class="form-group col-xs-12 col-md-6" id="board-background">
+				<p><b>Board background:</b></p>
+				<md-select placeholder="Select image" ng-model="page.boardBackground">
+	     			<md-option ng-repeat='image in backgrounds' value='{{image}}' style="height:auto; padding:1%;">
+	     				<img class='select-background' ng-src="{{image}}" style="width:30%; margin:auto;" />
+	     			</md-option>
+	 			</md-select>
+	 		</div>
+
+
+	 		<div class="form-group col-xs-12 col-sm-6 col-md-4">
+	 			<p><b>Character start position:</b></p>
+				<div class='col-xs-12 col-sm-6'>
+					<md-select placeholder="X" ng-model="avatarPos[0]">
+		     			<md-option ng-repeat='num in boardLength()' value='{{num}}'>{{num}}</md-option>
+		 			</md-select>
+		 		</div>
+	 			<div class='col-xs-12 col-sm-6'>
+					<md-select placeholder="Y" ng-model="avatarPos[1]">
+		     			<md-option ng-repeat='num in boardLength()' value='{{num}}'>{{num}}</md-option>
 		 			</md-select>
 		 		</div>
 
+		 	</div>
 
-		 		<div class="form-group col-xs-12 col-sm-6 col-md-3">
-		 			<p><b>Character start position:</b></p>
-					<div class='col-xs-12 col-sm-6'>
-						<md-select placeholder="X" ng-model="avatarPos[0]">
-			     			<md-option ng-repeat='num in boardLength()' value='{{num}}'>{{num}}</md-option>
-			 			</md-select>
-			 		</div>
-		 			<div class='col-xs-12 col-sm-6'>
-						<md-select placeholder="Y" ng-model="avatarPos[1]">
-			     			<md-option ng-repeat='num in boardLength()' value='{{num}}'>{{num}}</md-option>
-			 			</md-select>
-			 		</div>
-
-			 	</div>
-
-		<button class='btn direction' ng-click='setBoard()'>Set Board</button>
+			<button class='btn green' ng-click='setBoard()'>Set Board</button>
 			 	
 		</div>
 
@@ -80,79 +104,85 @@
 
 		</div>
 
-	</div>
+		<!--show gameboard & sprites-->
+		<div class="panel-body">
 
-	<div class="col-xs-12 panel-body">
+			<div class='col-xs-12 col-sm-6 col-md-4' id='right-page'>
+				<p><b>Gameboard</b></p>
 
-		<div class='col-xs-12 col-sm-6 col-md-4' id='right-page'>
-			<p><b>Gameboard</b></p>
-
-			<div id="canvas" class="img-square">
-				<div id="cr-stage" ng-style="{background: url({{page.boardBackground}})}" class="text-center center-block">
-				<div ng-repeat="i in grid track by $index" style="height:{{size}}; width:{{size}}" class="square"></div>
+				<div id="canvas" class="img-square">
+					<div id="cr-stage" ng-style="{background: url({{page.boardBackground}})}" class="text-center center-block">
+					<div ng-repeat="i in grid track by $index" style="height:{{size}}; width:{{size}}" class="square"></div>
+					</div>
 				</div>
+			</div>	
+
+				<!--sprites added to click and delete-->
+			<div class="col-xs-12 col-sm-6 col-md-8">
+				<p><b>Currently on the board</b></p>
+				<div class='sprites-list col-xs-4 col-sm-3' ng-repeat='sprite in savedSprites'>
+					<span class="glyphicon glyphicon-remove pull-right" ng-click="removeSprite(sprite, $index)"></span>
+					<div style='background:url({{sprite.imgUrl}}) {{0-sprite.imgPos[0]*64}}px {{0-sprite.imgPos[1]*64}}px; width: 64px; height:64px'></div>
+					<p><b>Name:</b> {{sprite.varName}}</p>
+					<p><b>Position:</b> {{sprite.pos[0]}}, {{sprite.pos[1]}}</p>
+
+				</div>
+
+				<p ng-if="savedSprites.length === 0">
+					Create and add variables above to add items to the board.
+				</p>
 			</div>
-		</div>	
-
-			<!--sprites added to click and delete-->
-		<div class="col-xs-12 col-sm-6 col-md-8">
-			<p><b>Currently on the board</b></p>
-			<div class='sprites-list col-xs-4 col-sm-3' ng-repeat='sprite in savedSprites'>
-				<span class="glyphicon glyphicon-remove pull-right" ng-click="removeSprite(sprite, $index)"></span>
-				<div style='background:url({{sprite.imgUrl}}) {{0-sprite.imgPos[0]*64}}px {{0-sprite.imgPos[1]*64}}px; width: 64px; height:64px'></div>
-				<p><b>Name:</b> {{sprite.varName}}</p>
-				<p><b>Position:</b> {{sprite.pos[0]}}, {{sprite.pos[1]}}</p>
-
-			</div>
-
-			<p ng-if="savedSprites.length === 0">
-				Create and add variables above to add items to the board.
-			</p>
 		</div>
 	</div>
 
+	<div class="panel-body">
+		<hr />
+		<div class="panel-heading">
+			<h3>Game play</h3>
+		</div>
 
-	 		
-
-	<!-- gameboard -->
-	
-
-	<div class='clearfix page-section'></div>
-		<hr/>
-	<div class='row page-section'>
-		<div class="col-sm-12 col-md-6">
-			<!--dropdown to select tools-->
-			<div class="btn-group inline" uib-dropdown>
-		        <button type="button" class="btn tool" uib-dropdown-toggle>
-		        	<span>Select tools</span>
-			        <span class="caret"></span>
-			        <span class="sr-only">Split button!</span>
-		        </button>
-		        <ul class="uib-dropdown-menu" role="menu" aria-labelledby="split-button">
-		        	<li role="menuitem"ng-repeat='tool in toolsPoss track by $index' ng-click='addTool(tool, $index, "tool")'>{{tool}}</li>
-		        </ul>
-			</div>
+		<div class="panel-body col-sm-12">
+				<!--dropdown to select tools-->
+				<div class="btn-group inline" uib-dropdown>
+			        <button type="button" class="btn turqoise" uib-dropdown-toggle>
+			        	<span>Select tools</span>
+				        <span class="caret"></span>
+				        <span class="sr-only">Split button!</span>
+			        </button>
+			        <ul class="uib-dropdown-menu" role="menu" aria-labelledby="split-button">
+			        	<li role="menuitem"ng-repeat='tool in toolsPoss track by $index' ng-click='addTool(tool, $index, "tool")'>{{tool}}</li>
+			        </ul>
+				</div>
 					<!--dropdown to select directions-->
-			<div class="btn-group inline" uib-dropdown>
-				<button type="button" class="btn direction" uib-dropdown-toggle>
-		        	<span>Select Directions</span>
-			        <span class="caret"></span>
-			        <span class="sr-only">Split button!</span>
-		        </button>
-		        <ul class="uib-dropdown-menu" role="menu" aria-labelledby="split-button">
-		        	<li role="menuitem"ng-repeat='tool in dirsPoss track by $index' ng-click='addTool(tool, $index, "direction")'>{{tool}}</li>
-		        </ul>
-			</div>
-			<!--the page's toolbox-->
-			<tool-box></tool-box>
+				<div class="btn-group inline" uib-dropdown>
+					<button type="button" class="btn purple" uib-dropdown-toggle>
+			        	<span>Select Directions</span>
+				        <span class="caret"></span>
+				        <span class="sr-only">Split button!</span>
+			        </button>
+			        <ul class="uib-dropdown-menu" role="menu" aria-labelledby="split-button">
+			        	<li role="menuitem"ng-repeat='tool in dirsPoss track by $index' ng-click='addTool(tool, $index, "direction")'>{{tool}}</li>
+			        </ul>
+				</div>
 		</div>
-		<div class="col-md-6 col-sm-12">
-			<spell></spell>
+		<div class="clearfix"></div>
+		<div class="panel-body">
+			<div class="col-sm-12 col-md-6">
+				<!--the page's toolbox-->
+				<tool-box></tool-box>
+			</div>
+
+			<div class="col-sm-12 col-md-6">
+				<spell></spell>
+
+			</div>
 		</div>
 	</div>
 
-	<div class='row'>
-		<button ng-click='savePage()' class="btn btn-large create-btn text-center center-block"><h4>Save Page</h4></button>
+
+	 	
+	<div class='panel-body col-sm-12'>
+		<button ng-click='savePage()' class="btn btn-large purple text-center center-block"><h4>Save Page</h4></button>
 	</div>
 
 </div>
