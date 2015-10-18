@@ -42,7 +42,7 @@
 	<!--sprites added to click and deleat-->
 <div class='sprites-list col-xs-3 col-sm-2 col md-1' ng-repeat='sprite in savedSprites'>
 	<span class="glyphicon glyphicon-remove pull-right" ng-click="removeSprite(sprite, $index)"></span>
-	<div style='background:url({{sprite.loc}}) {{sprite.pos[0]*64}}px {{sprite.pos[1]*64}}px; width: 64px; height:64px'></div>
+	<div style='background:url({{sprite.loc}}) {{0-sprite.pos[0]*64}}px {{0-sprite.pos[1]*64}}px; width: 64px; height:64px'></div>
 	<p class='no-padding-margin'>({{sprite.pos.x}},{{sprite.pos.y}})</p> 
 	<p class='no-padding-margin'>{{sprite.varName}}</p>
 </div>
