@@ -41,58 +41,81 @@
 
 		<div class="panel-body">
 				<div class="form-group col-xs-12 col-sm-6 col-md-3">
-					<p><b>Board background:</b></p>
+					<p>Board background:</p>
+					<md-select class='select-background no-padding-margin inline' placeholder="Select image" ng-model="page.boardBackground">
+		     			<md-option ng-repeat='image in backgrounds' value='{{image}}'>
+		     				<img ng-src="{{image}}" style="margin:auto;" class='background-img'/>
+		     			</md-option>
+		 			</md-select>
+		 		</div>
 
-					<div class="col-xs-12">
-						<md-select class='select-background' placeholder="Select image" ng-model="page.boardBackground">
-			     			<md-option ng-repeat='image in backgrounds' value='{{image}}'><img ng-src="{{image}}" style="margin:auto;" class='background-img'/></md-option>
-		 				</md-select>
-		 			</div>
-
-	 			</div>
 
 		 		<div class="form-group col-xs-12 col-sm-6 col-md-3">
 		 			<p><b>Character start position:</b></p>
 					<div class='col-xs-12 col-sm-6'>
-						<md-select placeholder="X" ng-model="avitarPos.x">
+						<md-select placeholder="X" ng-model="avatarPos[0]">
 			     			<md-option ng-repeat='num in boardLength()' value='{{num}}'>{{num}}</md-option>
 			 			</md-select>
 			 		</div>
 		 			<div class='col-xs-12 col-sm-6'>
-						<md-select placeholder="Y" ng-model="avitarPos.y">
+						<md-select placeholder="Y" ng-model="avatarPos[1]">
 			     			<md-option ng-repeat='num in boardLength()' value='{{num}}'>{{num}}</md-option>
 			 			</md-select>
 			 		</div>
 
 			 	</div>
 
-
+		<button class='btn direction' ng-click='setBoard()'>Set Board</button>
 			 	
+		</div>
+
+		<div class="panel-body">
+			<div class='col-xs-12 col-sm-6 col-md-3'>
+				<new-var-form></new-var-form>		
 			</div>
 
-			<div class="panel-body">
-				<div class='col-xs-12 col-sm-6 col-md-3'>
-					<new-var-form></new-var-form>		
-				</div>
-
-				<div class='col-sm-12 col-md-9'>
-					<new-sprite-form></new-sprite-form>
-				</div>
-
+			<div class='col-sm-12 col-md-9'>
+				<new-sprite-form></new-sprite-form>
 			</div>
+
+		</div>
+
 	</div>
-</div>
+
+	<div class="col-xs-12 panel-body">
+
+		<div class='col-xs-12 col-sm-6 col-md-4' id='right-page'>
+			<p><b>Gameboard</b></p>
+
+			<div id="canvas" class="img-square">
+				<div id="cr-stage" ng-style="{background: url({{page.boardBackground}})}" class="text-center center-block">
+				<div ng-repeat="i in grid track by $index" style="height:{{size}}; width:{{size}}" class="square"></div>
+				</div>
+			</div>
+		</div>	
+
+			<!--sprites added to click and delete-->
+		<div class="col-xs-12 col-sm-6 col-md-8">
+			<p><b>Currently on the board</b></p>
+			<div class='sprites-list col-xs-4 col-sm-3' ng-repeat='sprite in savedSprites'>
+				<span class="glyphicon glyphicon-remove pull-right" ng-click="removeSprite(sprite, $index)"></span>
+				<div style='background:url({{sprite.imgUrl}}) {{0-sprite.imgPos[0]*64}}px {{0-sprite.imgPos[1]*64}}px; width: 64px; height:64px'></div>
+				<p><b>Name:</b> {{sprite.varName}}</p>
+				<p><b>Position:</b> {{sprite.pos[0]}}, {{sprite.pos[1]}}</p>
+
+			</div>
+
+			<p ng-if="savedSprites.length === 0">
+				Create and add variables above to add items to the board.
+			</p>
+		</div>
+	</div>
+
+
 	 		
 
 	<!-- gameboard -->
-	<div class='col-xs-12 col-sm-6 col-md-3' id='right-page'>
-		<h4 class='text-center'>Current Gameboard</h4>
-		<div id="canvas" class="img-square">
-			<div id="cr-stage" ng-style="{background: url({{page.boardBackground}})}" class="text-center center-block">
-			<div ng-repeat="i in grid track by $index" style="height:{{size}}; width:{{size}}" class="square"></div>
-			</div>
-		</div>
-	</div>		
+	
 
 	<div class='clearfix page-section'></div>
 		<hr/>
