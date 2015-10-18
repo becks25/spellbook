@@ -2,95 +2,160 @@
 	<div class="panel-heading">
 		<h2 class='text-center'>Build a New Page</h2>
 	</div>
-
-	<div class="panel-body">
-		<hr />
-		<div class="panel-heading">
-			<h3>Page details</h3>
-		</div>
-
+	<uib-accordion close-others='false'>
+	<uib-accordion-group>
+		<uib-accordion-heading class="panel-heading" >
+		<div><i class="glyphicon glyphicon-chevron-down"></i> 
+	        Add Page details </div>
+	    </uib-accordion-heading> 
 		<div class="panel-body">
-			<div class='col-xs-12 col-sm-8'>
-				<md-input-container >
-					<label>Enter story text</label>
-					<textarea id="page-text" type='text' class='form-control' ng-model='page.text' style="max-height:100px; overflow:auto;" rows="4">
-					</textarea>
+			<!-- <hr />
+			<div class="panel-heading">
+				<h3>Page details</h3>
+			</div> -->
 
-				</md-input-container>
+			<div class="panel-body">
+				<div class='col-xs-12 col-sm-8'>
+					<md-input-container >
+						<label>Enter story text</label>
+						<textarea id="page-text" type='text' class='form-control' ng-model='page.text' style="max-height:100px; overflow:auto;" rows="4">
+						</textarea>
 
-				<md-input-container>
-			      	<label>Enter a hint</label>
-			      	<input ng-model="page.hint"/>
-			    </md-input-container>
+					</md-input-container>
 
-			</div>
+					<md-input-container>
+				      	<label>Enter a hint</label>
+				      	<input ng-model="page.hint"/>
+				    </md-input-container>
 
-			<div class="col-xs-12 col-sm-4">
-				<div class="panel-body" style="margin-top:7%;">
-		        	<p><b>Concepts used in this level:</b></p>
-		        	<div class="inline col-xs-12" ng-repeat="concept in possConcepts" ng-click="toggleConcept(concept, $event)">
-						<input type="checkbox" ng-model="clickedConcepts[concept]"/> {{concept}}
+				</div>
+
+				<div class="col-xs-12 col-sm-4">
+					<div class="panel-body" style="margin-top:7%;">
+			        	<p><b>Concepts used in this level:</b></p>
+			        	<div class="inline col-xs-12" ng-repeat="concept in possConcepts" ng-click="toggleConcept(concept, $event)">
+							<input type="checkbox" ng-model="clickedConcepts[concept]"/> {{concept}}
+						</div>
 					</div>
 				</div>
 			</div>
+	 
 		</div>
- 
-	</div>
-	<!-- add a variable -->
-
-	<div class='panel-body'>
-		<hr/>
-
-		<div class="panel-heading">
-			<h3>Gameboard</h3>
-		</div>
-
+	</uib-accordion-group>
+		
+	<uib-accordion-group>
+		<uib-accordion-heading class="panel-heading" >
+	        <div><i class="glyphicon glyphicon-chevron-down"></i> 
+	        Add to Gameboard </div>
+	    </uib-accordion-heading> 
 		<div class="panel-body">
-			<div class="form-group col-xs-12 col-md-6" id="board-background">
-				<p><b>Board background:</b></p>
-				<md-select placeholder="Select image" ng-model="page.boardBackground">
-	     			<md-option ng-repeat='image in backgrounds' value='{{image}}' style="height:auto; padding:1%;">
-	     				<img class='select-background' ng-src="{{image}}" style="width:30%; margin:auto;" />
-	     			</md-option>
-	 			</md-select>
-	 		</div>
+			<!-- <hr/>
 
+			<div class="panel-heading">
+				<h3>Gameboard</h3>
+			</div> -->
 
-	 		<div class="form-group col-xs-12 col-sm-6 col-md-4">
-	 			<p><b>Character start position:</b></p>
-				<div class='col-xs-12 col-sm-6'>
-					<md-select placeholder="X" ng-model="avatarPos[0]">
-		     			<md-option ng-repeat='num in boardLength()' value='{{num}}'>{{num}}</md-option>
-		 			</md-select>
-		 		</div>
-	 			<div class='col-xs-12 col-sm-6'>
-					<md-select placeholder="Y" ng-model="avatarPos[1]">
-		     			<md-option ng-repeat='num in boardLength()' value='{{num}}'>{{num}}</md-option>
+			<div class="panel-body">
+				<div class="form-group col-xs-12 col-md-6" id="board-background">
+					<p><b>Board background:</b></p>
+					<md-select placeholder="Select image" ng-model="page.boardBackground">
+		     			<md-option ng-repeat='image in backgrounds' value='{{image}}' style="height:auto; padding:1%;">
+		     				<img class='select-background' ng-src="{{image}}" style="width:30%; margin:auto;" />
+		     			</md-option>
 		 			</md-select>
 		 		</div>
 
-		 	</div>
 
-			<button class='btn green' ng-click='setBoard()'>Set Board</button>
-			 	
+		 		<div class="form-group col-xs-12 col-sm-6 col-md-4">
+		 			<p><b>Character start position:</b></p>
+					<div class='col-xs-12 col-sm-6'>
+						<md-select placeholder="X" ng-model="avatarPos[0]">
+			     			<md-option ng-repeat='num in boardLength()' value='{{num}}'>{{num}}</md-option>
+			 			</md-select>
+			 		</div>
+		 			<div class='col-xs-12 col-sm-6'>
+						<md-select placeholder="Y" ng-model="avatarPos[1]">
+			     			<md-option ng-repeat='num in boardLength()' value='{{num}}'>{{num}}</md-option>
+			 			</md-select>
+			 		</div>
+
+			 	</div>
+
+				<button class='btn green' ng-click='setBoard()'>Set Board</button>
+				 	
+			</div>
+
+			<div class="panel-body">
+				<div class='col-xs-12 col-sm-6 col-md-3'>
+					<new-var-form></new-var-form>		
+				</div>
+
+				<div class='col-sm-12 col-md-9'>
+					<new-sprite-form></new-sprite-form>
+				</div>
+
+			</div>
 		</div>
+	</uib-accordion-group>
 
+	<uib-accordion-group>
+		<uib-accordion-heading class="panel-heading" >
+	        <div><i class="glyphicon glyphicon-chevron-down"></i> 
+	        Set up Gameplay </div>
+	    </uib-accordion-heading>
 		<div class="panel-body">
-			<div class='col-xs-12 col-sm-6 col-md-3'>
-				<new-var-form></new-var-form>		
-			</div>
+			<!-- <hr />
+			<div class="panel-heading">
+				<h3>Game play</h3>
+			</div> -->
 
-			<div class='col-sm-12 col-md-9'>
-				<new-sprite-form></new-sprite-form>
+			<div class="panel-body col-sm-12">
+					<!--dropdown to select tools-->
+					<div class="btn-group inline" uib-dropdown>
+				        <button type="button" class="btn turqoise" uib-dropdown-toggle>
+				        	<span>Select tools</span>
+					        <span class="caret"></span>
+					        <span class="sr-only">Split button!</span>
+				        </button>
+				        <ul class="uib-dropdown-menu" role="menu" aria-labelledby="split-button">
+				        	<li role="menuitem"ng-repeat='tool in toolsPoss track by $index' ng-click='addTool(tool, $index, "tool")'>{{tool}}</li>
+				        </ul>
+					</div>
+						<!--dropdown to select directions-->
+					<div class="btn-group inline" uib-dropdown>
+						<button type="button" class="btn purple" uib-dropdown-toggle>
+				        	<span>Select Directions</span>
+					        <span class="caret"></span>
+					        <span class="sr-only">Split button!</span>
+				        </button>
+				        <ul class="uib-dropdown-menu" role="menu" aria-labelledby="split-button">
+				        	<li role="menuitem"ng-repeat='tool in dirsPoss track by $index' ng-click='addTool(tool, $index, "direction")'>{{tool}}</li>
+				        </ul>
+					</div>
 			</div>
+			<div class="clearfix"></div>
+			<div class="panel-body">
+				<div class="col-sm-12 col-md-6">
+					<!--the page's toolbox-->
+					<tool-box></tool-box>
+				</div>
 
+				<div class="col-sm-12 col-md-6">
+					<spell></spell>
+
+				</div>
+			</div>
 		</div>
+
+	</uib-accordion-group>
+	</uib-accordion>
+	<div class='panel-body'></div>
 
 		<!--show gameboard & sprites-->
 		<div class="panel-body">
 
 			<div class='col-xs-12 col-sm-6 col-md-4' id='right-page'>
-				<p><b>Gameboard</b></p>
+				<p><b>Your Gameboard</b></p>
 
 				<div id="canvas" class="img-square">
 					<div id="cr-stage" ng-style="{background: url({{page.boardBackground}})}" class="text-center center-block">
@@ -116,52 +181,9 @@
 			</div>
 		</div>
 	</div>
+<!-- <uib-accordion close-others='false'>
 
-	<div class="panel-body">
-		<hr />
-		<div class="panel-heading">
-			<h3>Game play</h3>
-		</div>
-
-		<div class="panel-body col-sm-12">
-				<!--dropdown to select tools-->
-				<div class="btn-group inline" uib-dropdown>
-			        <button type="button" class="btn turqoise" uib-dropdown-toggle>
-			        	<span>Select tools</span>
-				        <span class="caret"></span>
-				        <span class="sr-only">Split button!</span>
-			        </button>
-			        <ul class="uib-dropdown-menu" role="menu" aria-labelledby="split-button">
-			        	<li role="menuitem"ng-repeat='tool in toolsPoss track by $index' ng-click='addTool(tool, $index, "tool")'>{{tool}}</li>
-			        </ul>
-				</div>
-					<!--dropdown to select directions-->
-				<div class="btn-group inline" uib-dropdown>
-					<button type="button" class="btn purple" uib-dropdown-toggle>
-			        	<span>Select Directions</span>
-				        <span class="caret"></span>
-				        <span class="sr-only">Split button!</span>
-			        </button>
-			        <ul class="uib-dropdown-menu" role="menu" aria-labelledby="split-button">
-			        	<li role="menuitem"ng-repeat='tool in dirsPoss track by $index' ng-click='addTool(tool, $index, "direction")'>{{tool}}</li>
-			        </ul>
-				</div>
-		</div>
-		<div class="clearfix"></div>
-		<div class="panel-body">
-			<div class="col-sm-12 col-md-6">
-				<!--the page's toolbox-->
-				<tool-box></tool-box>
-			</div>
-
-			<div class="col-sm-12 col-md-6">
-				<spell></spell>
-
-			</div>
-		</div>
-	</div>
-
-
+</uib-accordion> -->
 	 	
 	<div class='panel-body col-sm-12'>
 		<button ng-click='savePage()' class="btn btn-large purple text-center center-block"><h4>Save Page</h4></button>
