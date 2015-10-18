@@ -58,9 +58,9 @@ app.controller('levelEditCtrl', ($scope, AuthService, $state, $stateParams, Clas
   $scope.level = new LevelFactory($scope.page);
   $scope.spell = new SpellFactory($scope.level);
   $scope.possSprites = _.keys(SPRITES).map(sprite=>{
-      return {name:sprite, pos:SPRITES[sprite], loc: 'images/sprites.png'};
+      return {name:sprite, imgPos:SPRITES[sprite], imgUrl: 'images/sprites.png'};
     });
-  _.keys(SPRITE_AVATARS).forEach(sprite=>$scope.possSprites.push({name:sprite, pos:SPRITE_AVATARS[sprite], loc: 'images/SpriteAvatars.png'}));
+  _.keys(SPRITE_AVATARS).forEach(sprite=>$scope.possSprites.push({name:sprite, imgPos:SPRITE_AVATARS[sprite], imgUrl: 'images/SpriteAvatars.png'}));
   console.log('sprites', $scope.possSprites);
   //move the empty sprite to the end
   $scope.possSprites.push($scope.possSprites.shift());
@@ -115,14 +115,11 @@ app.controller('levelEditCtrl', ($scope, AuthService, $state, $stateParams, Clas
 
   //add sprite to board and saved arr
   $scope.saveSprite = ()=>{
-    var sprite = {
-      type: $scope.newSprite.type,
-      name: $scope.newSprite.name,      
-    };
     if ($scope.newSprite.varName) sprite.varName = $scope.newSprite.varName;
     if ($scope.newSprite.match) sprite.match = $scope.newSprite.match;
     $scope.page.gameboard[$scope.newSpritePos.x-1][$scope.newSpritePos.y-1].push($scope.newSprite);
     $scope.newSprite.pos = $scope.newSpritePos;
+    $scope.newSprite.imgPos = $scope.newSprite.imgPos;
 
     $scope.savedSprites.push($scope.newSprite);
     console.log('gameboard', $scope.page.gameboard)
@@ -134,13 +131,11 @@ app.controller('levelEditCtrl', ($scope, AuthService, $state, $stateParams, Clas
     };
     $scope.newSpritePos = {x: null, y: null};
     $scope.resetMap();
-
-//need to reload map with sprites
-
   };
   $scope.selectImg = (possSpr)=>{
     $scope.newSprite.name = possSpr.name;
-    $scope.newSprite.img = possSpr.img;
+    $scope.newSprite.imgUrl = possSpr.imgUrl;
+    $scope.newSprite.imgPos = possSpr.imgPos;
   };
   $scope.removeSprite = (sprite, index)=>{
     $scope.savedSprites.splice(index, 1);
@@ -313,7 +308,8 @@ var baseConfig = {
 
     TilesizeFactory.NumTiles = $scope.page.gameboard.length;
     Crafty.load(['/images/sprites.png']);
-    Crafty.init(TilesizeFactory.TILESIZE/2 * TilesizeFactory.NumTiles, TilesizeFactory.TILESIZE/2 * TilesizeFactory.NumTiles);
+    var tileSize = TilesizeFactory.TILESIZE;
+    Crafty.init(tileSize * TilesizeFactory.NumTiles, tileSize * TilesizeFactory.NumTiles);
 
     Crafty.canvas.init();
     //need to load sprites on to map
@@ -323,7 +319,7 @@ var baseConfig = {
 
     $scope.grid = new Array(TilesizeFactory.NumTiles * TilesizeFactory.NumTiles);
 
-    $scope.size = TilesizeFactory.TILESIZE/2 + 'px';
+    $scope.size = tileSize + 'px';
 
     $scope.level.map.resetMap();
 
