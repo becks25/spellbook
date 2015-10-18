@@ -5,7 +5,7 @@
 		</textarea>
 	</div>
 	<!-- this right-page id is imporant because it is used by craft to determine screen size.  it must be on a col-sm-6-->
-	<div class='col-xs-12 col-sm-6 hint' id='right-page'>
+	<div class='col-xs-12 col-sm-6 hint'>
 		<md-input-container>
 	      	<label>Enter a hint</label>
 	      	<input ng-model="page.hint">
@@ -55,7 +55,7 @@
 		<new-var-form></new-var-form>		
 	</div>
 	<!-- gameboard -->
-	<div class='col-xs-12 col-sm-6 col-md-3'>
+	<div class='col-xs-12 col-sm-6 col-md-3' id='right-page'>
 		<h4 class='text-center'>Current Gameboard</h4>
 		<div id="canvas" class="img-square">
 			<div id="cr-stage" ng-style="{background: url({{page.boardBackground}})}" class="text-center center-block">
