@@ -90,8 +90,8 @@ app.directive('adminStats', function(UserFactory) {
         });
 
         //insert pie chart!
-        var genderData = scope.genderDist; 
-        var genderData =_.pairs(genderData);
+        var genderData =_.omit(scope.genderDist, ['rather not say']);
+        genderData = _.pairs(genderData);
 
         var width = document.querySelector('#genderChart').clientWidth -30;
         var r = width/2;
