@@ -247,7 +247,12 @@ var baseConfig = {
       var gameboard = _.cloneDeep(boardPlaceholder);
       //construct 3-d array
       gameboard[$scope.avatarPos[0]-1][$scope.avatarPos[1]-1].push({type: 'Avatar', name: 'WizardGirl1'});
-      $scope.savedSprites.forEach(sprite=>gameboard[sprite.pos[0]-1][sprite.pos[1]-1].push({type: sprite.type, name: sprite.name}));
+      $scope.savedSprites.forEach(sprite=>{
+        var mapObj = {type: sprite.type, name: sprite.name};
+        if(sprite.varName) mapObj.varName = sprite.varName;
+        if(sprite.match) mapObj.match = sprite.match;
+        gameboard[sprite.pos[0]-1][sprite.pos[1]-1].push(mapObj);
+      });
       Crafty("2D").each(function(i) {
           this.destroy();
         });
