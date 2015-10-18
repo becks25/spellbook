@@ -17,17 +17,18 @@
     </uib-carousel>
 </div>
 <div ng-show='newSprite.name' class='col-xs-12 col-md-8'>
+<form name='addNewSprite' ng-submit='addNewSprite.$valid && saveSprite()' novalidate>
 	<div class='col-xs-12 col-md-6'>
-		<!---select type of variable-->
-		<md-select class="col-xs-12" placeholder="Select type" ng-model="newSprite.type">
-	 		<md-option ng-repeat='type in ["Collectible", "Obstacle", "Person"]' value='{{type}}'>{{type}}</md-option>
+	<!---select type of variable-->
+	<md-select class='col-xs-12' placeholder="Select type *" ng-model="newSprite.type" required>
+ 		<md-option ng-repeat='type in ["Collectible", "Obstacle", "Person"]' value='{{type}}'>{{type}}</md-option>
 		</md-select>
 
 		<!--select x & y pos-->
-		<md-select class='col-sm-6 col-xs-12' placeholder="X" ng-model="newSprite.pos[0]">
+		<md-select class='col-sm-6 col-xs-12' placeholder="X*" ng-model="newSprite.pos[0]" required>
  			<md-option ng-repeat='num in boardLength()' value='{{num}}'>{{num}}</md-option>
 		</md-select>
-		<md-select class='col-sm-6 col-xs-12' placeholder="Y" ng-model="newSprite.pos[1]">
+		<md-select class='col-sm-6 col-xs-12' placeholder="Y*" ng-model="newSprite.pos[1]" required>
  			<md-option ng-repeat='num in boardLength()' value='{{num}}'>{{num}}</md-option>
 		</md-select>
 	</div>
@@ -48,7 +49,7 @@
 
 	<div class="col-xs-12">
 
-		<button class='green btn center-block text-center' ng-click="saveSprite()">Add to gameboard</button>	
+	<button class='green btn center-block text-center' type="submit">Add to gameboard</button>	    	
 	</div>    	
 </div>
 
