@@ -83,7 +83,7 @@ app.controller('levelEditCtrl', ($scope, AuthService, $state, $stateParams, Clas
     'variable': [], //objects instead of strings
   };
 
-  $scope.openSections = {info: true, board: true, reqs: false}
+  $scope.openSections = {info: false, board: false, reqs: false}
   //sets newVar to empty version on load
   clearNewVar();
 
