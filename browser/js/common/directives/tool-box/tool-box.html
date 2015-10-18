@@ -11,14 +11,18 @@
         <div class="col-md-4 col-sm-12">
             <b>Tools</b>
             <ul ng-model="spellTools" ui-sortable="toolConfig" class="spellTools first">
-                <li ng-repeat="tool in spellTools" class="tool" draggable><span class="">{{ tool.text }}</span></li>
+                <li ng-repeat="tool in spellTools" class="tool" draggable>
+                <span ng-if='makingNewLevel'class="glyphicon glyphicon-remove pull-right" ng-click="removeToolOrDir(tool, index, spellTools)"></span>
+                <span class="">{{ tool.text }}</span></li>
             </ul>
 
 		</div>
 		<div class="col-md-4 col-sm-12">
 			<b>Directions</b>
 				<ul ng-model="directions" ui-sortable="dirConfig" class="spellDirs first">
-		  			<li ng-repeat="tool in directions" class="direction" draggable="true"><span class="" >{{ tool.text }}</span></li>
+		  			<li ng-repeat="tool in directions" class="direction" draggable="true">
+		  			<span ng-if='makingNewLevel'class="glyphicon glyphicon-remove pull-right" ng-click="removeToolOrDir(tool, index, spellDirs)"></span>
+		  			<span class="" >{{ tool.text }}</span></li>
 		  		</ul>
 
 
@@ -26,8 +30,9 @@
         <div class="col-md-4 col-sm-12">
             <b>Variables</b>
             <ul ng-model="spellVars" ui-sortable="dirConfig" class="spellVars first">
-                <li ng-repeat="tool in spellVars track by $index" class="variable" draggable="true"><span
-                        class="">{{ tool.text.replace(re, ' ')}}</span></li>
+                <li ng-repeat="tool in spellVars track by $index" class="variable" draggable="true">
+                <span ng-if='makingNewLevel'class="glyphicon glyphicon-remove pull-right" ng-click="removeItem(index, spellVars)"></span>
+                <span class="">{{ tool.text.replace(re, ' ')}}</span></li>
             </ul>
         </div>
     </div>
