@@ -1,22 +1,22 @@
-<form name='newVarForm' ng-sumbit='addTool(newVar, null, "variable")'>
+<form name='newVarForm' ng-sumbit='addTool(newVar, null, "variable")' novalidate>
 	<p><b>Create a variable</b></p>
-	<md-select class='select-var-type' placeholder="Select type" ng-model="newVar.varType" required>
+	<md-select class='select-var-type' placeholder="Select type" ng-model="newVar.varType" name='newVar.varType' required>
 		<md-option ng-repeat='type in varTypes' value='{{type}}'>{{type}}</md-option>
 	</md-select>
 	<md-input-container class='inline select-var-type'>
       	<label>Enter the variable text</label>
-      	<input ng-model="newVar.text" required>
+      	<input ng-model="newVar.text" name='newVar.text' ng-maxlength="50" required>
     </md-input-container>
 	<div ng-if='newVar.varType === "condition"'>
-		<md-select placeholder="Select condition type" ng-model="newVar.fnType" class='inline select-var-type' ng-required='newVar.varType === "condition"'>
+		<md-select name='newVar.fnType' placeholder="Select condition type" ng-model="newVar.fnType" class='inline select-var-type' ng-required='newVar.varType === "condition"'>
 			<md-option ng-repeat='type in varFnTypes' value='{{type}}'>{{type}}</md-option>
 		</md-select>
 	</div>
 	<div ng-if='newVar.fnType === "match" || newVar.fnType === "holding"'>
 		<md-input-container class='inline select-var-type'>
 	      	<label>Enter variable to match</label>
-	      	<input ng-model="newVar.arg" ng-required='newVar.fnType === "match" || newVar.fnType === "holding"'>
+	      	<input ng-model="newVar.arg" name='newVar.arg' ng-required='newVar.fnType === "match" || newVar.fnType === "holding"' ng-maxlength="50">
 	    </md-input-container>
 	</div>
-    <button class='btn green text-center center-block'ng-click='type='submit'>Save Variable</button>
+    <button class='btn green text-center center-block' type='submit'>Save Variable</button>
     </form>

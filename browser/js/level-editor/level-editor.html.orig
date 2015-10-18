@@ -1,6 +1,16 @@
+<<<<<<< HEAD
 <div class="panel level-editor">
 	<div class="panel-heading">
 		<h2 class='text-center'>Build a New Page</h2>
+=======
+<div class="container">
+	<h2 class='text-center title-font'>Create a New Page for Your Story</h2>
+	<!-- this is for setting board size-->
+
+	<div class='col-xs-12 col-sm-6 page-text page-section'>
+		<textarea type='text' rows='6' class='form-control' ng-model='page.text' placeholder='Enter page text'>
+		</textarea>
+>>>>>>> form validation of new sprite.  form validation that doesnt work on new var
 	</div>
 
 	<div class="panel-body">
@@ -24,21 +34,58 @@
 			    </md-input-container>
 
 			</div>
+	<!-- this right-page id is imporant because it is used by craft to determine screen size.  it must be on a col-sm-6-->
+<<<<<<< HEAD
+		<!-- <div class='col-xs-12 col-sm-6 hint'>
+			
+
+			<div class="col-sm-12 col-md-4 nav_button" dropdown >
+				<button id="single-button" type="button" class="btn btn-default btn-block" dropdown-toggle ng-disabled="disabled">
+				Select concepts<span class="caret"></span>
+				</button>
+				<ul class="list-group dropdown-menu concept-menu" role="menu" aria-labelledby="single-button">
+					<li ng-repeat="concept in possConcepts" ng-click="toggleConcept(concept, $event)" class="list-group-item">
+						<input type="checkbox" ng-model="clickedConcepts[concept]"/> {{concept}}
+					</li>
+				</ul>
+	        </div>
+
+
+		</div> -->
 
 			<div class="col-xs-12 col-sm-4">
 				<div class="panel-body" style="margin-top:7%;">
-		        	<p><b>Concepts used in this level:</b></p>
-		        	<div class="inline col-xs-12" ng-repeat="concept in possConcepts" ng-click="toggleConcept(concept, $event)">
-						<input type="checkbox" ng-model="clickedConcepts[concept]"/> {{concept}}
-					</div>
-				</div>
-			</div>
-		</div>
- 
+	        	<p><b>Concepts used in this level:</b></p>
+	        	<div class="inline col-xs-12" ng-repeat="concept in possConcepts" ng-click="toggleConcept(concept, $event)">
+=======
+	<div class='col-xs-12 col-sm-6 hint'>
+		<md-input-container>
+	      	<label>Enter a hint</label>
+	      	<input ng-model="page.hint">
+	    </md-input-container>
+	    <!-- dropdown for concepts -->
+		<button class="col-sm-12 col-md-4 nav_button no-padding-margin" uib-dropdown >
+			<md-button id="single-button" type="button" class="btn button md-primary btn-block" uib-dropdown-toggle ng-disabled="disabled">
+			Select concepts<span class="caret"></span>
+			</md-button>
+			<ul class="list-group uib-dropdown-menu concept-menu" role="menu" aria-labelledby="single-button">
+				<li ng-repeat="concept in possConcepts" ng-click="toggleConcept(concept, $event)" class="list-group-item">
+>>>>>>> form validation of new sprite.  form validation that doesnt work on new var
+					<input type="checkbox" ng-model="clickedConcepts[concept]"/> {{concept}}
+	        	</div>
+		        </div>
+	        </div>
+        </div>
+
+
 	</div>
+<<<<<<< HEAD
 	<!-- add a variable -->
 
 	<div class='panel-body'>
+=======
+	<div class='col-xs-12 page-section'>
+>>>>>>> form validation of new sprite.  form validation that doesnt work on new var
 		<hr/>
 
 		<div class="panel-heading">
@@ -74,6 +121,7 @@
 			<button class='btn green' ng-click='setBoard()'>Set Board</button>
 			 	
 		</div>
+<<<<<<< HEAD
 
 		<div class="panel-body">
 			<div class='col-xs-12 col-sm-6 col-md-3'>
@@ -82,9 +130,25 @@
 
 			<div class='col-sm-12 col-md-9'>
 				<new-sprite-form></new-sprite-form>
+=======
+		<button class='btn direction' ng-click='setBoard()'>Set Board</button>
+	</div>
+	 		
+	<div class='col-xs-12 col-sm-6 col-md-3'>
+		<new-var-form></new-var-form>		
+	</div>
+
+	<!-- gameboard -->
+	<div class='col-xs-12 col-sm-6 col-md-3' id='right-page'>
+		<h4 class='text-center'>Current Gameboard</h4>
+		<div id="canvas" class="img-square">
+			<div id="cr-stage" ng-style="{background: url({{page.boardBackground}})}" class="text-center center-block">
+			<div ng-repeat="i in grid track by $index" style="height:{{size}}; width:{{size}}" class="square"></div>
+>>>>>>> form validation of new sprite.  form validation that doesnt work on new var
 			</div>
 
 		</div>
+<<<<<<< HEAD
 
 		<!--show gameboard & sprites-->
 		<div class="panel-body">
@@ -113,6 +177,27 @@
 				<p ng-if="savedSprites.length === 0">
 					Create and add variables above to add items to the board.
 				</p>
+=======
+	</div>		
+	<div class='col-xs-12 col-md-6'>
+		<new-sprite-form></new-sprite-form>
+	</div>
+	<div class='clearfix page-section'></div>
+		
+	<hr/>
+	<div class='row page-section'>
+		<div class="col-sm-12 col-md-6">
+			<!--dropdown to select tools-->
+			<div class="btn-group inline" uib-dropdown>
+		        <button type="button" class="btn tool" uib-dropdown-toggle>
+		        	<span>Select tools</span>
+			        <span class="caret"></span>
+			        <span class="sr-only">Split button!</span>
+		        </button>
+		        <ul class="uib-dropdown-menu" role="menu" aria-labelledby="split-button">
+		        	<li role="menuitem"ng-repeat='tool in toolsPoss track by $index' ng-click='addTool(tool, $index, "tool")'>{{tool}}</li>
+		        </ul>
+>>>>>>> form validation of new sprite.  form validation that doesnt work on new var
 			</div>
 		</div>
 	</div>
