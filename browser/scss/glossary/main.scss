@@ -3,7 +3,7 @@
 		padding:1%;
 	}
 
-	li{
+	.panel.tool{
 		margin-top:1%;
 	}
 	h3{
@@ -13,7 +13,10 @@
 	.tool-drop{
 		border: 2px solid $turqoise;
 		border-radius:6px;
-
+		padding:0px;
+		.panel.tool{
+			margin:0px;
+		}
 		.spellTool{
 			border-bottom-left-radius: 0px;
 			border-bottom-right-radius:0px;
