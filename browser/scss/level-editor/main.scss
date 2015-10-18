@@ -1,19 +1,40 @@
+h2{
+	font-family: $font-title !important;
+}
 .add-variable{
-	border-style: groove;
-    border-width: medium;
-    border-color: $green;
+	margin-top: 20px;
+	// border-style: groove;
+ //    border-width: medium;
+ //    border-color: $green;
 	h4{
 		font-family: $font-title !important;
 		margin-bottom: 0px;
 		margin-top: 2px;
-		display: inline !important;
+		// display: inline !important;
 	}
 	
 }
-.select-var-type {
+.page-text{
+	font-family: $font-default !important;
+}
+
+.no-padding-margin {
+	padding: 0 !important;
+	margin: 0 !important;
+}
+
+.build-board {
+	padding-top: 1% !important;
+}
+
+.title-font {
+	h4{
+		font-family: $font-title !important;
+	}
+}
+.select-var-type{
 	padding: 0px;
 	margin: 0px;
-	width: 50%;
 }
 // .sprite-props
 // {
@@ -27,7 +48,22 @@
 
 .btn.variable{
 	background: $green;
-	float: right;
+	display: inline-block;
+}
+
+.btn.md-primary.btn-block {
+	color: grey !important;
+	border-color: grey;
+	margin: 0 !important;
+	padding: 0;
+	font-family: $font-default !important;
+
+}
+
+
+.page-section {
+	margin-top: 5%;
+	margin-bottom: 5%;
 }
 
 .btn.direction{
@@ -36,7 +72,7 @@
 
 .sprite-carousel{
 
-	h4{
+	h3{
 		font-family: $font-title !important;
 		margin-bottom: 0px;
 		margin-top: 2px;
@@ -44,4 +80,12 @@
 	}
 	height: 100%;
 	width: 100%;
+}
+
+.create-btn{
+  background-color: $purple;
+  color:white;
+
+  font-family: $font-title;
+  margin-top:3%;
 }

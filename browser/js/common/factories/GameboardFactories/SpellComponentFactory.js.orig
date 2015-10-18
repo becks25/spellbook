@@ -1,16 +1,26 @@
 app.factory('SpellComponentFactory', function(ConditionFnFactory, LARGE_AVATARS, SPRITES){
 	return {
+<<<<<<< HEAD
 		possTools: ['move', 'ifStatement', 'whileLoop', 'forLoop', 'pickUp', 'give', 'tell', 'ask', 'moveRandom'],
+=======
+		possTools: ['move', 'ifStatement', 'whileLoop', 'forLoop', 'pickUp', 'give', 'tell', 'ask'],
+>>>>>>> add pg works. yay. possible error with not saving the avatar correnctly
+		possConcepts:['For Loop', 'While Loop', 'If-statements', 'Conditionals', 'Expressions', 'Movement'],
 		possDirections: ['up', 'down', 'left', 'right'],
 		makeSpellVar: (variable)=>{
 			var name = variable.text.split(' ').join('_');
             return {
             	name: name,
             	 text: variable.text,
-            	  type: 'variable', 
+            	  type: 'variable',
             	  varType: variable.varType,
             	  //value is a function that returns true or false depending on the state of the game
             	  value: (spell) => {
+<<<<<<< HEAD
+=======
+            	  	console.log(variable.arg)
+            	  	console.log('variable', variable)
+>>>>>>> add pg works. yay. possible error with not saving the avatar correnctly
             	  	return ConditionFnFactory[variable.fnType](variable.arg, spell);
             	  },
             	};
@@ -36,7 +46,7 @@ app.factory('SpellComponentFactory', function(ConditionFnFactory, LARGE_AVATARS,
             case 'moveRandom':
               toolObj.action ='moveRandom';
               toolObj.text = 'move random';
-              toolObj.direction = 'down';
+              toolObj.direciton = 'down';
               toolObj.distance = 1;
               toolObj.type = 'tool';
               break;
@@ -45,7 +55,6 @@ app.factory('SpellComponentFactory', function(ConditionFnFactory, LARGE_AVATARS,
 	          toolObj.text = 'pick up';
 	          toolObj.variable = null;
 	          toolObj.type = 'tool';
-
 	          break;
 	        case 'give':
 	          toolObj.action = 'give';
@@ -90,7 +99,7 @@ app.factory('SpellComponentFactory', function(ConditionFnFactory, LARGE_AVATARS,
 	          toolObj.variable = null;
 	          toolObj.type = 'tool';
 	          break;
-	        default: 
+	        default:
 	          toolObj.action = toolStr;
 	          toolObj.text = toolStr;
 	          toolObj.person = null;
