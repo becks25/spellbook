@@ -29,15 +29,13 @@ app.factory('MapFactory', function(ClassFactory, TilesizeFactory, AuthService, U
             return AuthService.getLoggedInUser()
                 .then(function(user){
                     return user;
-                })
+                });
         }
 
         resetMap(){
-            // Crafty("2D").detach();
 
             Crafty("2D").each(function(i) {
-                //console.log('destroying', i, this)
-                    this.destroy();
+                this.destroy();
                 
             });
 
@@ -149,6 +147,7 @@ app.factory('MapFactory', function(ClassFactory, TilesizeFactory, AuthService, U
         }
 
         createObject (obj, x, y) {
+            console.log('creating', obj)
             var position = {x: x, y: y};
             return new ClassFactory[obj.type](obj.name, position, obj.action || null, obj.varName || null, obj.variables || null, obj.match || null);
         }

@@ -21,7 +21,8 @@ var schema = new mongoose.Schema({
         numMoves: Number 
     },
     pageNumber: Number,
-    boardBackground: {type: String, default: 'images/flower-field.png'}
+    boardBackground: {type: String, default: 'images/flower-field.png'},
+    status: Number,
 });
 
 

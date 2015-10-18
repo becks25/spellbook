@@ -1,7 +1,6 @@
 app.factory('SpellComponentFactory', function(ConditionFnFactory, LARGE_AVATARS, SPRITES){
 	return {
 		possTools: ['move', 'ifStatement', 'whileLoop', 'forLoop', 'pickUp', 'give', 'tell', 'ask', 'moveRandom'],
-		possConcepts:['For Loop', 'While Loop', 'If-statements', 'Conditionals', 'Expressions', 'Movement'],
 		possDirections: ['up', 'down', 'left', 'right'],
 		makeSpellVar: (variable)=>{
 			var name = variable.text.split(' ').join('_');
