@@ -1,90 +1,54 @@
-
-.add-variable{
-	margin-top: 20px;
-	h4{
-		margin-bottom: 0px;
-		margin-top: 2px;
+.level-editor{
+	h1, h2, h3{
+		font-family: $font-title;
 	}
-	
-}
-.page-text{
-	font-family: $font-default !important;
-}
 
-.no-padding-margin {
-	padding: 0 !important;
-	margin: 0 !important;
-}
-
-.build-board {
-	padding-top: 1% !important;
-}
-
-.title-font {
-	
-	font-family: $font-title !important;
-
-}
-
-h2.title-font{
-	color: $purple !important;
-}
-
-.select-var-type{
-	padding: 0px;
-	margin: 0px;
-}
-
-.btn.tool{
-	background: $turqoise;
-}
-
-.btn.variable{
-	background: $green;
-	display: block;
-	margin: 2% 0 0 0;
-}
-
-.btn.md-primary {
-	color: grey !important;
-	border-color: grey;
-	margin: 0 !important;
-	padding: 0;
-	font-family: $font-default !important;
-}
-
-.background-img{
-	height:40px;
-}
-
-.page-section {
-	margin-top: 5%;
-	margin-bottom: 5%;
-}
-
-.btn.direction{
-	background: $purple;
-}
-
-.sprite-carousel{
-	h3{
-		font-family: $font-title !important;
-		margin-bottom: 0px;
-		margin-top: 2px;
-		display: inline !important;
+	md-input-container:not(.md-input-invalid).md-input-focused {
+		label{
+			color: $purple;
+		}
+		.md-input{
+			border-color:$purple;
+		}
 	}
-	height: 100%;
-	width: 100%;
-}
 
-.create-btn{
-  background-color: $purple;
-  color:white;
+	.sprite-carousel{
+		height:64px;
+		width:64px;
+		margin:30px auto auto auto;
+	}
 
-  font-family: $font-title;
-  margin-top:3%;
-}
+	.sprite-select{
+		margin-top:10px;
+	}
 
-.sprite-thumbnail{
-	width: 100%
+	.carousel{
+		height:150px;
+	}
+
+	.carousel-indicators{
+		display:none;
+	}
+
+	md-select, md-input{
+		margin-top:0;
+	}
+
+	.turqoise{
+		background: $turqoise;
+	}
+
+	.green{
+		background: $green;
+	}
+
+	.purple{
+		background: $purple;
+		color:white;
+	}
+
+	p{
+		font-family:$font-default;
+	}
+
 }

@@ -89,6 +89,8 @@ app.controller('levelEditCtrl', ($scope, AuthService, $state, $stateParams, Clas
 
   $scope.savePage = () =>{
     //page obj already has story, text, hint, background, gameboard
+    $scope.page.text = '<p>' + $('#page-text').val().replace(/\</g, '&#60').replace(/\>/g,'&#62').replace(/\"/g, '&#34').replace(/\//g, '&#47').replace(/\{/g,'&#123').replace(/\}/g,'&#125').replace(/\[/g,'&#91').replace(/\]/g,'&#93').replace(/\|/g,'&#124').replace(/\n/g, '</p><p>') + '</p>'
+
     $scope.page.concepts = _.keys($scope.concepts).filter(concept=>$scope.concepts[concept]);
     $scope.page.tools = saved.tool;
     $scope.page.directions = saved.direction;

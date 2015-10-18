@@ -5,11 +5,14 @@ $font-default: 'Happy Monkey', cursive;
 $font-title: 'Henny Penny', cursive;
 * {
   box-sizing: border-box;
+    outline:none;
+
 }
 
 body {
   background: #fdfdfd;
   font-family: $font-default;
+
 }
 
 body, html {
@@ -24,11 +27,16 @@ body, html {
   }
 }
 
+
 #main {
   padding-top: 4%;
   width: 100%;
   margin: 0 auto;
   position:relative;
+}
+
+button{
+  font-family:$font-default;
 }
 
 @import 'directives/main';

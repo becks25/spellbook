@@ -1,5 +1,5 @@
 <div ng-model='newVar'>
-	<h4 class='text-center'>Add a variable</h4>
+	<p><b>Create a variable</b></p>
 	<md-select class='select-var-type' placeholder="Select type" ng-model="newVar.varType">
 		<md-option ng-repeat='type in varTypes' value='{{type}}'>{{type}}</md-option>
 	</md-select>
@@ -18,4 +18,5 @@
 	      	<input ng-model="newVar.arg">
 	    </md-input-container>
 	</div>
-    <button class='btn variable'ng-click='addTool(newVar, null, "variable")'>Save Variable</button>
+    <button class='btn green text-center center-block'ng-click='addTool(newVar, null, "variable")'>Save Variable</button>
+</div>
