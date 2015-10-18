@@ -82,6 +82,8 @@ app.controller('levelEditCtrl', ($scope, AuthService, $state, $stateParams, Clas
     'direction': [], //this might not need to be in here
     'variable': [], //objects instead of strings
   };
+
+  $scope.openSections = {info: true, board: true, reqs: false}
   //sets newVar to empty version on load
   clearNewVar();
 
@@ -196,6 +198,7 @@ app.controller('levelEditCtrl', ($scope, AuthService, $state, $stateParams, Clas
     };
 
   	$scope.addTool = (tool, index, type)=>{
+      console.log('creating', tool, index, type)
       switch (type){
         case 'tool':
           $scope.toolsPoss.splice(index, 1)
