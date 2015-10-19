@@ -19,6 +19,7 @@ app.controller('LoginSignupCtrl', function ($rootScope, AUTH_EVENTS, $scope, Aut
     $scope.loginError = null;
     $scope.signupError = null;
     $scope.user;
+    $scope.signup.isTeacher = false;
 
   //   $scope.validateForm = function() {
   //   var x = document.forms['signupForm', 'email'].value;
@@ -38,8 +39,6 @@ app.controller('LoginSignupCtrl', function ($rootScope, AUTH_EVENTS, $scope, Aut
         });
 
     };
-
-
 
   $scope.createUser = function(userInfo) {
     $scope.signupError = null;

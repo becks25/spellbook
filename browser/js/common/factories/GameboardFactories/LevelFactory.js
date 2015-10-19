@@ -136,9 +136,11 @@ app.factory('LevelFactory', function(PageFactory, UserFactory, AuthService, MapF
       return false;
     }
 
-    constructReqs(winArr){
+    constructReqs(winArr, lossArr){
       var level = this;
       constructReqs('win', winArr);
+      constructReqs('lose', lossArr);
+      
       return this.requirements;
 
       //constructs req dictionary object from spell arr

@@ -44,7 +44,7 @@ app.controller('levelEditCtrl', ($scope, AuthService, $state, $stateParams, Clas
   $scope.directions = [];
   $scope.spellComponents = []; //used for storing dragged requirements
   $scope.varTypes = ['person', 'variable', 'condition'];
-  $scope.varFnTypes = ['holding', 'match', 'true', 'false'];
+  $scope.varFnTypes = ['holding', 'match', 'returnTrue', 'returnFalse'];
   $scope.newVar = {};
   $scope.page = {
     story:$stateParams.storyId,
@@ -74,6 +74,9 @@ app.controller('levelEditCtrl', ($scope, AuthService, $state, $stateParams, Clas
   $scope.savedSprites = [];
   $scope.backgrounds = GAMEBOARD_BACKGROUNDS;
   $scope.makingNewLevel = true;
+  $scope.savedWinReqs = [];
+  $scope.savedLoseReqs = [];
+  var setWin = true;
   var toolsForRequirements = ['pickUp', 'give', 'ask', 'tell'];
   //used to keep track of vars that should be refreshed in tool box and to save pg
   //array members have the same type as poss arrays (str, str, obj)
@@ -91,25 +94,41 @@ app.controller('levelEditCtrl', ($scope, AuthService, $state, $stateParams, Clas
 
   $scope.savePage = () =>{
     //page obj already has story, text, hint, background, gameboard
-    $scope.page.text = '<p>' + $('#page-text').val().replace(/\</g, '&#60').replace(/\>/g,'&#62').replace(/\"/g, '&#34').replace(/\//g, '&#47').replace(/\{/g,'&#123').replace(/\}/g,'&#125').replace(/\[/g,'&#91').replace(/\]/g,'&#93').replace(/\|/g,'&#124').replace(/\n/g, '</p><p>') + '</p>'
-
     $scope.page.concepts = _.keys($scope.concepts).filter(concept=>$scope.concepts[concept]);
+    console.log('concepts before save', $scope.page.concepts);
     $scope.page.tools = saved.tool;
     $scope.page.directions = saved.direction;
     $scope.page.variables = saved.variable;
     //set req from spell box
-    $scope.page.requirements = $scope.level.constructReqs($scope.spellComponents)
+    $scope.toggleWinLossReqs();
+    $scope.page.requirements = $scope.level.constructReqs($scope.savedWinReqs, $scope.savedLoseReqs);
+    //weird mongoose thing where empty obj isn't saved to database
+    if($scope.savedWinReqs.length===0)$scope.page.requirements = {win:true};
     //set gameboard with objs
     //find pg num
+    console.log('reqs before save', $scope.page.requirements);
 
     StoryFactory.find($stateParams.storyId)
-    .then(story => story.getAllPages($stateParams.storyId))
+    .then(story => {
+      var newConcept;
+      $scope.page.concepts.forEach(concept=>{
+        // check if new concepts that need to be added to story
+        if(story.concepts.indexOf(concept)<0){
+          story.concepts.push(concept);
+          newConcept = true;
+        }
+      });
+      if (newConcept) return StoryFactory.save(story).then(story => story.getAllPages($stateParams.storyId));
+      else return story.getAllPages($stateParams.storyId);
+    })
     .then(pages => {
+      $scope.page.text = '<p>' + $('#page-text').val().replace(/\</g, '&#60').replace(/\>/g,'&#62').replace(/\"/g, '&#34').replace(/\//g, '&#47').replace(/\{/g,'&#123').replace(/\}/g,'&#125').replace(/\[/g,'&#91').replace(/\]/g,'&#93').replace(/\|/g,'&#124').replace(/\n/g, '</p><p>') + '</p>'
       $scope.page.pageNumber = pages.length;
       return PageFactory.create($scope.page);
     }).then(page => {
       console.log('made', page)
-      $state.go('add', {storyId: $stateParams.storyId});
+      // clearPage();
+      $state.go($state.current, {}, {reload: true});
     });
   };
 
@@ -147,8 +166,35 @@ app.controller('levelEditCtrl', ($scope, AuthService, $state, $stateParams, Clas
     // console.log(_.get(sprite, $scope.page.gameboard));
     // console.log('removing', $scope.page.gameboard)
   };
+  $scope.winLose = ()=>setWin ? 'win' : 'loss'
+ var modalInstance;
+  //toggles condition setting box between win and lose
+  $scope.toggleWinLossReqs = ()=>{
+    //remove win reqs from loss reqs
+    var repeats = _.intersection($scope.savedWinReqs, $scope.savedLoseReqs);
+    console.log('repeats', repeats)
+    if(repeats.length) {
+      modalInstance = $uibModal.open({
+          animation:true,
+          templateUrl: 'js/common/directives/win-modal/level-edit-repeat-reqs.html',
+          controller: 'ModalCtrl'
+      });
+      repeats.forEach(obj=>{
+        var foundIndex = _.findIndex($scope.savedLoseReqs, obj);
+        $scope.savedLoseReqs.splice(foundIndex, 1);
+      });
+      repeats = [];
+    }
+    if(setWin){
+      $scope.savedWinReqs = _.cloneDeep($scope.spellComponents);
+      $scope.spellComponents = $scope.savedLoseReqs;
+    } else {
+      $scope.savedLoseReqs = _.cloneDeep($scope.spellComponents);
+      $scope.spellComponents = $scope.savedWinReqs;
+    }
 
-
+    setWin = !setWin;
+  };
   //stores temp new var before saving
   function clearNewVar(){
     $scope.newVar = {
@@ -186,11 +232,13 @@ app.controller('levelEditCtrl', ($scope, AuthService, $state, $stateParams, Clas
     $scope.possConcepts = CONCEPTS;
     $scope.concepts = {};
     $scope.toggleConcept = (concept, e) => {
+      console.log(concept)
         e.stopPropagation();
         $scope.concepts[concept] = !$scope.concepts[concept];
+        console.log('concepts now', $scope.concepts)
     };
-    $scope.possConcepts.forEach(concept => $scope.concepts[concept] = true);
-
+    $scope.possConcepts.forEach(concept => $scope.concepts[concept] = false);
+    console.log('concepts on load', $scope.concepts)
     //for adding and removing str/str
     $scope.addConcept = (concept, index, addLoc, removeLoc) => {
       addLoc.push(concept);
@@ -208,6 +256,7 @@ app.controller('levelEditCtrl', ($scope, AuthService, $state, $stateParams, Clas
           return makeSpellDir(tool);
         case 'variable':
         if(!tool.text) return;
+          // $scope.newVarForm.$setPristine();
           makeSpellVar(tool);
           clearNewVar();
       }
@@ -322,8 +371,6 @@ var baseConfig = {
         },
         connectWith: ".spellCompVars"
     });
-
-
 
 
 //loads board and sprites based on screen size

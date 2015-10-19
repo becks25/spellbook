@@ -9,6 +9,9 @@ app.factory('ConditionFnFactory', function(){
             var pos = spell.avatar.position;
             return spell.map.checkPos(pos, thingToMatch, 'match');
         },
+        returnTrue: ()=> true,
+        returnFalse: ()=> false,
+
 
     };
 });
