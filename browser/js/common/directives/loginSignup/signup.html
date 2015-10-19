@@ -48,9 +48,12 @@
         </select>
       </div>
     </div>
-
-
-
+    <div class="form-group" ng-click="signup.isTeacher = !signup.isTeacher">
+      <div class="control-label col-md-4">
+        <input type="checkbox" ng-model="signup.isTeacher"ng-click="signup.isTeacher = !signup.isTeacher"/>
+      </div>
+      <div class="col-md-8">I'm a teacher and would like to track my students' progress (coming soon)</div>      
+    </div>
 
     <!-- Submit form -->
     <button type="submit" class="btn btn-default">Signup</button>

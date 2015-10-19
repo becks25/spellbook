@@ -34,7 +34,7 @@
 					<div class="panel-body" style="margin-top:7%;">
 			        	<p><b>Concepts used in this level:</b></p>
 			        	<div class="inline col-xs-12" ng-repeat="concept in possConcepts" ng-click="toggleConcept(concept, $event)">
-							<input type="checkbox" ng-model="clickedConcepts[concept]"/> {{concept}}
+							<input type="checkbox" ng-model="concepts[concept]"ng-click="toggleConcept(concept, $event)"/> {{concept}}
 						</div>
 					</div>
 				</div>
@@ -142,8 +142,17 @@
 
 				<div class="col-sm-12 col-md-6">
 					<spell></spell>
-
+					<button ng-click='toggleWinLossReqs()'>Switch to setting {{winLose}} requirements</button>
 				</div>
+				<div class='col-xs-12 col-md-6'>
+					<h4>Win conditions: </h4>
+					<div class='col-xs-12 col-sm-6 col-md-3 turqoise req-obj' ng-repeat='item in savedWinReqs'>{{item.action}}: {{item.person}}, {{item.variable}}</div>
+				</div>	
+				<div class='col-xs-12 col-md-6'>
+					<h4>Loss conditions: </h4>
+					<div class='col-xs-12 col-sm-6 col-md-3 turqoise req-obj' ng-repeat='item in savedLoseReqs'>{{item.action}}: {{item.person}}, {{item.variable}}</div>
+				</div>			
+			
 			</div>
 		</div>
 
