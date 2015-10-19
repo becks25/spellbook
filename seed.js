@@ -95,7 +95,7 @@ var seedStories = function(theuser){
     stories.push({
         title: 'Space Princess',
         description: "Aria gets lost in space and has to rescue a friend",
-        difficulty: 3,
+        difficulty: 5,
         concepts: ['Conditionals', 'While loop', 'For loop'],
         cover: 'images/book-covers/background-space.png',
         author: theuser
@@ -362,7 +362,7 @@ var seedPages = function(stories){
 
             },{
                 story: story._id,
-                text:'<p>"Wow!  My present is a spaceship!  I was planning to explore our solar system, and was especially excited to see Saturn’s rings, but my brother kept coming inside and messing everything up.  He must have done some serious damage, because when I took off, I couldn’t control my navigation, and now I seem to have landed on a strange planet." </p><p>"When I got out of my spaceship, I was greeted by a strange creature, who introduced itself as Zeke.  Zeke is worried because he can’t find his best friend, Liz."</p><p class="promptText">Can you go to each of the aliens on the page and ask them if they have seen Liz?  You’re running low on power, so you can only use three commands.</p>',
+                text:'<p>"Wow!  My present is a spaceship!  I was planning to explore our solar system, and was especially excited to see Saturn’s rings, but my brother kept coming inside and messing everything up.  He must have done some serious damage, because when I took off, I couldn’t control my navigation, and now I seem to have landed on a strange planet." </p><p>"When I got out of my spaceship, I was greeted by a strange creature, who introduced itself as Zeke.  Zeke is worried because he can’t find his best friend, Liz."</p><p class="promptText">Can you go to each of the aliens on the page and ask them if they have seen Liz?  You’re running low on power, so you can only use five commands.</p>',
                 tools: ['move', 'pickUp', 'ask', 'tell', 'ifStatement', 'forLoop'],
                 variables: [
                     {text: 'Have you seen Liz?', varType: 'variable'},
@@ -435,7 +435,7 @@ var seedPages = function(stories){
 
             },{
                 story: story._id,
-                text:'<p>"Oh no, you discovered that Liz was captured by an evil warlord.  He’s keeping her locked in a cell somewhere in his fortress.  Fortunately, Zeke is friends with one of the guards, who will free Liz if you can bring him the key."</p><p>"To free Liz, you will need to find the right key, and give it to a guard named Nimit.  Carefull, though, if you give the key to the wrong guard, the evil warlord might find out you are here. And in order to keep quiet, you can only use three moves at level one of your spell.</p>',
+                text:'<p>"Oh no, you discovered that Liz was captured by an evil warlord.  He’s keeping her locked in a cell somewhere in his fortress.  Fortunately, Zeke is friends with one of the guards, who will free Liz if you can bring him the key."</p><p>"To free Liz, you will need to find the right key, and give it to a guard named Nimit.  Carefull, though, if you give the key to the wrong guard, the evil warlord might find out you are here. And in order to keep quiet, you can only use four moves at the outer level of your spell.</p>',
                 tools: ['move', 'pickUp', 'give', 'ask', 'whileLoop'],
                 variables: [
                     {text: 'key', varType: 'variable'},
@@ -451,19 +451,19 @@ var seedPages = function(stories){
                         give: {key:{'Guard&2': false}},
                     }, lose: {
                         give: {
-                            'key': {'Guard&1': false, 'Guard&3': false}
+                            'key': {'Guard&1': false, 'Guard&3': false, 'Guard&4': false, 'Guard&5': false,}
                 }}},        
                 gameboard: [
                     [
                         [{
                             type: 'Avatar',
                             name:'WizzardGirl3'
-                        }],
-                        [{
+                        }, {
                             type:'Collectible',
-                            name:'Banana',
+                            name:'Crystal1',
                             varName:'key'
                         }],
+                        [],
                         [],
                         [],
                         []
@@ -473,8 +473,9 @@ var seedPages = function(stories){
                         [{
                             type:'Person',
                             name:'Alien1',
-                            varName:'Guard&1',
-                            match: 'notNimit'                            
+                            varName:'Guard&3',
+                            match: 'notNimit'
+
                         }],
                         [{
                             type:'Person',
@@ -484,13 +485,18 @@ var seedPages = function(stories){
                         [{
                             type:'Person',
                             name:'Alien1',
-                            varName:'Guard&3',
-                            match: 'notNimit'
-
+                            varName:'Guard&4',
+                            match: 'notNimit'                            
                         }]
                     ],[
                         [],
-                        [],
+                        [{
+                            type:'Person',
+                            name:'Alien1',
+                            varName:'Guard&5',
+                            match: 'notNimit'
+
+                        }],
                         [],
                         [],
                         []
@@ -501,7 +507,13 @@ var seedPages = function(stories){
                         [],
                         []
                     ],[
-                        [],
+                        [{
+                            type:'Person',
+                            name:'Alien1',
+                            varName:'Guard&1',
+                            match: 'notNimit'
+
+                        }],
                         [],
                         [],
                         [],
