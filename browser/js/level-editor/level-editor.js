@@ -374,24 +374,27 @@ var baseConfig = {
 
 
 //loads board and sprites based on screen size
-    document.getElementById('cr-stage').style.backgroundImage='url('+$scope.page.boardBackground+')';
+    $scope.initalizeboard = () => {
+      console.log('make the board');
+      document.getElementById('cr-stage').style.backgroundImage='url('+$scope.page.boardBackground+')';
 
-    TilesizeFactory.NumTiles = $scope.page.gameboard.length;
-    Crafty.load(['/images/sprites.png']);
-    var tileSize = TilesizeFactory.TILESIZE;
-    Crafty.init(tileSize * TilesizeFactory.NumTiles, tileSize * TilesizeFactory.NumTiles);
+      TilesizeFactory.NumTiles = $scope.page.gameboard.length;
+      Crafty.load(['/images/sprites.png']);
+      var tileSize = TilesizeFactory.TILESIZE;
+      Crafty.init(tileSize * TilesizeFactory.NumTiles, tileSize * TilesizeFactory.NumTiles);
 
-    Crafty.canvas.init();
-    //need to load sprites on to map
+      Crafty.canvas.init();
+      //need to load sprites on to map
 
-    Crafty.sprite(64, '/images/sprites.png', SPRITES);
-    Crafty.sprite(64, '/images/SpriteAvatars.png', SPRITE_AVATARS);
+      Crafty.sprite(64, '/images/sprites.png', SPRITES);
+      Crafty.sprite(64, '/images/SpriteAvatars.png', SPRITE_AVATARS);
 
-    $scope.grid = new Array(TilesizeFactory.NumTiles * TilesizeFactory.NumTiles);
+      $scope.grid = new Array(TilesizeFactory.NumTiles * TilesizeFactory.NumTiles);
 
-    $scope.size = tileSize + 'px';
+      $scope.size = tileSize + 'px';
 
-    $scope.resetMap();
+      $scope.resetMap();
+    }
 
 
 });

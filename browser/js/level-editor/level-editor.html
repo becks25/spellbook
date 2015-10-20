@@ -2,11 +2,11 @@
 	<div class="panel-heading">
 		<h2 class='text-center'>Build a New Page</h2>
 	</div>
-	<uib-accordion close-others='false'>
-	<uib-accordion-group>
+	<uib-accordion close-others='true'>
+	<uib-accordion-group is-open='true'>
 		<uib-accordion-heading class="panel-heading" >
 		<div><i class="glyphicon glyphicon-chevron-down"></i> 
-	        Add Page details </div>
+	        1. Page details </div>
 	    </uib-accordion-heading> 
 		<div class="panel-body">
 			<!-- <hr />
@@ -44,9 +44,9 @@
 	</uib-accordion-group>
 		
 	<uib-accordion-group>
-		<uib-accordion-heading class="panel-heading" >
-	        <div><i class="glyphicon glyphicon-chevron-down"></i> 
-	        Add to Gameboard </div>
+		<uib-accordion-heading class="panel-heading">
+	        <div ng-click="initalizeboard()"><i class="glyphicon glyphicon-chevron-down"></i> 
+	        2. Gameboard </div>
 	    </uib-accordion-heading> 
 		<div class="panel-body">
 			<!-- <hr/>
@@ -95,13 +95,43 @@
 				</div>
 
 			</div>
+
+
+					<div class="panel-body">
+
+			<div class='col-xs-12 col-sm-6 col-md-4'>
+				<p><b>Your Gameboard</b></p>
+
+				<div id="canvas" class="img-square">
+					<div id="cr-stage" ng-style="{background: url({{page.boardBackground}})}" class="text-center center-block">
+					<div ng-repeat="i in grid track by $index" style="height:{{size}}; width:{{size}}" class="square"></div>
+					</div>
+				</div>
+			</div>	
+
+				<!--sprites added to click and delete-->
+			<div class="col-xs-12 col-sm-6 col-md-8">
+				<p><b>Currently on the board</b></p>
+				<div class='sprites-list col-xs-4 col-sm-3' ng-repeat='sprite in savedSprites'>
+					<span class="glyphicon glyphicon-remove pull-right" ng-click="removeSprite(sprite, $index)"></span>
+					<div style='background:url({{sprite.imgUrl}}) {{0-sprite.imgPos[0]*64}}px {{0-sprite.imgPos[1]*64}}px; width: 64px; height:64px'></div>
+					<p><b>Name:</b> {{sprite.varName}}</p>
+					<p><b>Position:</b> {{sprite.pos[0]}}, {{sprite.pos[1]}}</p>
+
+				</div>
+
+				<p ng-if="savedSprites.length === 0">
+					Create and add variables above to add items to the board.
+				</p>
+			</div>
+		</div>
 		</div>
 	</uib-accordion-group>
 
 	<uib-accordion-group>
 		<uib-accordion-heading class="panel-heading" >
 	        <div><i class="glyphicon glyphicon-chevron-down"></i> 
-	        Set up Gameplay </div>
+	        3. Gameplay </div>
 	    </uib-accordion-heading>
 		<div class="panel-body">
 			<!-- <hr />
@@ -179,7 +209,7 @@
 	<div class='panel-body'></div>
 
 		<!--show gameboard & sprites-->
-		<div class="panel-body">
+	<!-- 	<div class="panel-body">
 
 			<div class='col-xs-12 col-sm-6 col-md-4' id='right-page'>
 				<p><b>Your Gameboard</b></p>
@@ -192,6 +222,7 @@
 			</div>	
 
 				<!--sprites added to click and delete-->
+			<!--
 			<div class="col-xs-12 col-sm-6 col-md-8">
 				<p><b>Currently on the board</b></p>
 				<div class='sprites-list col-xs-4 col-sm-3' ng-repeat='sprite in savedSprites'>
@@ -206,7 +237,7 @@
 					Create and add variables above to add items to the board.
 				</p>
 			</div>
-		</div>
+		</div> -->
 	</div>
 <!-- <uib-accordion close-others='false'>
 
@@ -217,4 +248,4 @@
 	</div>
 
 </div>
-
+<div class='col-xs-12 col-sm-6 col-md-4' id='right-page'></div>
