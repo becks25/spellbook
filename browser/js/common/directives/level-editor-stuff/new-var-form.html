@@ -1,6 +1,6 @@
 <!-- <form name='newVarForm' ng-sumbit='newVarForm.$valid && addTool(newVar, null, "variable")' novalidate> -->
 	
-<form name='newVarForm'>
+<form name='form.newVarForm' novalidate>
 	<p><b>Create a variable</b></p>
 	<md-select class='select-var-type' placeholder="Select type" ng-model="newVar.varType" name='newVar.varType' required>
 		<md-option ng-repeat='type in varTypes' value='{{type}}'>{{type}}</md-option>

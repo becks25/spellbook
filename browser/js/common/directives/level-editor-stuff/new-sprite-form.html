@@ -17,7 +17,7 @@
     </uib-carousel>
 </div>
 <div ng-show='newSprite.name' class='col-xs-12 col-md-8'>
-<form name='addNewSprite' ng-submit='addNewSprite.$valid && saveSprite()' novalidate>
+<form name='form.addNewSprite' ng-submit='form.addNewSprite.$valid && saveSprite()' novalidate>
 	<div class='col-xs-12 col-md-6'>
 	<!---select type of variable-->
 	<md-select class='col-xs-12' placeholder="Select type *" ng-model="newSprite.type" required>

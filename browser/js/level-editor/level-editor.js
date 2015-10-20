@@ -77,6 +77,7 @@ app.controller('levelEditCtrl', ($scope, AuthService, $state, $stateParams, Clas
   $scope.savedWinReqs = [];
   $scope.savedLoseReqs = [];
   var setWin = true;
+  $scope.form = {};
   var toolsForRequirements = ['pickUp', 'give', 'ask', 'tell'];
   //used to keep track of vars that should be refreshed in tool box and to save pg
   //array members have the same type as poss arrays (str, str, obj)
@@ -136,14 +137,9 @@ app.controller('levelEditCtrl', ($scope, AuthService, $state, $stateParams, Clas
 
   //add sprite to board and saved arr
   $scope.saveSprite = ()=>{
-    // if ($scope.newSprite.varName) sprite.varName = $scope.newSprite.varName;
-    // if ($scope.newSprite.match) sprite.match = $scope.newSprite.match;
-    // $scope.page.gameboard[$scope.newSpritePos.x-1][$scope.newSpritePos.y-1].push($scope.newSprite);
-    // $scope.newSprite.pos = $scope.newSpritePos;
     $scope.newSprite.imgPos = $scope.newSprite.imgPos;
 
     $scope.savedSprites.push($scope.newSprite);
-    // console.log('gameboard', $scope.page.gameboard)
     $scope.newSprite = {
       type: null,
       name: null,
@@ -151,8 +147,9 @@ app.controller('levelEditCtrl', ($scope, AuthService, $state, $stateParams, Clas
       match: null,
       pos: [null, null]
     };
-    // $scope.newSpritePos = {x: null, y: null};
     $scope.resetMap();
+    $scope.form.addNewSprite.$setPristine();
+    $scope.form.addNewSprite.$setUntouched();
   };
   $scope.selectImg = (possSpr)=>{
     $scope.newSprite.name = possSpr.name;
@@ -162,7 +159,6 @@ app.controller('levelEditCtrl', ($scope, AuthService, $state, $stateParams, Clas
   $scope.removeSprite = (sprite, index)=>{
     $scope.savedSprites.splice(index, 1);
     $scope.resetMap();
-
     // console.log(_.get(sprite, $scope.page.gameboard));
     // console.log('removing', $scope.page.gameboard)
   };
@@ -256,9 +252,12 @@ app.controller('levelEditCtrl', ($scope, AuthService, $state, $stateParams, Clas
           return makeSpellDir(tool);
         case 'variable':
         if(!tool.text) return;
-          // $scope.newVarForm.$setPristine();
+        console.log($scope.form.newVarForm)
           makeSpellVar(tool);
           clearNewVar();
+          $scope.form.newVarForm.$setPristine();
+          $scope.form.newVarForm.$setUntouched();
+
       }
     };
 
