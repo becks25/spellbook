@@ -110,6 +110,7 @@
 			</div> -->
 
 			<div class="panel-body col-sm-12">
+				<div class='col-xs-12 col-md-6'>
 					<!--dropdown to select tools-->
 					<div class="btn-group inline" uib-dropdown>
 				        <button type="button" class="btn turqoise" uib-dropdown-toggle>
@@ -132,6 +133,23 @@
 				        	<li role="menuitem"ng-repeat='tool in dirsPoss track by $index' ng-click='addTool(tool, $index, "direction")'>{{tool}}</li>
 				        </ul>
 					</div>
+				</div>
+				<div class='col-xs-12 col-md-6'>
+					<!-- select max moves-->
+					<div class='col-xs-12 col-md-6'>
+						<md-input-container class='no-margin'>
+					      	<label>Maximum number of moves (optional)</label>
+					      	<input type='number' ng-model="page.requirements.numMoves"/>
+					    </md-input-container>
+				    </div>
+					<div class='col-xs-12 col-md-6'>
+					    <md-input-container class='no-margin'>
+					      	<label>Maximum outer spell length (optional</label>
+					      	<input type='number' ng-model="page.requirements.spellLength"/>
+					    </md-input-container>
+					</div>
+				</div>
+
 			</div>
 			<div class="clearfix"></div>
 			<div class="panel-body">

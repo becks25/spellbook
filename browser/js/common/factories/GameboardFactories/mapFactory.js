@@ -120,7 +120,6 @@ app.factory('MapFactory', function(ClassFactory, TilesizeFactory, AuthService, U
         checkPos (pos, itemName, match){
             var foundObj;
             this.getObjects(pos).some(obj => {
-                // console.log('mapArray', obj);
                     if(match){
                         if(obj[match] && obj[match] === itemName){
                             foundObj = obj;
@@ -147,7 +146,6 @@ app.factory('MapFactory', function(ClassFactory, TilesizeFactory, AuthService, U
         }
 
         createObject (obj, x, y) {
-            console.log('creating', obj)
             var position = {x: x, y: y};
             return new ClassFactory[obj.type](obj.name, position, obj.action || null, obj.varName || null, obj.variables || null, obj.match || null);
         }

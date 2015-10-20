@@ -49,7 +49,7 @@ app.factory('SpellFactory', function(TilesizeFactory){
 		if (this.ok) {
 		  return this.execute(argArr)
 		  .then(()=>{
-			if (this.level.isSolved()) return this.level.win();
+			if (this.level.isSolved(argArr.length, this.countMoves(argArr))) return this.level.win();
 			else return this.level.lose();
 		  });
 		}
@@ -69,6 +69,17 @@ app.factory('SpellFactory', function(TilesizeFactory){
   		if (this.currentCommand!==null){
   			return this.executeCommand(spellArr[this.currentCommand]);
   		}
+  	}
+  	//loops through all the commands in the spell arr to count them
+  	//TODO - use this to refactor step through to deep step
+  	countMoves(spellArr, count){
+  		if(!count) count = 0;
+  		count += spellArr.length;
+  		spellArr.forEach(component=> {
+  			if(component.expressions && component.expressions.length)count = this.countMoves(component.expressions, count);
+  		});
+  		console.log('num moves', count)
+  		return count;
   	}
 
 

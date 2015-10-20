@@ -53,11 +53,9 @@ app.factory('MapObjectFactory', function(PosFactory, TilesizeFactory, AuthServic
       }
 
       tween(attrs, duration, callback){
-        console.log('tween', this.entity)
         this.entity.requires('Tween');
         this.entity.tween(attrs,duration);
         // Set up callback to run once at end of tweening...
-        console.log('tween callback', callback)
         if (callback) {
           var self = this;
           var onceFn = function() {
@@ -69,13 +67,11 @@ app.factory('MapObjectFactory', function(PosFactory, TilesizeFactory, AuthServic
       }
 
       promTweenQueen(attrs, duration){
-        console.log('should be tweening')
         var self = this;
         return new Promise(function(resolve, reject){
           self.tween(attrs, duration, function(err, res){
             if(err) reject(err);
             else {
-              console.log('reseolving')
               resolve(res);
             }
           });

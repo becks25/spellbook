@@ -52,12 +52,13 @@ app.factory('LevelFactory', function(PageFactory, UserFactory, AuthService, MapF
 
     //checks req obj to seeif all condtions are met
     // checks win reqs for false, lose reqs for true, length and numMoves
-    isSolved(spellMoves, spellLength){
+    isSolved(spellLength, spellMoves){
+      console.log('solving', spellLength, spellMoves)
       var level = this;
       var solved = checkWinLoseReqs('win')
       if(solved) solved = checkWinLoseReqs('lose');
-      if (solved && this.requirements.spellLength) solved = this.requirements.spellLength <= spellLength;
-      if (solved && this.requirements.numMoves) solved = this.requirements.numMoves <= spellMoves;
+      if (solved && this.requirements.spellLength) solved = this.requirements.spellLength >= spellLength;
+      if (solved && this.requirements.numMoves) solved = this.requirements.numMoves >= spellMoves;
       return solved;
 
   
@@ -79,10 +80,14 @@ app.factory('LevelFactory', function(PageFactory, UserFactory, AuthService, MapF
   }
 
     //check and update requirements
-    updateReq(action, variable, person){     
+    updateReq(action, variable, person){  
+      console.log('updating', variable, action, person) 
+        console.log(this.requirements['win'][action][variable][person])
+      // console.log(this.requirements['lose'][action][variable][person])
       if (_.has(this.requirements, 'win', action, variable, person)){
           if(this.requirements['win'] && this.requirements['win'][action] && this.requirements['win'][action][variable] && this.requirements['win'][action][variable].hasOwnProperty(person)){
             this.requirements['win'][action][variable][person] = true;
+            console.log('in win')
           } else this.requirements['lose'][action][variable][person] = true;
       }
     }

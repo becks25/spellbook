@@ -103,7 +103,7 @@ app.controller('levelEditCtrl', ($scope, AuthService, $state, $stateParams, Clas
     $scope.toggleWinLossReqs();
     $scope.page.requirements = $scope.level.constructReqs($scope.savedWinReqs, $scope.savedLoseReqs);
     //weird mongoose thing where empty obj isn't saved to database
-    if($scope.savedWinReqs.length===0)$scope.page.requirements = {win:true};
+    if($scope.savedWinReqs.length===0)$scope.page.requirements.win=true;
     //set gameboard with objs
     //find pg num
     console.log('reqs before save', $scope.page.requirements);

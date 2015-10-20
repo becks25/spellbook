@@ -373,11 +373,14 @@ var seedPages = function(stories){
                 concepts: ['For Loop'],
                 hint: 'Try repeating, and think about using the bump to your advantage',
                 requirements: { win: { ask: {
-                    'Alien&1': {'Have_you_seen_Liz?': false},
-                    'Alien&2': {'Have_you_seen_Liz?': false},
-                    'Alien&3': {'Have_you_seen_Liz?': false},
-                    'Alien&4': {'Have_you_seen_Liz?': false}
-                }}},
+                    'Have_you_seen_Liz?':{
+                        'Alien&1': false,
+                        'Alien&2':false,
+                        'Alien&3': false,
+                        'Alien&4': false}
+                }},
+                    numMoves: 5
+                },
                 gameboard: [
                     [
                         [{
@@ -452,7 +455,7 @@ var seedPages = function(stories){
                     }, lose: {
                         give: {
                             'key': {'Guard&1': false, 'Guard&3': false, 'Guard&4': false, 'Guard&5': false,}
-                }}},        
+                }}, spellLength: 4 },        
                 gameboard: [
                     [
                         [{
