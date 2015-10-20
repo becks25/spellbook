@@ -6,6 +6,8 @@ We aim to address the gender gap in Computer Science by engaging girls in progra
 
 Each page in the book will further the storyline and present the child with a fun challenge that uses a basic piece of logic (such as if-statements, loops, etc).
 
-Teachers, parents, and children can also track how they are doing on their user pages, as well as the teacher data page.
+Using Angular, Crafty, and Tween,  we designed a visual programming language based on Scratch that allows players to drag and drop commands into a 'spell, and watch the mini program play out on the game board, giving them the chance to debug their code.
+
+In order to help teachers, parents and children track progress and address challenges, we used D3 to visualize analysis of players' data.  
 
 We always welcome feedback to improve our app. If you would like ask a question, or tell us what you think, email us at spellbookcode@gmail.com
