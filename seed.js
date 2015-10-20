@@ -230,7 +230,7 @@ var seedPages = function(stories){
                     'Banana&1': {noOne: false},
                     'Banana&2':{noOne: false},
                     'Banana&3': {noOne: false}
-                }}},
+                }}, numMoves: 4},
                 gameboard: [
                     [
                         [{
