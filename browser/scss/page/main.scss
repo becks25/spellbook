@@ -241,7 +241,11 @@ $brown: #45320b;
 	-moz-box-shadow: -9px 10px 12px 6px rgba(0,0,0,0.08),inset -10px 5px 150px rgba(black, 0.3);
 	box-shadow: -9px 10px 12px 6px rgba(0,0,0,0.08), inset 10px 0px 150px rgba(black, 0.3);
 
-	background: #ffffff; /* Old browsers */
+	background: url(images/page_texture_2.jpeg);
+	background-size: cover;
+	repeat: no-repeat; 
+	// background: #ffffff; /* Old browsers */
+
 
 
 
@@ -254,8 +258,10 @@ $brown: #45320b;
 	-moz-box-shadow: 9px 10px 12px 6px rgba(0,0,0,0.08), inset -10px 0px 150px rgba(black, 0.3);
 	box-shadow: 9px 10px 12px 6px rgba(0,0,0,0.08), inset -10px 0px 150px rgba(black, 0.3);
 	
-
-	background: #f2f2f2; /* Old browsers */
+	background: url(images/page_texture_2.jpeg);
+	background-size: cover;
+	repeat: no-repeat; 
+	// background: #f2f2f2; /* Old browsers */
 
 
 
