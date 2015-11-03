@@ -185,9 +185,10 @@ app.run(function ($rootScope, AuthService, $state) {
     });
 
 });
-app.run(function(StoryFactory, PageFactory, UserFactory) {
+app.run(function(StoryFactory, PageFactory, UserFactory, ClassesFactory) {
       StoryFactory.findAll();
       PageFactory.findAll();
       UserFactory.findAll();
+      ClassesFactory.findAll();
 
   });

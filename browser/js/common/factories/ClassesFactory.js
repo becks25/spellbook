@@ -20,5 +20,5 @@ app.factory('ClassesFactory', function(DS, $http) {
                 }
             }
         }
-    });
+    })
 }).run(ClassesFactory=>{});
