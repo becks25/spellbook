@@ -3,22 +3,23 @@ app.factory('ClassesFactory', function(DS, $http) {
         name: 'classes',
         idAttribute: '_id',
         relations: {
+            // hasMany: {
+            //     students: {
+            //         localKeys: '_students',
+            //         localField: 'students'
+            //     },
+            //     assignedStories: {
+            //         localKeys: '_assignedStories',
+            //         localField: 'assignedStories'
+            //     }
+            // },
             belongsTo: {
                 teacher: {
                     localKey: 'teacherId',
                     localField: 'teacher'
                 }
-            },
-            hasMany: {
-                students: {
-                    localKey: '_students',
-                    localField: 'students'
-                },
-                assignedStories: {
-                    localKey: '_assignedStories',
-                    localField: 'assignedStories'
-                }
             }
+            
         }
     })
 }).run(ClassesFactory=>{});

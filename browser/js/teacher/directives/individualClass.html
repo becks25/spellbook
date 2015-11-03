@@ -1,0 +1,38 @@
+<div class='col-sm-12 panel'>
+	<div class="panel-heading" ng-click="showMore = !showMore">
+		<div class="inline">
+			<span ng-hide="showMore" ng-click="showMore = true" class="glyphicon glyphicon-triangle-right"></span>
+
+			<span ng-show="showMore" ng-click="showMore = false" class="glyphicon glyphicon-triangle-bottom"></span>
+		</div>
+			<h4 class="inline"><b>{{class.name}}</b></h4>
+
+	</div>
+
+	<div ng-show="showMore">
+		<div class="panel-body">
+			<p class="inline">
+				<b>Average rating:</b> 
+			</p>
+
+			<p class="inline">
+				<b>Class code: </b> {{class.code}}
+			</p>
+		</div>
+
+		<div class="panel-body">
+			<p><b>Assigned Stories</b></p>
+
+			<story-list-item ng-repeat="story in class.assignedStories" story="story" index="$index" shelf="false"></story-list-item>
+			<p ng-if="class.assignedStories.length ==0">No stories assigned</p>
+		</div>	
+
+		<div class="panel-body">
+			<p><b>Students</b></p>
+
+			<p>STUDENTS</p>
+		</div>
+	</div>
+
+
+</div>

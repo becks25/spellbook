@@ -18,13 +18,25 @@
 </div>
 
 
-<div class="col-sm-12 panel-body">
-	<form class="form-horizontal" id="newclass-form" name="newClass" ng-submit="newClass.$valid && createClass(createNewClass)" novalidate>
-		<div class="input-group" ng-class="{'has-error': newClass.className.$dirty && newClass.className.$invalid || newClass.className.$invalid && newClass.$submitted}">
+<div class="col-sm-12 panel">
+	<form class="form-inline" id="newclass-form" name="newClass" ng-submit="newClass.$valid && createClass(createNewClass)" novalidate>
+		<div class="col-sm-5 col-xs-12" ng-class="{'has-error': newClass.className.$dirty && newClass.className.$invalid || newClass.className.$invalid && newClass.$submitted}">
 			<input type="text" class="form-control" id="className" ng-model="createNewClass.name" name="className" required placeholder="Class Name"/>
-			<span class="input-group-btn">
-				<button class="btn btn-default" type="submit">Create new class</button>
-			</span>
+		</div>
+
+		<div class="col-sm-5 col-xs-12">
+			<input type="text" class="form-control" ng-model="createNewClass.code" placeholder="Class Code"/>
+		</div>
+			<button class="btn btn-default turqoise col-sm-2 col-xs-12" type="submit">Create new class</button>
 		</div>
 	</form>
+</div>
+
+<div class="col-sm-12 panel">
+	<div class="panel-heading">
+		<h3>My Classes</h3>
+	</div>
+
+	<individual-class ng-repeat="class in classes"></individual-class>
+
 </div>
