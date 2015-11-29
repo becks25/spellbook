@@ -96,7 +96,10 @@ app.factory('LevelFactory', function(PageFactory, UserFactory, AuthService, MapF
     //get the currently logged in user
       return AuthService.getLoggedInUser()
         .then(user => {
-          if(!user) return;
+          if(!user) {
+            this.won = true;
+              return true;
+          }
           return UserFactory.find(user._id)
             .then(userInfo => {
               //remove the current page from their unfinishedPages
@@ -104,7 +107,7 @@ app.factory('LevelFactory', function(PageFactory, UserFactory, AuthService, MapF
                 if(!page) return;
                 return page.toString() === this.page._id.toString();
               });
-                            // var i = userInfo.unfinishedPages.indexOf(this.page._id);
+              // var i = userInfo.unfinishedPages.indexOf(this.page._id);
               // userInfo.unfinishedPages.splice(i, 1);
 
               //add the next page to their unfinished Pages

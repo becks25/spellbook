@@ -78,7 +78,6 @@ app.factory('SpellFactory', function(TilesizeFactory){
   		spellArr.forEach(component=> {
   			if(component.expressions && component.expressions.length)count = this.countMoves(component.expressions, count);
   		});
-  		console.log('num moves', count)
   		return count;
   	}
 

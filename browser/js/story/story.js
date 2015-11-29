@@ -32,9 +32,11 @@ app.controller('StoryCtrl', ($scope, $state, stories, $timeout, StoryFactory, $s
     var findIfStarted = (story) => {
         return story.getAllPages(story._id)
             .then(pages => {
-                for(var i =0; i < user.unfinishedPages.length; i++) {
-                    if(user.unfinishedPages[i].storyId === story._id) {
-                        return user.unfinishedPages[i];
+                if (user){
+                    for(var i =0; i < user.unfinishedPages.length; i++) {
+                        if(user.unfinishedPages[i].storyId === story._id) {
+                            return user.unfinishedPages[i];
+                        }
                     }
                 }
                 for(var j =0; j < pages.length; j++) {
@@ -44,20 +46,26 @@ app.controller('StoryCtrl', ($scope, $state, stories, $timeout, StoryFactory, $s
     };
 
     $scope.goToStoryPage = (event, story) => {
-        if (user) {
+        if (!user) {
+            var modalInstance = $uibModal.open({
+                            animation:true,
+                            templateUrl: 'js/common/directives/not-loggedin/not-loggedin.html',
+                            controller: 'ModalCtrl'
+            });
+        }
         findIfStarted(story).then(result => {
-                        $('.shelf-whole').fadeOut();
+            $('.shelf-whole').fadeOut();
             $('.story-info').fadeOut().css('display','none');
             Promise.all(outTran.animate(event.currentTarget))
                 .then(() => $state.go('page', {id: result._id}))
         });
-        }
-        else{
-            modalInstance = $uibModal.open({
-                            animation:true,
-                            templateUrl: 'js/common/directives/not-loggedin/not-loggedin.html',
-                            controller: 'ModalCtrl'
-                        });
-        }
+        // }
+        // else{
+        //     modalInstance = $uibModal.open({
+        //                     animation:true,
+        //                     templateUrl: 'js/common/directives/not-loggedin/not-loggedin.html',
+        //                     controller: 'ModalCtrl'
+        //                 });
+        // }
     };
 });

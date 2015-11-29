@@ -6,10 +6,12 @@ app.config($stateProvider => {
             user: (UserFactory, AuthService) => {
                 return AuthService.getLoggedInUser()
                 .then(user => {
+                    console.log('got here')
                     if(user) return UserFactory.find(user._id);
-                    else return;
+                    console.log('no user found');
+                    return;
 
-                })
+                });
               },
             story: (page, StoryFactory) => {
                 return StoryFactory.find(page.storyId);

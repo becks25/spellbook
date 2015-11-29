@@ -12,7 +12,7 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
     else $scope.user = {character: { picture: 'Giraffe1', name: 'Omri'}}
     TilesizeFactory.NumTiles = $scope.page.gameboard.length;
 
-    $scope.avatar = $scope.user.character.picture
+    $scope.avatar = $scope.user.character.picture;
     $scope.text = $compile($scope.page.text)($scope);
     angular.element(document.getElementById('storyText')).append($scope.text);
 
@@ -245,7 +245,7 @@ app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPR
 
     var modalInstance;
 
-    $scope.solved=false;
+    $scope.solved = false;
     $scope.runSpell = argArr => {
         $scope.spell.run(argArr)
             .then(res => {
