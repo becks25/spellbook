@@ -1,7 +1,7 @@
 /**
  * Created by Austin on 10/13/15.
  */
-app.controller('PageCtrl', ($scope, AuthService, $state, page, ClassFactory, SPRITES, LevelFactory, TilesizeFactory, SpellFactory, SpellComponentFactory, SPRITE_AVATARS, orderByFilter, $compile, user, AvatarFactory, PageFactory, allPages, $uibModal, UserFactory, $timeout) => {
+app.controller('PageCtrl', [($scope, AuthService, $state, page, ClassFactory, SPRITES, LevelFactory, TilesizeFactory, SpellFactory, SpellComponentFactory, SPRITE_AVATARS, orderByFilter, $compile, user, AvatarFactory, PageFactory, allPages, $uibModal, UserFactory, $timeout) => {
     $scope.page = page;
     $scope.allPages = allPages;
     $scope.spellComponents = []; // update from db if saved version is present
