@@ -1,4 +1,4 @@
-app.directive('newSpriteForm', function ($rootScope, $state) {
+app.directive('newSpriteForm', ['$rootScope', '$state', function ($rootScope, $state) {
 
     return {
         restrict: 'E',
@@ -6,4 +6,4 @@ app.directive('newSpriteForm', function ($rootScope, $state) {
         link: (scope, elem, attr) => {
         }
     };
-  });
+  }]);

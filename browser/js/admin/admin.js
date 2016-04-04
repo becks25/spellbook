@@ -1,4 +1,4 @@
-app.config(function ($stateProvider) {
+app.config(['$stateProvider' ,function ($stateProvider) {
 
     $stateProvider.state('admin', {
         url: '/admin',
@@ -71,9 +71,9 @@ app.config(function ($stateProvider) {
         }
     });
 
-});
+}]);
 
-app.controller('AdminController', function ($scope, stories, users, mastery, popularStory, CONCEPTS, usersData, PageFactory, $state) {
+app.controller('AdminController', ['$scope', 'stories', 'users', 'mastery', 'popularStory', 'CONCEPTS', 'usersData', 'PageFactory', '$state', function ($scope, stories, users, mastery, popularStory, CONCEPTS, usersData, PageFactory, $state) {
     $scope.stories = stories;
 
     console.log($scope.stories);
@@ -141,7 +141,7 @@ app.controller('AdminController', function ($scope, stories, users, mastery, pop
     // giveMeAnAuthor();
 
 
-});
+}]);
 
 app.filter('rangeFilter', function() {
     return function( users, rangeInfo ) {

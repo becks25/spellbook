@@ -1,4 +1,4 @@
-app.directive('adminUsers', function(UserFactory) {
+app.directive('adminUsers', ['UserFactory', function(UserFactory) {
   return {
     restrict: 'E',
     templateUrl: '/js/common/directives/admin-users/admin-users.html',
@@ -18,4 +18,4 @@ app.directive('adminUsers', function(UserFactory) {
       }
     }
   };
-});
+}]);

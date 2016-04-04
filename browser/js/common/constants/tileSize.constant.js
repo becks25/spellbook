@@ -1,4 +1,4 @@
-app.factory('TilesizeFactory',function($window){
+app.factory('TilesizeFactory', ['$window', function($window){
     var numTiles = 6;
 
     var width = document.querySelector('#right-page').clientWidth;
@@ -8,4 +8,4 @@ app.factory('TilesizeFactory',function($window){
       NumTiles: numTiles
     }
 
-});
+}]);

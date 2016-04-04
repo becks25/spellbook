@@ -1,4 +1,4 @@
-app.config(function ($stateProvider) {
+app.config(['$stateProvider', function ($stateProvider) {
 
     // Register our *about* state.
     $stateProvider.state('about', {
@@ -10,4 +10,4 @@ app.config(function ($stateProvider) {
         }
     });
 
-});
+}]);

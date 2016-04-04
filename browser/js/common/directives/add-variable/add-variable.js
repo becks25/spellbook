@@ -1,4 +1,4 @@
-app.directive('addVariable', function ($rootScope, $state, SpellFactory) {
+app.directive('addVariable', ['$rootScope', '$state', 'SpellFactory', function ($rootScope, $state, SpellFactory) {
 
     return {
         restrict: 'E',
@@ -17,4 +17,4 @@ app.directive('addVariable', function ($rootScope, $state, SpellFactory) {
         	
         }
     };
-  });
+  }]);

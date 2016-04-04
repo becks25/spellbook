@@ -1,4 +1,4 @@
-app.controller('DragAndDropCtrl', function ($scope, DraggedFactory) {
+app.controller('DragAndDropCtrl', ['$scope', 'DraggedFactory', function ($scope, DraggedFactory) {
 
     $scope.handleDragStart = function (e) {
         becks.log(['started drag', e]);
@@ -35,4 +35,4 @@ app.controller('DragAndDropCtrl', function ($scope, DraggedFactory) {
         e.dataTransfer.dropEffect = 'move'; // See the section on the DataTransfer object.
 
     };
-});
+}]);

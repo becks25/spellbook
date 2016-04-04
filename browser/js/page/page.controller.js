@@ -1,7 +1,7 @@
 /**
  * Created by Austin on 10/13/15.
  */
-app.controller('PageCtrl', [($scope, AuthService, $state, page, ClassFactory, SPRITES, LevelFactory, TilesizeFactory, SpellFactory, SpellComponentFactory, SPRITE_AVATARS, orderByFilter, $compile, user, AvatarFactory, PageFactory, allPages, $uibModal, UserFactory, $timeout) => {
+app.controller('PageCtrl', ['$scope', 'AuthService', '$state', 'page', 'ClassFactory', 'SPRITES', 'LevelFactory', 'TilesizeFactory', 'SpellFactory', 'SpellComponentFactory', 'SPRITE_AVATARS', 'orderByFilter', '$compile', 'user', 'AvatarFactory', 'PageFactory', 'allPages', '$uibModal', 'UserFactory', '$timeout', ($scope, AuthService, $state, page, ClassFactory, SPRITES, LevelFactory, TilesizeFactory, SpellFactory, SpellComponentFactory, SPRITE_AVATARS, orderByFilter, $compile, user, AvatarFactory, PageFactory, allPages, $uibModal, UserFactory, $timeout) => {
     $scope.page = page;
     $scope.allPages = allPages;
     $scope.spellComponents = []; // update from db if saved version is present
@@ -224,10 +224,10 @@ app.controller('PageCtrl', [($scope, AuthService, $state, page, ClassFactory, SP
         }
     }
 
-    Crafty.load(['/images/sprites.png']);
+    Crafty.load({images:['/images/sprites.png']});
     Crafty.init(TilesizeFactory.TILESIZE * TilesizeFactory.NumTiles, TilesizeFactory.TILESIZE * TilesizeFactory.NumTiles);
 
-    Crafty.canvas.init();
+    // Crafty.canvas.init();
 
     Crafty.sprite(64, '/images/sprites.png', SPRITES);
     Crafty.sprite(64, '/images/SpriteAvatars.png', SPRITE_AVATARS);
@@ -284,4 +284,4 @@ app.controller('PageCtrl', [($scope, AuthService, $state, page, ClassFactory, SP
 
 
 
-});
+}]);

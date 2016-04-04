@@ -1,4 +1,4 @@
-app.directive('gameBoard', function ($rootScope, $state) {
+app.directive('gameBoard', ['$rootScope', '$state', function ($rootScope, $state) {
 
     return {
         restrict: 'E',
@@ -11,4 +11,4 @@ app.directive('gameBoard', function ($rootScope, $state) {
          
         }
     }
-  });
+  }]);

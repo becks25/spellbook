@@ -1,4 +1,4 @@
-app.directive('adminStats', function(UserFactory) {
+app.directive('adminStats', ['UserFactory', function(UserFactory) {
   return {
     restrict: 'E',
     templateUrl: '/js/common/directives/admin-stats/admin-stats.html',
@@ -143,4 +143,4 @@ app.directive('adminStats', function(UserFactory) {
   
     }
   };
-});
+}]);

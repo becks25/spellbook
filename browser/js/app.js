@@ -1,7 +1,7 @@
 'use strict';
 window.app = angular.module('FullstackGeneratedApp', ['ui.router', 'ui.bootstrap', 'fsaPreBuilt', 'js-data', 'ui.sortable', 'ngAnimate', 'ngMaterial']);
 
-app.config(function ($urlRouterProvider, $locationProvider, DSProvider) {
+app.config(['$urlRouterProvider', '$locationProvider' ,'DSProvider', function ($urlRouterProvider, $locationProvider, DSProvider) {
     // This turns off hashbang urls (/#about) and changes it to something normal (/about)
     $locationProvider.html5Mode(true);
     // If we go to a URL that ui-router doesn't have registered, go to the "/" url.
@@ -38,8 +38,8 @@ app.config(function ($urlRouterProvider, $locationProvider, DSProvider) {
      //  }
      //}
 
-  })
-  .config(function(DSProvider) {
+  }])
+  .config(['DSProvider', function(DSProvider) {
     // Mongoose Relation Fix (fixes deserialization)
     // From http://plnkr.co/edit/3z90PD9wwwhWdnVrZqkB?p=preview
     // This was shown to us by @jmdobry, the idea here is that
@@ -99,7 +99,7 @@ app.config(function ($urlRouterProvider, $locationProvider, DSProvider) {
 
 
 
-});
+}]);
 
 // This app.run is for controlling access to specific states.
 app.run(function ($rootScope, AuthService, $state) {

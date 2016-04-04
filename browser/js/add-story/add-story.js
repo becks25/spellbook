@@ -1,4 +1,4 @@
-app.config($stateProvider => {
+app.config(['$stateProvider', ($stateProvider) => {
 	$stateProvider.state('addStory',{
 		url: '/addStory',
         data: {
@@ -19,10 +19,10 @@ app.config($stateProvider => {
             }
         }
 	});
-});
+}]);
 
 
-app.controller('AddStoryController', function ($scope, user, StoryFactory, $state, SpellComponentFactory) {
+app.controller('AddStoryController', ['$scope', 'user', 'StoryFactory', '$state', 'SpellComponentFactory', function ($scope, user, StoryFactory, $state, SpellComponentFactory) {
 
     $scope.user = user;
 
@@ -67,7 +67,7 @@ app.controller('AddStoryController', function ($scope, user, StoryFactory, $stat
 
     };
 
-});
+}]);
 
 
 

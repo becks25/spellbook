@@ -1,4 +1,4 @@
-app.directive('conceptItem', function(UserFactory) {
+app.directive('conceptItem', ['UserFactory', function(UserFactory) {
   return {
     restrict: 'E',
     templateUrl: '/js/common/directives/concept-item/concept-item.html',
@@ -12,4 +12,4 @@ app.directive('conceptItem', function(UserFactory) {
     	};
     }
   };
-});
+}]);
