@@ -378,11 +378,11 @@ var baseConfig = {
       document.getElementById('cr-stage').style.backgroundImage='url('+$scope.page.boardBackground+')';
 
       TilesizeFactory.NumTiles = $scope.page.gameboard.length;
-      Crafty.load(['/images/sprites.png']);
+      Crafty.load({images:['/images/sprites.png']});
       var tileSize = TilesizeFactory.TILESIZE;
       Crafty.init(tileSize * TilesizeFactory.NumTiles, tileSize * TilesizeFactory.NumTiles);
 
-      Crafty.canvas.init();
+      // Crafty.canvas.init();
       //need to load sprites on to map
 
       Crafty.sprite(64, '/images/sprites.png', SPRITES);
