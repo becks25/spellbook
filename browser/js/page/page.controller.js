@@ -224,13 +224,14 @@ app.controller('PageCtrl', ['$scope', 'AuthService', '$state', 'page', 'ClassFac
         }
     }
 
-    Crafty.load({images:['/images/sprites.png']});
+    // Crafty.load({images:['/images/sprites.png', '/images/SpriteAvatars.png']});
     Crafty.init(TilesizeFactory.TILESIZE * TilesizeFactory.NumTiles, TilesizeFactory.TILESIZE * TilesizeFactory.NumTiles);
 
-    // Crafty.canvas.init();
+    Crafty.canvasLayer.init();
 
     Crafty.sprite(64, '/images/sprites.png', SPRITES);
     Crafty.sprite(64, '/images/SpriteAvatars.png', SPRITE_AVATARS);
+    console.log('sprites', SPRITES, SPRITE_AVATARS)
 
     $scope.level = new LevelFactory($scope.page, $scope.nextPage);
     $scope.spell = new SpellFactory($scope.level);
